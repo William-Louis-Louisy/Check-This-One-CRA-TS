@@ -8,6 +8,7 @@ module.exports = {
         myWhite: "#FAFDFF",
         myBlack: "#000C14",
         myGray: "#A2B2BE",
+        myLightGray: "#F0F2F4",
       },
       backgroundImage: {
         background: "url('/src/assets/cto-background.jpg')",

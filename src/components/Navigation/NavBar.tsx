@@ -15,7 +15,7 @@ function classNames(...classes: string[]) {
 function NavBar() {
   const { lang } = useContext(AppContext);
   return (
-    <Disclosure as="nav" className="bg-white shadow-2xl">
+    <Disclosure as="nav" className="bg-white shadow-xl">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
@@ -27,7 +27,7 @@ function NavBar() {
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                   {/* Current: "border-primary text-gray-900", Default: "border-transparent text-myborder-myGray hover:border-myGray hover:text-myBlack" */}
                   <Link
-                    to="#"
+                    to="/"
                     className="inline-flex items-center border-b-2 border-primary px-1 pt-1 text-sm font-medium text-myBlack"
                   >
                     {trad[lang].navbar.home}
@@ -36,23 +36,23 @@ function NavBar() {
                     to="#"
                     className="text-myborder-myGray inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium hover:border-myGray hover:text-myBlack"
                   >
-                    Team
+                    {trad[lang].navbar.movies}
                   </Link>
                   <Link
                     to="#"
                     className="text-myborder-myGray inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium hover:border-myGray hover:text-myBlack"
                   >
-                    Projects
+                    {trad[lang].navbar.tvShows}
                   </Link>
                   <Link
-                    to="#"
+                    to="youtubeSearch"
                     className="text-myborder-myGray inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium hover:border-myGray hover:text-myBlack"
                   >
-                    Calendar
+                    {trad[lang].navbar.youtube}
                   </Link>
                 </div>
               </div>
-              <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
+              {/* <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
                 <div className="w-full max-w-lg lg:max-w-xs">
                   <label htmlFor="search" className="sr-only">
                     Search
@@ -73,7 +73,7 @@ function NavBar() {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="flex items-center lg:hidden">
                 {/* Mobile menu button */}
                 <Disclosure.Button className="hover:text-myborder-myGray inline-flex items-center justify-center rounded-md p-2 text-myGray hover:bg-myWhite focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary">

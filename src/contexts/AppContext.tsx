@@ -1,9 +1,22 @@
-import axios from "axios";
+// import axios from "axios";
 import trad from "../lang/traduction";
 import { useToasts } from "react-toast-notifications";
-import { createContext, SetStateAction, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
-export const AppContext: any = createContext(null);
+type AppContextType = {
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  lang: string;
+  storeLang: (value: string) => void;
+};
+
+export const AppContext = createContext<AppContextType>(null);
 
 const AppProvider = ({ children }) => {
   const { addToast } = useToasts();
@@ -12,7 +25,7 @@ const AppProvider = ({ children }) => {
 
   /* Headers contenant le token JWT */
 
-  const storeLang = async (value: any) => {
+  const storeLang = async (value: string) => {
     try {
       await localStorage.setItem("lang", value);
       setLang(value);
