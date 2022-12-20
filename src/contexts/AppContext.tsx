@@ -23,8 +23,7 @@ const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [lang, setLang] = useState<string>("fr");
 
-  /* Headers contenant le token JWT */
-
+  // STOCK LANG IN ASYNC STORAGE
   const storeLang = async (value: string) => {
     try {
       await localStorage.setItem("lang", value);
@@ -38,7 +37,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  // Récupère la langue stocker dans l'async storage
+  // GET LANG FROM ASYNC STORAGE
   useEffect(() => {
     const getLang = async () => {
       try {
