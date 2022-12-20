@@ -1,9 +1,9 @@
 import Logo from "../Logo";
 import LangToggle from "../LangToggle";
-import { Link } from "react-router-dom";
 import trad from "../../lang/traduction";
 import { Fragment, useContext } from "react";
 import { SearchIcon } from "@heroicons/react/solid";
+import { Link, useLocation } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
@@ -13,7 +13,34 @@ function classNames(...classes: string[]) {
 }
 
 function NavBar() {
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  // CONTEXT IMPORTS
   const { lang } = useContext(AppContext);
+
+  // TABS STATE
+  const tabs = [
+    { name: trad[lang].navbar.home, link: "/", current: pathname === "/" },
+    {
+      name: trad[lang].navbar.movies,
+      link: "moviesSearch",
+      current: pathname === "/moviesSearch",
+    },
+    {
+      name: trad[lang].navbar.tvShows,
+      link: "showsSearch",
+      current: pathname === "/showsSearch",
+    },
+    {
+      name: trad[lang].navbar.youtube,
+      link: "youtubeSearch",
+      current: pathname === "/youtubeSearch",
+    },
+  ];
+
+  console.log(pathname);
+
   return (
     <Disclosure as="nav" className="bg-white shadow-xl">
       {({ open }) => (
@@ -25,31 +52,21 @@ function NavBar() {
                   <Logo />
                 </div>
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
-                  {/* Current: "border-primary text-gray-900", Default: "border-transparent text-myborder-myGray hover:border-myGray hover:text-myBlack" */}
-                  <Link
-                    to="/"
-                    className="inline-flex items-center border-b-2 border-primary px-1 pt-1 text-sm font-medium text-myBlack"
-                  >
-                    {trad[lang].navbar.home}
-                  </Link>
-                  <Link
-                    to="moviesSearch"
-                    className="text-myborder-myGray inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium hover:border-myGray hover:text-myBlack"
-                  >
-                    {trad[lang].navbar.movies}
-                  </Link>
-                  <Link
-                    to="showsSearch"
-                    className="text-myborder-myGray inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium hover:border-myGray hover:text-myBlack"
-                  >
-                    {trad[lang].navbar.tvShows}
-                  </Link>
-                  <Link
-                    to="youtubeSearch"
-                    className="text-myborder-myGray inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium hover:border-myGray hover:text-myBlack"
-                  >
-                    {trad[lang].navbar.youtube}
-                  </Link>
+                  {tabs.map((tab, index) => (
+                    <Link
+                      key={index}
+                      to={tab.link}
+                      className={classNames(
+                        tab.current
+                          ? "border-primary text-primary"
+                          : "text-myborder-myGray border-transparent hover:border-myGray hover:text-myBlack",
+                        "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
+                      )}
+                      aria-current={tab.current ? "page" : undefined}
+                    >
+                      {tab.name}
+                    </Link>
+                  ))}
                 </div>
               </div>
               {/* <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
@@ -168,7 +185,6 @@ function NavBar() {
 
           <Disclosure.Panel className="lg:hidden">
             <div className="space-y-1 pt-2 pb-3">
-              {/* Current: "bg-indigo-50 border-primary text-primary", Default: "border-transparent text-myGray hover:bg-myGray hover:border-myGray hover:text-myBlack" */}
               <Disclosure.Button
                 as="a"
                 href="#"
