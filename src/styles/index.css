@@ -15,3 +15,25 @@ body {
   height: 100vh;
   background-color: "red";
 }
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+.card {
+  scrollbar-width: auto;
+  scrollbar-color: #123456 #f0f2f4;
+}
+
+/* Chrome, Edge, and Safari */
+.card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.card::-webkit-scrollbar-track {
+  background: #f0f2f4;
+}
+
+.card::-webkit-scrollbar-thumb {
+  background-color: #006bb6;
+  border-radius: 6px;
+  border: 3px solid #f0f2f4;
+}

@@ -33,13 +33,13 @@ function NavBar() {
                     {trad[lang].navbar.home}
                   </Link>
                   <Link
-                    to="#"
+                    to="moviesSearch"
                     className="text-myborder-myGray inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium hover:border-myGray hover:text-myBlack"
                   >
                     {trad[lang].navbar.movies}
                   </Link>
                   <Link
-                    to="#"
+                    to="showsSearch"
                     className="text-myborder-myGray inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium hover:border-myGray hover:text-myBlack"
                   >
                     {trad[lang].navbar.tvShows}

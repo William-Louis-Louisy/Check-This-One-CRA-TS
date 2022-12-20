@@ -1,16 +1,12 @@
 import axios from "axios";
 import trad from "../lang/traduction";
-import Button from "@mui/material/Button";
 import { useContext, useState } from "react";
 import { SearchIcon } from "@heroicons/react/solid";
 import { AppContext } from "../contexts/AppContext";
 import CircularProgress from "@mui/material/CircularProgress";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  EyeIcon,
-  ClipboardListIcon,
-} from "@heroicons/react/outline";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import YoutubeVideoCard from "../components/Cards/YoutubeVideoCard";
+import YoutubeChannelCard from "../components/Cards/YoutubeChannelCard";
 
 interface IYoutubeSearch {
   etag: string;
@@ -39,7 +35,6 @@ function YoutubeSearch() {
       const { data } = await axios.get(
         `${process.env.REACT_APP_YTB_SEARCH_URL}&pageToken=${pageToken}&q=${query}&key=${process.env.REACT_APP_YTB_API_KEY}`
       );
-      console.log("YTB DATA", data);
       setResults(data);
     } catch (error) {
       console.error(error);
@@ -74,13 +69,14 @@ function YoutubeSearch() {
         {trad[lang].pageTitles.youtubeSearch}
       </h1>
       {/* SEARCH BAR */}
-      <div className="flex w-[90%] items-center justify-center px-2 md:w-[400px] lg:ml-6 lg:justify-end">
+      <div className="flex w-[90%] items-center justify-center px-2 md:w-[400px] lg:justify-end">
         <div className="w-full max-w-lg lg:max-w-xl">
           <label htmlFor="search" className="sr-only">
             {trad[lang].placeholders.searchYoutube}
           </label>
           <div className="relative">
             <button
+              id="search-button"
               className="absolute inset-y-0 left-0 flex cursor-pointer items-center pl-3"
               onClick={() => {
                 getYoutubeData();
@@ -111,73 +107,16 @@ function YoutubeSearch() {
           <div className="flex w-full flex-col items-center py-10">
             {results?.items.map((item) =>
               item.id.kind === "youtube#video" ? (
-                <div
-                  key={item.etag}
-                  className="my-5 flex w-full flex-col gap-3 bg-myWhite shadow-lg md:w-3/5 md:flex-row"
-                >
-                  <img
-                    src={item.snippet.thumbnails.medium.url}
-                    alt={item.snippet.title}
-                  />
-                  <div className="flex w-full flex-col items-start gap-2 px-3 pb-3 md:py-6 md:pb-0">
-                    <p className="text-lg font-semibold text-myBlack">
-                      {item.snippet.title}
-                    </p>
-                    <p className="w-full truncate text-myBlack md:w-96">
-                      {item.snippet.description}
-                    </p>
-                    <p className="w-full text-sm italic text-myBlack md:w-60">
-                      {trad[lang].labels.publishedOn}{" "}
-                      {new Date(item.snippet.publishedAt).toLocaleDateString()}
-                    </p>
-                    <div className="my-2 flex w-full flex-row items-center justify-end gap-6">
-                      <a
-                        href={`https://www.youtube.com/watch?v=${item.id.videoId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button
-                          sx={{ color: "#006BB6", borderColor: "#006BB6" }}
-                          variant="outlined"
-                          startIcon={
-                            <EyeIcon className="h-6 w-6 text-secondary" />
-                          }
-                        >
-                          {trad[lang].labels.see}
-                        </Button>
-                      </a>
-
-                      <Button
-                        sx={{ color: "#FAFDFF", borderColor: "#FAFDFF" }}
-                        variant="contained"
-                        startIcon={
-                          <ClipboardListIcon className="h-6 w-6 text-myWhite" />
-                        }
-                      >
-                        {trad[lang].labels.addToAList}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+                <YoutubeVideoCard
+                  key={`${item.etag}-${item.id.kind}`}
+                  item={item}
+                  lang={lang}
+                />
               ) : (
-                <div
-                  key={item.etag}
-                  className="my-5 flex w-full flex-col gap-3 bg-myWhite p-3 shadow-lg md:w-fit md:flex-row md:items-center md:rounded-3xl"
-                >
-                  <img
-                    className="w-32 rounded-full"
-                    src={item.snippet.thumbnails.medium.url}
-                    alt={item.snippet.title}
-                  />
-                  <div className="flex flex-col items-start gap-2 px-3 pb-3 md:py-6 md:pb-0">
-                    <p className="text-lg font-semibold text-myBlack">
-                      {item.snippet.title}
-                    </p>
-                    <p className="w-full truncate text-myBlack md:w-60">
-                      {item.snippet.description}
-                    </p>
-                  </div>
-                </div>
+                <YoutubeChannelCard
+                  key={`${item.etag}-${item.id.kind}`}
+                  item={item}
+                />
               )
             )}
             <div className="my-5 flex w-full flex-row justify-end gap-8 md:w-3/5">
