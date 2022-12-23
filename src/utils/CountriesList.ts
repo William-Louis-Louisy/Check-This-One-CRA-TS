@@ -1,633 +1,1375 @@
-// COUNTRIES LIST WITH NAMES TRANSLATED IN ENGLISH AND FRENCH WITH THEIR RESPECTIVE FLAGS IN SVG
+// COUNTRIES LIST WITH NAMES TRANSLATED IN ENGLISH AND FRENCH WITH THEIR RESPECTIVE FLAGS
 export const countriesList = [
   {
-    name: "Afghanistan",
-    flag: "https://www.countryflags.io/AF/flat/64.png",
-    fr: "Afghanistan",
-    en: "Afghanistan",
+    name: {
+      english: "Afghanistan",
+      french: "Afghanistan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/af.png",
   },
   {
-    name: "Åland Islands",
-    flag: "https://www.countryflags.io/AX/flat/64.png",
-    fr: "Îles Åland",
-    en: "Åland Islands",
+    name: {
+      english: "Albania",
+      french: "Albanie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/al.png",
   },
   {
-    name: "Albania",
-    flag: "https://www.countryflags.io/AL/flat/64.png",
-    fr: "Albanie",
-    en: "Albania",
+    name: {
+      english: "Algeria",
+      french: "Algérie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/dz.png",
   },
   {
-    name: "Algeria",
-    flag: "https://www.countryflags.io/DZ/flat/64.png",
-    fr: "Algérie",
-    en: "Algeria",
+    name: {
+      english: "Andorra",
+      french: "Andorre",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ad.png",
   },
   {
-    name: "American Samoa",
-    flag: "https://www.countryflags.io/AS/flat/64.png",
-    fr: "Samoa américaines",
-    en: "American Samoa",
+    name: {
+      english: "Angola",
+      french: "Angola",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ao.png",
   },
   {
-    name: "Andorra",
-    flag: "https://www.countryflags.io/AD/flat/64.png",
-    fr: "Andorre",
-    en: "Andorra",
+    name: {
+      english: "Antigua and Barbuda",
+      french: "Antigua-et-Barbuda",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ag.png",
   },
   {
-    name: "Angola",
-    flag: "https://www.countryflags.io/AO/flat/64.png",
-    fr: "Angola",
-    en: "Angola",
+    name: {
+      english: "Argentina",
+      french: "Argentine",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ar.png",
   },
   {
-    name: "Anguilla",
-    flag: "https://www.countryflags.io/AI/flat/64.png",
-    fr: "Anguilla",
-    en: "Anguilla",
+    name: {
+      english: "Armenia",
+      french: "Arménie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/am.png",
   },
   {
-    name: "Antarctica",
-    flag: "https://www.countryflags.io/AQ/flat/64.png",
-    fr: "Antarctique",
-    en: "Antarctica",
+    name: {
+      english: "Australia",
+      french: "Australie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/au.png",
   },
   {
-    name: "Antigua and Barbuda",
-    flag: "https://www.countryflags.io/AG/flat/64.png",
-    fr: "Antigua-et-Barbuda",
-    en: "Antigua and Barbuda",
+    name: {
+      english: "Austria",
+      french: "Autriche",
+    },
+    flag: "https://flagpedia.net/data/flags/small/at.png",
   },
   {
-    name: "Argentina",
-    flag: "https://www.countryflags.io/AR/flat/64.png",
-    fr: "Argentine",
-    en: "Argentina",
+    name: {
+      english: "Azerbaijan",
+      french: "Azerbaïdjan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/az.png",
   },
   {
-    name: "Armenia",
-    flag: "https://www.countryflags.io/AM/flat/64.png",
-    fr: "Arménie",
-    en: "Armenia",
+    name: {
+      english: "Bahamas",
+      french: "Bahamas",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bs.png",
   },
   {
-    name: "Aruba",
-    flag: "https://www.countryflags.io/AW/flat/64.png",
-    fr: "Aruba",
-    en: "Aruba",
+    name: {
+      english: "Bahrain",
+      french: "Bahreïn",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bh.png",
   },
   {
-    name: "Australia",
-    flag: "https://www.countryflags.io/AU/flat/64.png",
-    fr: "Australie",
-    en: "Australia",
+    name: {
+      english: "Bangladesh",
+      french: "Bangladesh",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bd.png",
   },
   {
-    name: "Austria",
-    flag: "https://www.countryflags.io/AT/flat/64.png",
-    fr: "Autriche",
-    en: "Austria",
+    name: {
+      english: "Barbados",
+      french: "Barbade",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bb.png",
   },
   {
-    name: "Azerbaijan",
-    flag: "https://www.countryflags.io/AZ/flat/64.png",
-    fr: "Azerbaïdjan",
-    en: "Azerbaijan",
+    name: {
+      english: "Belarus",
+      french: "Biélorussie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/by.png",
   },
   {
-    name: "Bahamas",
-    flag: "https://www.countryflags.io/BS/flat/64.png",
-    fr: "Bahamas",
-    en: "Bahamas",
+    name: {
+      english: "Belgium",
+      french: "Belgique",
+    },
+    flag: "https://flagpedia.net/data/flags/small/be.png",
   },
   {
-    name: "Bahrain",
-    flag: "https://www.countryflags.io/BH/flat/64.png",
-    fr: "Bahreïn",
-    en: "Bahrain",
+    name: {
+      english: "Belize",
+      french: "Belize",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bz.png",
   },
   {
-    name: "Bangladesh",
-    flag: "https://www.countryflags.io/BD/flat/64.png",
-    fr: "Bangladesh",
-    en: "Bangladesh",
+    name: {
+      english: "Benin",
+      french: "Bénin",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bj.png",
   },
   {
-    name: "Barbados",
-    flag: "https://www.countryflags.io/BB/flat/64.png",
-    fr: "Barbade",
-    en: "Barbados",
+    name: {
+      english: "Bhutan",
+      french: "Bhoutan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bt.png",
   },
   {
-    name: "Belarus",
-    flag: "https://www.countryflags.io/BY/flat/64.png",
-    fr: "Biélorussie",
-    en: "Belarus",
+    name: {
+      english: "Bolivia",
+      french: "Bolivie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bo.png",
   },
   {
-    name: "Belgium",
-    flag: "https://www.countryflags.io/BE/flat/64.png",
-    fr: "Belgique",
-    en: "Belgium",
+    name: {
+      english: "Bosnia and Herzegovina",
+      french: "Bosnie-Herzégovine",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ba.png",
   },
   {
-    name: "Belize",
-    flag: "https://www.countryflags.io/BZ/flat/64.png",
-    fr: "Belize",
-    en: "Belize",
+    name: {
+      english: "Botswana",
+      french: "Botswana",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bw.png",
   },
   {
-    name: "Benin",
-    flag: "https://www.countryflags.io/BJ/flat/64.png",
-    fr: "Bénin",
-    en: "Benin",
+    name: {
+      english: "Brazil",
+      french: "Brésil",
+    },
+    flag: "https://flagpedia.net/data/flags/small/br.png",
   },
   {
-    name: "Bermuda",
-    flag: "https://www.countryflags.io/BM/flat/64.png",
-    fr: "Bermudes",
-    en: "Bermuda",
+    name: {
+      english: "Brunei",
+      french: "Brunéi",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bn.png",
   },
   {
-    name: "Bhutan",
-    flag: "https://www.countryflags.io/BT/flat/64.png",
-    fr: "Bhoutan",
-    en: "Bhutan",
+    name: {
+      english: "Bulgaria",
+      french: "Bulgarie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bg.png",
   },
   {
-    name: "Bolivia",
-    flag: "https://www.countryflags.io/BO/flat/64.png",
-    fr: "Bolivie",
-    en: "Bolivia",
+    name: {
+      english: "Burkina Faso",
+      french: "Burkina Faso",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bf.png",
   },
   {
-    name: "Bosnia and Herzegovina",
-    flag: "https://www.countryflags.io/BA/flat/64.png",
-    fr: "Bosnie-Herzégovine",
-    en: "Bosnia and Herzegovina",
+    name: {
+      english: "Burma (Myanmar)",
+      french: "Birmanie (Myanmar)",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mm.png",
   },
   {
-    name: "Botswana",
-    flag: "https://www.countryflags.io/BW/flat/64.png",
-    fr: "Botswana",
-    en: "Botswana",
+    name: {
+      english: "Burundi",
+      french: "Burundi",
+    },
+    flag: "https://flagpedia.net/data/flags/small/bi.png",
   },
   {
-    name: "Bouvet Island",
-    flag: "https://www.countryflags.io/BV/flat/64.png",
-    fr: "Île Bouvet",
-    en: "Bouvet Island",
+    name: {
+      english: "Cabo Verde",
+      french: "Cabo Verde",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cv.png",
   },
   {
-    name: "Brazil",
-    flag: "https://www.countryflags.io/BR/flat/64.png",
-    fr: "Brésil",
-    en: "Brazil",
+    name: {
+      english: "Cambodia",
+      french: "Cambodge",
+    },
+    flag: "https://flagpedia.net/data/flags/small/kh.png",
   },
   {
-    name: "British Indian Ocean Territory",
-    flag: "https://www.countryflags.io/IO/flat/64.png",
-    fr: "Territoire britannique de l'océan Indien",
-    en: "British Indian Ocean Territory",
+    name: {
+      english: "Cameroon",
+      french: "Cameroun",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cm.png",
   },
   {
-    name: "Brunei Darussalam",
-    flag: "https://www.countryflags.io/BN/flat/64.png",
-    fr: "Brunéi Darussalam",
-    en: "Brunei Darussalam",
+    name: {
+      english: "Canada",
+      french: "Canada",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ca.png",
   },
   {
-    name: "Bulgaria",
-    flag: "https://www.countryflags.io/BG/flat/64.png",
-    fr: "Bulgarie",
-    en: "Bulgaria",
+    name: {
+      english: "Central African Republic",
+      french: "République centrafricaine",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cf.png",
   },
   {
-    name: "Burkina Faso",
-    flag: "https://www.countryflags.io/BF/flat/64.png",
-    fr: "Burkina Faso",
-    en: "Burkina Faso",
+    name: {
+      english: "Chad",
+      french: "Tchad",
+    },
+    flag: "https://flagpedia.net/data/flags/small/td.png",
   },
   {
-    name: "Burundi",
-    flag: "https://www.countryflags.io/BI/flat/64.png",
-    fr: "Burundi",
-    en: "Burundi",
+    name: {
+      english: "Chile",
+      french: "Chili",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cl.png",
   },
   {
-    name: "Cambodia",
-    flag: "https://www.countryflags.io/KH/flat/64.png",
-    fr: "Cambodge",
-    en: "Cambodia",
+    name: {
+      english: "China",
+      french: "Chine",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cn.png",
   },
   {
-    name: "Cameroon",
-    flag: "https://www.countryflags.io/CM/flat/64.png",
-    fr: "Cameroun",
-    en: "Cameroon",
+    name: {
+      english: "Colombia",
+      french: "Colombie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/co.png",
   },
   {
-    name: "Canada",
-    flag: "https://www.countryflags.io/CA/flat/64.png",
-    fr: "Canada",
-    en: "Canada",
+    name: {
+      english: "Comoros",
+      french: "Comores",
+    },
+    flag: "https://flagpedia.net/data/flags/small/km.png",
   },
   {
-    name: "Cape Verde",
-    flag: "https://www.countryflags.io/CV/flat/64.png",
-    fr: "Cap-Vert",
-    en: "Cape Verde",
+    name: {
+      english: "Congo (Brazzaville)",
+      french: "Congo (Brazzaville)",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cg.png",
   },
   {
-    name: "Cayman Islands",
-    flag: "https://www.countryflags.io/KY/flat/64.png",
-    fr: "Îles Caïmans",
-    en: "Cayman Islands",
+    name: {
+      english: "Congo (Kinshasa)",
+      french: "Congo (Kinshasa)",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cd.png",
   },
   {
-    name: "Central African Republic",
-    flag: "https://www.countryflags.io/CF/flat/64.png",
-    fr: "République centrafricaine",
-    en: "Central African Republic",
+    name: {
+      english: "Costa Rica",
+      french: "Costa Rica",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cr.png",
   },
   {
-    name: "Chad",
-    flag: "https://www.countryflags.io/TD/flat/64.png",
-    fr: "Tchad",
-    en: "Chad",
+    name: {
+      english: "Cote d'Ivoire",
+      french: "Côte d'Ivoire",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ci.png",
   },
   {
-    name: "Chile",
-    flag: "https://www.countryflags.io/CL/flat/64.png",
-    fr: "Chili",
-    en: "Chile",
+    name: {
+      english: "Croatia",
+      french: "Croatie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/hr.png",
   },
   {
-    name: "China",
-    flag: "https://www.countryflags.io/CN/flat/64.png",
-    fr: "Chine",
-    en: "China",
+    name: {
+      english: "Cuba",
+      french: "Cuba",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cu.png",
   },
   {
-    name: "Christmas Island",
-    flag: "https://www.countryflags.io/CX/flat/64.png",
-    fr: "Île Christmas",
-    en: "Christmas Island",
+    name: {
+      english: "Cyprus",
+      french: "Chypre",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cy.png",
   },
   {
-    name: "Cocos (Keeling) Islands",
-    flag: "https://www.countryflags.io/CC/flat/64.png",
-    fr: "Îles Cocos (Keeling)",
-    en: "Cocos (Keeling) Islands",
+    name: {
+      english: "Czech Republic",
+      french: "République tchèque",
+    },
+    flag: "https://flagpedia.net/data/flags/small/cz.png",
   },
   {
-    name: "Colombia",
-    flag: "https://www.countryflags.io/CO/flat/64.png",
-    fr: "Colombie",
-    en: "Colombia",
+    name: {
+      english: "Denmark",
+      french: "Danemark",
+    },
+    flag: "https://flagpedia.net/data/flags/small/dk.png",
   },
   {
-    name: "Comoros",
-    flag: "https://www.countryflags.io/KM/flat/64.png",
-    fr: "Comores",
-    en: "Comoros",
+    name: {
+      english: "Djibouti",
+      french: "Djibouti",
+    },
+    flag: "https://flagpedia.net/data/flags/small/dj.png",
   },
   {
-    name: "Congo",
-    flag: "https://www.countryflags.io/CG/flat/64.png",
-    fr: "Congo",
-    en: "Congo",
+    name: {
+      english: "Dominica",
+      french: "Dominique",
+    },
+    flag: "https://flagpedia.net/data/flags/small/dm.png",
   },
   {
-    name: "Congo, The Democratic Republic of the",
-    flag: "https://www.countryflags.io/CD/flat/64.png",
-    fr: "Congo, la République démocratique du",
-    en: "Congo, The Democratic Republic of the",
+    name: {
+      english: "Dominican Republic",
+      french: "République dominicaine",
+    },
+    flag: "https://flagpedia.net/data/flags/small/do.png",
   },
   {
-    name: "Cook Islands",
-    flag: "https://www.countryflags.io/CK/flat/64.png",
-    fr: "Îles Cook",
-    en: "Cook Islands",
+    name: {
+      english: "Ecuador",
+      french: "Équateur",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ec.png",
   },
   {
-    name: "Costa Rica",
-    flag: "https://www.countryflags.io/CR/flat/64.png",
-    fr: "Costa Rica",
-    en: "Costa Rica",
+    name: {
+      english: "Egypt",
+      french: "Égypte",
+    },
+    flag: "https://flagpedia.net/data/flags/small/eg.png",
   },
   {
-    name: "Cote D'Ivoire",
-    flag: "https://www.countryflags.io/CI/flat/64.png",
-    fr: "Côte d'Ivoire",
-    en: "Cote D'Ivoire",
+    name: {
+      english: "El Salvador",
+      french: "El Salvador",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sv.png",
   },
   {
-    name: "Croatia",
-    flag: "https://www.countryflags.io/HR/flat/64.png",
-    fr: "Croatie",
-    en: "Croatia",
+    name: {
+      english: "Equatorial Guinea",
+      french: "Guinée équatoriale",
+    },
+    flag: "https://flagpedia.net/data/flags/small/gn.png",
   },
   {
-    name: "Cuba",
-    flag: "https://www.countryflags.io/CU/flat/64.png",
-    fr: "Cuba",
-    en: "Cuba",
+    name: {
+      english: "Eritrea",
+      french: "Érythrée",
+    },
+    flag: "https://flagpedia.net/data/flags/small/er.png",
   },
   {
-    name: "Cyprus",
-    flag: "https://www.countryflags.io/CY/flat/64.png",
-    fr: "Chypre",
-    en: "Cyprus",
+    name: {
+      english: "Estonia",
+      french: "Estonie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ee.png",
   },
   {
-    name: "Czech Republic",
-    flag: "https://www.countryflags.io/CZ/flat/64.png",
-    fr: "République tchèque",
-    en: "Czech Republic",
+    name: {
+      english: "Eswatini",
+      french: "Eswatini",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sz.png",
   },
   {
-    name: "Denmark",
-    flag: "https://www.countryflags.io/DK/flat/64.png",
-    fr: "Danemark",
-    en: "Denmark",
+    name: {
+      english: "Ethiopia",
+      french: "Éthiopie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/et.png",
   },
   {
-    name: "Djibouti",
-    flag: "https://www.countryflags.io/DJ/flat/64.png",
-    fr: "Djibouti",
-    en: "Djibouti",
+    name: {
+      english: "Fiji",
+      french: "Fidji",
+    },
+    flag: "https://flagpedia.net/data/flags/small/fj.png",
   },
   {
-    name: "Dominica",
-    flag: "https://www.countryflags.io/DM/flat/64.png",
-    fr: "Dominique",
-    en: "Dominica",
+    name: {
+      english: "Finland",
+      french: "Finlande",
+    },
+    flag: "https://flagpedia.net/data/flags/small/fi.png",
   },
   {
-    name: "Dominican Republic",
-    flag: "https://www.countryflags.io/DO/flat/64.png",
-    fr: "République dominicaine",
-    en: "Dominican Republic",
+    name: {
+      english: "France",
+      french: "France",
+    },
+    flag: "https://flagpedia.net/data/flags/small/fr.png",
   },
   {
-    name: "Ecuador",
-    flag: "https://www.countryflags.io/EC/flat/64.png",
-    fr: "Équateur",
-    en: "Ecuador",
+    name: {
+      english: "Gabon",
+      french: "Gabon",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ga.png",
   },
   {
-    name: "Egypt",
-    flag: "https://www.countryflags.io/EG/flat/64.png",
-    fr: "Égypte",
-    en: "Egypt",
+    name: {
+      english: "Gambia",
+      french: "Gambie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/gm.png",
   },
   {
-    name: "El Salvador",
-    flag: "https://www.countryflags.io/SV/flat/64.png",
-    fr: "Salvador",
-    en: "El Salvador",
+    name: {
+      english: "Georgia",
+      french: "Géorgie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ge.png",
   },
   {
-    name: "Equatorial Guinea",
-    flag: "https://www.countryflags.io/GQ/flat/64.png",
-    fr: "Guinée équatoriale",
-    en: "Equatorial Guinea",
+    name: {
+      english: "Germany",
+      french: "Allemagne",
+    },
+    flag: "https://flagpedia.net/data/flags/small/de.png",
   },
   {
-    name: "Eritrea",
-    flag: "https://www.countryflags.io/ER/flat/64.png",
-    fr: "Érythrée",
-    en: "Eritrea",
+    name: {
+      english: "Ghana",
+      french: "Ghana",
+    },
+    flag: "https://flagpedia.net/data/flags/small/gh.png",
   },
   {
-    name: "Estonia",
-    flag: "https://www.countryflags.io/EE/flat/64.png",
-    fr: "Estonie",
-    en: "Estonia",
+    name: {
+      english: "Greece",
+      french: "Grèce",
+    },
+    flag: "https://flagpedia.net/data/flags/small/gr.png",
   },
   {
-    name: "Ethiopia",
-    flag: "https://www.countryflags.io/ET/flat/64.png",
-    fr: "Éthiopie",
-    en: "Ethiopia",
+    name: {
+      english: "Grenada",
+      french: "Grenade",
+    },
+    flag: "https://flagpedia.net/data/flags/small/gd.png",
   },
   {
-    name: "Falkland Islands (Malvinas)",
-    flag: "https://www.countryflags.io/FK/flat/64.png",
-    fr: "Îles Malouines (Falkland)",
-    en: "Falkland Islands (Malvinas)",
+    name: {
+      english: "Guatemala",
+      french: "Guatemala",
+    },
+    flag: "https://flagpedia.net/data/flags/small/gt.png",
   },
   {
-    name: "Faroe Islands",
-    flag: "https://www.countryflags.io/FO/flat/64.png",
-    fr: "Îles Féroé",
-    en: "Faroe Islands",
+    name: {
+      english: "Guinea",
+      french: "Guinée",
+    },
+    flag: "https://flagpedia.net/data/flags/small/gn.png",
   },
   {
-    name: "Fiji",
-    flag: "https://www.countryflags.io/FJ/flat/64.png",
-    fr: "Fidji",
-    en: "Fiji",
+    name: {
+      english: "Guinea-Bissau",
+      french: "Guinée-Bissau",
+    },
+    flag: "https://flagpedia.net/data/flags/small/gw.png",
   },
   {
-    name: "Finland",
-    flag: "https://www.countryflags.io/FI/flat/64.png",
-    fr: "Finlande",
-    en: "Finland",
+    name: {
+      english: "Guyana",
+      french: "Guyana",
+    },
+    flag: "https://flagpedia.net/data/flags/small/gy.png",
   },
   {
-    name: "France",
-    flag: "https://www.countryflags.io/FR/flat/64.png",
-    fr: "France",
-    en: "France",
+    name: {
+      english: "Haiti",
+      french: "Haïti",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ht.png",
   },
   {
-    name: "French Guiana",
-    flag: "https://www.countryflags.io/GF/flat/64.png",
-    fr: "Guyane française",
-    en: "French Guiana",
+    name: {
+      english: "Honduras",
+      french: "Honduras",
+    },
+    flag: "https://flagpedia.net/data/flags/small/hn.png",
   },
   {
-    name: "French Polynesia",
-    flag: "https://www.countryflags.io/PF/flat/64.png",
-    fr: "Polynésie française",
-    en: "French Polynesia",
+    name: {
+      english: "Hungary",
+      french: "Hongrie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/hu.png",
   },
   {
-    name: "French Southern Territories",
-    flag: "https://www.countryflags.io/TF/flat/64.png",
-    fr: "Terres australes françaises",
-    en: "French Southern Territories",
+    name: {
+      english: "Iceland",
+      french: "Islande",
+    },
+    flag: "https://flagpedia.net/data/flags/small/is.png",
   },
   {
-    name: "Gabon",
-    flag: "https://www.countryflags.io/GA/flat/64.png",
-    fr: "Gabon",
-    en: "Gabon",
+    name: {
+      english: "India",
+      french: "Inde",
+    },
+    flag: "https://flagpedia.net/data/flags/small/in.png",
   },
   {
-    name: "Gambia",
-    flag: "https://www.countryflags.io/GM/flat/64.png",
-    fr: "Gambie",
-    en: "Gambia",
+    name: {
+      english: "Indonesia",
+      french: "Indonésie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/id.png",
   },
   {
-    name: "Georgia",
-    flag: "https://www.countryflags.io/GE/flat/64.png",
-    fr: "Géorgie",
-    en: "Georgia",
+    name: {
+      english: "Iran",
+      french: "Iran",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ir.png",
   },
   {
-    name: "Germany",
-    flag: "https://www.countryflags.io/DE/flat/64.png",
-    fr: "Allemagne",
-    en: "Germany",
+    name: {
+      english: "Iraq",
+      french: "Irak",
+    },
+    flag: "https://flagpedia.net/data/flags/small/iq.png",
   },
   {
-    name: "Ghana",
-    flag: "https://www.countryflags.io/GH/flat/64.png",
-    fr: "Ghana",
-    en: "Ghana",
+    name: {
+      english: "Ireland",
+      french: "Irlande",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ie.png",
   },
   {
-    name: "Gibraltar",
-    flag: "https://www.countryflags.io/GI/flat/64.png",
-    fr: "Gibraltar",
-    en: "Gibraltar",
+    name: {
+      english: "Israel",
+      french: "Israël",
+    },
+    flag: "https://flagpedia.net/data/flags/small/il.png",
   },
   {
-    name: "Greece",
-    flag: "https://www.countryflags.io/GR/flat/64.png",
-    fr: "Grèce",
-    en: "Greece",
+    name: {
+      english: "Italy",
+      french: "Italie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/it.png",
   },
   {
-    name: "Greenland",
-    flag: "https://www.countryflags.io/GL/flat/64.png",
-    fr: "Groenland",
-    en: "Greenland",
+    name: {
+      english: "Jamaica",
+      french: "Jamaïque",
+    },
+    flag: "https://flagpedia.net/data/flags/small/jm.png",
   },
   {
-    name: "Grenada",
-    flag: "https://www.countryflags.io/GD/flat/64.png",
-    fr: "Grenade",
-    en: "Grenada",
+    name: {
+      english: "Japan",
+      french: "Japon",
+    },
+    flag: "https://flagpedia.net/data/flags/small/jp.png",
   },
   {
-    name: "Guadeloupe",
-    flag: "https://www.countryflags.io/GP/flat/64.png",
-    fr: "Guadeloupe",
-    en: "Guadeloupe",
+    name: {
+      english: "Jordan",
+      french: "Jordanie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/jo.png",
   },
   {
-    name: "Guam",
-    flag: "https://www.countryflags.io/GU/flat/64.png",
-    fr: "Guam",
-    en: "Guam",
+    name: {
+      english: "Kazakhstan",
+      french: "Kazakhstan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/kz.png",
   },
   {
-    name: "Guatemala",
-    flag: "https://www.countryflags.io/GT/flat/64.png",
-    fr: "Guatemala",
-    en: "Guatemala",
+    name: {
+      english: "Kenya",
+      french: "Kenya",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ke.png",
   },
   {
-    name: "Guernsey",
-    flag: "https://www.countryflags.io/GG/flat/64.png",
-    fr: "Guernesey",
-    en: "Guernsey",
+    name: {
+      english: "Kiribati",
+      french: "Kiribati",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ki.png",
   },
   {
-    name: "Guinea",
-    flag: "https://www.countryflags.io/GN/flat/64.png",
-    fr: "Guinée",
-    en: "Guinea",
+    name: {
+      english: "Korea (North)",
+      french: "Corée (Nord)",
+    },
+    flag: "https://flagpedia.net/data/flags/small/kp.png",
   },
   {
-    name: "Guinea-Bissau",
-    flag: "https://www.countryflags.io/GW/flat/64.png",
-    fr: "Guinée-Bissau",
-    en: "Guinea-Bissau",
+    name: {
+      english: "Korea (South)",
+      french: "Corée (Sud)",
+    },
+    flag: "https://flagpedia.net/data/flags/small/kr.png",
   },
   {
-    name: "Guyana",
-    flag: "https://www.countryflags.io/GY/flat/64.png",
-    fr: "Guyana",
-    en: "Guyana",
+    name: {
+      english: "Kuwait",
+      french: "Koweït",
+    },
+    flag: "https://flagpedia.net/data/flags/small/kw.png",
   },
   {
-    name: "Haiti",
-    flag: "https://www.countryflags.io/HT/flat/64.png",
-    fr: "Haïti",
-    en: "Haiti",
+    name: {
+      english: "Kyrgyzstan",
+      french: "Kirghizistan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/kg.png",
   },
   {
-    name: "Heard Island and McDonald Islands",
-    flag: "https://www.countryflags.io/HM/flat/64.png",
-    fr: "Îles Heard-et-MacDonald",
-    en: "Heard Island and McDonald Islands",
+    name: {
+      english: "Laos",
+      french: "Laos",
+    },
+    flag: "https://flagpedia.net/data/flags/small/la.png",
   },
   {
-    name: "Holy See (Vatican City State)",
-    flag: "https://www.countryflags.io/VA/flat/64.png",
-    fr: "Saint-Siège (État de la Cité du Vatican)",
-    en: "Holy See (Vatican City State)",
+    name: {
+      english: "Latvia",
+      french: "Lettonie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/lv.png",
   },
   {
-    name: "Honduras",
-    flag: "https://www.countryflags.io/HN/flat/64.png",
-    fr: "Honduras",
-    en: "Honduras",
+    name: {
+      english: "Lebanon",
+      french: "Liban",
+    },
+    flag: "https://flagpedia.net/data/flags/small/lb.png",
   },
   {
-    name: "Hong Kong",
-    flag: "https://www.countryflags.io/HK/flat/64.png",
-    fr: "Hong Kong",
-    en: "Hong Kong",
+    name: {
+      english: "Lesotho",
+      french: "Lesotho",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ls.png",
   },
   {
-    name: "Hungary",
-    flag: "https://www.countryflags.io/HU/flat/64.png",
-    fr: "Hongrie",
-    en: "Hungary",
+    name: {
+      english: "Liberia",
+      french: "Liberia",
+    },
+    flag: "https://flagpedia.net/data/flags/small/lr.png",
   },
   {
-    name: "Iceland",
-    flag: "https://www.countryflags.io/IS/flat/64.png",
-    fr: "Islande",
-    en: "Iceland",
+    name: {
+      english: "Libya",
+      french: "Libye",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ly.png",
   },
   {
-    name: "India",
-    flag: "https://www.countryflags.io/IN/flat/64.png",
-    fr: "Inde",
-    en: "India",
+    name: {
+      english: "Liechtenstein",
+      french: "Liechtenstein",
+    },
+    flag: "https://flagpedia.net/data/flags/small/li.png",
   },
   {
-    name: "Indonesia",
-    flag: "https://www.countryflags.io/ID/flat/64.png",
-    fr: "Indonésie",
-    en: "Indonesia",
+    name: {
+      english: "Lithuania",
+      french: "Lituanie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/lt.png",
   },
   {
-    name: "Iran",
-    flag: "https://www.countryflags.io/IR/flat/64.png",
-    fr: "Iran",
-    en: "Iran",
+    name: {
+      english: "Luxembourg",
+      french: "Luxembourg",
+    },
+    flag: "https://flagpedia.net/data/flags/small/lu.png",
   },
   {
-    name: "Iraq",
-    flag: "https://www.countryflags.io/IQ/flat/64.png",
-    fr: "Irak",
-    en: "Iraq",
+    name: {
+      english: "Madagascar",
+      french: "Madagascar",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mg.png",
   },
   {
-    name: "Ireland",
-    flag: "https://www.countryflags.io/IE/flat/64.png",
-    fr: "Irlande",
-    en: "Ireland",
+    name: {
+      english: "Malawi",
+      french: "Malawi",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mw.png",
+  },
+  {
+    name: {
+      english: "Malaysia",
+      french: "Malaisie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/my.png",
+  },
+  {
+    name: {
+      english: "Maldives",
+      french: "Maldives",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mv.png",
+  },
+  {
+    name: {
+      english: "Mali",
+      french: "Mali",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ml.png",
+  },
+  {
+    name: {
+      english: "Malta",
+      french: "Malte",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mt.png",
+  },
+  {
+    name: {
+      english: "Marshall Islands",
+      french: "Îles Marshall",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mh.png",
+  },
+  {
+    name: {
+      english: "Mauritania",
+      french: "Mauritanie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mr.png",
+  },
+  {
+    name: {
+      english: "Mauritius",
+      french: "Maurice",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mu.png",
+  },
+  {
+    name: {
+      english: "Mexico",
+      french: "Mexique",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mx.png",
+  },
+  {
+    name: {
+      english: "Micronesia",
+      french: "Micronésie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/fm.png",
+  },
+  {
+    name: {
+      english: "Moldova",
+      french: "Moldavie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/md.png",
+  },
+  {
+    name: {
+      english: "Monaco",
+      french: "Monaco",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mc.png",
+  },
+  {
+    name: {
+      english: "Mongolia",
+      french: "Mongolie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mn.png",
+  },
+  {
+    name: {
+      english: "Montenegro",
+      french: "Monténégro",
+    },
+    flag: "https://flagpedia.net/data/flags/small/me.png",
+  },
+  {
+    name: {
+      english: "Morocco",
+      french: "Maroc",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ma.png",
+  },
+  {
+    name: {
+      english: "Mozambique",
+      french: "Mozambique",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mz.png",
+  },
+  {
+    name: {
+      english: "Myanmar (Burma)",
+      french: "Myanmar (Birmanie)",
+    },
+    flag: "https://flagpedia.net/data/flags/small/mm.png",
+  },
+  {
+    name: {
+      english: "Namibia",
+      french: "Namibie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/na.png",
+  },
+  {
+    name: {
+      english: "Nauru",
+      french: "Nauru",
+    },
+    flag: "https://flagpedia.net/data/flags/small/nr.png",
+  },
+  {
+    name: {
+      english: "Nepal",
+      french: "Népal",
+    },
+    flag: "https://flagpedia.net/data/flags/small/np.png",
+  },
+  {
+    name: {
+      english: "Netherlands",
+      french: "Pays-Bas",
+    },
+    flag: "https://flagpedia.net/data/flags/small/nl.png",
+  },
+  {
+    name: {
+      english: "New Zealand",
+      french: "Nouvelle-Zélande",
+    },
+    flag: "https://flagpedia.net/data/flags/small/nz.png",
+  },
+  {
+    name: {
+      english: "Nicaragua",
+      french: "Nicaragua",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ni.png",
+  },
+  {
+    name: {
+      english: "Niger",
+      french: "Niger",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ne.png",
+  },
+  {
+    name: {
+      english: "Nigeria",
+      french: "Nigéria",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ng.png",
+  },
+  {
+    name: {
+      english: "Norway",
+      french: "Norvège",
+    },
+    flag: "https://flagpedia.net/data/flags/small/no.png",
+  },
+  {
+    name: {
+      english: "Oman",
+      french: "Oman",
+    },
+    flag: "https://flagpedia.net/data/flags/small/om.png",
+  },
+  {
+    name: {
+      english: "Pakistan",
+      french: "Pakistan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/pk.png",
+  },
+  {
+    name: {
+      english: "Palau",
+      french: "Palaos",
+    },
+    flag: "https://flagpedia.net/data/flags/small/pw.png",
+  },
+  {
+    name: {
+      english: "Panama",
+      french: "Panama",
+    },
+    flag: "https://flagpedia.net/data/flags/small/pa.png",
+  },
+  {
+    name: {
+      english: "Papua New Guinea",
+      french: "Papouasie-Nouvelle-Guinée",
+    },
+    flag: "https://flagpedia.net/data/flags/small/pg.png",
+  },
+  {
+    name: {
+      english: "Paraguay",
+      french: "Paraguay",
+    },
+    flag: "https://flagpedia.net/data/flags/small/py.png",
+  },
+  {
+    name: {
+      english: "Peru",
+      french: "Pérou",
+    },
+    flag: "https://flagpedia.net/data/flags/small/pe.png",
+  },
+  {
+    name: {
+      english: "Philippines",
+      french: "Philippines",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ph.png",
+  },
+  {
+    name: {
+      english: "Poland",
+      french: "Pologne",
+    },
+    flag: "https://flagpedia.net/data/flags/small/pl.png",
+  },
+  {
+    name: {
+      english: "Portugal",
+      french: "Portugal",
+    },
+    flag: "https://flagpedia.net/data/flags/small/pt.png",
+  },
+  {
+    name: {
+      english: "Qatar",
+      french: "Qatar",
+    },
+    flag: "https://flagpedia.net/data/flags/small/qa.png",
+  },
+  {
+    name: {
+      english: "Romania",
+      french: "Roumanie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ro.png",
+  },
+  {
+    name: {
+      english: "Russia",
+      french: "Russie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ru.png",
+  },
+  {
+    name: {
+      english: "Rwanda",
+      french: "Rwanda",
+    },
+    flag: "https://flagpedia.net/data/flags/small/rw.png",
+  },
+  {
+    name: {
+      english: "Saint Kitts and Nevis",
+      french: "Saint-Kitts-et-Nevis",
+    },
+    flag: "https://flagpedia.net/data/flags/small/kn.png",
+  },
+  {
+    name: {
+      english: "Saint Lucia",
+      french: "Sainte-Lucie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/lc.png",
+  },
+  {
+    name: {
+      english: "Saint Vincent and the Grenadines",
+      french: "Saint-Vincent-et-les-Grenadines",
+    },
+    flag: "https://flagpedia.net/data/flags/small/vc.png",
+  },
+  {
+    name: {
+      english: "Samoa",
+      french: "Samoa",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ws.png",
+  },
+  {
+    name: {
+      english: "San Marino",
+      french: "Saint-Marin",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sm.png",
+  },
+  {
+    name: {
+      english: "Sao Tome and Principe",
+      french: "Sao Tomé-et-Principe",
+    },
+    flag: "https://flagpedia.net/data/flags/small/st.png",
+  },
+  {
+    name: {
+      english: "Saudi Arabia",
+      french: "Arabie Saoudite",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sa.png",
+  },
+  {
+    name: {
+      english: "Senegal",
+      french: "Sénégal",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sn.png",
+  },
+  {
+    name: {
+      english: "Serbia",
+      french: "Serbie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/rs.png",
+  },
+  {
+    name: {
+      english: "Seychelles",
+      french: "Seychelles",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sc.png",
+  },
+  {
+    name: {
+      english: "Sierra Leone",
+      french: "Sierra Leone",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sl.png",
+  },
+  {
+    name: {
+      english: "Singapore",
+      french: "Singapour",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sg.png",
+  },
+  {
+    name: {
+      english: "Slovakia",
+      french: "Slovaquie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sk.png",
+  },
+  {
+    name: {
+      english: "Slovenia",
+      french: "Slovénie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/si.png",
+  },
+  {
+    name: {
+      english: "Solomon Islands",
+      french: "Îles Salomon",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sb.png",
+  },
+  {
+    name: {
+      english: "Somalia",
+      french: "Somalie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/so.png",
+  },
+  {
+    name: {
+      english: "South Africa",
+      french: "Afrique du Sud",
+    },
+    flag: "https://flagpedia.net/data/flags/small/za.png",
+  },
+  {
+    name: {
+      english: "South Korea",
+      french: "Corée du Sud",
+    },
+    flag: "https://flagpedia.net/data/flags/small/kr.png",
+  },
+  {
+    name: {
+      english: "South Sudan",
+      french: "Soudan du Sud",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ss.png",
+  },
+  {
+    name: {
+      english: "Spain",
+      french: "Espagne",
+    },
+    flag: "https://flagpedia.net/data/flags/small/es.png",
+  },
+  {
+    name: {
+      english: "Sri Lanka",
+      french: "Sri Lanka",
+    },
+    flag: "https://flagpedia.net/data/flags/small/lk.png",
+  },
+  {
+    name: {
+      english: "Sudan",
+      french: "Soudan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sd.png",
+  },
+  {
+    name: {
+      english: "Suriname",
+      french: "Suriname",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sr.png",
+  },
+  {
+    name: {
+      english: "Sweden",
+      french: "Suède",
+    },
+    flag: "https://flagpedia.net/data/flags/small/se.png",
+  },
+  {
+    name: {
+      english: "Switzerland",
+      french: "Suisse",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ch.png",
+  },
+  {
+    name: {
+      english: "Syria",
+      french: "Syrie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/sy.png",
+  },
+  {
+    name: {
+      english: "Taiwan",
+      french: "Taïwan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/tw.png",
+  },
+  {
+    name: {
+      english: "Tajikistan",
+      french: "Tadjikistan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/tj.png",
+  },
+  {
+    name: {
+      english: "Tanzania",
+      french: "Tanzanie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/tz.png",
+  },
+  {
+    name: {
+      english: "Thailand",
+      french: "Thaïlande",
+    },
+    flag: "https://flagpedia.net/data/flags/small/th.png",
+  },
+  {
+    name: {
+      english: "Timor-Leste (East Timor)",
+      french: "Timor-Leste (Timor Oriental)",
+    },
+    flag: "https://flagpedia.net/data/flags/small/tl.png",
+  },
+  {
+    name: {
+      english: "Togo",
+      french: "Togo",
+    },
+    flag: "https://flagpedia.net/data/flags/small/tg.png",
+  },
+  {
+    name: {
+      english: "Tonga",
+      french: "Tonga",
+    },
+    flag: "https://flagpedia.net/data/flags/small/to.png",
+  },
+  {
+    name: {
+      english: "Trinidad and Tobago",
+      french: "Trinité-et-Tobago",
+    },
+    flag: "https://flagpedia.net/data/flags/small/tt.png",
+  },
+  {
+    name: {
+      english: "Tunisia",
+      french: "Tunisie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/tn.png",
+  },
+  {
+    name: {
+      english: "Turkey",
+      french: "Turquie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/tr.png",
+  },
+  {
+    name: {
+      english: "Turkmenistan",
+      french: "Turkménistan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/tm.png",
+  },
+  {
+    name: {
+      english: "Tuvalu",
+      french: "Tuvalu",
+    },
+    flag: "https://flagpedia.net/data/flags/small/tv.png",
+  },
+  {
+    name: {
+      english: "Uganda",
+      french: "Ouganda",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ug.png",
+  },
+  {
+    name: {
+      english: "Ukraine",
+      french: "Ukraine",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ua.png",
+  },
+  {
+    name: {
+      english: "United Arab Emirates",
+      french: "Émirats Arabes Unis",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ae.png",
+  },
+  {
+    name: {
+      english: "United Kingdom",
+      french: "Royaume-Uni",
+    },
+    flag: "https://flagpedia.net/data/flags/small/gb.png",
+  },
+  {
+    name: {
+      english: "United States",
+      french: "États-Unis",
+    },
+    flag: "https://flagpedia.net/data/flags/small/us.png",
+  },
+  {
+    name: {
+      english: "Uruguay",
+      french: "Uruguay",
+    },
+    flag: "https://flagpedia.net/data/flags/small/uy.png",
+  },
+  {
+    name: {
+      english: "Uzbekistan",
+      french: "Ouzbékistan",
+    },
+    flag: "https://flagpedia.net/data/flags/small/uz.png",
+  },
+  {
+    name: {
+      english: "Vanuatu",
+      french: "Vanuatu",
+    },
+    flag: "https://flagpedia.net/data/flags/small/vu.png",
+  },
+  {
+    name: {
+      english: "Vatican City",
+      french: "Cité du Vatican",
+    },
+    flag: "https://flagpedia.net/data/flags/small/va.png",
+  },
+  {
+    name: {
+      english: "Venezuela",
+      french: "Venezuela",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ve.png",
+  },
+  {
+    name: {
+      english: "Vietnam",
+      french: "Viêt Nam",
+    },
+    flag: "https://flagpedia.net/data/flags/small/vn.png",
+  },
+  {
+    name: {
+      english: "Yemen",
+      french: "Yémen",
+    },
+    flag: "https://flagpedia.net/data/flags/small/ye.png",
+  },
+  {
+    name: {
+      english: "Zambia",
+      french: "Zambie",
+    },
+    flag: "https://flagpedia.net/data/flags/small/zm.png",
+  },
+  {
+    name: {
+      english: "Zimbabwe",
+      french: "Zimbabwe",
+    },
+    flag: "https://flagpedia.net/data/flags/small/zw.png",
   },
 ];
