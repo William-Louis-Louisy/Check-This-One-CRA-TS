@@ -1,6 +1,5 @@
 // import axios from "axios";
 import trad from "../lang/traduction";
-import { useToasts } from "react-toast-notifications";
 import {
   createContext,
   Dispatch,
@@ -8,6 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { toast } from "react-toastify";
 
 type AppContextType = {
   loading: boolean;
@@ -19,7 +19,6 @@ type AppContextType = {
 export const AppContext = createContext<AppContextType>(null);
 
 const AppProvider = ({ children }) => {
-  const { addToast } = useToasts();
   const [loading, setLoading] = useState(true);
   const [lang, setLang] = useState<string>("fr");
 
@@ -28,12 +27,10 @@ const AppProvider = ({ children }) => {
     try {
       await localStorage.setItem("lang", value);
       setLang(value);
+      console.log("Langue changée en " + value);
     } catch (error) {
       console.error(error);
-      addToast(trad[lang].global.error, {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      console.error("Erreur lors du changement de langue");
     }
   };
 

@@ -20,7 +20,7 @@ body {
 /* Firefox */
 .card {
   scrollbar-width: auto;
-  scrollbar-color: #123456 #f0f2f4;
+  scrollbar-color: #f58426 #f0f2f4;
 }
 
 /* Chrome, Edge, and Safari */
@@ -33,7 +33,7 @@ body {
 }
 
 .card::-webkit-scrollbar-thumb {
-  background-color: #006bb6;
+  background-color: #f58426;
   border-radius: 6px;
   border: 3px solid #f0f2f4;
 }

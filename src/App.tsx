@@ -1,13 +1,16 @@
-import { ToastProvider } from "react-toast-notifications";
+import { ToastContainer } from "react-toastify";
+import AppProvider from "./contexts/AppContext";
+import { UserProvider } from "./contexts/UserContext";
 import PublicRoutes from "./routes/Routes";
 
 function App() {
   return (
-    <div className="App">
-      <ToastProvider placement="top-right">
+    <AppProvider>
+      <UserProvider>
         <PublicRoutes />
-      </ToastProvider>
-    </div>
+        <ToastContainer />
+      </UserProvider>
+    </AppProvider>
   );
 }
 
