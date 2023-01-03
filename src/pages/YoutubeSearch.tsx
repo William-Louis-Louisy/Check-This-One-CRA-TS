@@ -1,6 +1,6 @@
 import axios from "axios";
 import trad from "../lang/traduction";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SearchIcon } from "@heroicons/react/solid";
 import { AppContext } from "../contexts/AppContext";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -27,6 +27,8 @@ function YoutubeSearch() {
   const [isFetching, setIsFetching] = useState(false);
   const [loading, setLoading] = useState(true);
   const [results, setResults] = useState<IYoutubeSearch>();
+  const [mostPopular, setMostPopular] = useState<any>();
+  const [isTrending, setIsTrending] = useState(true);
   const [pageToken, setPageToken] = useState("");
 
   // GET YOUTUBE DATA
@@ -42,6 +44,24 @@ function YoutubeSearch() {
       setLoading(false);
     }
   };
+
+  // GET MOST POPULAR
+  const getMostPopular = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_YTB_SEARCH_URL}&chart=mostPopular&regionCode=FR&type=video&key=${process.env.REACT_APP_YTB_API_KEY}`
+      );
+      setMostPopular(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getMostPopular();
+  }, []);
 
   const handleNextPage = async () => {
     try {
@@ -62,6 +82,8 @@ function YoutubeSearch() {
     }
   };
 
+  console.log(mostPopular);
+
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
       {/* TITLE */}
@@ -81,6 +103,7 @@ function YoutubeSearch() {
               onClick={() => {
                 getYoutubeData();
                 setIsFetching(true);
+                setIsTrending(false);
               }}
             >
               <SearchIcon className="h-5 w-5 text-myGray" aria-hidden="true" />
@@ -98,6 +121,19 @@ function YoutubeSearch() {
         </div>
       </div>
       {/* RESULTS */}
+
+      {isTrending && mostPopular && (
+        <div className="flex w-full flex-col items-center py-10">
+          {mostPopular?.items.map((item) => (
+            <YoutubeVideoCard
+              key={`${item.etag}-${item.id.kind}`}
+              item={item}
+              lang={lang}
+            />
+          ))}
+        </div>
+      )}
+
       {isFetching ? (
         loading ? (
           <div className="my-10">
