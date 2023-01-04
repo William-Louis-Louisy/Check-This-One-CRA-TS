@@ -23,7 +23,7 @@ interface IYoutubeSearch {
 
 function YoutubeSearch() {
   const { lang } = useContext(AppContext);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("tendance");
   const [isFetching, setIsFetching] = useState(false);
   const [loading, setLoading] = useState(true);
   const [results, setResults] = useState<IYoutubeSearch>();

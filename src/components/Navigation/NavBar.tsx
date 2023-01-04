@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { UserContext } from "../../contexts/UserContext";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -18,6 +19,7 @@ function NavBar() {
 
   // CONTEXT IMPORTS
   const { lang } = useContext(AppContext);
+  const { user, logout } = useContext(UserContext);
 
   // TABS STATE
   const tabs = [
@@ -39,8 +41,6 @@ function NavBar() {
     },
   ];
 
-  console.log(pathname);
-
   return (
     <Disclosure as="nav" className="bg-white shadow-xl">
       {({ open }) => (
@@ -59,8 +59,8 @@ function NavBar() {
                       className={classNames(
                         tab.current
                           ? "border-primary text-primary"
-                          : "text-myborder-myGray border-transparent hover:border-myGray hover:text-myBlack",
-                        "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
+                          : "text-myborder-myGray border-transparent hover:border-secondary hover:text-secondary",
+                        "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium duration-150"
                       )}
                       aria-current={tab.current ? "page" : undefined}
                     >
@@ -69,28 +69,6 @@ function NavBar() {
                   ))}
                 </div>
               </div>
-              {/* <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
-                <div className="w-full max-w-lg lg:max-w-xs">
-                  <label htmlFor="search" className="sr-only">
-                    Search
-                  </label>
-                  <div className="relative">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                      <SearchIcon
-                        className="h-5 w-5 text-myGray"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <input
-                      id="search"
-                      name="search"
-                      className="placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray bg-myWhite py-2 pl-10 pr-3 leading-5 focus:border-secondary focus:placeholder-myGray focus:outline-none focus:ring-1 focus:ring-secondary sm:text-sm"
-                      placeholder="Search"
-                      type="search"
-                    />
-                  </div>
-                </div>
-              </div> */}
               <div className="flex items-center lg:hidden">
                 {/* Mobile menu button */}
                 <Disclosure.Button className="hover:text-myborder-myGray inline-flex items-center justify-center rounded-md p-2 text-myGray hover:bg-myWhite focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary">
@@ -103,78 +81,102 @@ function NavBar() {
                 </Disclosure.Button>
               </div>
               <div className="hidden lg:ml-4 lg:flex lg:items-center">
-                <button
-                  type="button"
-                  className="hover:text-myborder-myGray flex-shrink-0 rounded-full bg-myWhite p-1 text-myGray focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+                {user?.user_name && (
+                  <button
+                    type="button"
+                    className="hover:text-myborder-myGray flex-shrink-0 rounded-full bg-myWhite p-1 text-myGray focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+                  >
+                    <span className="sr-only">View notifications</span>
+                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                )}
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-4 flex-shrink-0">
-                  <div>
-                    <Menu.Button className="flex rounded-full bg-myWhite text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://ucarecdn.com/c55e78f8-eccb-4a04-90fc-fa9d00386297/kekw.png"
-                        alt=""
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
+                {user && user.email !== "" ? (
+                  <Menu as="div" className="relative ml-4 flex-shrink-0">
+                    <div>
+                      <Menu.Button className="flex rounded-full bg-myWhite text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">
+                        <span className="sr-only">Open user menu</span>
+                        {user.avatar ? (
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src="https://ucarecdn.com/c55e78f8-eccb-4a04-90fc-fa9d00386297/kekw.png"
+                            alt=""
+                          />
+                        ) : (
+                          user?.user_name && (
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary">
+                              <p className="text-center text-2xl text-white">
+                                {user?.user_name[0].toUpperCase()}
+                              </p>
+                            </div>
+                          )
+                        )}
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-myWhite py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/userProfile"
+                              className={classNames(
+                                active ? "bg-myWhite" : "",
+                                "block px-4 py-2 text-sm text-myBlack"
+                              )}
+                            >
+                              Your Profile
+                            </Link>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/login"
+                              className={classNames(
+                                active ? "bg-myWhite" : "",
+                                "block px-4 py-2 text-sm text-myBlack"
+                              )}
+                            >
+                              Settings
+                            </Link>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              type="button"
+                              onClick={() => logout()}
+                              className={classNames(
+                                active ? "bg-myWhite" : "",
+                                "block px-4 py-2 text-sm text-myBlack"
+                              )}
+                            >
+                              Sign out
+                            </button>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                ) : (
+                  <Link
+                    to="/login"
+                    className={classNames(
+                      "block px-4 py-2 text-sm text-myBlack"
+                    )}
                   >
-                    <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-myWhite py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="#"
-                            className={classNames(
-                              active ? "bg-myWhite" : "",
-                              "block px-4 py-2 text-sm text-myBlack"
-                            )}
-                          >
-                            Your Profile
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="#"
-                            className={classNames(
-                              active ? "bg-myWhite" : "",
-                              "block px-4 py-2 text-sm text-myBlack"
-                            )}
-                          >
-                            Settings
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="#"
-                            className={classNames(
-                              active ? "bg-myWhite" : "",
-                              "block px-4 py-2 text-sm text-myBlack"
-                            )}
-                          >
-                            Sign out
-                          </Link>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
+                    {trad[lang].navbar.login}
+                  </Link>
+                )}
 
                 {/* Language Toggle */}
 

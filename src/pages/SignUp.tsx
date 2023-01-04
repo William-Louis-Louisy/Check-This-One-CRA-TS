@@ -1,8 +1,12 @@
+import axios from "axios";
 import trad from "../lang/traduction";
-import React, { useContext, useState } from "react";
 import { AppContext } from "../contexts/AppContext";
+import { useContext, useState, useEffect } from "react";
+import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const navigate = useNavigate();
   const { lang } = useContext(AppContext);
   const [signupForm, setSignupForm] = useState({
     username: "",
@@ -10,6 +14,108 @@ function SignUp() {
     password: "",
     passwordConfirm: "",
   });
+  const [formErrors, setFormErrors] = useState({
+    username: false,
+    email: false,
+    password: false,
+    passwordConfirm: false,
+  });
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  // VERIFY USERNAME LENGTH
+  function isValidUsername(username: string): boolean {
+    return username.length > 1 && username.length < 5;
+  }
+  const handleUsernameChange = (username: string) => {
+    if (isValidUsername(username)) {
+      setFormErrors({ ...formErrors, username: true });
+    } else {
+      setFormErrors({ ...formErrors, username: false });
+    }
+  };
+
+  // VERIFY EMAIL FORMAT
+  function isValidEmail(email: string): boolean {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+  const handleEmailChange = (email: string) => {
+    if (email.length > 3 && !isValidEmail(email)) {
+      setFormErrors({ ...formErrors, email: true });
+    } else {
+      setFormErrors({ ...formErrors, email: false });
+    }
+  };
+
+  // VERIFY PASSWORD LENGTH AND USAGE OF NUMBERS AND AT LEAST A CAPITAL LETTER
+  function isValidPassword(password: string): boolean {
+    const re = /^(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+    return re.test(password);
+  }
+  const handlePasswordChange = (password: string) => {
+    if (password.length > 1 && !isValidPassword(password)) {
+      setFormErrors({ ...formErrors, password: true });
+    } else {
+      setFormErrors({ ...formErrors, password: false });
+    }
+  };
+
+  // VERIFY PASSWORD CONFIRMATION
+  function isValidPasswordConfirm(password: string): boolean {
+    return password === signupForm.password;
+  }
+  const handlePasswordConfirmChange = (passwordConfirm: string) => {
+    if (
+      passwordConfirm.length > 3 &&
+      !isValidPasswordConfirm(passwordConfirm)
+    ) {
+      setFormErrors({ ...formErrors, passwordConfirm: true });
+    } else {
+      setFormErrors({ ...formErrors, passwordConfirm: false });
+    }
+  };
+
+  // VERIFY IF ALL FIELDS ARE VALID
+  const handleFormValidation = () => {
+    if (signupForm.username.length < 5 || signupForm.username.length > 16) {
+      setIsFormValid(true);
+    }
+    if (!isValidEmail(signupForm.email)) {
+      setIsFormValid(true);
+    }
+    if (!isValidPassword(signupForm.password)) {
+      setIsFormValid(true);
+    }
+    if (!isValidPasswordConfirm(signupForm.passwordConfirm)) {
+      setIsFormValid(true);
+    }
+  };
+
+  useEffect(() => {
+    handleFormValidation();
+  }, [signupForm]);
+
+  // POST DATA
+  const postData = async () => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_URL}/register`,
+        {
+          user_name: signupForm.username,
+          email: signupForm.email,
+          password: signupForm.password,
+        }
+      );
+      if (data) {
+        console.log("Account created!");
+        navigate("/login");
+      } else {
+        console.error("Error creating account!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="flex h-[calc(100vh-64px)]">
@@ -32,13 +138,15 @@ function SignUp() {
                   >
                     {trad[lang].signup.username}
                   </label>
-                  <div className="mt-1">
+                  <div className="relative mt-1 rounded-md shadow-sm">
                     <input
                       id="username"
                       name="username"
                       type="text"
                       autoComplete="username"
                       required
+                      minLength={5}
+                      maxLength={16}
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-secondary focus:outline-none focus:ring-secondary sm:text-sm"
                       onChange={(e) =>
                         setSignupForm({
@@ -46,7 +154,24 @@ function SignUp() {
                           username: e.target.value,
                         })
                       }
+                      onBlur={() => handleUsernameChange(signupForm.username)}
                     />
+                    {formErrors.username && (
+                      <div className="pointer-events-none absolute top-2.5 right-0 flex items-center pr-3">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    )}
+                    {formErrors.username && (
+                      <p
+                        className="mt-2 text-sm text-red-600"
+                        id="username-error"
+                      >
+                        {trad[lang].signup.usernameLength}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -58,7 +183,7 @@ function SignUp() {
                   >
                     {trad[lang].signup.email}
                   </label>
-                  <div className="mt-1">
+                  <div className="relative mt-1 rounded-md shadow-sm">
                     <input
                       id="email"
                       name="email"
@@ -72,7 +197,21 @@ function SignUp() {
                           email: e.target.value,
                         })
                       }
+                      onBlur={() => handleEmailChange(signupForm.email)}
                     />
+                    {formErrors.email && (
+                      <div className="pointer-events-none absolute top-2.5 right-0 flex items-center pr-3">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    )}
+                    {formErrors.email && (
+                      <p className="mt-2 text-sm text-red-600" id="email-error">
+                        {trad[lang].signup.verifyEmail}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -84,7 +223,7 @@ function SignUp() {
                   >
                     {trad[lang].signup.password}
                   </label>
-                  <div className="mt-1">
+                  <div className="relative mt-1 rounded-md shadow-sm">
                     <input
                       id="password"
                       name="password"
@@ -98,7 +237,24 @@ function SignUp() {
                           password: e.target.value,
                         })
                       }
+                      onBlur={() => handlePasswordChange(signupForm.password)}
                     />
+                    {formErrors.password && (
+                      <div className="pointer-events-none absolute top-2.5 right-0 flex items-center pr-3">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    )}
+                    {formErrors.password && (
+                      <p
+                        className="mt-2 text-sm text-red-600"
+                        id="password-error"
+                      >
+                        {trad[lang].signup.verifyPassword}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -124,7 +280,26 @@ function SignUp() {
                           passwordConfirm: e.target.value,
                         })
                       }
+                      onBlur={() =>
+                        handlePasswordConfirmChange(signupForm.passwordConfirm)
+                      }
                     />
+                    {formErrors.passwordConfirm && (
+                      <div className="pointer-events-none absolute top-2.5 right-0 flex items-center pr-3">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    )}
+                    {formErrors.passwordConfirm && (
+                      <p
+                        className="mt-2 text-sm text-red-600"
+                        id="password-error"
+                      >
+                        {trad[lang].signup.verifyPassword}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -144,7 +319,13 @@ function SignUp() {
                 <div>
                   <button
                     type="submit"
-                    className="flex w-full justify-center rounded-md border border-transparent bg-secondary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+                    disabled={!isFormValid}
+                    onClick={() => postData()}
+                    className={`${
+                      !isFormValid
+                        ? "cursor-not-allowed bg-gray-200 text-myBlack focus:ring-gray-200"
+                        : "bg-secondary text-white hover:bg-secondary focus:ring-secondary"
+                    }, flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2`}
                   >
                     {trad[lang].signup.submit}
                   </button>

@@ -1,42 +1,84 @@
 import React from "react";
+import { IUser } from "../../contexts/UserContext";
 
-function UserCard() {
+function UserCard({ user, avatar }: { user: IUser; avatar: string }) {
   return (
-    <div className="m-8 flex w-full max-w-[668px] flex-row items-center rounded-md p-4 shadow-md lg:w-1/2">
-      <img
-        className="mx-4 h-32 w-32 rounded-full object-cover"
-        src="https://focus.telerama.fr/2022/09/27/0/0/1280/720/1200/0/60/0/00a77b2_1664272535142-telerama-000388-059.jpg/webp"
-        alt=""
-      />
+    <div className="w-full space-y-8 divide-y divide-gray-200 rounded-md bg-white p-8 shadow-lg md:w-1/2">
+      <div className="space-y-4 divide-y divide-gray-200 sm:space-y-4">
+        {/* AVATAR */}
+        <div className="mb-6 flex flex-row items-center justify-center gap-4 md:mb-0">
+          <img
+            className="h-20 w-20 rounded-full object-cover"
+            src={avatar}
+            alt=""
+          />
+          <div className="w-full">
+            <h3 className="text-left text-lg font-medium leading-6 text-gray-900">
+              {user.user_name}
+            </h3>
+          </div>
+        </div>
 
-      <div className="flex h-full w-full flex-col px-4">
-        <h3 className="text-center text-2xl font-bold text-primary">
-          John Doe
-        </h3>
-        {/* EMAIL */}
-        <div className="flex flex-row items-center justify-between text-primary">
-          <p>Email :</p>
-          <p>admin@admin.fr</p>
-        </div>
         {/* COUNTRY */}
-        <div className="flex flex-row items-center justify-between text-primary">
-          <p>Country :</p>
-          <p>France</p>
+        <div className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 ">
+          <label
+            htmlFor="country"
+            className="block pt-2 text-sm font-medium text-gray-700 sm:mt-px"
+          >
+            Country
+          </label>
+          <div className="mt-1">
+            <p
+              id="country"
+              className="block w-full max-w-lg sm:max-w-xs sm:text-sm"
+            >
+              {user.country}
+            </p>
+          </div>
         </div>
+
         {/* CITY */}
-        <div className="flex flex-row items-center justify-between text-primary">
-          <p>City :</p>
-          <p>Lyon</p>
+        <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 ">
+          <label
+            htmlFor="city"
+            className="block pt-2 text-sm font-medium text-gray-700 sm:mt-px"
+          >
+            City
+          </label>
+          <div className="mt-1">
+            <p
+              id="country"
+              className="block w-full max-w-lg sm:max-w-xs sm:text-sm"
+            >
+              {user.city}
+            </p>
+          </div>
         </div>
-        {/* CATCHLINE */}
-        <div className="flex flex-row items-center justify-between text-primary">
-          <p>Catchline :</p>
-          <p>"Ne laisse jamais personne savoir ce que tu penses."</p>
-        </div>
+
         {/* INTRODUCTION */}
-        <div className="flex flex-row items-center justify-between text-primary">
-          <p>Introduction :</p>
-          <p>admin@admin.fr</p>
+        <div className="flex flex-col sm:gap-1 ">
+          <label
+            htmlFor="about"
+            className="block pt-2 text-sm font-medium text-gray-700 sm:mt-px"
+          >
+            Catchline
+          </label>
+          <p id="about" className="ml-6 max-w-[320px] text-sm italic">
+            {user.catchline}
+          </p>
+        </div>
+
+        {/* INTRODUCTION */}
+        <div className="flex flex-col sm:gap-1 ">
+          <label
+            htmlFor="about"
+            className="block pt-2 text-sm font-medium text-gray-700 sm:mt-px"
+          >
+            About
+          </label>
+          <p id="about" className="ml-6 max-w-[320px] text-sm italic">
+            {user.introduction}
+          </p>
         </div>
       </div>
     </div>

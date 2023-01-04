@@ -1,16 +1,39 @@
+import axios from "axios";
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
+import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
 
 function Login() {
+  const navigate = useNavigate();
   const { lang } = useContext(AppContext);
+  const { storeUser } = useContext(UserContext);
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
     rememberMe: false,
   });
 
-  console.log(loginForm);
+  // LOGIN
+  const login = async () => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_URL}/login`,
+        {
+          email: loginForm.email,
+          password: loginForm.password,
+        }
+      );
+      if (data) {
+        storeUser(data.user);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      navigate("/");
+    }
+  };
 
   return (
     <div className="flex h-[calc(100vh-64px)]">
@@ -109,8 +132,9 @@ function Login() {
 
                 <div>
                   <button
-                    type="submit"
+                    type="button"
                     className="flex w-full justify-center rounded-md border border-transparent bg-secondary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+                    onClick={() => login()}
                   >
                     {trad[lang].login.submit}
                   </button>

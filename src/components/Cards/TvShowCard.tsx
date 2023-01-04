@@ -2,7 +2,7 @@ import { ClipboardListIcon } from "@heroicons/react/outline";
 import React from "react";
 import trad from "../../lang/traduction";
 
-function TvShowCard({ serie, lang }) {
+function TvShowCard({ serie, lang, handleAddToList }) {
   const dateFormater = (date) => {
     let [yy, mm, dd] = date.split("-");
     return [dd, mm, yy].join("/");
@@ -55,7 +55,7 @@ function TvShowCard({ serie, lang }) {
       <div className="mt-4 mb-2 flex flex-row items-center gap-6 md:absolute md:bottom-1">
         <button
           className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-white shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-          onClick={() => handlePost()}
+          onClick={() => handleAddToList(serie)}
           // style={{ display: isAdded ? "none" : "flex" }}
         >
           <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />
