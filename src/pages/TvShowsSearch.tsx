@@ -5,12 +5,15 @@ import { AppContext } from "../contexts/AppContext";
 import { useContext, useState, useEffect } from "react";
 import TvShowCard from "../components/Cards/TvShowCard";
 import AddToList from "../components/Modals/AddToList";
+import { UserContext } from "../contexts/UserContext";
 
 function TvShowsSearch() {
   const { lang } = useContext(AppContext);
+  const { user } = useContext(UserContext);
   const [showsData, setShowsData] = useState([]);
   const [search, setSearch] = useState("a");
   const [open, setOpen] = useState(false);
+  const [openNewList, setOpenNewList] = useState(false);
   const [contentToList, setContentToList] = useState();
   const [contentTitle, setContentTitle] = useState("");
 
@@ -84,6 +87,9 @@ function TvShowsSearch() {
         contentToList={contentToList}
         contentTitle={contentTitle}
         lang={lang}
+        user={user}
+        openNewList={openNewList}
+        setOpenNewList={setOpenNewList}
       />
     </div>
   );

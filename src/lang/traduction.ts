@@ -9,6 +9,7 @@ const trad = {
       title2: "avec nous !",
       subtitle:
         "Rejoignez la communauté et partagez avec nous vos films, séries et vidéos Youtube préférés !",
+      signUpNow: "Inscrivez-vous maintenant",
     },
     labels: {
       previousPage: "Page précédente",
@@ -29,6 +30,7 @@ const trad = {
       add: "Ajouter",
       lists: "Listes",
       cancel: "Annuler",
+      createNewList: "Créer une nouvelle liste",
     },
     navbar: {
       home: "Accueil",
@@ -99,6 +101,7 @@ const trad = {
       title2: "with us!",
       subtitle:
         "Join the community and share with us your must-see movies, TV shows and Youtube videos !",
+      signUpNow: "Sign up now",
     },
     labels: {
       previousPage: "Previous page",
@@ -119,6 +122,7 @@ const trad = {
       add: "Ajouter",
       lists: "Lists",
       cancel: "Cancel",
+      createNewList: "Create a new list",
     },
     navbar: {
       home: "Home",

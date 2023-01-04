@@ -5,11 +5,15 @@ import { AppContext } from "../contexts/AppContext";
 import MovieCard from "../components/Cards/MovieCard";
 import { useContext, useState, useEffect } from "react";
 import AddToList from "../components/Modals/AddToList";
+import { UserContext } from "../contexts/UserContext";
+import CreateListForm from "../components/Modals/CreateListForm";
 
 function MoviesSearch() {
   const { lang } = useContext(AppContext);
+  const { user } = useContext(UserContext);
   const [moviesData, setMoviesData] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openNewList, setOpenNewList] = useState(false);
   const [search, setSearch] = useState("a");
   const [contentToList, setContentToList] = useState();
   const [contentTitle, setContentTitle] = useState("");
@@ -85,6 +89,19 @@ function MoviesSearch() {
         contentToList={contentToList}
         contentTitle={contentTitle}
         lang={lang}
+        user={user}
+        openNewList={openNewList}
+        setOpenNewList={setOpenNewList}
+      />
+
+      {/* CREATE NEW LIST */}
+      <CreateListForm
+        open={open}
+        setOpen={setOpen}
+        openNewList={openNewList}
+        setOpenNewList={setOpenNewList}
+        lang={lang}
+        user={user}
       />
     </div>
   );

@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import trad from "../lang/traduction";
 import { AppContext } from "../contexts/AppContext";
+import { UserContext } from "../contexts/UserContext";
+import { Link } from "react-router-dom";
 
 function Home() {
   const { lang } = useContext(AppContext);
+  const { user } = useContext(UserContext);
 
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
@@ -32,6 +35,16 @@ function Home() {
               <p className="mx-auto mt-6 max-w-lg text-center text-xl text-primary/75 sm:max-w-3xl">
                 {trad[lang].home.subtitle}
               </p>
+              {!user?.user_name && (
+                <div className="mt-8 flex w-full flex-col items-center">
+                  <Link
+                    to="/signup"
+                    className="rounded-md bg-secondary px-4 py-3 text-myWhite"
+                  >
+                    {trad[lang].home.signUpNow}
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

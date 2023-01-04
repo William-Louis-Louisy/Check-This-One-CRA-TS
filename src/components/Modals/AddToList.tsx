@@ -1,61 +1,47 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { CheckIcon, ClipboardListIcon } from "@heroicons/react/outline";
+import { ClipboardListIcon } from "@heroicons/react/outline";
 import trad from "../../lang/traduction";
+import axios from "axios";
 
-function AddToList({ open, setOpen, contentToList, contentTitle, lang }) {
+function AddToList({
+  open,
+  setOpen,
+  contentToList,
+  contentTitle,
+  lang,
+  user,
+  openNewList,
+  setOpenNewList,
+}) {
   const cancelButtonRef = useRef(null);
+  const [lists, setLists] = useState([]);
+  const [newListForm, setNewListForm] = useState({
+    title: "",
+    description: "",
+    tags: "",
+    type: "movie",
+    privacy: "public",
+    likes: 0,
+  });
 
-  const lists = [
-    {
-      id: 1,
-      name: "My List",
-    },
-    {
-      id: 2,
-      name: "My List 2",
-    },
-    {
-      id: 3,
-      name: "My List 3",
-    },
-    {
-      id: 4,
-      name: "My List 4",
-    },
-    {
-      id: 5,
-      name: "My List 5",
-    },
-    {
-      id: 6,
-      name: "My List 6",
-    },
-    {
-      id: 7,
-      name: "My List 7",
-    },
-    {
-      id: 8,
-      name: "My List 8",
-    },
-    {
-      id: 9,
-      name: "My List 9",
-    },
-    {
-      id: 10,
-      name: "My List 10",
-    },
-    {
-      id: 11,
-      name: "My List 11",
-    },
-    {
-      id: 12,
-      name: "My List 12",
-    },
-  ];
+  // GET LISTS BY USER ID
+  const getLists = async () => {
+    try {
+      const data = await axios.get(
+        `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
+      );
+      setLists(data.data.lists);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getLists();
+  }, []);
+
+  console.log(lists);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -112,9 +98,78 @@ function AddToList({ open, setOpen, contentToList, contentTitle, lang }) {
                   <div className="my-4 h-[1px] w-full bg-gray-200"></div>
                   <div className="mt-2">
                     <fieldset>
-                      <legend className="w-full text-left text-lg font-medium text-gray-900">
-                        {trad[lang].modals.lists} :
-                      </legend>
+                      <div className="flex w-full flex-row items-center justify-between">
+                        <legend className="w-full text-left text-lg font-medium text-gray-900">
+                          {trad[lang].modals.lists} :
+                        </legend>
+                        <button
+                          onClick={() => {
+                            setOpen(false);
+                            setOpenNewList(!openNewList);
+                          }}
+                          className="whitespace-nowrap rounded-md border border-secondary bg-myWhite px-4 py-2 text-base text-secondary duration-150 hover:border-primary hover:text-primary"
+                        >
+                          {trad[lang].modals.createNewList}
+                        </button>
+                      </div>
+
+                      {/* NEW LIST FORM */}
+                      {openNewList && (
+                        <div className="mt-4 flex flex-col gap-4 border border-gray-200 p-4">
+                          {/* List title */}
+                          <div className="flex flex-col gap-1">
+                            <label
+                              htmlFor="listTitle"
+                              className="w-full text-left text-sm font-medium text-gray-700"
+                            >
+                              Name:
+                            </label>
+                            <div className="mt-1">
+                              <input
+                                type="text"
+                                name="listTitle"
+                                id="listTitle"
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+                              />
+                            </div>
+                          </div>
+
+                          {/* List description */}
+                          <div className="flex flex-col gap-1">
+                            <label
+                              htmlFor="comment"
+                              className="w-full text-left text-sm font-medium text-gray-700"
+                            >
+                              Description:
+                            </label>
+                            <div className="mt-1">
+                              <textarea
+                                rows={4}
+                                name="comment"
+                                id="comment"
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                defaultValue={""}
+                              />
+                            </div>
+                          </div>
+
+                          {/* Tag select */}
+
+                          {/* Buttons row */}
+                          <div className="flex w-full flex-row justify-end gap-4">
+                            <button
+                              className="px-5 py-2 text-sm text-secondary duration-150 hover:text-primary"
+                              onClick={() => setOpenNewList(!openNewList)}
+                            >
+                              Annuler
+                            </button>
+                            <button className="rounded-md border border-secondary px-5 py-2 text-sm text-secondary duration-150 hover:border-primary hover:text-primary">
+                              Valider
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
                       <div className="card mt-4 max-h-[208px] divide-y divide-gray-200 overflow-y-scroll border-t border-b border-gray-200">
                         {lists.map((item, itemIdx) => (
                           <div
@@ -126,7 +181,7 @@ function AddToList({ open, setOpen, contentToList, contentTitle, lang }) {
                                 htmlFor={`item-${item.id}`}
                                 className="select-none font-medium text-gray-700"
                               >
-                                {item.name}
+                                {item.title}
                               </label>
                             </div>
                             <div className="ml-3 flex h-5 items-center">

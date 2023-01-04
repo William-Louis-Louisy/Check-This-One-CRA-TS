@@ -8,7 +8,7 @@ import trad from "../lang/traduction";
 function Login() {
   const navigate = useNavigate();
   const { lang } = useContext(AppContext);
-  const { user, storeUser } = useContext(UserContext);
+  const { storeUser } = useContext(UserContext);
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
@@ -26,8 +26,7 @@ function Login() {
         }
       );
       if (data) {
-        console.log("data", data);
-        storeUser(data);
+        storeUser(data.user);
       }
     } catch (error) {
       console.error(error);
