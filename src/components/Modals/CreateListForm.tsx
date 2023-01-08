@@ -13,6 +13,7 @@ function CreateListForm({
   user,
   open,
   setOpen,
+  refetch,
 }) {
   const cancelButtonRef = useRef(null);
   const [newListForm, setNewListForm] = useState({
@@ -25,6 +26,11 @@ function CreateListForm({
   const onClose = () => {
     setOpenNewList(false);
     setOpen(true);
+    setNewListForm({
+      title: "",
+      description: "",
+      tags: [],
+    });
   };
 
   // POST NEW LIST
@@ -37,20 +43,20 @@ function CreateListForm({
       console.log(data);
     } catch (error) {
       console.error(error);
+    } finally {
+      onClose();
+      refetch();
     }
   };
 
   const handleTagSelect = (e) => {
     const selectedTag = tagsList.find((tag) => tag.name === e.target.value);
-    console.log("selectedTag", selectedTag);
 
     setNewListForm({
       ...newListForm,
       tags: [...newListForm.tags, selectedTag],
     });
   };
-
-  console.log(newListForm);
 
   return (
     <Transition.Root show={openNewList} as={Fragment}>
@@ -145,7 +151,7 @@ function CreateListForm({
                               rows={4}
                               name="description"
                               id="description"
-                              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                               defaultValue={""}
                               onChange={(e) =>
                                 setNewListForm({
@@ -230,7 +236,7 @@ function CreateListForm({
                 <button
                   type="button"
                   className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
-                  onClick={() => setOpenNewList(false)}
+                  onClick={() => onClose()}
                   ref={cancelButtonRef}
                 >
                   {trad[lang].modals.cancel}

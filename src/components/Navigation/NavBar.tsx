@@ -97,10 +97,10 @@ function NavBar() {
                     <div>
                       <Menu.Button className="flex rounded-full bg-myWhite text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">
                         <span className="sr-only">Open user menu</span>
-                        {user.avatar ? (
+                        {user?.avatar ? (
                           <img
                             className="h-8 w-8 rounded-full"
-                            src="https://ucarecdn.com/c55e78f8-eccb-4a04-90fc-fa9d00386297/kekw.png"
+                            src={user?.avatar}
                             alt=""
                           />
                         ) : (

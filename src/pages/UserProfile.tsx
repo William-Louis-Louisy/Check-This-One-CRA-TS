@@ -6,7 +6,7 @@ import EditUserCard from "../components/Cards/EditUserCard";
 
 function UserProfile() {
   const { lang } = useContext(AppContext);
-  const { user, refetchUser, avatar } = useContext(UserContext);
+  const { user, refetchUser } = useContext(UserContext);
 
   if (user.id === 0) {
     return <div>loading</div>;
@@ -20,7 +20,7 @@ function UserProfile() {
         </h3>
       </div>
       <div className="mb-16 flex w-full flex-col items-center gap-4  lg:w-[70%] lg:flex-row lg:items-start lg:justify-between">
-        <UserCard user={user} avatar={avatar} />
+        <UserCard user={user} avatar={user.avatar} />
         <EditUserCard lang={lang} user={user} refetch={refetchUser} />
       </div>
     </div>

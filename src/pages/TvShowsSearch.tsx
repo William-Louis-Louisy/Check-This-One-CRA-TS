@@ -16,14 +16,29 @@ function TvShowsSearch() {
   const [openNewList, setOpenNewList] = useState(false);
   const [contentToList, setContentToList] = useState();
   const [contentTitle, setContentTitle] = useState("");
+  const [lists, setLists] = useState([]);
+
+  // LANGUAGE HANDLER
+  const handleLang = (lang) => {
+    switch (lang) {
+      case "fr":
+        return "fr-FR";
+      case "en":
+        return "en-US";
+      default:
+        return "en-US";
+    }
+  };
 
   useEffect(() => {
     axios
       .get(
-        `${process.env.REACT_APP_TMDB_SHOWS_SEARCH_URL}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&query=${search}&language=en-US`
+        `${process.env.REACT_APP_TMDB_SHOWS_SEARCH_URL}?api_key=${
+          process.env.REACT_APP_TMDB_API_KEY
+        }&query=${search}&language=${handleLang(lang)}`
       )
       .then((res) => setShowsData(res.data.results));
-  }, [search]);
+  }, [search, lang]);
 
   const handleAddToList = (content) => {
     setOpen(true);
@@ -81,16 +96,19 @@ function TvShowsSearch() {
         ))}
       </div>
       {/* ADD TO LIST MODAL */}
-      <AddToList
-        open={open}
-        setOpen={setOpen}
-        contentToList={contentToList}
-        contentTitle={contentTitle}
-        lang={lang}
-        user={user}
-        openNewList={openNewList}
-        setOpenNewList={setOpenNewList}
-      />
+      {user?.id && (
+        <AddToList
+          open={open}
+          setOpen={setOpen}
+          contentToList={contentToList}
+          contentTitle={contentTitle}
+          lang={lang}
+          user={user}
+          openNewList={openNewList}
+          setOpenNewList={setOpenNewList}
+          lists={lists}
+        />
+      )}
     </div>
   );
 }

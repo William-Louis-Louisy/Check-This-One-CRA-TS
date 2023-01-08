@@ -82,8 +82,6 @@ function YoutubeSearch() {
     }
   };
 
-  console.log(mostPopular);
-
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
       {/* TITLE */}
