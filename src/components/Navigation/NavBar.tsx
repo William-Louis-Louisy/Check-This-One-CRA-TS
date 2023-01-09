@@ -133,20 +133,20 @@ function NavBar() {
                                 "block px-4 py-2 text-sm text-myBlack"
                               )}
                             >
-                              Your Profile
+                              {trad[lang].navbar.myProfile}
                             </Link>
                           )}
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="/login"
+                              to="/userLists"
                               className={classNames(
                                 active ? "bg-myWhite" : "",
                                 "block px-4 py-2 text-sm text-myBlack"
                               )}
                             >
-                              Settings
+                              {trad[lang].navbar.myLists}
                             </Link>
                           )}
                         </Menu.Item>
@@ -160,7 +160,7 @@ function NavBar() {
                                 "block px-4 py-2 text-sm text-myBlack"
                               )}
                             >
-                              Sign out
+                              {trad[lang].navbar.logout}
                             </button>
                           )}
                         </Menu.Item>

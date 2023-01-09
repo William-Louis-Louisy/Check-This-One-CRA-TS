@@ -1,10 +1,10 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import trad from "../../lang/traduction";
+import { tagsList } from "../../utils/TagsList";
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ClipboardListIcon, XIcon } from "@heroicons/react/outline";
-import { tagsList } from "../../utils/TagsList";
-import { log } from "console";
 
 function CreateListForm({
   openNewList,
@@ -41,6 +41,13 @@ function CreateListForm({
         newListForm
       );
       console.log(data);
+      toast.success(`${trad[lang].toasts.listCreated}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     } catch (error) {
       console.error(error);
     } finally {

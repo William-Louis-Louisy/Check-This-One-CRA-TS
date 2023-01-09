@@ -53,7 +53,8 @@ function MoviesSearch() {
       const data = await axios.get(
         `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
       );
-      setLists(data.data.lists);
+      console.log(data.data.results);
+      setLists(data.data.results);
     } catch (error) {
       console.error(error);
     }

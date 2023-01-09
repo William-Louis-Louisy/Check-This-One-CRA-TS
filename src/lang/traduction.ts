@@ -42,6 +42,8 @@ const trad = {
       youtube: "Youtube",
       movies: "Films",
       tvShows: "Séries",
+      myProfile: "Mon profil",
+      myLists: "Mes listes",
     },
     pageTitles: {
       home: "Accueil",
@@ -79,6 +81,7 @@ const trad = {
         addToList: "L'élément a bien été ajouté à la liste !",
         removeToList: "L'élément a bien été supprimé de la liste !",
         langChanged: "La langue a bien été changée !",
+        listCreated: "La liste a bien été créée !",
       },
       error: {
         login: "Une erreur est survenue lors de la connexion.",
@@ -134,6 +137,8 @@ const trad = {
       youtube: "Youtube",
       movies: "Movies",
       tvShows: "TV Shows",
+      myProfile: "My profile",
+      myLists: "My lists",
     },
     pageTitles: {
       home: "Home",
@@ -170,6 +175,7 @@ const trad = {
         addToList: "The element has been added to the list !",
         removeToList: "The element has been removed from the list !",
         langChanged: "Language changed.",
+        listCreated: "List created !",
       },
       error: {
         login: "An error occurred while logging in.",

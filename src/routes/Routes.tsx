@@ -8,6 +8,7 @@ import YoutubeSearch from "../pages/YoutubeSearch";
 import TvShowsSearch from "../pages/TvShowsSearch";
 import NavBar from "../components/Navigation/NavBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import UserLists from "../pages/UserLists";
 
 export default function PublicRoutes() {
   return (
@@ -27,6 +28,7 @@ export default function PublicRoutes() {
 
         {/* USER */}
         <Route path="userProfile" element={<UserProfile />} />
+        <Route path="userLists" element={<UserLists />} />
       </Routes>
     </BrowserRouter>
   );
