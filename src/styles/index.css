@@ -48,18 +48,22 @@ body {
   align-items: center;
   border-radius: 6px;
   padding: 12px;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .slider {
   display: flex;
   height: 100%;
   width: 100%;
-  padding: 12px;
   overflow-x: scroll;
   scroll-behavior: smooth;
   scroll-snap-type: x var(--tw-scroll-snap-strictness);
   --tw-scroll-snap-strictness: proximity;
   white-space: nowrap;
-  gap: 12px;
+  gap: 24px;
   scrollbar-width: none;
 }
 .slider::-webkit-scrollbar {

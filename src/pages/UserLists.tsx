@@ -48,7 +48,7 @@ function UserLists() {
           <div className="flex w-[90%] items-center justify-center px-2 md:w-[400px] lg:justify-end">
             <div className="w-full max-w-lg lg:max-w-xl">
               <label htmlFor="search" className="sr-only">
-                {trad[lang].placeholders.searchMovies}
+                {trad[lang].placeholders.searchLists}
               </label>
               <div className="relative">
                 <button
@@ -64,7 +64,7 @@ function UserLists() {
                   id="search"
                   name="search"
                   className="placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray bg-myWhite py-2 pl-10 pr-3 leading-5 focus:border-myGray focus:placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm"
-                  placeholder={trad[lang].placeholders.searchMovies}
+                  placeholder={trad[lang].placeholders.searchLists}
                   type="text"
                   onChange={(e) => console.log(e.target.value)}
                 />
@@ -79,7 +79,13 @@ function UserLists() {
         {/* RESULTS */}
         {total > 0 ? (
           lists.map((list: any) => (
-            <ListDisplay key={`list-${list.id}`} list={list} lang={lang} />
+            <ListDisplay
+              key={`list-${list.id}`}
+              list={list}
+              user={user.id}
+              lang={lang}
+              refetch={getLists}
+            />
           ))
         ) : (
           <p>Vous n'avez pas encore créé de liste de films.</p>

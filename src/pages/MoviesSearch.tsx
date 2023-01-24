@@ -7,6 +7,7 @@ import { useContext, useState, useEffect } from "react";
 import AddToList from "../components/Modals/AddToList";
 import { UserContext } from "../contexts/UserContext";
 import CreateListForm from "../components/Modals/CreateListForm";
+import { handleLang } from "../utils/RequestLanguageHandler";
 
 function MoviesSearch() {
   const { lang } = useContext(AppContext);
@@ -18,18 +19,6 @@ function MoviesSearch() {
   const [contentToList, setContentToList] = useState();
   const [contentTitle, setContentTitle] = useState("");
   const [openNewList, setOpenNewList] = useState(false);
-
-  // LANGUAGE HANDLER
-  const handleLang = (lang) => {
-    switch (lang) {
-      case "fr":
-        return "fr-FR";
-      case "en":
-        return "en-US";
-      default:
-        return "en-US";
-    }
-  };
 
   useEffect(() => {
     axios
@@ -53,7 +42,6 @@ function MoviesSearch() {
       const data = await axios.get(
         `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
       );
-      console.log(data.data.results);
       setLists(data.data.results);
     } catch (error) {
       console.error(error);
@@ -108,6 +96,7 @@ function MoviesSearch() {
             key={movie.id}
             movie={movie}
             lang={lang}
+            user={user}
             handleAddToList={handleAddToList}
           />
         ))}

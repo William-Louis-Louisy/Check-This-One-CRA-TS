@@ -3,6 +3,8 @@ const trad = {
   fr: {
     global: {
       error: "Un problème est survenu.",
+      lists: "Listes",
+      list: "Liste",
     },
     home: {
       title1: "Créez vos listes",
@@ -32,6 +34,19 @@ const trad = {
       cancel: "Annuler",
       createNewList: "Créer une nouvelle liste",
     },
+    movieDetails: {
+      originalTitle: "Titre original",
+      releaseDate: "Date de sortie",
+      runtime: "Durée",
+      genres: "Genres",
+      overview: "Synopsis",
+      productionCompanies: "Sociétés de production",
+      noProvider: "Aucun fournisseur disponible",
+      selectYourLocation: "Sélectionnez votre localisation",
+      recommendations: "Recommandations",
+      streamingProviders: "Plateformes de streaming",
+      thisMovieappearsIn: "Déjà dans",
+    },
     navbar: {
       home: "Accueil",
       login: "Connexion",
@@ -57,6 +72,7 @@ const trad = {
       searchYoutube: "Rechercher une vidéo Youtube...",
       searchMovies: "Rechercher un film...",
       searchTvShows: "Rechercher une série...",
+      searchLists: "Rechercher une liste...",
     },
     signup: {
       title: "Créez votre compte",
@@ -82,6 +98,7 @@ const trad = {
         removeToList: "L'élément a bien été supprimé de la liste !",
         langChanged: "La langue a bien été changée !",
         listCreated: "La liste a bien été créée !",
+        listDeleted: "La liste a bien été supprimée !",
       },
       error: {
         login: "Une erreur est survenue lors de la connexion.",
@@ -91,6 +108,8 @@ const trad = {
         removeToList:
           "Une erreur est survenue lors de la suppression de l'élément.",
         langChanged: "Une erreur est survenue lors du changement de langue.",
+        listDeletedError:
+          "Un problème est survenu lors de la suppression de cette liste !",
       },
     },
   },
@@ -98,6 +117,8 @@ const trad = {
   en: {
     global: {
       error: "Language changed.",
+      lists: "Lists",
+      list: "List",
     },
     home: {
       title1: "List it up",
@@ -127,6 +148,19 @@ const trad = {
       cancel: "Cancel",
       createNewList: "Create a new list",
     },
+    movieDetails: {
+      originalTitle: "Titre original",
+      releaseDate: "Release date",
+      runtime: "Runtime",
+      genres: "Genres",
+      overview: "Overview",
+      productionCompanies: "Production companies",
+      noProvider: "No provider available",
+      selectYourLocation: "Select your location",
+      recommendations: "Recommendations",
+      streamingProviders: "Streaming providers",
+      thisMovieappearsIn: "Already in",
+    },
     navbar: {
       home: "Home",
       login: "Login",
@@ -152,6 +186,7 @@ const trad = {
       searchYoutube: "Search a Youtube video...",
       searchMovies: "Search a movie...",
       searchTvShows: "Search a TV Show...",
+      searchLists: "Search a list...",
     },
     signup: {
       title: "Create your account",
@@ -176,6 +211,7 @@ const trad = {
         removeToList: "The element has been removed from the list !",
         langChanged: "Language changed.",
         listCreated: "List created !",
+        listDeleted: "List deleted !",
       },
       error: {
         login: "An error occurred while logging in.",
@@ -184,6 +220,7 @@ const trad = {
         addToList: "An error occurred while adding the element.",
         removeToList: "An error occurred while removing the element.",
         langChanged: "An error occurred while changing the language.",
+        listDeletedError: "An error occurred while deleting this list !",
       },
     },
   },

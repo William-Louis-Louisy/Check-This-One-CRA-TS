@@ -36,12 +36,11 @@ function CreateListForm({
   // POST NEW LIST
   const postNewList = async () => {
     try {
-      const data = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_API_URL}/list/create/${user?.id}`,
         newListForm
       );
-      console.log(data);
-      toast.success(`${trad[lang].toasts.listCreated}`, {
+      toast.success(`${trad[lang].toasts.success.listCreated}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

@@ -20,7 +20,7 @@ function AddToList({
   lists,
 }) {
   const cancelButtonRef = useRef(null);
-  const [selectedList, setSelectedList] = useState<ISelectedList[]>();
+  const [selectedList, setSelectedList] = useState<ISelectedList[]>([]);
 
   // HANDLE CONTENT TYPE
   const handleContentType = (content) => {

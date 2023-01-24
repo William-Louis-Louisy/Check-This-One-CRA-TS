@@ -9,6 +9,7 @@ import TvShowsSearch from "../pages/TvShowsSearch";
 import NavBar from "../components/Navigation/NavBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLists from "../pages/UserLists";
+import MovieDetails from "../pages/MovieDetails";
 
 export default function PublicRoutes() {
   return (
@@ -29,6 +30,9 @@ export default function PublicRoutes() {
         {/* USER */}
         <Route path="userProfile" element={<UserProfile />} />
         <Route path="userLists" element={<UserLists />} />
+
+        {/* CONTENT DETAILS */}
+        <Route path="movieDetails/:movieId" element={<MovieDetails />} />
       </Routes>
     </BrowserRouter>
   );
