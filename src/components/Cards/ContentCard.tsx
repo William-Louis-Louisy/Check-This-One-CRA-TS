@@ -17,19 +17,33 @@ function ContentCard({ data }) {
   };
 
   return (
-    <Link to={`/${handleType(data.type)}/${data.provider_id}`}>
+    <a
+      href={
+        data.type === "youtube"
+          ? `https://www.youtube.com/watch?v=${data.provider_id_string}}`
+          : `/${handleType(data.type)}/${data.provider_id}`
+      }
+    >
       <div className="h-80 w-[213px]">
         <img
           src={
-            data.poster_path
+            data.type === "youtube"
+              ? data.poster_path
+                ? data.poster_path
+                : "/src/assets/poster.jpg"
+              : data.poster_path
               ? "https://image.tmdb.org/t/p/w500" + data.poster_path
               : "/src/assets/poster.jpg"
           }
-          className="rounded-md md:h-80"
+          className={`${
+            data.type === "youtube"
+              ? "object-contain md:h-80"
+              : "rounded-md md:h-80"
+          }`}
           alt=""
         />
       </div>
-    </Link>
+    </a>
   );
 }
 

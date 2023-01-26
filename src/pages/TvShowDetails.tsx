@@ -10,6 +10,7 @@ import trad from "../lang/traduction";
 import { IMovieProvider } from "../types/MovieProvider";
 import { IShowDetails } from "../types/ShowDetails";
 import { ISuggestedShow } from "../types/SuggestedShow";
+import { formatDateUsToFr } from "../utils/DateFormater";
 import { handleLang } from "../utils/RequestLanguageHandler";
 
 function TvShowDetails() {
@@ -238,7 +239,9 @@ function TvShowDetails() {
               <span className="font-bold text-primary">
                 {trad[lang].showDetails.firstAirDate}:
               </span>{" "}
-              {show?.first_air_date}
+              {lang === "fr"
+                ? formatDateUsToFr(show?.first_air_date)
+                : show?.first_air_date}
             </span>
           </div>
 

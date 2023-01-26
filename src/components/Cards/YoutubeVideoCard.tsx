@@ -2,7 +2,7 @@ import { ClipboardListIcon, EyeIcon } from "@heroicons/react/outline";
 import React from "react";
 import trad from "../../lang/traduction";
 
-function YoutubeVideoCard({ item, lang }) {
+function YoutubeVideoCard({ item, lang, addToList }) {
   return (
     <div className="my-5 flex w-full flex-col gap-3 bg-myWhite shadow-lg lg:w-3/5 lg:min-w-[900px] lg:flex-row lg:gap-0">
       <img
@@ -35,6 +35,7 @@ function YoutubeVideoCard({ item, lang }) {
           <button
             type="button"
             className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-white shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            onClick={() => addToList(item)}
           >
             <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />
             {trad[lang].labels.addToAList}

@@ -10,6 +10,7 @@ import trad from "../lang/traduction";
 import { IMovie } from "../types/Movie";
 import { IMovieDetails } from "../types/MovieDetails";
 import { IMovieProvider } from "../types/MovieProvider";
+import { formatDateUsToFr } from "../utils/DateFormater";
 import { handleLang } from "../utils/RequestLanguageHandler";
 
 function MovieDetails() {
@@ -247,12 +248,16 @@ function MovieDetails() {
             </span>
 
             {/* Release date */}
-            <span className="flex w-full flex-row justify-between text-smokyBlack">
-              <span className="font-bold text-primary">
-                {trad[lang].movieDetails.releaseDate}:
-              </span>{" "}
-              {movie?.release_date}
-            </span>
+            {movie?.release_date && (
+              <span className="flex w-full flex-row justify-between text-smokyBlack">
+                <span className="font-bold text-primary">
+                  {trad[lang].movieDetails.releaseDate}:
+                </span>{" "}
+                {lang === "fr"
+                  ? formatDateUsToFr(movie?.release_date)
+                  : movie?.release_date}
+              </span>
+            )}
 
             {/* Runtime */}
             <span className="flex w-full flex-row justify-between text-smokyBlack">
