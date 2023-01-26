@@ -37,16 +37,12 @@ function AddToList({
   // FOR EACH LIST, ADD CONTENT TO LIST
   const handleAddContentToList = async (listId) => {
     try {
-      const data = await axios.put(
-        `${process.env.REACT_APP_API_URL}/${listId}/content`,
-        {
-          provider_id: contentToList.id,
-          title: contentTitle,
-          poster_path: contentToList.poster_path,
-          type: handleContentType(contentToList),
-        }
-      );
-      console.log("data", data);
+      await axios.put(`${process.env.REACT_APP_API_URL}/${listId}/content`, {
+        provider_id: contentToList.id,
+        title: contentTitle,
+        poster_path: contentToList.poster_path,
+        type: handleContentType(contentToList),
+      });
     } catch (error) {
       console.error(error);
     }

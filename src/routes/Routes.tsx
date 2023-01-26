@@ -10,6 +10,7 @@ import NavBar from "../components/Navigation/NavBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLists from "../pages/UserLists";
 import MovieDetails from "../pages/MovieDetails";
+import TvShowDetails from "../pages/TvShowDetails";
 
 export default function PublicRoutes() {
   return (
@@ -33,6 +34,7 @@ export default function PublicRoutes() {
 
         {/* CONTENT DETAILS */}
         <Route path="movieDetails/:movieId" element={<MovieDetails />} />
+        <Route path="tvDetails/:tvShowId" element={<TvShowDetails />} />
       </Routes>
     </BrowserRouter>
   );

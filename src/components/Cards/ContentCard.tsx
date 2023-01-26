@@ -2,8 +2,22 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function ContentCard({ data }) {
+  // HANLE TYPE
+  const handleType = (type) => {
+    switch (type) {
+      case "movie":
+        return "movieDetails";
+      case "show":
+        return "tvDetails";
+      case "youtube":
+        return "youtubeDetails";
+      default:
+        return "movieDetails";
+    }
+  };
+
   return (
-    <Link to={`/movieDetails/${data.provider_id}`}>
+    <Link to={`/${handleType(data.type)}/${data.provider_id}`}>
       <div className="h-80 w-[213px]">
         <img
           src={

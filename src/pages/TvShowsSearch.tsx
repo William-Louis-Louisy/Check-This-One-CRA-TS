@@ -6,6 +6,7 @@ import { useContext, useState, useEffect } from "react";
 import TvShowCard from "../components/Cards/TvShowCard";
 import AddToList from "../components/Modals/AddToList";
 import { UserContext } from "../contexts/UserContext";
+import CreateListForm from "../components/Modals/CreateListForm";
 
 function TvShowsSearch() {
   const { lang } = useContext(AppContext);
@@ -45,6 +46,21 @@ function TvShowsSearch() {
     setContentToList(content);
     setContentTitle(content.name);
   };
+
+  // GET LISTS BY USER ID
+  const getLists = async () => {
+    try {
+      const data = await axios.get(
+        `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
+      );
+      setLists(data.data.results);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    if (user?.id) getLists();
+  }, [user?.id]);
 
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
@@ -107,6 +123,19 @@ function TvShowsSearch() {
           openNewList={openNewList}
           setOpenNewList={setOpenNewList}
           lists={lists}
+        />
+      )}
+
+      {/* CREATE NEW LIST */}
+      {user?.id && (
+        <CreateListForm
+          open={open}
+          setOpen={setOpen}
+          openNewList={openNewList}
+          setOpenNewList={setOpenNewList}
+          lang={lang}
+          user={user}
+          refetch={getLists}
         />
       )}
     </div>

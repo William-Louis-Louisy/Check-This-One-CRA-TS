@@ -145,22 +145,26 @@ function MovieDetails() {
         </h3>
         <div className="flex flex-row items-center gap-3">
           {/* LISTS COUNT */}
-          <Link to="#" className="rounded-md border border-secondary px-4 py-2">
-            <span className="flex flex-row items-center gap-2 text-sm font-medium text-secondary">
-              <EyeIcon className="h-5 w-5" aria-hidden="true" />
-              {trad[lang].movieDetails.thisMovieappearsIn} {listsCount}{" "}
-              {listsCount > 1
-                ? trad[lang].global.lists
-                : trad[lang].global.list}
-            </span>
-          </Link>
+          {listsCount > 0 && (
+            <Link
+              to="#"
+              className="rounded-md border border-secondary px-4 py-2"
+            >
+              <span className="flex flex-row items-center gap-2 text-sm font-medium text-secondary">
+                <EyeIcon className="h-5 w-5" aria-hidden="true" />
+                {trad[lang].movieDetails.thisMovieappearsIn} {listsCount}{" "}
+                {listsCount > 1
+                  ? trad[lang].global.lists
+                  : trad[lang].global.list}
+              </span>
+            </Link>
+          )}
 
           {/* ADD TO LIST BUTTON */}
           {user?.id && (
             <button
               className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-white shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               onClick={() => handleAddToList(movie)}
-              // style={{ display: isAdded ? "none" : "flex" }}
             >
               <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />
               {trad[lang].labels.addToAList}

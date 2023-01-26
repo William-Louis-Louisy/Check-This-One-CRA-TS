@@ -74,6 +74,16 @@ const trad = {
       searchTvShows: "Rechercher une série...",
       searchLists: "Rechercher une liste...",
     },
+    showDetails: {
+      originalName: "Nom original",
+      firstAirDate: "Date de première diffusion",
+      episodeRunTime: "Durée d'un épisode",
+      numberOfEpisodes: "Nombre d'épisodes",
+      numberOfSeasons: "Nombre de saisons",
+      overview: "Synopsis",
+      status: "Statut",
+      genre: "Genre",
+    },
     signup: {
       title: "Créez votre compte",
       username: "Nom d'utilisateur",
@@ -187,6 +197,16 @@ const trad = {
       searchMovies: "Search a movie...",
       searchTvShows: "Search a TV Show...",
       searchLists: "Search a list...",
+    },
+    showDetails: {
+      originalName: "Original name",
+      firstAirDate: "First air date",
+      episodeRunTime: "Episode runtime",
+      numberOfEpisodes: "Number of episodes",
+      numberOfSeasons: "Number of seasons",
+      overview: "Overview",
+      status: "Status",
+      genre: "Genre",
     },
     signup: {
       title: "Create your account",
