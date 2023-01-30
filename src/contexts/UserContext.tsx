@@ -26,9 +26,6 @@ export type UserContextType = {
   logout: () => void;
   refetchUser: () => void;
   getUser: () => void;
-  getAvatar: () => void;
-  avatar: string;
-  setAvatar: Dispatch<SetStateAction<string>>;
 };
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -51,7 +48,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       await localStorage.setItem("user", JSON.stringify(value));
       setUser(value);
-      console.log("User stored");
     } catch (error) {
       console.error(error);
       console.error("Error while storing user");
@@ -83,6 +79,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.error(error);
     }
   };
+
   useEffect(() => {
     if (user.id) {
       refetchUser();
@@ -107,42 +104,42 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // GET AVATAR FROM DB AND STORE IT IN ASYNC STORAGE
-  const getAvatar = async () => {
-    try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/avatar/${user.id}`
-      );
-      if (data) {
-        // Format avatar to base64
-        const avatarBase64 = `data:image/jpeg;base64,${data.avatar}`;
-        // Store avatar in async storage
-        await localStorage.setItem("userAvatar", avatarBase64);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    if (user?.id) {
-      getAvatar();
-    }
-  }, [user?.id]);
+  // const getAvatar = async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       `${process.env.REACT_APP_API_URL}/avatar/${user.id}`
+  //     );
+  //     if (data) {
+  //       // Format avatar to base64
+  //       const avatarBase64 = `data:image/jpeg;base64,${data.avatar}`;
+  //       // Store avatar in async storage
+  //       await localStorage.setItem("userAvatar", avatarBase64);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (user?.id) {
+  //     getAvatar();
+  //   }
+  // }, [user?.id]);
 
   // GET AVATAR FROM ASYNC STORAGE
 
-  const getAvatarFromStorage = async () => {
-    try {
-      const storedAvatar = await localStorage.getItem("userAvatar");
-      if (storedAvatar) {
-        setAvatar(storedAvatar);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    getAvatarFromStorage();
-  }, []);
+  // const getAvatarFromStorage = async () => {
+  //   try {
+  //     const storedAvatar = await localStorage.getItem("userAvatar");
+  //     if (storedAvatar) {
+  //       setAvatar(storedAvatar);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getAvatarFromStorage();
+  // }, []);
 
   return (
     <UserContext.Provider
@@ -153,9 +150,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         logout,
         getUser,
         refetchUser,
-        getAvatar,
-        avatar,
-        setAvatar,
       }}
     >
       {children}

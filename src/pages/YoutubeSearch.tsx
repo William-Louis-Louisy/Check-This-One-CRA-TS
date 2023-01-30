@@ -7,6 +7,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import YoutubeVideoCard from "../components/Cards/YoutubeVideoCard";
 import YoutubeChannelCard from "../components/Cards/YoutubeChannelCard";
+import { UserContext } from "../contexts/UserContext";
+import AddToList from "../components/Modals/AddToList";
+import CreateListForm from "../components/Modals/CreateListForm";
 
 interface IYoutubeSearch {
   etag: string;
@@ -21,15 +24,28 @@ interface IYoutubeSearch {
   regionCode: string;
 }
 
+interface IContentToList {
+  etag: string;
+  id: string;
+  poster_path: string;
+  title: string;
+}
+
 function YoutubeSearch() {
   const { lang } = useContext(AppContext);
-  const [query, setQuery] = useState("tendance");
-  const [isFetching, setIsFetching] = useState(false);
+  const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
   const [results, setResults] = useState<IYoutubeSearch>();
   const [mostPopular, setMostPopular] = useState<any>();
   const [isTrending, setIsTrending] = useState(true);
   const [pageToken, setPageToken] = useState("");
+  const [lists, setLists] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [contentToList, setContentToList] = useState<IContentToList>();
+  const [contentTitle, setContentTitle] = useState("");
+  const [openNewList, setOpenNewList] = useState(false);
 
   // GET YOUTUBE DATA
   const getYoutubeData = async () => {
@@ -49,7 +65,7 @@ function YoutubeSearch() {
   const getMostPopular = async () => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_YTB_SEARCH_URL}&chart=mostPopular&regionCode=FR&type=video&key=${process.env.REACT_APP_YTB_API_KEY}`
+        `${process.env.REACT_APP_YTB_SEARCH_URL}&chart=mostPopular&locale=France&type=video&key=${process.env.REACT_APP_YTB_API_KEY}`
       );
       setMostPopular(data);
     } catch (error) {
@@ -63,6 +79,34 @@ function YoutubeSearch() {
     getMostPopular();
   }, []);
 
+  // GET LISTS BY USER ID
+  const getLists = async () => {
+    try {
+      const data = await axios.get(
+        `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
+      );
+      setLists(data.data.results);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    if (user?.id) getLists();
+  }, [user?.id]);
+
+  // ADD MOVIE TO LIST
+  const handleAddToList = (content) => {
+    setOpen(true);
+    setContentToList({
+      etag: content.etag,
+      id: content.id.videoId,
+      title: content.snippet.title,
+      poster_path: content.snippet.thumbnails.high.url,
+    });
+    setContentTitle(content.snippet.title);
+  };
+
+  // HANDLE NEXT PAGE
   const handleNextPage = async () => {
     try {
       setPageToken(results?.nextPageToken);
@@ -72,6 +116,8 @@ function YoutubeSearch() {
       getYoutubeData();
     }
   };
+
+  // HANDLE PREVIOUS PAGE
   const handlePreviousPage = async () => {
     try {
       setPageToken(results?.prevPageToken);
@@ -82,41 +128,46 @@ function YoutubeSearch() {
     }
   };
 
-  console.log(mostPopular);
-
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
-      {/* TITLE */}
-      <h1 className="my-10 text-center text-3xl uppercase text-primary">
-        {trad[lang].pageTitles.youtubeSearch}
-      </h1>
-      {/* SEARCH BAR */}
-      <div className="flex w-[90%] items-center justify-center px-2 md:w-[400px] lg:justify-end">
-        <div className="w-full max-w-lg lg:max-w-xl">
-          <label htmlFor="search" className="sr-only">
-            {trad[lang].placeholders.searchYoutube}
-          </label>
-          <div className="relative">
-            <button
-              id="search-button"
-              className="absolute inset-y-0 left-0 flex cursor-pointer items-center pl-3"
-              onClick={() => {
-                getYoutubeData();
-                setIsFetching(true);
-                setIsTrending(false);
-              }}
-            >
-              <SearchIcon className="h-5 w-5 text-myGray" aria-hidden="true" />
-            </button>
-            <input
-              id="search"
-              name="search"
-              className="placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray bg-myWhite py-2 pl-10 pr-3 leading-5 focus:border-myGray focus:placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm"
-              placeholder={trad[lang].placeholders.searchYoutube}
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
+      <div className="my-8 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+        {/* TITLE */}
+        <h3 className="text-lg font-medium leading-6 text-primary">
+          {trad[lang].pageTitles.youtubeSearch}
+        </h3>
+        <div className="mt-3 sm:mt-0 sm:ml-4">
+          {/* SEARCH BAR */}
+          <div className="flex w-[90%] items-center justify-center px-2 md:w-[400px] lg:justify-end">
+            <div className="w-full max-w-lg lg:max-w-xl">
+              <label htmlFor="search" className="sr-only">
+                {trad[lang].placeholders.searchYoutube}
+              </label>
+              <div className="relative">
+                <button
+                  id="search-button"
+                  className="absolute inset-y-0 left-0 flex cursor-pointer items-center pl-3"
+                  onClick={() => {
+                    getYoutubeData();
+                    setIsFetching(true);
+                    setIsTrending(false);
+                  }}
+                >
+                  <SearchIcon
+                    className="h-5 w-5 text-myGray"
+                    aria-hidden="true"
+                  />
+                </button>
+                <input
+                  id="search"
+                  name="search"
+                  className="placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray bg-myWhite py-2 pl-10 pr-3 leading-5 focus:border-myGray focus:placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm"
+                  placeholder={trad[lang].placeholders.searchYoutube}
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -127,6 +178,7 @@ function YoutubeSearch() {
           {mostPopular?.items.map((item) => (
             <YoutubeVideoCard
               key={`${item.etag}-${item.id.kind}`}
+              addToList={handleAddToList}
               item={item}
               lang={lang}
             />
@@ -145,6 +197,7 @@ function YoutubeSearch() {
               item.id.kind === "youtube#video" ? (
                 <YoutubeVideoCard
                   key={`${item.etag}-${item.id.kind}`}
+                  addToList={handleAddToList}
                   item={item}
                   lang={lang}
                 />
@@ -184,6 +237,34 @@ function YoutubeSearch() {
           </div>
         )
       ) : null}
+
+      {/* ADD TO LIST MODAL */}
+      {user?.id && (
+        <AddToList
+          open={open}
+          setOpen={setOpen}
+          contentToList={contentToList}
+          contentTitle={contentTitle}
+          lang={lang}
+          user={user}
+          openNewList={openNewList}
+          setOpenNewList={setOpenNewList}
+          lists={lists}
+        />
+      )}
+
+      {/* CREATE NEW LIST */}
+      {user?.id && (
+        <CreateListForm
+          open={open}
+          setOpen={setOpen}
+          openNewList={openNewList}
+          setOpenNewList={setOpenNewList}
+          lang={lang}
+          user={user}
+          refetch={getLists}
+        />
+      )}
     </div>
   );
 }

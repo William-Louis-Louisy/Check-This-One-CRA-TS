@@ -39,6 +39,11 @@ function NavBar() {
       link: "youtubeSearch",
       current: pathname === "/youtubeSearch",
     },
+    {
+      name: trad[lang].navbar.browseLists,
+      link: "browseLists",
+      current: pathname === "/browseLists",
+    },
   ];
 
   return (
@@ -97,10 +102,10 @@ function NavBar() {
                     <div>
                       <Menu.Button className="flex rounded-full bg-myWhite text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">
                         <span className="sr-only">Open user menu</span>
-                        {user.avatar ? (
+                        {user?.avatar ? (
                           <img
                             className="h-8 w-8 rounded-full"
-                            src="https://ucarecdn.com/c55e78f8-eccb-4a04-90fc-fa9d00386297/kekw.png"
+                            src={user?.avatar}
                             alt=""
                           />
                         ) : (
@@ -133,20 +138,20 @@ function NavBar() {
                                 "block px-4 py-2 text-sm text-myBlack"
                               )}
                             >
-                              Your Profile
+                              {trad[lang].navbar.myProfile}
                             </Link>
                           )}
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="/login"
+                              to="/userLists"
                               className={classNames(
                                 active ? "bg-myWhite" : "",
                                 "block px-4 py-2 text-sm text-myBlack"
                               )}
                             >
-                              Settings
+                              {trad[lang].navbar.myLists}
                             </Link>
                           )}
                         </Menu.Item>
@@ -160,7 +165,7 @@ function NavBar() {
                                 "block px-4 py-2 text-sm text-myBlack"
                               )}
                             >
-                              Sign out
+                              {trad[lang].navbar.logout}
                             </button>
                           )}
                         </Menu.Item>

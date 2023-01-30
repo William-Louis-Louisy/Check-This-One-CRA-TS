@@ -37,3 +37,64 @@ body {
   border-radius: 6px;
   border: 3px solid #f0f2f4;
 }
+
+/* ===== Slider CSS ===== */
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  padding: 12px;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.slider {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scroll-snap-type: x var(--tw-scroll-snap-strictness);
+  --tw-scroll-snap-strictness: proximity;
+  white-space: nowrap;
+  gap: 24px;
+  scrollbar-width: none;
+}
+.slider::-webkit-scrollbar {
+  display: none;
+}
+.leftBtn,
+.rightBtn {
+  position: absolute;
+  display: none;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+  border-radius: 100%;
+  padding: 4px;
+  opacity: 0.5;
+  transition-duration: 300ms;
+}
+.leftBtn.rightBtn:hover {
+  opacity: 1;
+}
+
+.leftBtn {
+  left: -56px;
+}
+.rightBtn {
+  right: -64px;
+}
+
+@media (min-width: 768px) {
+  .leftBtn,
+  .rightBtn {
+    display: flex;
+  }
+}

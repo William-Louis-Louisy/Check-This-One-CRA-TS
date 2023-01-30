@@ -4,6 +4,10 @@ import { ClipboardListIcon } from "@heroicons/react/outline";
 import trad from "../../lang/traduction";
 import axios from "axios";
 
+interface ISelectedList {
+  id: number;
+}
+
 function AddToList({
   open,
   setOpen,
@@ -13,35 +17,56 @@ function AddToList({
   user,
   openNewList,
   setOpenNewList,
+  lists,
 }) {
   const cancelButtonRef = useRef(null);
-  const [lists, setLists] = useState([]);
-  const [newListForm, setNewListForm] = useState({
-    title: "",
-    description: "",
-    tags: "",
-    type: "movie",
-    privacy: "public",
-    likes: 0,
-  });
+  const [selectedList, setSelectedList] = useState<ISelectedList[]>([]);
 
-  // GET LISTS BY USER ID
-  const getLists = async () => {
+  // HANDLE CONTENT TYPE
+  const handleContentType = (content) => {
+    if (content?.release_date) return "movie";
+    if (content?.first_air_date) return "show";
+    if (content?.etag) return "youtube";
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedList([]);
+  };
+
+  // FOR EACH LIST, ADD CONTENT TO LIST
+  const handleAddContentToList = async (listId) => {
     try {
-      const data = await axios.get(
-        `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
-      );
-      setLists(data.data.lists);
+      await axios.put(`${process.env.REACT_APP_API_URL}/${listId}/content`, {
+        provider_id: contentToList.id,
+        title: contentTitle,
+        poster_path: contentToList.poster_path,
+        type: handleContentType(contentToList),
+      });
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {
-    getLists();
-  }, []);
+  // HANDLE ADD CONTENT TO LIST
+  const handleAddContent = () => {
+    if (selectedList.length === 0) return;
+    if (selectedList.length === 1) {
+      handleAddContentToList(selectedList[0]);
+    }
+    if (selectedList.length > 1) {
+      selectedList.forEach((list) => {
+        handleAddContentToList(list);
+      });
+    }
+    handleClose();
+  };
 
-  console.log(lists);
+  useEffect(() => {
+    if (openNewList) {
+      setOpen(false);
+    }
+  }, [openNewList]);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -113,63 +138,6 @@ function AddToList({
                         </button>
                       </div>
 
-                      {/* NEW LIST FORM */}
-                      {openNewList && (
-                        <div className="mt-4 flex flex-col gap-4 border border-gray-200 p-4">
-                          {/* List title */}
-                          <div className="flex flex-col gap-1">
-                            <label
-                              htmlFor="listTitle"
-                              className="w-full text-left text-sm font-medium text-gray-700"
-                            >
-                              Name:
-                            </label>
-                            <div className="mt-1">
-                              <input
-                                type="text"
-                                name="listTitle"
-                                id="listTitle"
-                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-                              />
-                            </div>
-                          </div>
-
-                          {/* List description */}
-                          <div className="flex flex-col gap-1">
-                            <label
-                              htmlFor="comment"
-                              className="w-full text-left text-sm font-medium text-gray-700"
-                            >
-                              Description:
-                            </label>
-                            <div className="mt-1">
-                              <textarea
-                                rows={4}
-                                name="comment"
-                                id="comment"
-                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                defaultValue={""}
-                              />
-                            </div>
-                          </div>
-
-                          {/* Tag select */}
-
-                          {/* Buttons row */}
-                          <div className="flex w-full flex-row justify-end gap-4">
-                            <button
-                              className="px-5 py-2 text-sm text-secondary duration-150 hover:text-primary"
-                              onClick={() => setOpenNewList(!openNewList)}
-                            >
-                              Annuler
-                            </button>
-                            <button className="rounded-md border border-secondary px-5 py-2 text-sm text-secondary duration-150 hover:border-primary hover:text-primary">
-                              Valider
-                            </button>
-                          </div>
-                        </div>
-                      )}
-
                       <div className="card mt-4 max-h-[208px] divide-y divide-gray-200 overflow-y-scroll border-t border-b border-gray-200">
                         {lists.map((item, itemIdx) => (
                           <div
@@ -190,6 +158,21 @@ function AddToList({
                                 name={`item-${item.id}`}
                                 type="checkbox"
                                 className="mr-4 h-4 w-4 rounded border-secondary text-primary focus:ring-primary"
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    setSelectedList([
+                                      ...selectedList,
+                                      item?.id,
+                                    ]);
+                                  } else {
+                                    setSelectedList(
+                                      selectedList.filter(
+                                        (selectedItem) =>
+                                          selectedItem !== item?.id
+                                      )
+                                    );
+                                  }
+                                }}
                               />
                             </div>
                           </div>
@@ -203,14 +186,14 @@ function AddToList({
                 <button
                   type="button"
                   className="inline-flex w-full justify-center rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:col-start-2 sm:text-sm"
-                  onClick={() => setOpen(false)}
+                  onClick={() => handleAddContent()}
                 >
                   {trad[lang].modals.add}
                 </button>
                 <button
                   type="button"
                   className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
-                  onClick={() => setOpen(false)}
+                  onClick={() => handleClose()}
                   ref={cancelButtonRef}
                 >
                   {trad[lang].modals.cancel}

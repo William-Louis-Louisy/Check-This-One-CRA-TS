@@ -1,10 +1,10 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import trad from "../../lang/traduction";
+import { tagsList } from "../../utils/TagsList";
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ClipboardListIcon, XIcon } from "@heroicons/react/outline";
-import { tagsList } from "../../utils/TagsList";
-import { log } from "console";
 
 function CreateListForm({
   openNewList,
@@ -13,6 +13,7 @@ function CreateListForm({
   user,
   open,
   setOpen,
+  refetch,
 }) {
   const cancelButtonRef = useRef(null);
   const [newListForm, setNewListForm] = useState({
@@ -25,32 +26,50 @@ function CreateListForm({
   const onClose = () => {
     setOpenNewList(false);
     setOpen(true);
+    setNewListForm({
+      title: "",
+      description: "",
+      tags: [],
+    });
   };
 
   // POST NEW LIST
   const postNewList = async () => {
     try {
-      const data = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_API_URL}/list/create/${user?.id}`,
         newListForm
       );
-      console.log(data);
+      toast.success(`${trad[lang].toasts.success.listCreated}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     } catch (error) {
       console.error(error);
+      toast.error(`${trad[lang].toasts.error.listCreatedError}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
+    } finally {
+      onClose();
+      refetch();
     }
   };
 
   const handleTagSelect = (e) => {
     const selectedTag = tagsList.find((tag) => tag.name === e.target.value);
-    console.log("selectedTag", selectedTag);
 
     setNewListForm({
       ...newListForm,
       tags: [...newListForm.tags, selectedTag],
     });
   };
-
-  console.log(newListForm);
 
   return (
     <Transition.Root show={openNewList} as={Fragment}>
@@ -102,7 +121,7 @@ function CreateListForm({
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Cérer une nouvelle liste
+                    {trad[lang].listEdition.createANewList}
                   </Dialog.Title>
                   <div className="mt-2">
                     <fieldset>
@@ -114,7 +133,7 @@ function CreateListForm({
                             htmlFor="listTitle"
                             className="w-full text-left text-sm font-medium text-gray-700"
                           >
-                            Name:
+                            {trad[lang].listEdition.listName}:
                           </label>
                           <div className="mt-1">
                             <input
@@ -138,14 +157,14 @@ function CreateListForm({
                             htmlFor="description"
                             className="w-full text-left text-sm font-medium text-gray-700"
                           >
-                            Description:
+                            {trad[lang].listEdition.listDescription}:
                           </label>
                           <div className="mt-1">
                             <textarea
                               rows={4}
                               name="description"
                               id="description"
-                              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                               defaultValue={""}
                               onChange={(e) =>
                                 setNewListForm({
@@ -163,7 +182,7 @@ function CreateListForm({
                             htmlFor="select"
                             className="w-full text-left text-sm font-medium text-gray-700"
                           >
-                            Tags:
+                            {trad[lang].listEdition.listTags}:
                           </label>
                           <div className="mt-1">
                             <select
@@ -173,6 +192,9 @@ function CreateListForm({
                               defaultValue={""}
                               onChange={(e) => handleTagSelect(e)}
                             >
+                              <option>
+                                {trad[lang].placeholders.chooseATag}
+                              </option>
                               {tagsList.map((tag) => {
                                 return (
                                   <option key={tag.name} value={tag.name}>
@@ -230,7 +252,7 @@ function CreateListForm({
                 <button
                   type="button"
                   className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
-                  onClick={() => setOpenNewList(false)}
+                  onClick={() => onClose()}
                   ref={cancelButtonRef}
                 >
                   {trad[lang].modals.cancel}

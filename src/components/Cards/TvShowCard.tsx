@@ -1,18 +1,12 @@
 import { ClipboardListIcon } from "@heroicons/react/outline";
 import React from "react";
+import { Link } from "react-router-dom";
 import trad from "../../lang/traduction";
 
 function TvShowCard({ serie, lang, handleAddToList }) {
   const dateFormater = (date) => {
     let [yy, mm, dd] = date.split("-");
     return [dd, mm, yy].join("/");
-  };
-
-  const handleDelete = (serieId) => {
-    console.log(serieId);
-  };
-  const handlePost = () => {
-    console.log("post");
   };
 
   // CUT TITLES LENGTH IF TOO LONG
@@ -29,15 +23,18 @@ function TvShowCard({ serie, lang, handleAddToList }) {
 
   return (
     <div className="relative flex w-full flex-col items-center overflow-hidden rounded-xl py-3 duration-100 md:h-[564px] md:w-60">
-      <img
-        src={
-          serie.poster_path
-            ? "https://image.tmdb.org/t/p/w500" + serie.poster_path
-            : "/src/assets/poster.jpg"
-        }
-        alt=""
-        className="w-4/5 rounded-md md:h-80 md:w-full"
-      />
+      <Link to={`/tvDetails/${serie.id}`} className="">
+        <img
+          src={
+            serie.poster_path
+              ? "https://image.tmdb.org/t/p/w500" + serie.poster_path
+              : "/src/assets/poster.jpg"
+          }
+          alt=""
+          className="w-4/5 rounded-md duration-200 hover:shadow-xl hover:shadow-smokyBlack/10 md:h-80 md:w-full"
+        />
+      </Link>
+
       <h2 className="mt-3 mb-2 w-full text-ellipsis whitespace-nowrap text-center text-lg font-semibold text-myBlack">
         {screenWidth > 400 ? titleLength(serie.name) : serie.name}
       </h2>

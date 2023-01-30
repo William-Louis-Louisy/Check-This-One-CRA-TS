@@ -7,30 +7,49 @@ import { useContext, useState, useEffect } from "react";
 import AddToList from "../components/Modals/AddToList";
 import { UserContext } from "../contexts/UserContext";
 import CreateListForm from "../components/Modals/CreateListForm";
+import { handleLang } from "../utils/RequestLanguageHandler";
 
 function MoviesSearch() {
   const { lang } = useContext(AppContext);
   const { user } = useContext(UserContext);
-  const [moviesData, setMoviesData] = useState([]);
+  const [lists, setLists] = useState([]);
   const [open, setOpen] = useState(false);
-  const [openNewList, setOpenNewList] = useState(false);
   const [search, setSearch] = useState("a");
+  const [moviesData, setMoviesData] = useState([]);
   const [contentToList, setContentToList] = useState();
   const [contentTitle, setContentTitle] = useState("");
+  const [openNewList, setOpenNewList] = useState(false);
 
   useEffect(() => {
     axios
       .get(
-        `${process.env.REACT_APP_TMDB_SEARCH_URL}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&query=${search}&language=en-US`
+        `${process.env.REACT_APP_TMDB_SEARCH_URL}?api_key=${
+          process.env.REACT_APP_TMDB_API_KEY
+        }&query=${search}&language=${handleLang(lang)}`
       )
       .then((res) => setMoviesData(res.data.results));
-  }, [search]);
+  }, [search, lang]);
 
   const handleAddToList = (content) => {
     setOpen(true);
     setContentToList(content);
     setContentTitle(content.title);
   };
+
+  // GET LISTS BY USER ID
+  const getLists = async () => {
+    try {
+      const data = await axios.get(
+        `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
+      );
+      setLists(data.data.results);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    if (user?.id) getLists();
+  }, [user?.id]);
 
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
@@ -77,32 +96,39 @@ function MoviesSearch() {
             key={movie.id}
             movie={movie}
             lang={lang}
+            user={user}
             handleAddToList={handleAddToList}
           />
         ))}
       </div>
 
       {/* ADD TO LIST MODAL */}
-      <AddToList
-        open={open}
-        setOpen={setOpen}
-        contentToList={contentToList}
-        contentTitle={contentTitle}
-        lang={lang}
-        user={user}
-        openNewList={openNewList}
-        setOpenNewList={setOpenNewList}
-      />
+      {user?.id && (
+        <AddToList
+          open={open}
+          setOpen={setOpen}
+          contentToList={contentToList}
+          contentTitle={contentTitle}
+          lang={lang}
+          user={user}
+          openNewList={openNewList}
+          setOpenNewList={setOpenNewList}
+          lists={lists}
+        />
+      )}
 
       {/* CREATE NEW LIST */}
-      <CreateListForm
-        open={open}
-        setOpen={setOpen}
-        openNewList={openNewList}
-        setOpenNewList={setOpenNewList}
-        lang={lang}
-        user={user}
-      />
+      {user?.id && (
+        <CreateListForm
+          open={open}
+          setOpen={setOpen}
+          openNewList={openNewList}
+          setOpenNewList={setOpenNewList}
+          lang={lang}
+          user={user}
+          refetch={getLists}
+        />
+      )}
     </div>
   );
 }
