@@ -49,6 +49,13 @@ function CreateListForm({
       });
     } catch (error) {
       console.error(error);
+      toast.error(`${trad[lang].toasts.error.listCreatedError}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     } finally {
       onClose();
       refetch();
@@ -114,7 +121,7 @@ function CreateListForm({
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Cérer une nouvelle liste
+                    {trad[lang].listEdition.createANewList}
                   </Dialog.Title>
                   <div className="mt-2">
                     <fieldset>
@@ -126,7 +133,7 @@ function CreateListForm({
                             htmlFor="listTitle"
                             className="w-full text-left text-sm font-medium text-gray-700"
                           >
-                            Name:
+                            {trad[lang].listEdition.listName}:
                           </label>
                           <div className="mt-1">
                             <input
@@ -150,7 +157,7 @@ function CreateListForm({
                             htmlFor="description"
                             className="w-full text-left text-sm font-medium text-gray-700"
                           >
-                            Description:
+                            {trad[lang].listEdition.listDescription}:
                           </label>
                           <div className="mt-1">
                             <textarea
@@ -175,7 +182,7 @@ function CreateListForm({
                             htmlFor="select"
                             className="w-full text-left text-sm font-medium text-gray-700"
                           >
-                            Tags:
+                            {trad[lang].listEdition.listTags}:
                           </label>
                           <div className="mt-1">
                             <select
@@ -185,6 +192,9 @@ function CreateListForm({
                               defaultValue={""}
                               onChange={(e) => handleTagSelect(e)}
                             >
+                              <option>
+                                {trad[lang].placeholders.chooseATag}
+                              </option>
                               {tagsList.map((tag) => {
                                 return (
                                   <option key={tag.name} value={tag.name}>

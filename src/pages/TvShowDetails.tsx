@@ -235,14 +235,16 @@ function TvShowDetails() {
             </span>
 
             {/* Release date */}
-            <span className="flex w-full flex-row justify-between text-smokyBlack">
-              <span className="font-bold text-primary">
-                {trad[lang].showDetails.firstAirDate}:
-              </span>{" "}
-              {lang === "fr"
-                ? formatDateUsToFr(show?.first_air_date)
-                : show?.first_air_date}
-            </span>
+            {show?.first_air_date && (
+              <span className="flex w-full flex-row justify-between text-smokyBlack">
+                <span className="font-bold text-primary">
+                  {trad[lang].showDetails.firstAirDate}:
+                </span>{" "}
+                {lang === "fr"
+                  ? formatDateUsToFr(show?.first_air_date)
+                  : show?.first_air_date}
+              </span>
+            )}
           </div>
 
           <div className="flex w-full flex-col items-start">

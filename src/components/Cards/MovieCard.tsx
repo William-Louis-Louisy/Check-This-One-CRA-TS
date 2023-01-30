@@ -10,16 +10,6 @@ function MovieCard({ movie, lang, handleAddToList, user }) {
     return [dd, mm, yy].join("/");
   };
 
-  // DELETE MOVIE
-  const handleDelete = (movieId) => {
-    console.log("delete", movieId);
-  };
-
-  // ADD MOVIE
-  const handlePost = () => {
-    console.log("post");
-  };
-
   // CUT TITLES LENGTH IF TOO LONG
   const titleLength = (title) => {
     if (title.length > 20) {

@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { IUser } from "../../contexts/UserContext";
+import trad from "../../lang/traduction";
 import { countriesList } from "../../utils/CountriesList";
 
 function EditUserCard({
@@ -12,12 +15,17 @@ function EditUserCard({
   user: IUser;
   refetch: () => void;
 }) {
+  // NAVIGATE
+  const navigate = useNavigate();
+
+  // PROFILE FORM
   const [profileForm, setProfileForm] = useState({
     country: user.country,
     city: user.city,
     catchline: user.catchline,
     introduction: user.introduction,
     avatar: user.avatar as any,
+    username: user.user_name,
   });
 
   // GET BASE64 FUNCTION
@@ -43,24 +51,31 @@ function EditUserCard({
   const updateProfile = async () => {
     if (user.id) {
       try {
-        const { data } = await axios.put(
-          `${process.env.REACT_APP_API_URL}/update/${user.id}`,
-          {
-            country: profileForm.country,
-            city: profileForm.city,
-            catchline: profileForm.catchline,
-            introduction: profileForm.introduction,
-            avatar: profileForm.avatar,
-          }
-        );
-        if (data) {
-          console.log("Profile updated");
-          console.log("PAR LA !!", data);
-        }
+        await axios.put(`${process.env.REACT_APP_API_URL}/update/${user.id}`, {
+          username: profileForm.username,
+          country: profileForm.country,
+          city: profileForm.city,
+          catchline: profileForm.catchline,
+          introduction: profileForm.introduction,
+          avatar: profileForm.avatar,
+        });
+        toast.success(`${trad[lang].toasts.success.userProfileUpdated}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+        });
+        refetch();
       } catch (error) {
         console.error(error);
-      } finally {
-        refetch();
+        toast.error(`${trad[lang].toasts.success.userProfileUpdatedError}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+        });
       }
     } else {
       console.error("No user id");
@@ -73,7 +88,7 @@ function EditUserCard({
         <div>
           <div>
             <h3 className="text-lg font-medium leading-6 text-gray-900">
-              Edit profile
+              {trad[lang].user.editProfile}
             </h3>
           </div>
 
@@ -83,7 +98,7 @@ function EditUserCard({
               htmlFor="photo"
               className="block text-sm font-medium text-gray-700"
             >
-              Photo
+              {trad[lang].user.avatar}
             </label>
             <div className="mt-1 sm:col-span-2 sm:mt-0">
               <div className="flex items-center">
@@ -96,13 +111,39 @@ function EditUserCard({
             </div>
           </div>
 
+          {/* USERNAME */}
+          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            >
+              {trad[lang].user.username}
+            </label>
+            <div className="mt-1 sm:col-span-2 sm:mt-0">
+              <input
+                type="text"
+                name="username"
+                id="username"
+                autoComplete="username"
+                defaultValue={user.user_name}
+                className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:max-w-xs sm:text-sm"
+                onChange={(e) => {
+                  setProfileForm({
+                    ...profileForm,
+                    username: e.target.value,
+                  });
+                }}
+              />
+            </div>
+          </div>
+
           {/* COUNTRY */}
           <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
             <label
               htmlFor="country"
               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
             >
-              Country
+              {trad[lang].user.country}
             </label>
             <div className="mt-1 sm:col-span-2 sm:mt-0">
               <select
@@ -131,7 +172,7 @@ function EditUserCard({
               htmlFor="city"
               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
             >
-              City
+              {trad[lang].user.city}
             </label>
             <div className="mt-1 sm:col-span-2 sm:mt-0">
               <input
@@ -154,17 +195,17 @@ function EditUserCard({
           {/* CATCHLINE */}
           <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
             <label
-              htmlFor="about"
+              htmlFor="catchline"
               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
             >
-              Catchline
+              {trad[lang].user.catchline}
             </label>
             <div className="mt-1 sm:col-span-2 sm:mt-0">
               <textarea
-                id="about"
-                name="about"
+                id="catchline"
+                name="catchline"
                 rows={2}
-                className="block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
+                className="card block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
                 defaultValue={user.catchline}
                 onChange={(e) => {
                   setProfileForm({
@@ -174,7 +215,7 @@ function EditUserCard({
                 }}
               />
               <p className="mt-2 text-sm text-gray-500">
-                Give us your best quote.
+                {trad[lang].user.giveUsYourBestQuote}
               </p>
             </div>
           </div>
@@ -185,14 +226,14 @@ function EditUserCard({
               htmlFor="about"
               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
             >
-              Introduction
+              {trad[lang].user.introduction}
             </label>
             <div className="mt-1 sm:col-span-2 sm:mt-0">
               <textarea
                 id="about"
                 name="about"
                 rows={3}
-                className="block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
+                className="card block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
                 defaultValue={user.introduction}
                 onChange={(e) => {
                   setProfileForm({
@@ -202,7 +243,7 @@ function EditUserCard({
                 }}
               />
               <p className="mt-2 text-sm text-gray-500">
-                Write a few sentences about yourself.
+                {trad[lang].user.tellUsAboutYou}
               </p>
             </div>
           </div>
@@ -214,15 +255,16 @@ function EditUserCard({
           <button
             type="button"
             className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+            onClick={() => navigate(-1)}
           >
-            Cancel
+            {trad[lang].user.cancel}
           </button>
           <button
             type="button"
             onClick={() => updateProfile()}
             className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-secondary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
           >
-            Save
+            {trad[lang].user.update}
           </button>
         </div>
       </div>

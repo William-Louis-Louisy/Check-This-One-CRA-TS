@@ -9,13 +9,6 @@ function TvShowCard({ serie, lang, handleAddToList }) {
     return [dd, mm, yy].join("/");
   };
 
-  const handleDelete = (serieId) => {
-    console.log(serieId);
-  };
-  const handlePost = () => {
-    console.log("post");
-  };
-
   // CUT TITLES LENGTH IF TOO LONG
   const titleLength = (title) => {
     if (title.length > 20) {

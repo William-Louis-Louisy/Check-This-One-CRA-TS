@@ -1,84 +1,37 @@
-import React from "react";
+import { useContext } from "react";
+import { AppContext } from "../../contexts/AppContext";
 import { IUser } from "../../contexts/UserContext";
+import trad from "../../lang/traduction";
 
 function UserCard({ user, avatar }: { user: IUser; avatar: string }) {
+  // GET LANG FROM CONTEXT
+  const { lang } = useContext(AppContext);
+
   return (
-    <div className="w-full space-y-8 divide-y divide-gray-200 rounded-md bg-white p-8 shadow-lg md:w-1/2">
-      <div className="space-y-4 divide-y divide-gray-200 sm:space-y-4">
-        {/* AVATAR */}
-        <div className="mb-6 flex flex-row items-center justify-center gap-4 md:mb-0">
+    <div className="w-full rounded-md bg-white shadow-lg md:w-1/2">
+      <div className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center">
+        <div className="flex flex-1 flex-col p-8">
           <img
-            className="h-20 w-20 rounded-full object-cover"
-            src={avatar}
+            className="mx-auto h-32 w-32 flex-shrink-0 rounded-full"
+            src={user.avatar}
             alt=""
           />
-          <div className="w-full">
-            <h3 className="text-left text-lg font-medium leading-6 text-gray-900">
-              {user.user_name}
-            </h3>
-          </div>
-        </div>
+          <h3 className="mt-2 font-bold text-primary">{user.user_name}</h3>
+          <dl className="mt-1 flex flex-grow flex-col justify-between">
+            <dt className="sr-only">{trad[lang].user.location}</dt>
+            <dd className="">
+              <span className="rounded-full bg-orange-50 px-2 py-1 text-xs font-medium text-primary">
+                {user.city}, {user.country}
+              </span>
+            </dd>
+            <dt className="sr-only">{trad[lang].user.catchline}</dt>
+            <dd className="mt-3 text-sm italic text-gray-600">
+              "{user.catchline}"
+            </dd>
 
-        {/* COUNTRY */}
-        <div className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 ">
-          <label
-            htmlFor="country"
-            className="block pt-2 text-sm font-medium text-gray-700 sm:mt-px"
-          >
-            Country
-          </label>
-          <div className="mt-1">
-            <p
-              id="country"
-              className="block w-full max-w-lg sm:max-w-xs sm:text-sm"
-            >
-              {user.country}
-            </p>
-          </div>
-        </div>
-
-        {/* CITY */}
-        <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 ">
-          <label
-            htmlFor="city"
-            className="block pt-2 text-sm font-medium text-gray-700 sm:mt-px"
-          >
-            City
-          </label>
-          <div className="mt-1">
-            <p
-              id="country"
-              className="block w-full max-w-lg sm:max-w-xs sm:text-sm"
-            >
-              {user.city}
-            </p>
-          </div>
-        </div>
-
-        {/* INTRODUCTION */}
-        <div className="flex flex-col sm:gap-1 ">
-          <label
-            htmlFor="about"
-            className="block pt-2 text-sm font-medium text-gray-700 sm:mt-px"
-          >
-            Catchline
-          </label>
-          <p id="about" className="ml-6 max-w-[320px] text-sm italic">
-            {user.catchline}
-          </p>
-        </div>
-
-        {/* INTRODUCTION */}
-        <div className="flex flex-col sm:gap-1 ">
-          <label
-            htmlFor="about"
-            className="block pt-2 text-sm font-medium text-gray-700 sm:mt-px"
-          >
-            About
-          </label>
-          <p id="about" className="ml-6 max-w-[320px] text-sm italic">
-            {user.introduction}
-          </p>
+            <dt className="sr-only">{trad[lang].user.introduction}</dt>
+            <dd className="mt-3 text-sm text-gray-500">{user.introduction}</dd>
+          </dl>
         </div>
       </div>
     </div>

@@ -11,6 +11,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLists from "../pages/UserLists";
 import MovieDetails from "../pages/MovieDetails";
 import TvShowDetails from "../pages/TvShowDetails";
+import ListEdition from "../pages/ListEdition";
+import BrowseLists from "../pages/BrowseLists";
 
 export default function PublicRoutes() {
   return (
@@ -35,6 +37,13 @@ export default function PublicRoutes() {
         {/* CONTENT DETAILS */}
         <Route path="movieDetails/:movieId" element={<MovieDetails />} />
         <Route path="tvDetails/:tvShowId" element={<TvShowDetails />} />
+
+        {/* LIST EDITION */}
+        <Route path="listEdition/:listId" element={<ListEdition />} />
+
+        {/* BROWSE LISTS */}
+        <Route path="browseLists" element={<BrowseLists />} />
+        <Route path="browseLists/:userId" element={<BrowseLists />} />
       </Routes>
     </BrowserRouter>
   );

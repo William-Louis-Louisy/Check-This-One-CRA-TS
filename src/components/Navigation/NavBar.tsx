@@ -39,6 +39,11 @@ function NavBar() {
       link: "youtubeSearch",
       current: pathname === "/youtubeSearch",
     },
+    {
+      name: trad[lang].navbar.browseLists,
+      link: "browseLists",
+      current: pathname === "/browseLists",
+    },
   ];
 
   return (

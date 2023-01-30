@@ -79,6 +79,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.error(error);
     }
   };
+
   useEffect(() => {
     if (user.id) {
       refetchUser();

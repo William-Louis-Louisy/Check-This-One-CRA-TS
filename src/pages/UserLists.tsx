@@ -45,7 +45,7 @@ function UserLists() {
         </h3>
         <div className="mt-3 sm:mt-0 sm:ml-4">
           {/* SEARCH BAR */}
-          <div className="flex w-[90%] items-center justify-center px-2 md:w-[400px] lg:justify-end">
+          {/* <div className="flex w-[90%] items-center justify-center px-2 md:w-[400px] lg:justify-end">
             <div className="w-full max-w-lg lg:max-w-xl">
               <label htmlFor="search" className="sr-only">
                 {trad[lang].placeholders.searchLists}
@@ -70,7 +70,7 @@ function UserLists() {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
