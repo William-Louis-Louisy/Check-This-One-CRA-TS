@@ -1,13 +1,21 @@
+import {
+  FaTv,
+  FaYoutube,
+  FaFilm,
+  FaPodcast,
+  FaList,
+  FaHome,
+  FaSignInAlt,
+} from "react-icons/fa";
 import Logo from "../Logo";
 import LangToggle from "../LangToggle";
 import trad from "../../lang/traduction";
 import { Fragment, useContext } from "react";
-import { SearchIcon } from "@heroicons/react/solid";
 import { Link, useLocation } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
+import { UserContext } from "../../contexts/UserContext";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-import { UserContext } from "../../contexts/UserContext";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -23,26 +31,41 @@ function NavBar() {
 
   // TABS STATE
   const tabs = [
-    { name: trad[lang].navbar.home, link: "/", current: pathname === "/" },
+    {
+      name: trad[lang].navbar.home,
+      link: "/",
+      current: pathname === "/",
+      icon: <FaHome className="mr-2 h-4 w-4" />,
+    },
     {
       name: trad[lang].navbar.movies,
       link: "moviesSearch",
       current: pathname === "/moviesSearch",
+      icon: <FaFilm className="mr-2 h-4 w-4" />,
     },
     {
       name: trad[lang].navbar.tvShows,
       link: "showsSearch",
       current: pathname === "/showsSearch",
+      icon: <FaTv className="mr-2 h-4 w-4" />,
     },
     {
       name: trad[lang].navbar.youtube,
       link: "youtubeSearch",
       current: pathname === "/youtubeSearch",
+      icon: <FaYoutube className="mr-2 h-4 w-4" />,
+    },
+    {
+      name: trad[lang].navbar.podcasts,
+      link: "podcastsSearch",
+      current: pathname === "/podcastsSearch",
+      icon: <FaPodcast className="mr-2 h-4 w-4" />,
     },
     {
       name: trad[lang].navbar.browseLists,
       link: "browseLists",
       current: pathname === "/browseLists",
+      icon: <FaList className="mr-2 h-4 w-4" />,
     },
   ];
 
@@ -50,17 +73,18 @@ function NavBar() {
     <Disclosure as="nav" className="bg-white shadow-xl">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-            <div className="flex h-16 justify-between">
+          <div className="flex w-screen flex-row items-center justify-between px-2 sm:px-4 md:justify-center lg:px-8">
+            <div className="flex h-16 w-full justify-between md:w-4/5">
               <div className="flex px-2 lg:px-0">
                 <div className="flex flex-shrink-0 items-center">
                   <Logo />
                 </div>
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                   {tabs.map((tab, index) => (
-                    <Link
+                    <Disclosure.Button
+                      as="a"
                       key={index}
-                      to={tab.link}
+                      href={tab.link}
                       className={classNames(
                         tab.current
                           ? "border-primary text-primary"
@@ -69,15 +93,17 @@ function NavBar() {
                       )}
                       aria-current={tab.current ? "page" : undefined}
                     >
-                      {tab.name}
-                    </Link>
+                      {tab.icon} {tab.name}
+                    </Disclosure.Button>
                   ))}
                 </div>
               </div>
               <div className="flex items-center lg:hidden">
                 {/* Mobile menu button */}
-                <Disclosure.Button className="hover:text-myborder-myGray inline-flex items-center justify-center rounded-md p-2 text-myGray hover:bg-myWhite focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary">
-                  <span className="sr-only">Open main menu</span>
+                <Disclosure.Button className="hover:text-myborder-myGray inline-flex items-center justify-center rounded-md p-2 text-myGray hover:bg-myWhite focus:outline-none focus:ring-2 focus:ring-inset focus:ring-transparent">
+                  <span className="sr-only">
+                    {trad[lang].navbar.openMainMenu}
+                  </span>
                   {open ? (
                     <XIcon className="block h-6 w-6" aria-hidden="true" />
                   ) : (
@@ -91,7 +117,9 @@ function NavBar() {
                     type="button"
                     className="hover:text-myborder-myGray flex-shrink-0 rounded-full bg-myWhite p-1 text-myGray focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
                   >
-                    <span className="sr-only">View notifications</span>
+                    <span className="sr-only">
+                      {trad[lang].navbar.viewNotifications}
+                    </span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
                 )}
@@ -101,7 +129,9 @@ function NavBar() {
                   <Menu as="div" className="relative ml-4 flex-shrink-0">
                     <div>
                       <Menu.Button className="flex rounded-full bg-myWhite text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">
-                        <span className="sr-only">Open user menu</span>
+                        <span className="sr-only">
+                          {trad[lang].navbar.openUserMenu}
+                        </span>
                         {user?.avatar ? (
                           <img
                             className="h-8 w-8 rounded-full"
@@ -190,86 +220,94 @@ function NavBar() {
             </div>
           </div>
 
-          <Disclosure.Panel className="lg:hidden">
+          <Disclosure.Panel className="absolute z-[99999] min-h-screen w-full bg-white lg:hidden">
             <div className="space-y-1 pt-2 pb-3">
-              <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-primary bg-myWhite py-2 pl-3 pr-4 text-base font-medium text-primary"
-              >
-                Dashboard
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-myGray hover:border-myGray hover:bg-myGray hover:text-myBlack"
-              >
-                Team
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-myGray hover:border-myGray hover:bg-myGray hover:text-myBlack"
-              >
-                Projects
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-myGray hover:border-myGray hover:bg-myGray hover:text-myBlack"
-              >
-                Calendar
-              </Disclosure.Button>
+              {tabs.map((t, i) => (
+                <Disclosure.Button
+                  as="a"
+                  href={t.link}
+                  className={classNames(
+                    t.current
+                      ? "border-primary text-primary"
+                      : "border-transparent text-myGray",
+                    "flex flex-row items-center border-l-4 bg-white py-4 pl-3 pr-4 text-base font-medium"
+                  )}
+                >
+                  {t.icon} {t.name}
+                </Disclosure.Button>
+              ))}
             </div>
-            <div className="border-t border-gray-200 pt-4 pb-3">
-              <div className="flex items-center px-4">
-                <div className="flex-shrink-0">
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="ml-3">
-                  <div className="text-base font-medium text-myBlack">
-                    Tom Cook
+            {user && user?.user_name && user?.id ? (
+              <div className="border-t border-myGray pt-4 pb-3">
+                <div className="flex items-center px-4">
+                  <div className="flex-shrink-0">
+                    {user?.avatar ? (
+                      <img
+                        className="h-10 w-10 rounded-full"
+                        src={user?.avatar}
+                        alt=""
+                      />
+                    ) : (
+                      user?.user_name && (
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
+                          <p className="text-center text-2xl text-white">
+                            {user?.user_name[0].toUpperCase()}
+                          </p>
+                        </div>
+                      )
+                    )}
                   </div>
-                  <div className="text-myborder-myGray text-sm font-medium">
-                    tom@example.com
+                  <div className="ml-3">
+                    <div className="text-base font-medium text-myBlack">
+                      {user?.user_name}
+                    </div>
                   </div>
+                  <button
+                    type="button"
+                    className="hover:text-myborder-myGray ml-auto flex-shrink-0 rounded-full bg-myWhite p-1 text-myGray focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+                  >
+                    <span className="sr-only">
+                      {trad[lang].navbar.viewNotifications}
+                    </span>
+                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="hover:text-myborder-myGray ml-auto flex-shrink-0 rounded-full bg-myWhite p-1 text-myGray focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+                <div className="mt-3 space-y-1">
+                  <Disclosure.Button
+                    as="a"
+                    href="#"
+                    className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
+                  >
+                    {trad[lang].navbar.myProfile}
+                  </Disclosure.Button>
+                  <Disclosure.Button
+                    as="a"
+                    href="#"
+                    className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
+                  >
+                    {trad[lang].navbar.myLists}
+                  </Disclosure.Button>
+                  <Disclosure.Button
+                    as="a"
+                    href="#"
+                    className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
+                  >
+                    {trad[lang].navbar.logout}
+                  </Disclosure.Button>
+                </div>
               </div>
-              <div className="mt-3 space-y-1">
+            ) : (
+              <div className="border-t border-gray-200 pt-4 pb-3">
                 <Disclosure.Button
                   as="a"
-                  href="#"
-                  className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
+                  href="/login"
+                  className="text-myborder-myGray flex flex-row items-center px-4 py-2 text-base font-medium"
                 >
-                  Your Profile
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
-                >
-                  Settings
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
-                >
-                  Sign out
+                  <FaSignInAlt className="mr-2 h-4 w-4" />
+                  {trad[lang].navbar.login}
                 </Disclosure.Button>
               </div>
-            </div>
+            )}
           </Disclosure.Panel>
         </>
       )}

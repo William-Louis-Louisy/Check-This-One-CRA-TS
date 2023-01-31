@@ -1,7 +1,8 @@
-import { ClipboardListIcon, FolderAddIcon } from "@heroicons/react/outline";
+import { ClipboardListIcon } from "@heroicons/react/outline";
 import React from "react";
 import { Link } from "react-router-dom";
 import trad from "../../lang/traduction";
+import Poster from "../../assets/poster.jpg";
 
 function MovieCard({ movie, lang, handleAddToList, user }) {
   // FORMAT DATE
@@ -12,8 +13,8 @@ function MovieCard({ movie, lang, handleAddToList, user }) {
 
   // CUT TITLES LENGTH IF TOO LONG
   const titleLength = (title) => {
-    if (title.length > 20) {
-      return title.slice(0, 20) + "...";
+    if (title.length > 16) {
+      return title.slice(0, 16) + "...";
     } else {
       return title;
     }
@@ -23,20 +24,23 @@ function MovieCard({ movie, lang, handleAddToList, user }) {
   const screenWidth = window.innerWidth;
 
   return (
-    <div className="relative flex w-full flex-col items-center overflow-hidden rounded-xl py-3 duration-100 md:h-[564px] md:w-60">
-      <Link to={`/movieDetails/${movie.id}`} className="">
+    <div className="relative flex w-[90%] flex-col items-center overflow-hidden rounded-xl px-3 py-3 duration-100 sm:w-full md:h-[564px] md:w-60">
+      <Link
+        to={`/movieDetails/${movie.id}`}
+        className="flex w-4/5 flex-col items-center sm:w-full"
+      >
         <img
           src={
             movie.poster_path
               ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
-              : "/src/assets/poster.jpg"
+              : Poster
           }
           alt=""
           className="w-4/5 rounded-md duration-200 hover:shadow-xl hover:shadow-smokyBlack/10 md:h-80 md:w-full"
         />
       </Link>
 
-      <h2 className="mt-3 mb-2 w-full text-ellipsis whitespace-nowrap text-center text-lg font-semibold text-myBlack">
+      <h2 className="mt-3 mb-2 w-[90%] truncate text-center text-lg font-semibold text-myBlack sm:w-full sm:text-ellipsis sm:whitespace-nowrap">
         {screenWidth > 400 ? titleLength(movie.title) : movie.title}
       </h2>
       {movie.release_date ? (
@@ -46,9 +50,11 @@ function MovieCard({ movie, lang, handleAddToList, user }) {
       ) : (
         ""
       )}
-      <p className="card mt-2 h-[90px] overflow-y-scroll text-ellipsis px-4 text-center text-sm text-myBlack">
-        {movie.overview}
-      </p>
+      {movie && movie?.overview && (
+        <p className="card mt-2 h-[90px] overflow-y-scroll text-ellipsis px-4 text-center text-sm text-myBlack">
+          {movie.overview}
+        </p>
+      )}
 
       <div className="mt-4 mb-2 flex flex-row items-center gap-6 md:absolute md:bottom-1">
         {user?.id ? (

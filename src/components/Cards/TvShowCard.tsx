@@ -2,6 +2,7 @@ import { ClipboardListIcon } from "@heroicons/react/outline";
 import React from "react";
 import { Link } from "react-router-dom";
 import trad from "../../lang/traduction";
+import Poster from "../../assets/poster.jpg";
 
 function TvShowCard({ serie, lang, handleAddToList }) {
   const dateFormater = (date) => {
@@ -22,13 +23,16 @@ function TvShowCard({ serie, lang, handleAddToList }) {
   const screenWidth = window.innerWidth;
 
   return (
-    <div className="relative flex w-full flex-col items-center overflow-hidden rounded-xl py-3 duration-100 md:h-[564px] md:w-60">
-      <Link to={`/tvDetails/${serie.id}`} className="">
+    <div className="relative flex w-[90%] flex-col items-center overflow-hidden rounded-xl px-3 py-3 duration-100 sm:w-full md:h-[564px] md:w-60">
+      <Link
+        to={`/tvDetails/${serie.id}`}
+        className="flex w-4/5 flex-col items-center sm:w-full"
+      >
         <img
           src={
             serie.poster_path
               ? "https://image.tmdb.org/t/p/w500" + serie.poster_path
-              : "/src/assets/poster.jpg"
+              : Poster
           }
           alt=""
           className="w-4/5 rounded-md duration-200 hover:shadow-xl hover:shadow-smokyBlack/10 md:h-80 md:w-full"
@@ -45,9 +49,11 @@ function TvShowCard({ serie, lang, handleAddToList }) {
       ) : (
         ""
       )}
-      <p className="card mt-2 h-[90px] overflow-y-scroll text-ellipsis px-4 text-center text-sm text-myBlack">
-        {serie.overview}
-      </p>
+      {serie?.overview && (
+        <p className="card mt-2 h-[90px] overflow-y-scroll text-ellipsis px-4 text-center text-sm text-myBlack">
+          {serie.overview}
+        </p>
+      )}
 
       <div className="mt-4 mb-2 flex flex-row items-center gap-6 md:absolute md:bottom-1">
         <button

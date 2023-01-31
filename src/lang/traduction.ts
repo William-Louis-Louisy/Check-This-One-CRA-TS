@@ -6,6 +6,10 @@ const trad = {
       lists: "Listes",
       list: "Liste",
       createdBy: "Créée par",
+      errorFourOFour: "Erreur 404",
+      errorFourOFourMessage: "La page que vous recherchez n'existe pas.",
+      youreLost: "Hum... Je crois que vous êtes perdu !",
+      backToHome: "Retour à l'accueil",
     },
     home: {
       title1: "Créez vos listes",
@@ -86,6 +90,10 @@ const trad = {
       myProfile: "Mon profil",
       myLists: "Mes listes",
       browseLists: "Parcourir les listes",
+      podcasts: "Podcasts",
+      openMainMenu: "Ouvrir le menu principal",
+      viewNotifications: "Voir les notifications",
+      openUserMenu: "Ouvrir le menu utilisateur",
     },
     pageTitles: {
       home: "Accueil",
@@ -186,6 +194,11 @@ const trad = {
       lists: "Lists",
       list: "List",
       createdBy: "Created by",
+      errorFourOFour: "404 error",
+      errorFourOFourMessage:
+        "It looks like the page you’re looking for doesn't exist.",
+      youreLost: "Uh oh! I think you’re lost.",
+      backToHome: "Go back home",
     },
     home: {
       title1: "List it up",
@@ -266,6 +279,10 @@ const trad = {
       myProfile: "My profile",
       myLists: "My lists",
       browseLists: "Browse lists",
+      podcasts: "Podcasts",
+      openMainMenu: "Open main menu",
+      viewNotifications: "View notifications",
+      openUserMenu: "Open user menu",
     },
     pageTitles: {
       home: "Home",
