@@ -1,17 +1,18 @@
-import { BanIcon, ClipboardListIcon, EyeIcon } from "@heroicons/react/outline";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import AddToList from "../components/Modals/AddToList";
-import CreateListForm from "../components/Modals/CreateListForm";
-import { AppContext } from "../contexts/AppContext";
-import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
 import { IMovie } from "../types/Movie";
+import Poster from "../assets/poster.jpg";
+import { Link, useParams } from "react-router-dom";
+import { AppContext } from "../contexts/AppContext";
+import { UserContext } from "../contexts/UserContext";
 import { IMovieDetails } from "../types/MovieDetails";
+import AddToList from "../components/Modals/AddToList";
 import { IMovieProvider } from "../types/MovieProvider";
+import { useContext, useEffect, useState } from "react";
 import { formatDateUsToFr } from "../utils/DateFormater";
 import { handleLang } from "../utils/RequestLanguageHandler";
+import CreateListForm from "../components/Modals/CreateListForm";
+import { ClipboardListIcon, EyeIcon } from "@heroicons/react/outline";
 
 function MovieDetails() {
   // GET MOVIE ID FROM URL
@@ -32,6 +33,7 @@ function MovieDetails() {
   const [selectedCountry, setSelectedCountry] = useState("FR");
   const [similarMovies, setSimilarMovies] = useState<IMovie[]>([]);
   const [filteredProviders, setFilteredProviders] = useState<IMovieProvider>();
+  const [loading, setLoading] = useState(true);
 
   // GET MOVIE BY ID
   const getMovie = async () => {
@@ -59,6 +61,8 @@ function MovieDetails() {
         setListsCount(data.data.count);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -136,12 +140,14 @@ function MovieDetails() {
     filterWatchProviders();
   }, [watchProviders, selectedCountry]);
 
+  if (loading) return <div>LOADING</div>;
+
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pb-16">
       {/*----- PAGE HEADING -----*/}
-      <div className="my-8 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+      <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
-        <h3 className="text-2xl font-medium leading-6 text-primary">
+        <h3 className="w-full text-xl font-medium leading-6 text-primary sm:text-2xl">
           {movie?.title}
         </h3>
         <div className="flex flex-row items-center gap-3">
@@ -175,16 +181,16 @@ function MovieDetails() {
       </div>
 
       {/*----- MOVIE DETAILS -----*/}
-      <div className="flex flex-row lg:w-[70%]">
-        <div className="flex w-2/5 flex-col items-center">
+      <div className="flex w-full flex-col items-center sm:flex-row sm:items-start lg:w-[70%]">
+        <div className="mb-8 flex w-full flex-col items-center sm:mb-0 sm:w-2/5">
           {/* MOVIE POSTER */}
           <img
             src={
               movie?.poster_path
                 ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
-                : "/src/assets/poster.jpg"
+                : Poster
             }
-            className="rounded-md md:h-[480px]"
+            className="w-80 rounded-md md:h-[480px]"
             alt=""
           />
 
@@ -236,11 +242,11 @@ function MovieDetails() {
         </div>
 
         {/* MOVIE INFORMATIONS */}
-        <div className="ml-5 flex w-3/5 flex-col items-start gap-5">
+        <div className="flex w-[90%] flex-col items-center gap-5 sm:ml-5 sm:w-3/5 sm:items-start">
           {/* Main Informations */}
           <div className="flex w-full flex-col items-start">
             {/* Original title */}
-            <span className="flex w-full flex-row justify-between text-smokyBlack">
+            <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
               <span className="font-bold text-primary">
                 {trad[lang].movieDetails.originalTitle}:
               </span>{" "}
@@ -249,7 +255,7 @@ function MovieDetails() {
 
             {/* Release date */}
             {movie?.release_date && (
-              <span className="flex w-full flex-row justify-between text-smokyBlack">
+              <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
                 <span className="font-bold text-primary">
                   {trad[lang].movieDetails.releaseDate}:
                 </span>{" "}
@@ -260,7 +266,7 @@ function MovieDetails() {
             )}
 
             {/* Runtime */}
-            <span className="flex w-full flex-row justify-between text-smokyBlack">
+            <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
               <span className="font-bold text-primary">
                 {trad[lang].movieDetails.runtime}:
               </span>{" "}
@@ -269,7 +275,7 @@ function MovieDetails() {
           </div>
 
           {/* Genres */}
-          <div className="flex flex-col items-start">
+          <div className="flex w-full flex-col items-start text-sm sm:text-base">
             <span className="font-bold text-primary">
               {trad[lang].movieDetails.genres}:
             </span>
@@ -287,7 +293,7 @@ function MovieDetails() {
           </div>
 
           {/* Overview */}
-          <div className="flex flex-col items-start">
+          <div className="flex w-full flex-col items-start text-sm sm:text-base">
             <span className="font-bold text-primary">
               {trad[lang].movieDetails.overview}:
             </span>
@@ -296,7 +302,7 @@ function MovieDetails() {
 
           {/* Similar Movies */}
           <div className="flex flex-col items-start">
-            <span className="font-bold text-primary">
+            <span className="text-sm font-bold text-primary sm:text-base">
               {trad[lang].movieDetails.recommendations}:
             </span>
             <div className="flex flex-row flex-wrap items-center gap-5">

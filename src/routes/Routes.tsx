@@ -2,17 +2,18 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import Error404 from "../pages/Error404";
-import UserProfile from "../pages/UserProfile";
-import MoviesSearch from "../pages/MoviesSearch";
-import YoutubeSearch from "../pages/YoutubeSearch";
-import TvShowsSearch from "../pages/TvShowsSearch";
-import NavBar from "../components/Navigation/NavBar";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLists from "../pages/UserLists";
-import MovieDetails from "../pages/MovieDetails";
-import TvShowDetails from "../pages/TvShowDetails";
+import UserProfile from "../pages/UserProfile";
 import ListEdition from "../pages/ListEdition";
 import BrowseLists from "../pages/BrowseLists";
+import MoviesSearch from "../pages/MoviesSearch";
+import MovieDetails from "../pages/MovieDetails";
+import YoutubeSearch from "../pages/YoutubeSearch";
+import TvShowsSearch from "../pages/TvShowsSearch";
+import TvShowDetails from "../pages/TvShowDetails";
+import NavBar from "../components/Navigation/NavBar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import PodcastsSearch from "../pages/PodcastsSearch";
 
 export default function PublicRoutes() {
   return (
@@ -25,6 +26,7 @@ export default function PublicRoutes() {
         <Route path="moviesSearch" element={<MoviesSearch />} />
         <Route path="showsSearch" element={<TvShowsSearch />} />
         <Route path="youtubeSearch" element={<YoutubeSearch />} />
+        <Route path="podcastsSearch" element={<PodcastsSearch />} />
 
         {/* AUTHENTICATION */}
         <Route path="login" element={<Login />} />
