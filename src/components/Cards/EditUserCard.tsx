@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { IUser } from "../../contexts/UserContext";
 import trad from "../../lang/traduction";
 import { countriesList } from "../../utils/CountriesList";
+import { Widget } from "@uploadcare/react-widget";
 
 function EditUserCard({
   lang,

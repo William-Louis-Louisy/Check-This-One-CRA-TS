@@ -73,12 +73,12 @@ function NavBar() {
     <Disclosure as="nav" className="bg-white shadow-xl">
       {({ open }) => (
         <>
-          <div className="flex w-screen flex-row items-center justify-between px-2 sm:px-4 md:justify-center lg:px-8">
+          <div className="flex flex-row items-center justify-between px-2 sm:px-4 md:justify-center lg:px-8">
             <div className="flex h-16 w-full justify-between md:w-4/5">
               <div className="flex px-2 lg:px-0">
-                <div className="flex flex-shrink-0 items-center">
+                <Link to="/" className="flex flex-shrink-0 items-center">
                   <Logo />
-                </div>
+                </Link>
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                   {tabs.map((tab, index) => (
                     <Disclosure.Button
@@ -225,6 +225,7 @@ function NavBar() {
               {tabs.map((t, i) => (
                 <Disclosure.Button
                   as="a"
+                  key={i}
                   href={t.link}
                   className={classNames(
                     t.current
@@ -275,22 +276,21 @@ function NavBar() {
                 <div className="mt-3 space-y-1">
                   <Disclosure.Button
                     as="a"
-                    href="#"
+                    href="/userProfile"
                     className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
                   >
                     {trad[lang].navbar.myProfile}
                   </Disclosure.Button>
                   <Disclosure.Button
                     as="a"
-                    href="#"
+                    href="/userLists"
                     className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
                   >
                     {trad[lang].navbar.myLists}
                   </Disclosure.Button>
                   <Disclosure.Button
-                    as="a"
-                    href="#"
                     className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
+                    onClick={() => logout()}
                   >
                     {trad[lang].navbar.logout}
                   </Disclosure.Button>

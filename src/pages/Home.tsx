@@ -11,7 +11,7 @@ function Home() {
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
       {/* Hero section */}
-      <div className="relative my-16 w-full">
+      <div className="relative w-full md:my-16">
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100" />
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
