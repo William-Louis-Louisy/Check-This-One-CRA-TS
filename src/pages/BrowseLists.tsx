@@ -1,7 +1,7 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import ListDisplay from "../components/Lists/ListDisplay";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
@@ -19,7 +19,12 @@ function BrowseLists() {
 
   // LISTS
   const [lists, setLists] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useSearchParams({ query: "" });
+
+  // HANDLE SEARCH
+  const handleSearch = (event) => {
+    setSearchQuery({ query: event.target.value });
+  };
 
   // GET LISTS
   const getLists = async () => {
@@ -30,7 +35,7 @@ function BrowseLists() {
             process.env.REACT_APP_API_URL
           }/lists/getAllListsFiltered?creator_id=${
             userId.userId || ""
-          }&title=${searchQuery}`
+          }&title=${searchQuery.get("query")}`
         );
         setLists(data.data.lists);
 
@@ -81,7 +86,7 @@ function BrowseLists() {
                   className="placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray bg-myWhite py-2 pl-10 pr-3 leading-5 focus:border-myGray focus:placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm"
                   placeholder={trad[lang].placeholders.searchLists}
                   type="text"
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={handleSearch}
                 />
               </div>
             </div>

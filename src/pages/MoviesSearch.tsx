@@ -3,29 +3,35 @@ import trad from "../lang/traduction";
 import { SearchIcon } from "@heroicons/react/solid";
 import { AppContext } from "../contexts/AppContext";
 import MovieCard from "../components/Cards/MovieCard";
-import { useContext, useState, useEffect } from "react";
-import AddToList from "../components/Modals/AddToList";
 import { UserContext } from "../contexts/UserContext";
-import CreateListForm from "../components/Modals/CreateListForm";
+import AddToList from "../components/Modals/AddToList";
+import { useContext, useState, useEffect } from "react";
 import { handleLang } from "../utils/RequestLanguageHandler";
+import CreateListForm from "../components/Modals/CreateListForm";
+import { useSearchParams } from "react-router-dom";
 
 function MoviesSearch() {
   const { lang } = useContext(AppContext);
   const { user } = useContext(UserContext);
   const [lists, setLists] = useState([]);
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState("a");
+  const [search, setSearch] = useSearchParams({ query: "a" });
   const [moviesData, setMoviesData] = useState([]);
   const [contentToList, setContentToList] = useState();
   const [contentTitle, setContentTitle] = useState("");
   const [openNewList, setOpenNewList] = useState(false);
+
+  // HANDLE SEARCH
+  const handleSearch = (event) => {
+    setSearch({ query: event.target.value });
+  };
 
   useEffect(() => {
     axios
       .get(
         `${process.env.REACT_APP_TMDB_SEARCH_URL}?api_key=${
           process.env.REACT_APP_TMDB_API_KEY
-        }&query=${search}&language=${handleLang(lang)}`
+        }&query=${search.get("query")}&language=${handleLang(lang)}`
       )
       .then((res) => setMoviesData(res.data.results));
   }, [search, lang]);
@@ -52,7 +58,7 @@ function MoviesSearch() {
   }, [user?.id]);
 
   return (
-    <div className="flex h-full min-h-screen w-screen flex-col items-center bg-myLightGray">
+    <div className="flex h-full min-h-screen flex-col items-center bg-myLightGray">
       <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">
@@ -81,7 +87,7 @@ function MoviesSearch() {
                   className="placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray bg-myWhite py-2 pl-10 pr-3 leading-5 focus:border-myGray focus:placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm"
                   placeholder={trad[lang].placeholders.searchMovies}
                   type="text"
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={handleSearch}
                 />
               </div>
             </div>
