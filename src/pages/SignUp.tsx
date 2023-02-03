@@ -324,7 +324,7 @@ function SignUp() {
                     className={`${
                       !isFormValid
                         ? "cursor-not-allowed bg-gray-200 text-myBlack focus:ring-gray-200"
-                        : "bg-secondary text-white hover:bg-secondary focus:ring-secondary"
+                        : "bg-secondary text-myWhite hover:bg-secondary focus:ring-secondary"
                     }, flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2`}
                   >
                     {trad[lang].signup.submit}

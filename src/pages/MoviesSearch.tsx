@@ -59,6 +59,7 @@ function MoviesSearch() {
 
   return (
     <div className="flex h-full min-h-screen flex-col items-center bg-myLightGray">
+      {/*----- PAGE HEADING -----*/}
       <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">

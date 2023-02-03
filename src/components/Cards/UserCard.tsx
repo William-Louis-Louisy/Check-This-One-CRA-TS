@@ -8,8 +8,8 @@ function UserCard({ user, avatar }: { user: IUser; avatar: string }) {
   const { lang } = useContext(AppContext);
 
   return (
-    <div className="w-full rounded-md bg-white shadow-lg md:w-1/2">
-      <div className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center">
+    <div className="w-full rounded-md bg-myWhite shadow-lg md:w-1/2">
+      <div className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-myWhite text-center">
         <div className="flex flex-1 flex-col p-8">
           <img
             className="mx-auto h-32 w-32 flex-shrink-0 rounded-full"

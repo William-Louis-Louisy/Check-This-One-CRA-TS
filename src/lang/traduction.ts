@@ -10,6 +10,7 @@ const trad = {
       errorFourOFourMessage: "La page que vous recherchez n'existe pas.",
       youreLost: "Hum... Je crois que vous êtes perdu !",
       backToHome: "Retour à l'accueil",
+      noLists: "Aucune liste disponible",
     },
     home: {
       title1: "Créez vos listes",
@@ -199,6 +200,7 @@ const trad = {
         "It looks like the page you’re looking for doesn't exist.",
       youreLost: "Uh oh! I think you’re lost.",
       backToHome: "Go back home",
+      noLists: "No lists",
     },
     home: {
       title1: "List it up",

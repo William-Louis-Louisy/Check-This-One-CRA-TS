@@ -271,7 +271,7 @@ function ListEdition() {
             {/* Save button */}
             <button
               type="button"
-              className="hover:bg-primaryDark inline-flex w-full justify-center rounded-md border border-transparent bg-secondary px-4 py-2 text-sm font-medium text-white shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto"
+              className="hover:bg-primaryDark inline-flex w-full justify-center rounded-md border border-transparent bg-secondary px-4 py-2 text-sm font-medium text-myWhite shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto"
               onClick={() => {
                 updateList();
               }}

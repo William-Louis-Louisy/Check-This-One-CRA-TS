@@ -13,7 +13,7 @@
 
 body {
   height: 100vh;
-  background-color: "red";
+  background-color: "#F0F2F4";
 }
 
 /* ===== Scrollbar CSS ===== */
@@ -47,7 +47,7 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 6px;
-  padding: 12px;
+  padding: 0px;
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
@@ -96,5 +96,8 @@ body {
   .leftBtn,
   .rightBtn {
     display: flex;
+  }
+  .wrapper {
+    padding: 12px;
   }
 }

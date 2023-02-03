@@ -34,7 +34,7 @@ function YoutubeVideoCard({ item, lang, addToList }) {
 
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-white shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-myWhite shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             onClick={() => addToList(item)}
           >
             <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />

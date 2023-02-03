@@ -70,7 +70,7 @@ function NavBar() {
   ];
 
   return (
-    <Disclosure as="nav" className="bg-white shadow-xl">
+    <Disclosure as="nav" className="bg-myWhite shadow-xl">
       {({ open }) => (
         <>
           <div className="flex flex-row items-center justify-between px-2 sm:px-4 md:justify-center lg:px-8">
@@ -141,7 +141,7 @@ function NavBar() {
                         ) : (
                           user?.user_name && (
                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary">
-                              <p className="text-center text-2xl text-white">
+                              <p className="text-center text-2xl text-myWhite">
                                 {user?.user_name[0].toUpperCase()}
                               </p>
                             </div>
@@ -158,7 +158,7 @@ function NavBar() {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-myWhite py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-myWhite py-1 shadow-lg ring-1 ring-smokyBlack ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
                             <Link
@@ -214,24 +214,23 @@ function NavBar() {
                 )}
 
                 {/* Language Toggle */}
-
                 <LangToggle />
               </div>
             </div>
           </div>
 
-          <Disclosure.Panel className="absolute z-[99999] min-h-screen w-full bg-white lg:hidden">
+          <Disclosure.Panel className="absolute z-[99999] h-[calc(100vh-64px)] w-full bg-myWhite lg:hidden">
             <div className="space-y-1 pt-2 pb-3">
               {tabs.map((t, i) => (
                 <Disclosure.Button
                   as="a"
                   key={i}
-                  href={t.link}
+                  href={`/${t.link}`}
                   className={classNames(
                     t.current
                       ? "border-primary text-primary"
                       : "border-transparent text-myGray",
-                    "flex flex-row items-center border-l-4 bg-white py-4 pl-3 pr-4 text-base font-medium"
+                    "flex flex-row items-center border-l-4 bg-myWhite py-4 pl-3 pr-4 text-base font-medium"
                   )}
                 >
                   {t.icon} {t.name}
@@ -241,28 +240,37 @@ function NavBar() {
             {user && user?.user_name && user?.id ? (
               <div className="border-t border-myGray pt-4 pb-3">
                 <div className="flex items-center px-4">
-                  <div className="flex-shrink-0">
-                    {user?.avatar ? (
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src={user?.avatar}
-                        alt=""
-                      />
-                    ) : (
-                      user?.user_name && (
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
-                          <p className="text-center text-2xl text-white">
-                            {user?.user_name[0].toUpperCase()}
-                          </p>
-                        </div>
-                      )
-                    )}
-                  </div>
-                  <div className="ml-3">
-                    <div className="text-base font-medium text-myBlack">
-                      {user?.user_name}
+                  {/* Username and Avatar */}
+                  <Disclosure.Button
+                    as="a"
+                    href="/userProfile"
+                    className="text-myborder-myGray flex flex-row items-center text-base font-medium hover:bg-myWhite hover:text-myBlack"
+                  >
+                    <div className="flex-shrink-0">
+                      {user?.avatar ? (
+                        <img
+                          className="h-10 w-10 rounded-full"
+                          src={user?.avatar}
+                          alt=""
+                        />
+                      ) : (
+                        user?.user_name && (
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
+                            <p className="text-center text-2xl text-myWhite">
+                              {user?.user_name[0].toUpperCase()}
+                            </p>
+                          </div>
+                        )
+                      )}
                     </div>
-                  </div>
+                    <div className="ml-3">
+                      <div className="text-base font-medium text-myBlack">
+                        {user?.user_name}
+                      </div>
+                    </div>
+                  </Disclosure.Button>
+
+                  {/* Notification Bell */}
                   <button
                     type="button"
                     className="hover:text-myborder-myGray ml-auto flex-shrink-0 rounded-full bg-myWhite p-1 text-myGray focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
@@ -274,13 +282,6 @@ function NavBar() {
                   </button>
                 </div>
                 <div className="mt-3 space-y-1">
-                  <Disclosure.Button
-                    as="a"
-                    href="/userProfile"
-                    className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
-                  >
-                    {trad[lang].navbar.myProfile}
-                  </Disclosure.Button>
                   <Disclosure.Button
                     as="a"
                     href="/userLists"
@@ -308,6 +309,10 @@ function NavBar() {
                 </Disclosure.Button>
               </div>
             )}
+            {/* Language Toggle */}
+            <div className="absolute bottom-5 flex w-full flex-row items-center justify-end pr-5">
+              <LangToggle />
+            </div>
           </Disclosure.Panel>
         </>
       )}
