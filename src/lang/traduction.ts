@@ -11,6 +11,7 @@ const trad = {
       youreLost: "Hum... Je crois que vous êtes perdu !",
       backToHome: "Retour à l'accueil",
       noLists: "Aucune liste disponible",
+      loading: "Chargement",
     },
     home: {
       title1: "Créez vos listes",
@@ -203,6 +204,7 @@ const trad = {
       youreLost: "Uh oh! I think you’re lost.",
       backToHome: "Go back home",
       noLists: "No lists",
+      loading: "Loading",
     },
     home: {
       title1: "List it up",
