@@ -1,15 +1,56 @@
-import { useContext } from "react";
+import axios from "axios";
 import trad from "../lang/traduction";
+import { Link } from "react-router-dom";
+import Poster from "../assets/poster.jpg";
+import Slider from "../components/Common/Slider";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { handleCountry, handleLang } from "../utils/RequestLanguageHandler";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 
 function Home() {
   const { lang } = useContext(AppContext);
   const { user } = useContext(UserContext);
 
+  const [upcomingMovies, setUpcomingMovies] = useState([]);
+  const [topRatedShows, setTopRatedShows] = useState([]);
+
+  // GET UPOCOMING MOVIES
+  const getUpcomingMovies = async () => {
+    try {
+      const data = await axios.get(
+        `${process.env.REACT_APP_TMDB_MOVIE_URL}/upcoming?api_key=${
+          process.env.REACT_APP_TMDB_API_KEY
+        }&language=${handleLang(lang)}&page=1&region=${handleCountry(lang)}`
+      );
+      setUpcomingMovies(data.data.results);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // GET TOP RATED SHOWS
+  const getTopRatedShows = async () => {
+    try {
+      const data = await axios.get(
+        `${process.env.REACT_APP_TMDB_SHOWS_URL}/top_rated?api_key=${
+          process.env.REACT_APP_TMDB_API_KEY
+        }&language=${handleLang(lang)}&page=1`
+      );
+      setTopRatedShows(data.data.results);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getUpcomingMovies();
+    getTopRatedShows();
+  }, [lang]);
+
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
+    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pb-16">
       {/* Hero section */}
       <div className="relative w-full md:my-16">
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100" />
@@ -28,11 +69,11 @@ function Home() {
                 <span className="block text-myWhite">
                   {trad[lang].home.title1}
                 </span>
-                <span className="block text-primary/75">
+                <span className="block text-primary">
                   {trad[lang].home.title2}
                 </span>
               </h1>
-              <p className="mx-auto mt-6 max-w-lg text-center text-xl text-primary/75 sm:max-w-3xl">
+              <p className="mx-auto mt-6 max-w-lg text-center text-xl text-myWhite sm:max-w-3xl">
                 {trad[lang].home.subtitle}
               </p>
               {!user?.user_name && (
@@ -49,17 +90,69 @@ function Home() {
           </div>
         </div>
       </div>
+
+      {/* UPCOMING MOVIES */}
+      {upcomingMovies && (
+        <div className="mt-12 flex w-full flex-col items-center justify-start px-3 sm:mt-0 sm:w-4/5 sm:px-0">
+          <h2 className="mb-3 w-full text-left text-2xl font-bold text-primary sm:pl-3 md:text-3xl">
+            {trad[lang].home.upcomingMovies}
+          </h2>
+          <Slider
+            content={upcomingMovies?.map((movie) => (
+              <a key={`movie-${movie.id}`} href={`/movieDetails/${movie.id}`}>
+                <div className="h-80 w-[213px]">
+                  <img
+                    src={
+                      movie.poster_path
+                        ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
+                        : Poster
+                    }
+                    className="h-80 rounded-md"
+                    alt={movie?.original_title}
+                  />
+                </div>
+              </a>
+            ))}
+            sliderId="upcomingMovies"
+            leftButton={<ChevronLeftIcon className="h-8" />}
+            rightButton={<ChevronRightIcon className="h-8" />}
+            leftStepValue={200}
+            rightStepValue={200}
+          />
+        </div>
+      )}
+
+      {/* TOP RATED TV SHOWS */}
+      {topRatedShows && (
+        <div className="mt-12 flex w-full flex-col items-center justify-start px-3 sm:mt-16 sm:w-4/5 sm:px-0">
+          <h2 className="mb-3 w-full text-left text-2xl font-bold text-primary sm:pl-3 md:text-3xl">
+            {trad[lang].home.topRatedShows}
+          </h2>
+          <Slider
+            content={topRatedShows?.map((show) => (
+              <a key={`show-${show.id}`} href={`/tvDetails/${show.id}`}>
+                <div className="h-80 w-[213px]">
+                  <img
+                    src={
+                      show.poster_path
+                        ? "https://image.tmdb.org/t/p/w500" + show.poster_path
+                        : Poster
+                    }
+                    className="h-80 rounded-md"
+                    alt={show?.original_name}
+                  />
+                </div>
+              </a>
+            ))}
+            sliderId="topRatedShows"
+            leftButton={<ChevronLeftIcon className="h-8" />}
+            rightButton={<ChevronRightIcon className="h-8" />}
+            leftStepValue={200}
+            rightStepValue={200}
+          />
+        </div>
+      )}
     </div>
-
-    // SAVE THIS FOR LATER
-
-    // <div className="relative flex h-[calc(100vh-64px)] flex-col items-center bg-myLightGray text-myBlack">
-    //   <div className="h-1/3 w-full bg-background bg-cover" />
-    //   <p className="absolute top-1/3 text-6xl font-smokyBlack text-primary">
-    //     HELLO WORLD
-    //   </p>
-    //   <div className="h-2/3 w-full"></div>
-    // </div>
   );
 }
 

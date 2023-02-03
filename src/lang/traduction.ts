@@ -18,6 +18,8 @@ const trad = {
       subtitle:
         "Rejoignez la communauté et partagez avec nous vos films, séries et vidéos Youtube préférés !",
       signUpNow: "Inscrivez-vous maintenant",
+      upcomingMovies: "Films à venir",
+      topRatedShows: "Séries les mieux notées",
     },
     labels: {
       previousPage: "Page précédente",
@@ -208,6 +210,8 @@ const trad = {
       subtitle:
         "Join the community and share with us your must-see movies, TV shows and Youtube videos !",
       signUpNow: "Sign up now",
+      upcomingMovies: "Upcoming movies",
+      topRatedShows: "Top rated shows",
     },
     labels: {
       previousPage: "Previous page",
