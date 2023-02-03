@@ -41,11 +41,11 @@ function CreatorDisplayCard({ open, setOpen, creator, lang }) {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative inline-block transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
+            <div className="relative inline-block transform overflow-hidden rounded-lg bg-myWhite px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
               <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
                 <button
                   type="button"
-                  className="rounded-md bg-white text-gray-400 hover:text-gray-500"
+                  className="rounded-md bg-myWhite text-gray-400 hover:text-gray-500"
                   onClick={() => setOpen(false)}
                 >
                   <span className="sr-only">Close</span>
@@ -54,7 +54,7 @@ function CreatorDisplayCard({ open, setOpen, creator, lang }) {
               </div>
 
               {/* CREATOR CARD */}
-              <div className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center">
+              <div className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-myWhite text-center">
                 <div className="flex flex-1 flex-col p-8">
                   <img
                     className="mx-auto h-32 w-32 flex-shrink-0 rounded-full"

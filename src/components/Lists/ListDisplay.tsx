@@ -96,15 +96,18 @@ function ListDisplay({ list, lang, user, refetch }) {
   };
 
   return (
-    <div className="mx-4 flex w-full flex-col rounded-md bg-myWhite pl-3 pr-3 pb-3 pt-6 shadow-md">
-      <div className="ml-6 mr-3 flex flex-row items-center justify-between">
-        <div className="flex flex-row items-center gap-4">
+    <div className="flex w-full flex-col rounded-md bg-myWhite pl-3 pr-3 pb-3 pt-6 shadow-md md:mx-4">
+      {/* HEADING */}
+      <div className="flex flex-row items-center justify-between sm:ml-6 sm:mr-3">
+        {/* Title */}
+        <div className="flex flex-row items-center gap-2 sm:gap-4">
           <div>{typeToIcon(list.type)}</div>
-          <h4 className="text-base text-primary">{list.title}</h4>
+          <h4 className="truncate text-base text-primary">{list.title}</h4>
         </div>
 
-        <div className="flex flex-row items-center gap-3">
-          {creator && (
+        {/* Creator */}
+        <div className="flex flex-col items-center gap-3 md:flex-row">
+          {pathName !== "/userLists" && creator && (
             <span className="flex flex-row items-center gap-3">
               <button
                 onClick={() => setCreatorModal(true)}
@@ -120,24 +123,25 @@ function ListDisplay({ list, lang, user, refetch }) {
             </span>
           )}
 
+          {/* Creator action pannel */}
           {user === list.creator_id && pathName === "/userLists" && (
             <span className="relative z-0 inline-flex rounded-md shadow-sm">
               <button
                 type="button"
                 onClick={() => openModal(list.id)}
-                className="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-gray-50 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="relative inline-flex items-center rounded-l-md border border-gray-300 bg-myWhite px-3 py-2 text-sm font-medium hover:bg-gray-50 focus:z-10 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4"
               >
                 <TrashIcon className="h-5 w-5 text-red-600" />
               </button>
               <Link
                 to={`/listEdition/${list.id}`}
-                className="relative -ml-px inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-secondary hover:bg-gray-50 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="relative -ml-px inline-flex items-center border border-gray-300 bg-myWhite px-3 py-2 text-sm font-medium text-secondary hover:bg-gray-50 focus:z-10 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4"
               >
                 <PencilAltIcon className="h-5 w-5" />
               </Link>
               <button
                 type="button"
-                className="relative -ml-px inline-flex items-center rounded-r-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-secondary hover:bg-gray-50 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="relative -ml-px inline-flex items-center rounded-r-md border border-gray-300 bg-myWhite px-3 py-2 text-sm font-medium text-secondary hover:bg-gray-50 focus:z-10 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4"
               >
                 <HeartIcon className="text-myRed h-5 w-5" />
               </button>
@@ -145,9 +149,11 @@ function ListDisplay({ list, lang, user, refetch }) {
           )}
         </div>
       </div>
-      <p className="my-4 ml-8 text-sm italic text-myBlack">
+      <p className="my-4 text-sm italic text-myBlack sm:ml-8">
         "{list.description}"
       </p>
+
+      {/* SLIDER */}
       <Slider
         content={list.content.map((c: any, index: number) => (
           <ContentCard key={`card-${index}`} data={c} />
@@ -158,6 +164,8 @@ function ListDisplay({ list, lang, user, refetch }) {
         leftStepValue={200}
         rightStepValue={200}
       />
+
+      {/* CREATOR MODAL */}
       {creator && (
         <CreatorDisplayCard
           open={creatorModal}
@@ -167,7 +175,7 @@ function ListDisplay({ list, lang, user, refetch }) {
         />
       )}
 
-      {/* MODAL */}
+      {/* DELETE CONFIRMATION MODAL */}
       <DeleteConfirmation
         open={openDeleteModal}
         setOpen={setOpenDeleteModal}

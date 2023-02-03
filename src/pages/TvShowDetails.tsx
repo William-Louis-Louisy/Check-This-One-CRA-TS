@@ -32,6 +32,7 @@ function TvShowDetails() {
   const [selectedCountry, setSelectedCountry] = useState("FR");
   const [similarShows, setSimilarShows] = useState<ISuggestedShow[]>([]);
   const [filteredProviders, setFilteredProviders] = useState<IMovieProvider>();
+  const [loading, setLoading] = useState(true);
 
   // GET SHOW BY ID
   const getShow = async () => {
@@ -47,6 +48,22 @@ function TvShowDetails() {
         setShow(data.data);
       } catch (error) {
         console.error(error);
+      }
+    }
+  };
+
+  // GET ALL LISTS COUNT THAT CONTAIN A PROVIDER ID
+  const getListsCount = async () => {
+    if (tvShowId) {
+      try {
+        const data = await axios.get(
+          `${process.env.REACT_APP_API_URL}/lists/getCountByProviderId/${tvShowId.tvShowId}`
+        );
+        setListsCount(data.data.count);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -95,7 +112,8 @@ function TvShowDetails() {
     getShow();
     getWatchProviders();
     getSimilarMovies();
-  }, [tvShowId]);
+    getListsCount();
+  }, [tvShowId, lang]);
 
   useEffect(() => {
     filterWatchProviders();
@@ -123,20 +141,22 @@ function TvShowDetails() {
     setContentTitle(content.name);
   };
 
+  console.log(similarShows);
+
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pb-16">
       {/*----- PAGE HEADING -----*/}
-      <div className="my-8 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+      <div className="my-8 w-[90%] border-b border-primary pb-3 sm:flex sm:items-center sm:justify-between sm:pb-5 lg:w-[70%]">
         {/* TITLE */}
-        <h3 className="text-2xl font-medium leading-6 text-primary">
+        <h3 className="text-xl font-medium leading-6 text-primary sm:text-2xl">
           {show?.name}
         </h3>
-        <div className="flex flex-row items-center gap-3">
+        <div className="mt-3 flex flex-row items-center gap-3 sm:mt-0">
           {/* LISTS COUNT */}
           {listsCount > 0 && (
             <Link
               to="#"
-              className="rounded-md border border-secondary px-4 py-2"
+              className="rounded-md border border-secondary px-2 py-1 sm:px-4 sm:py-2"
             >
               <span className="flex flex-row items-center gap-2 text-sm font-medium text-secondary">
                 <EyeIcon className="h-5 w-5" aria-hidden="true" />
@@ -151,7 +171,7 @@ function TvShowDetails() {
           {/* ADD TO LIST BUTTON */}
           {user?.id && (
             <button
-              className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-white shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-2 py-1 text-sm font-medium text-myWhite shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:px-4 sm:py-2 sm:text-base"
               onClick={() => handleAddToList(show)}
             >
               <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />
@@ -162,8 +182,8 @@ function TvShowDetails() {
       </div>
 
       {/*----- SHOW DETAILS -----*/}
-      <div className="flex flex-row lg:w-[70%]">
-        <div className="flex w-2/5 flex-col items-center">
+      <div className="flex w-full flex-col items-center sm:flex-row sm:items-start lg:w-[70%]">
+        <div className="mb-8 flex w-full flex-col items-center sm:mb-0 sm:w-2/5">
           {/* SHOW POSTER */}
           <img
             src={
@@ -171,7 +191,7 @@ function TvShowDetails() {
                 ? "https://image.tmdb.org/t/p/w500" + show.poster_path
                 : "/src/assets/poster.jpg"
             }
-            className="rounded-md md:h-[480px]"
+            className="w-80 rounded-md md:h-[480px]"
             alt=""
           />
 
@@ -222,12 +242,12 @@ function TvShowDetails() {
           </div>
         </div>
 
-        {/* MOVIE INFORMATIONS */}
-        <div className="ml-5 flex w-3/5 flex-col items-start gap-5">
+        {/* SHOW INFORMATIONS */}
+        <div className="flex w-[90%] flex-col items-center gap-5 sm:ml-5 sm:w-3/5 sm:items-start">
           {/* Main Informations */}
           <div className="flex w-full flex-col items-start">
             {/* Original title */}
-            <span className="flex w-full flex-row justify-between text-smokyBlack">
+            <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
               <span className="font-bold text-primary">
                 {trad[lang].showDetails.originalName}:
               </span>{" "}
@@ -236,7 +256,7 @@ function TvShowDetails() {
 
             {/* Release date */}
             {show?.first_air_date && (
-              <span className="flex w-full flex-row justify-between text-smokyBlack">
+              <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
                 <span className="font-bold text-primary">
                   {trad[lang].showDetails.firstAirDate}:
                 </span>{" "}
@@ -250,7 +270,7 @@ function TvShowDetails() {
           <div className="flex w-full flex-col items-start">
             {/* Runtime */}
             {show?.episode_run_time?.length > 0 && show?.episode_run_time && (
-              <span className="flex w-full flex-row justify-between text-smokyBlack">
+              <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
                 <span className="font-bold text-primary">
                   {trad[lang].showDetails.episodeRunTime}:
                 </span>{" "}
@@ -259,43 +279,49 @@ function TvShowDetails() {
             )}
 
             {/* Number of episodes */}
-            <span className="flex w-full flex-row justify-between text-smokyBlack">
-              <span className="font-bold text-primary">
-                {trad[lang].showDetails.numberOfEpisodes}:
-              </span>{" "}
-              {show?.number_of_episodes}
-            </span>
+            {show?.number_of_episodes && (
+              <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                <span className="font-bold text-primary">
+                  {trad[lang].showDetails.numberOfEpisodes}:
+                </span>{" "}
+                {show?.number_of_episodes}
+              </span>
+            )}
 
             {/* Number of seasons */}
-            <span className="flex w-full flex-row justify-between text-smokyBlack">
-              <span className="font-bold text-primary">
-                {trad[lang].showDetails.numberOfSeasons}:
-              </span>{" "}
-              {show?.number_of_seasons}
-            </span>
+            {show?.number_of_seasons && (
+              <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                <span className="font-bold text-primary">
+                  {trad[lang].showDetails.numberOfSeasons}:
+                </span>{" "}
+                {show?.number_of_seasons}
+              </span>
+            )}
           </div>
 
           {/* Genres */}
-          <div className="flex flex-col items-start">
-            <span className="font-bold text-primary">
-              {trad[lang].movieDetails.genres}:
-            </span>
+          {show?.genres && (
+            <div className="flex w-full flex-col items-start text-sm sm:text-base">
+              <span className="font-bold text-primary">
+                {trad[lang].movieDetails.genres}:
+              </span>
 
-            <div className="mt-1 flex flex-wrap items-center gap-2">
-              {show?.genres.map((genre) => (
-                <span
-                  className="rounded-full bg-[#FBFBFB] py-1 px-3 text-sm text-smokyBlack"
-                  key={`genre-${genre.id}`}
-                >
-                  {genre.name}
-                </span>
-              ))}
+              <div className="mt-1 flex flex-wrap items-center gap-1 sm:gap-2">
+                {show?.genres.map((genre) => (
+                  <span
+                    className="rounded-full bg-[#FBFBFB] py-1 px-3 text-sm text-smokyBlack"
+                    key={`genre-${genre.id}`}
+                  >
+                    {genre.name}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Overview */}
           {show?.overview && (
-            <div className="flex flex-col items-start">
+            <div className="flex w-full flex-col items-start text-sm sm:text-base">
               <span className="font-bold text-primary">
                 {trad[lang].showDetails.overview}:
               </span>
@@ -303,30 +329,36 @@ function TvShowDetails() {
             </div>
           )}
 
-          {/* Similar Movies */}
-          <div className="flex flex-col items-start">
-            <span className="font-bold text-primary">
-              {trad[lang].movieDetails.recommendations}:
-            </span>
-            <div className="flex flex-row flex-wrap items-center gap-5">
-              {similarShows?.slice(0, 12).map((show) => (
-                <Link
-                  to={`/tvDetails/${show.id}`}
-                  key={`similar-show-${show.id}`}
-                >
-                  <img
-                    src={
-                      show?.poster_path
-                        ? "https://image.tmdb.org/t/p/w500" + show.poster_path
-                        : "/src/assets/poster.jpg"
-                    }
-                    className="w-24 rounded-md"
-                    alt=""
-                  />
-                </Link>
-              ))}
+          {/* Similar Shows */}
+          {similarShows && similarShows.length > 0 && (
+            <div className="flex flex-col items-start">
+              <span className="text-sm font-bold text-primary sm:text-base">
+                {trad[lang].movieDetails.recommendations}:
+              </span>
+              <div className="flex flex-row flex-wrap items-center gap-3 sm:gap-5">
+                {similarShows?.slice(0, 12).map(
+                  (show) =>
+                    show?.backdrop_path && (
+                      <Link
+                        to={`/tvDetails/${show.id}`}
+                        key={`similar-show-${show.id}`}
+                      >
+                        <img
+                          src={
+                            show?.poster_path
+                              ? "https://image.tmdb.org/t/p/w500" +
+                                show.poster_path
+                              : "/src/assets/poster.jpg"
+                          }
+                          className="w-24 rounded-md"
+                          alt=""
+                        />
+                      </Link>
+                    )
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       {/* ADD TO LIST MODAL */}

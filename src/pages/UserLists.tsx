@@ -75,7 +75,7 @@ function UserLists() {
       </div>
 
       {/*----- PAGE CONTENT -----*/}
-      <div className="my-12 flex flex-col items-center gap-8 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
+      <div className="my-12 flex w-full flex-col items-center gap-8 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
         {/* RESULTS */}
         {total > 0 ? (
           lists.map((list: any) => (
@@ -88,7 +88,7 @@ function UserLists() {
             />
           ))
         ) : (
-          <p>Vous n'avez pas encore créé de liste de films.</p>
+          <p>{trad[lang].global.noLists}</p>
         )}
       </div>
     </div>

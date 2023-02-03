@@ -59,7 +59,7 @@ function MovieCard({ movie, lang, handleAddToList, user }) {
       <div className="mt-4 mb-2 flex flex-row items-center gap-6 md:absolute md:bottom-1">
         {user?.id ? (
           <button
-            className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-white shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-myWhite shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             onClick={() => handleAddToList(movie)}
             // style={{ display: isAdded ? "none" : "flex" }}
           >
