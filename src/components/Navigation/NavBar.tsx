@@ -55,12 +55,12 @@ function NavBar() {
       current: pathname === "/youtubeSearch",
       icon: <FaYoutube className="mr-2 h-4 w-4" />,
     },
-    {
-      name: trad[lang].navbar.podcasts,
-      link: "podcastsSearch",
-      current: pathname === "/podcastsSearch",
-      icon: <FaPodcast className="mr-2 h-4 w-4" />,
-    },
+    // {
+    //   name: trad[lang].navbar.podcasts,
+    //   link: "podcastsSearch",
+    //   current: pathname === "/podcastsSearch",
+    //   icon: <FaPodcast className="mr-2 h-4 w-4" />,
+    // },
     {
       name: trad[lang].navbar.browseLists,
       link: "browseLists",
@@ -81,20 +81,19 @@ function NavBar() {
                 </Link>
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                   {tabs.map((tab, index) => (
-                    <Disclosure.Button
-                      as="a"
+                    <Link
                       key={index}
-                      href={tab.link}
+                      to={tab.link}
                       className={classNames(
                         tab.current
                           ? "border-primary text-primary"
                           : "text-myborder-myGray border-transparent hover:border-secondary hover:text-secondary",
-                        "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium duration-150"
+                        "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium text-secondary duration-150"
                       )}
                       aria-current={tab.current ? "page" : undefined}
                     >
                       {tab.icon} {tab.name}
-                    </Disclosure.Button>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -221,7 +220,19 @@ function NavBar() {
 
           <Disclosure.Panel className="absolute z-[99999] h-[calc(100vh-64px)] w-full bg-myWhite lg:hidden">
             <div className="space-y-1 pt-2 pb-3">
-              {tabs.map((t, i) => (
+              <Disclosure.Button
+                as="a"
+                href="/"
+                className={classNames(
+                  pathname === "/"
+                    ? "border-primary text-primary"
+                    : "border-transparent text-myGray",
+                  "flex flex-row items-center border-l-4 bg-myWhite py-4 pl-3 pr-4 text-base font-medium"
+                )}
+              >
+                <FaHome className="mr-2 h-4 w-4" /> {trad[lang].navbar.home}
+              </Disclosure.Button>
+              {tabs.slice(1).map((t, i) => (
                 <Disclosure.Button
                   as="a"
                   key={i}

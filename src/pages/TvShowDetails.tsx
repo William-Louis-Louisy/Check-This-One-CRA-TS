@@ -141,7 +141,7 @@ function TvShowDetails() {
     setContentTitle(content.name);
   };
 
-  console.log(similarShows);
+  if (loading) return <div>LOADING</div>;
 
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pb-16">
