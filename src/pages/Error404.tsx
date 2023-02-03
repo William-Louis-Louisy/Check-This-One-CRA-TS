@@ -26,7 +26,7 @@ function Error404() {
         <div className="mt-6">
           <Link
             to="/"
-            className="inline-flex items-center rounded-md border border-transparent bg-secondary px-4 py-2 text-sm font-medium text-white duration-150 sm:hover:bg-primary"
+            className="inline-flex items-center rounded-md border border-transparent bg-secondary px-4 py-2 text-sm font-medium text-myWhite duration-150 sm:hover:bg-primary"
           >
             {trad[lang].global.backToHome}
           </Link>

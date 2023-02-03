@@ -84,169 +84,167 @@ function EditUserCard({
   };
 
   return (
-    <div className="space-y-8 divide-y divide-gray-200 rounded-md bg-white p-8 shadow-lg">
-      <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-        <div>
-          <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-900">
-              {trad[lang].user.editProfile}
-            </h3>
-          </div>
+    <div className="space-y-8 divide-y divide-gray-200 rounded-md bg-myWhite p-8 shadow-lg">
+      <div className="space-y-4 sm:space-y-5">
+        <div className="mb-3">
+          <h3 className="text-lg font-medium leading-6 text-smokyBlack">
+            {trad[lang].user.editProfile}
+          </h3>
+        </div>
 
-          {/* AVATAR */}
-          <div className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 sm:pt-5">
-            <label
-              htmlFor="photo"
-              className="block text-sm font-medium text-gray-700"
-            >
-              {trad[lang].user.avatar}
-            </label>
-            <div className="mt-1 sm:col-span-2 sm:mt-0">
-              <div className="flex items-center">
-                <input
-                  type="file"
-                  onChange={(e) => fileSelectedHandler(e)}
-                  className="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* USERNAME */}
-          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-            >
-              {trad[lang].user.username}
-            </label>
-            <div className="mt-1 sm:col-span-2 sm:mt-0">
+        {/* AVATAR */}
+        <div className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 sm:pt-5">
+          <label
+            htmlFor="photo"
+            className="block text-sm font-medium text-gray-700"
+          >
+            {trad[lang].user.avatar}
+          </label>
+          <div className="mt-1 sm:col-span-2 sm:mt-0">
+            <div className="flex items-center">
               <input
-                type="text"
-                name="username"
-                id="username"
-                autoComplete="username"
-                defaultValue={user.user_name}
-                className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:max-w-xs sm:text-sm"
-                onChange={(e) => {
-                  setProfileForm({
-                    ...profileForm,
-                    username: e.target.value,
-                  });
-                }}
+                type="file"
+                onChange={(e) => fileSelectedHandler(e)}
+                className="ml-5 rounded-md border border-gray-300 bg-myWhite py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
               />
             </div>
           </div>
+        </div>
 
-          {/* COUNTRY */}
-          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-            <label
-              htmlFor="country"
-              className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-            >
-              {trad[lang].user.country}
-            </label>
-            <div className="mt-1 sm:col-span-2 sm:mt-0">
-              <select
-                id="country"
-                name="country"
-                autoComplete="country-name"
-                defaultValue={user.country}
-                className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:max-w-xs sm:text-sm"
-                onChange={(e) => {
-                  setProfileForm({
-                    ...profileForm,
-                    country: e.target.value,
-                  });
-                }}
-              >
-                {countriesList.map((country) => (
-                  <option key={country.name[lang]}>{country.name[lang]}</option>
-                ))}
-              </select>
-            </div>
+        {/* USERNAME */}
+        <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
+          <label
+            htmlFor="username"
+            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+          >
+            {trad[lang].user.username}
+          </label>
+          <div className="mt-1 sm:col-span-2 sm:mt-0">
+            <input
+              type="text"
+              name="username"
+              id="username"
+              autoComplete="username"
+              defaultValue={user.user_name}
+              className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:max-w-xs sm:text-sm"
+              onChange={(e) => {
+                setProfileForm({
+                  ...profileForm,
+                  username: e.target.value,
+                });
+              }}
+            />
           </div>
+        </div>
 
-          {/* CITY */}
-          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-            <label
-              htmlFor="city"
-              className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+        {/* COUNTRY */}
+        <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
+          <label
+            htmlFor="country"
+            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+          >
+            {trad[lang].user.country}
+          </label>
+          <div className="mt-1 sm:col-span-2 sm:mt-0">
+            <select
+              id="country"
+              name="country"
+              autoComplete="country-name"
+              defaultValue={user.country}
+              className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:max-w-xs sm:text-sm"
+              onChange={(e) => {
+                setProfileForm({
+                  ...profileForm,
+                  country: e.target.value,
+                });
+              }}
             >
-              {trad[lang].user.city}
-            </label>
-            <div className="mt-1 sm:col-span-2 sm:mt-0">
-              <input
-                type="text"
-                name="city"
-                id="city"
-                autoComplete="address-level2"
-                defaultValue={user.city}
-                className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:max-w-xs sm:text-sm"
-                onChange={(e) => {
-                  setProfileForm({
-                    ...profileForm,
-                    city: e.target.value,
-                  });
-                }}
-              />
-            </div>
+              {countriesList.map((country) => (
+                <option key={country.name[lang]}>{country.name[lang]}</option>
+              ))}
+            </select>
           </div>
+        </div>
 
-          {/* CATCHLINE */}
-          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-            <label
-              htmlFor="catchline"
-              className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-            >
-              {trad[lang].user.catchline}
-            </label>
-            <div className="mt-1 sm:col-span-2 sm:mt-0">
-              <textarea
-                id="catchline"
-                name="catchline"
-                rows={2}
-                className="card block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
-                defaultValue={user.catchline}
-                onChange={(e) => {
-                  setProfileForm({
-                    ...profileForm,
-                    catchline: e.target.value,
-                  });
-                }}
-              />
-              <p className="mt-2 text-sm text-gray-500">
-                {trad[lang].user.giveUsYourBestQuote}
-              </p>
-            </div>
+        {/* CITY */}
+        <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
+          <label
+            htmlFor="city"
+            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+          >
+            {trad[lang].user.city}
+          </label>
+          <div className="mt-1 sm:col-span-2 sm:mt-0">
+            <input
+              type="text"
+              name="city"
+              id="city"
+              autoComplete="address-level2"
+              defaultValue={user.city}
+              className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:max-w-xs sm:text-sm"
+              onChange={(e) => {
+                setProfileForm({
+                  ...profileForm,
+                  city: e.target.value,
+                });
+              }}
+            />
           </div>
+        </div>
 
-          {/* INTRODUCTION */}
-          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-            <label
-              htmlFor="about"
-              className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-            >
-              {trad[lang].user.introduction}
-            </label>
-            <div className="mt-1 sm:col-span-2 sm:mt-0">
-              <textarea
-                id="about"
-                name="about"
-                rows={3}
-                className="card block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
-                defaultValue={user.introduction}
-                onChange={(e) => {
-                  setProfileForm({
-                    ...profileForm,
-                    introduction: e.target.value,
-                  });
-                }}
-              />
-              <p className="mt-2 text-sm text-gray-500">
-                {trad[lang].user.tellUsAboutYou}
-              </p>
-            </div>
+        {/* CATCHLINE */}
+        <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
+          <label
+            htmlFor="catchline"
+            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+          >
+            {trad[lang].user.catchline}
+          </label>
+          <div className="mt-1 sm:col-span-2 sm:mt-0">
+            <textarea
+              id="catchline"
+              name="catchline"
+              rows={2}
+              className="card block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
+              defaultValue={user.catchline}
+              onChange={(e) => {
+                setProfileForm({
+                  ...profileForm,
+                  catchline: e.target.value,
+                });
+              }}
+            />
+            <p className="mt-2 text-sm text-gray-500">
+              {trad[lang].user.giveUsYourBestQuote}
+            </p>
+          </div>
+        </div>
+
+        {/* INTRODUCTION */}
+        <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
+          <label
+            htmlFor="about"
+            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+          >
+            {trad[lang].user.introduction}
+          </label>
+          <div className="mt-1 sm:col-span-2 sm:mt-0">
+            <textarea
+              id="about"
+              name="about"
+              rows={3}
+              className="card block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
+              defaultValue={user.introduction}
+              onChange={(e) => {
+                setProfileForm({
+                  ...profileForm,
+                  introduction: e.target.value,
+                });
+              }}
+            />
+            <p className="mt-2 text-sm text-gray-500">
+              {trad[lang].user.tellUsAboutYou}
+            </p>
           </div>
         </div>
       </div>
@@ -255,7 +253,7 @@ function EditUserCard({
         <div className="flex justify-end">
           <button
             type="button"
-            className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+            className="rounded-md border border-gray-300 bg-myWhite py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
             onClick={() => navigate(-1)}
           >
             {trad[lang].user.cancel}
@@ -263,7 +261,7 @@ function EditUserCard({
           <button
             type="button"
             onClick={() => updateProfile()}
-            className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-secondary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+            className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-secondary py-2 px-4 text-sm font-medium text-myWhite shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
           >
             {trad[lang].user.update}
           </button>

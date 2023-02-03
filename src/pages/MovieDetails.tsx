@@ -145,17 +145,17 @@ function MovieDetails() {
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pb-16">
       {/*----- PAGE HEADING -----*/}
-      <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+      <div className="my-8 w-[90%] border-b border-primary pb-3 sm:flex sm:items-center sm:justify-between sm:pb-5 lg:w-[70%]">
         {/* TITLE */}
-        <h3 className="w-full text-xl font-medium leading-6 text-primary sm:text-2xl">
+        <h3 className="text-xl font-medium leading-6 text-primary sm:text-2xl">
           {movie?.title}
         </h3>
-        <div className="flex flex-row items-center gap-3">
+        <div className="mt-3 flex flex-row items-center gap-3 sm:mt-0">
           {/* LISTS COUNT */}
           {listsCount > 0 && (
             <Link
               to="#"
-              className="rounded-md border border-secondary px-4 py-2"
+              className="rounded-md border border-secondary px-2 py-1 sm:px-4 sm:py-2"
             >
               <span className="flex flex-row items-center gap-2 text-sm font-medium text-secondary">
                 <EyeIcon className="h-5 w-5" aria-hidden="true" />
@@ -170,7 +170,7 @@ function MovieDetails() {
           {/* ADD TO LIST BUTTON */}
           {user?.id && (
             <button
-              className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-white shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-2 py-1 text-sm font-medium text-myWhite shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:px-4 sm:py-2 sm:text-base"
               onClick={() => handleAddToList(movie)}
             >
               <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />
@@ -216,7 +216,7 @@ function MovieDetails() {
                 onChange={(e) => setSelectedCountry(e.target.value)}
               >
                 <option value={"FR"}>France</option>
-                <option value={"UK"}>United Kingdom</option>
+                <option value={"GB"}>United Kingdom</option>
                 <option value={"US"}>United States</option>
               </select>
             </div>
@@ -280,7 +280,7 @@ function MovieDetails() {
               {trad[lang].movieDetails.genres}:
             </span>
 
-            <div className="mt-1 flex flex-wrap items-center gap-2">
+            <div className="mt-1 flex flex-wrap items-center gap-1 sm:gap-2">
               {movie?.genres.map((genre) => (
                 <span
                   className="rounded-full bg-[#FBFBFB] py-1 px-3 text-sm text-smokyBlack"
@@ -305,23 +305,27 @@ function MovieDetails() {
             <span className="text-sm font-bold text-primary sm:text-base">
               {trad[lang].movieDetails.recommendations}:
             </span>
-            <div className="flex flex-row flex-wrap items-center gap-5">
-              {similarMovies?.slice(0, 12).map((movie) => (
-                <Link
-                  to={`/movieDetails/${movie.id}`}
-                  key={`similar-movie-${movie.id}`}
-                >
-                  <img
-                    src={
-                      movie?.poster_path
-                        ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
-                        : "/src/assets/poster.jpg"
-                    }
-                    className="w-24 rounded-md"
-                    alt=""
-                  />
-                </Link>
-              ))}
+            <div className="flex flex-row flex-wrap items-center gap-3 sm:gap-5">
+              {similarMovies?.slice(0, 12).map(
+                (movie) =>
+                  movie?.poster_path && (
+                    <Link
+                      to={`/movieDetails/${movie.id}`}
+                      key={`similar-movie-${movie.id}`}
+                    >
+                      <img
+                        src={
+                          movie?.poster_path
+                            ? "https://image.tmdb.org/t/p/w500" +
+                              movie.poster_path
+                            : "/src/assets/poster.jpg"
+                        }
+                        className="w-24 rounded-md"
+                        alt=""
+                      />
+                    </Link>
+                  )
+              )}
             </div>
           </div>
         </div>
