@@ -2,6 +2,7 @@ import { ClipboardListIcon, EyeIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import PageLoader from "../components/Common/PageLoader";
 import AddToList from "../components/Modals/AddToList";
 import CreateListForm from "../components/Modals/CreateListForm";
 import { AppContext } from "../contexts/AppContext";
@@ -48,6 +49,8 @@ function TvShowDetails() {
         setShow(data.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -62,8 +65,6 @@ function TvShowDetails() {
         setListsCount(data.data.count);
       } catch (error) {
         console.error(error);
-      } finally {
-        setLoading(false);
       }
     }
   };
@@ -141,7 +142,7 @@ function TvShowDetails() {
     setContentTitle(content.name);
   };
 
-  if (loading) return <div>LOADING</div>;
+  if (loading) return <PageLoader lang={lang} />;
 
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pb-16">

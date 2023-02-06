@@ -8,6 +8,7 @@ import { UserContext } from "../contexts/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { handleCountry, handleLang } from "../utils/RequestLanguageHandler";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import PageLoader from "../components/Common/PageLoader";
 
 function Home() {
   const { lang } = useContext(AppContext);
@@ -48,6 +49,10 @@ function Home() {
     getUpcomingMovies();
     getTopRatedShows();
   }, [lang]);
+
+  if (!upcomingMovies || !topRatedShows) {
+    <PageLoader lang={lang} />;
+  }
 
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pb-16">

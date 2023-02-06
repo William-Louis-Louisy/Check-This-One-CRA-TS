@@ -13,6 +13,7 @@ import { formatDateUsToFr } from "../utils/DateFormater";
 import { handleLang } from "../utils/RequestLanguageHandler";
 import CreateListForm from "../components/Modals/CreateListForm";
 import { ClipboardListIcon, EyeIcon } from "@heroicons/react/outline";
+import PageLoader from "../components/Common/PageLoader";
 
 function MovieDetails() {
   // GET MOVIE ID FROM URL
@@ -140,7 +141,7 @@ function MovieDetails() {
     filterWatchProviders();
   }, [watchProviders, selectedCountry]);
 
-  if (loading) return <div>LOADING</div>;
+  if (loading) return <PageLoader lang={lang} />;
 
   return (
     <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pb-16">
