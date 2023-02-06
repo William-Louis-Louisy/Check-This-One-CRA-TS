@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
@@ -27,9 +28,23 @@ function Login() {
       );
       if (data) {
         storeUser(data.user);
+        toast.success(`${trad[lang].toasts.success.login}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+        });
       }
     } catch (error) {
       console.error(error);
+      toast.error(`${trad[lang].toasts.error.login}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     } finally {
       navigate("/");
     }

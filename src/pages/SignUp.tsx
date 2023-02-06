@@ -4,6 +4,7 @@ import { AppContext } from "../contexts/AppContext";
 import { useContext, useState, useEffect } from "react";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -107,13 +108,26 @@ function SignUp() {
         }
       );
       if (data) {
-        console.log("Account created!");
+        toast.success(`${trad[lang].toasts.success.signup}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+        });
         navigate("/login");
       } else {
         console.error("Error creating account!");
       }
     } catch (error) {
       console.error(error);
+      toast.error(`${trad[lang].toasts.error.signup}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     }
   };
 
