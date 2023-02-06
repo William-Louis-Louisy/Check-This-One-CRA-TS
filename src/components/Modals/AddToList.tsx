@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ClipboardListIcon } from "@heroicons/react/outline";
 import trad from "../../lang/traduction";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface ISelectedList {
   id: number;
@@ -43,8 +44,22 @@ function AddToList({
         poster_path: contentToList.poster_path,
         type: handleContentType(contentToList),
       });
+      toast.success(`${trad[lang].toasts.success.contentAddedToList}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     } catch (error) {
       console.error(error);
+      toast.error(`${trad[lang].toasts.error.contentAddedToListError}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     }
   };
 

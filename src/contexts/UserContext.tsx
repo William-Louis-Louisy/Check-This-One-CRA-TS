@@ -1,12 +1,15 @@
-import trad from "../lang/traduction";
 import React, {
   createContext,
   Dispatch,
   SetStateAction,
   useEffect,
   useState,
+  useContext,
 } from "react";
 import axios from "axios";
+import trad from "../lang/traduction";
+import { toast } from "react-toastify";
+import { AppContext } from "./AppContext";
 
 export interface IUser {
   id: number;
@@ -31,7 +34,7 @@ export type UserContextType = {
 export const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [avatar, setAvatar] = useState<string>("");
+  const { lang } = useContext(AppContext);
   const [user, setUser] = useState<IUser>({
     id: 0,
     email: "",
@@ -88,58 +91,38 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   // LOGOUT
   const logout = async () => {
-    await axios.get(`${process.env.REACT_APP_API_URL}/logout`);
-    setUser({
-      id: 0,
-      email: "",
-      user_name: "",
-      avatar: "",
-      country: "",
-      city: "",
-      introduction: "",
-      catchline: "",
-    });
-    await localStorage.clear();
-    window.location.replace("/");
+    try {
+      await axios.get(`${process.env.REACT_APP_API_URL}/logout`);
+      toast.success(`${trad[lang].toasts.success.logout}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
+      setUser({
+        id: 0,
+        email: "",
+        user_name: "",
+        avatar: "",
+        country: "",
+        city: "",
+        introduction: "",
+        catchline: "",
+      });
+      await localStorage.clear();
+      window.location.replace("/");
+    } catch (error) {
+      console.error(error);
+      toast.error(`${trad[lang].toasts.error.logout}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
+    }
   };
-
-  // GET AVATAR FROM DB AND STORE IT IN ASYNC STORAGE
-  // const getAvatar = async () => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `${process.env.REACT_APP_API_URL}/avatar/${user.id}`
-  //     );
-  //     if (data) {
-  //       // Format avatar to base64
-  //       const avatarBase64 = `data:image/jpeg;base64,${data.avatar}`;
-  //       // Store avatar in async storage
-  //       await localStorage.setItem("userAvatar", avatarBase64);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (user?.id) {
-  //     getAvatar();
-  //   }
-  // }, [user?.id]);
-
-  // GET AVATAR FROM ASYNC STORAGE
-
-  // const getAvatarFromStorage = async () => {
-  //   try {
-  //     const storedAvatar = await localStorage.getItem("userAvatar");
-  //     if (storedAvatar) {
-  //       setAvatar(storedAvatar);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getAvatarFromStorage();
-  // }, []);
 
   return (
     <UserContext.Provider

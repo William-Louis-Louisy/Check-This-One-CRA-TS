@@ -97,8 +97,22 @@ function ListEdition() {
         `${process.env.REACT_APP_API_URL}/${listId.listId}/content/${id}`
       );
       getListById();
+      toast.success(`${trad[lang].toasts.success.removeToList}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     } catch (error) {
       console.error(error);
+      toast.error(`${trad[lang].toasts.error.removeToList}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     }
   };
 

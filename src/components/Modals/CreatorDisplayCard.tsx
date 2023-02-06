@@ -56,11 +56,22 @@ function CreatorDisplayCard({ open, setOpen, creator, lang }) {
               {/* CREATOR CARD */}
               <div className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-myWhite text-center">
                 <div className="flex flex-1 flex-col p-8">
-                  <img
-                    className="mx-auto h-32 w-32 flex-shrink-0 rounded-full"
-                    src={creator.avatar}
-                    alt=""
-                  />
+                  {creator.avatar ? (
+                    <img
+                      className="mx-auto h-32 w-32 flex-shrink-0 rounded-full"
+                      src={creator.avatar}
+                      alt=""
+                    />
+                  ) : (
+                    creator?.user_name && (
+                      <div className="mx-auto flex h-32 w-32 flex-shrink-0 items-center justify-center rounded-full bg-secondary">
+                        <p className="text-center text-6xl text-myWhite">
+                          {creator?.user_name[0].toUpperCase()}
+                        </p>
+                      </div>
+                    )
+                  )}
+
                   <h3 className="mt-2 font-bold text-primary">
                     {creator.user_name}
                   </h3>

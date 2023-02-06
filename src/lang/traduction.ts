@@ -151,6 +151,7 @@ const trad = {
         listDeleted: "La liste a bien été supprimée !",
         listUpdated: "La liste a bien été mise à jour !",
         userProfileUpdated: "Votre profil a bien été mis à jour !",
+        contentAddedToList: "Le contenu a bien été ajouté à la liste !",
       },
       error: {
         login: "Une erreur est survenue lors de la connexion.",
@@ -168,6 +169,8 @@ const trad = {
           "Un problème est survenu lors de la création de cette liste !",
         userProfileUpdatedError:
           "Un problème est survenu lors de la mise à jour de votre profil !",
+        contentAddedToListError:
+          "Un problème est survenu lors de l'ajout du contenu à la liste !",
       },
     },
     user: {
@@ -343,6 +346,7 @@ const trad = {
         listDeleted: "List deleted !",
         listUpdated: "List updated !",
         userProfileUpdated: "Your profile has been updated !",
+        contentAddedToList: "The content has been added to the list !",
       },
       error: {
         login: "An error occurred while logging in.",
@@ -356,6 +360,8 @@ const trad = {
         listCreatedError: "An error occurred while creating this list !",
         userProfileUpdatedError:
           "An error occurred while updating your profile !",
+        contentAddedToListError:
+          "An error occurred while adding the content to the list !",
       },
     },
     user: {
