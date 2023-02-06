@@ -98,21 +98,21 @@ function Home() {
 
       {/* UPCOMING MOVIES */}
       {upcomingMovies && (
-        <div className="mt-12 flex w-full flex-col items-center justify-start px-3 sm:mt-0 sm:w-4/5 sm:px-0">
-          <h2 className="mb-3 w-full text-left text-2xl font-bold text-primary sm:pl-3 md:text-3xl">
+        <div className="mt-8 flex w-full flex-col items-center justify-start px-3 sm:mt-0 sm:w-4/5 sm:px-0">
+          <h2 className="mb-3 w-full text-left text-lg font-bold text-primary sm:pl-3 md:text-3xl">
             {trad[lang].home.upcomingMovies}
           </h2>
           <Slider
             content={upcomingMovies?.map((movie) => (
               <a key={`movie-${movie.id}`} href={`/movieDetails/${movie.id}`}>
-                <div className="h-80 w-[213px]">
+                <div className="h-40 w-[106px] md:h-80 md:w-[213px]">
                   <img
                     src={
                       movie.poster_path
                         ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
                         : Poster
                     }
-                    className="h-80 rounded-md"
+                    className="h-40 rounded-md md:h-80"
                     alt={movie?.original_title}
                   />
                 </div>
@@ -129,21 +129,21 @@ function Home() {
 
       {/* TOP RATED TV SHOWS */}
       {topRatedShows && (
-        <div className="mt-12 flex w-full flex-col items-center justify-start px-3 sm:mt-16 sm:w-4/5 sm:px-0">
-          <h2 className="mb-3 w-full text-left text-2xl font-bold text-primary sm:pl-3 md:text-3xl">
+        <div className="mt-8 flex w-full flex-col items-center justify-start px-3 sm:mt-16 sm:w-4/5 sm:px-0">
+          <h2 className="mb-3 w-full text-left text-lg font-bold text-primary sm:pl-3 md:text-3xl">
             {trad[lang].home.topRatedShows}
           </h2>
           <Slider
             content={topRatedShows?.map((show) => (
               <a key={`show-${show.id}`} href={`/tvDetails/${show.id}`}>
-                <div className="h-80 w-[213px]">
+                <div className="h-40 w-[106px] md:h-80 md:w-[213px]">
                   <img
                     src={
                       show.poster_path
                         ? "https://image.tmdb.org/t/p/w500" + show.poster_path
                         : Poster
                     }
-                    className="h-80 rounded-md"
+                    className="h-40 rounded-md md:h-80"
                     alt={show?.original_name}
                   />
                 </div>

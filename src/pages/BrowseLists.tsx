@@ -95,7 +95,7 @@ function BrowseLists() {
       </div>
 
       {/*----- PAGE CONTENT -----*/}
-      <div className="my-12 flex w-full flex-col items-center gap-8 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
+      <div className="flex w-full flex-col items-center gap-8 md:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
         {/* RESULTS */}
         {lists.length > 0 ? (
           lists.map((list: any) => (
