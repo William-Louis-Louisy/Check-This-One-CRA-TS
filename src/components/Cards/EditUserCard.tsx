@@ -29,25 +29,6 @@ function EditUserCard({
     username: user.user_name,
   });
 
-  // GET BASE64 FUNCTION
-  const getBase64 = (file: any) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-
-  // HANDLE FILE SELECTION
-  const fileSelectedHandler = async (event: any) => {
-    const base_string = [getBase64(event.target.files[0])];
-    const logo = await Promise.all(base_string);
-    const fileTmp = {
-      base64: logo[0],
-    };
-    setProfileForm({ ...profileForm, avatar: fileTmp.base64 });
-  };
-
   // UPDATE PROFILE
   const updateProfile = async () => {
     if (user.id) {
@@ -104,7 +85,6 @@ function EditUserCard({
           </label>
           <div className="avatarUpload mt-1 sm:col-span-2 sm:mt-0">
             <Widget
-              effects={"crop circle"}
               tabs="url file camera gdrive instagram"
               imagesOnly={true}
               multiple={false}
@@ -117,13 +97,6 @@ function EditUserCard({
                 });
               }}
             />
-            {/* <div className="flex items-center">
-              <input
-                type="file"
-                onChange={(e) => fileSelectedHandler(e)}
-                className="ml-5 rounded-md border border-gray-300 bg-myWhite py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
-              />
-            </div> */}
           </div>
         </div>
 
