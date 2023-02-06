@@ -85,7 +85,7 @@ function EditUserCard({
           </label>
           <div className="avatarUpload mt-1 sm:col-span-2 sm:mt-0">
             <Widget
-              tabs="url file camera gdrive instagram"
+              tabs="file url file camera gdrive instagram"
               imagesOnly={true}
               multiple={false}
               locale={lang === "fr" ? "fr" : "en"}
