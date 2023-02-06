@@ -13,7 +13,7 @@ function UserCard({ user, avatar }: { user: IUser; avatar: string }) {
         <div className="flex flex-1 flex-col p-8">
           {user.avatar ? (
             <img
-              className="mx-auto h-32 w-32 flex-shrink-0 rounded-full"
+              className="mx-auto h-32 w-32 flex-shrink-0 rounded-full object-cover"
               src={user.avatar}
               alt=""
             />
