@@ -24,7 +24,7 @@ function SmallContentCard({ data }) {
           : `/${handleType(data.type)}/${data.provider_id}`
       }
     >
-      <div className="h-48 max-w-[192px]">
+      <div className="h-40 w-[106px] md:h-48 md:max-w-[192px]">
         <img
           src={
             data.type === "youtube"
@@ -37,8 +37,8 @@ function SmallContentCard({ data }) {
           }
           className={`${
             data.type === "youtube"
-              ? "object-contain md:h-48"
-              : "rounded-md md:h-48"
+              ? "h-40 object-contain md:h-48"
+              : "h-40 rounded-md md:h-48"
           }`}
           alt=""
         />

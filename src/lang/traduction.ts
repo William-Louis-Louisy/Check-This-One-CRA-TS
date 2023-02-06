@@ -44,7 +44,7 @@ const trad = {
       deleteElementConfirmation:
         "Êtes-vous sûr de vouloir supprimer cet élément de la liste ? Cette action est irréversible.",
       deleteAnElement: "Supprimer un élément",
-      save: "Enregistrer les modifications",
+      save: "Enregistrer",
       editPrivacy: "Modifier la visibilité de la liste",
       privacy: "Visibilité",
       public: "Publique",

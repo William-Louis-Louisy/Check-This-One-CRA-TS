@@ -92,6 +92,27 @@ body {
   right: -64px;
 }
 
+.uploadcare--widget__button,
+.uploadcare--widget__button_type_open {
+  background-color: #006bb6;
+  color: white;
+}
+
+.uploadcare--button {
+  background-color: #006bb6;
+  color: white;
+}
+
+.uploadcare--button:hover {
+  background-color: #f58426;
+  color: white;
+}
+
+.uploadcare--menu__item:hover {
+  background-color: #006bb6;
+  color: white;
+}
+
 @media (min-width: 768px) {
   .leftBtn,
   .rightBtn {

@@ -115,7 +115,7 @@ function ListDisplay({ list, lang, user, refetch }) {
               >
                 {creator.avatar ? (
                   <img
-                    className="mr-2 h-8 w-8 rounded-full"
+                    className="mr-2 h-8 w-8 rounded-full object-cover"
                     src={creator.avatar}
                     alt=""
                   />

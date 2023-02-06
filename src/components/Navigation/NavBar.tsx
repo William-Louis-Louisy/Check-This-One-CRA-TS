@@ -133,7 +133,7 @@ function NavBar() {
                         </span>
                         {user?.avatar ? (
                           <img
-                            className="h-8 w-8 rounded-full"
+                            className="h-8 w-8 rounded-full object-cover"
                             src={user?.avatar}
                             alt=""
                           />
@@ -260,7 +260,7 @@ function NavBar() {
                     <div className="flex-shrink-0">
                       {user?.avatar ? (
                         <img
-                          className="h-10 w-10 rounded-full"
+                          className="h-10 w-10 rounded-full object-cover"
                           src={user?.avatar}
                           alt=""
                         />

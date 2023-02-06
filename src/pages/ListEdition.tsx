@@ -164,15 +164,15 @@ function ListEdition() {
       {/*----- PAGE HEADING -----*/}
       <div className="my-8 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
-        <h3 className="text-2xl font-medium leading-6 text-primary">
+        <h3 className="text-lg font-medium leading-6 text-primary">
           {trad[lang].listEdition.title}: "{list?.title}"
         </h3>
       </div>
 
       {/*----- EDITION FORM -----*/}
-      <div className="flex flex-row items-start justify-between lg:w-[70%]">
+      <div className="flex flex-col items-center md:flex-row md:items-start md:justify-between lg:w-[70%]">
         {/* LIST INFO */}
-        <div className="flex w-2/5 flex-col gap-6">
+        <div className="flex w-full flex-col gap-6 px-2 md:w-2/5 md:px-0">
           {/* List privacy */}
           <Switch.Group as="div" className="flex items-center justify-between">
             <span className="flex flex-grow flex-col">
@@ -295,7 +295,7 @@ function ListEdition() {
           </div>
         </div>
         {/* LIST CONTENTS */}
-        <div className="flex w-1/2 flex-col items-center gap-1">
+        <div className="my-6 flex w-full flex-col items-center gap-1 px-2 md:my-0 md:w-1/2 md:px-0">
           <label
             htmlFor="content"
             className="w-full text-left text-sm font-medium text-gray-700"
