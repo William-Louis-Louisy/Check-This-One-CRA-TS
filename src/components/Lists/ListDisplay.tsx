@@ -113,11 +113,22 @@ function ListDisplay({ list, lang, user, refetch }) {
                 onClick={() => setCreatorModal(true)}
                 className="flex flex-row items-center text-sm text-secondary"
               >
-                <img
-                  className="mr-2 h-8 w-8 rounded-full"
-                  src={creator.avatar}
-                  alt=""
-                />
+                {creator.avatar ? (
+                  <img
+                    className="mr-2 h-8 w-8 rounded-full"
+                    src={creator.avatar}
+                    alt=""
+                  />
+                ) : (
+                  creator?.user_name && (
+                    <div className="mr-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-secondary">
+                      <p className="text-center text-xl text-myWhite">
+                        {creator?.user_name[0].toUpperCase()}
+                      </p>
+                    </div>
+                  )
+                )}
+
                 {creator.user_name}
               </button>
             </span>

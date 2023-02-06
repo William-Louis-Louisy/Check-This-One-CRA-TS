@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 function ContentCard({ data }) {
   // HANLE TYPE
@@ -24,7 +23,7 @@ function ContentCard({ data }) {
           : `/${handleType(data.type)}/${data.provider_id}`
       }
     >
-      <div className="h-80 w-[213px]">
+      <div className="h-40 w-[106px] md:h-80 md:w-[213px]">
         <img
           src={
             data.type === "youtube"
@@ -37,8 +36,8 @@ function ContentCard({ data }) {
           }
           className={`${
             data.type === "youtube"
-              ? "object-contain md:h-80"
-              : "rounded-md md:h-80"
+              ? "h-40 object-contain md:h-80"
+              : "h-40 rounded-md md:h-80"
           }`}
           alt=""
         />
