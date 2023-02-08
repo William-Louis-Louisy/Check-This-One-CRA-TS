@@ -15,7 +15,7 @@ import trad from "../../lang/traduction";
 import { Link, useLocation } from "react-router-dom";
 import CreatorDisplayCard from "../Modals/CreatorDisplayCard";
 import DeleteConfirmation from "../Modals/DeleteConfirmation";
-import { UserContext } from "../../contexts/UserContext";
+import LikesModal from "../Modals/LikesModal";
 
 interface ICreator {
   avatar: string;
@@ -43,6 +43,9 @@ function ListDisplay({ list, lang, user, refetch }) {
   // DELETE LIST MODAL
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [listToDelete, setListToDelete] = useState<IListToDelete>();
+
+  // LIKES MODAL
+  const [openLikesModal, setOpenLikesModal] = useState(false);
 
   // HANDLE DELETE LIST
   const handleDeleteList = async () => {
@@ -85,6 +88,20 @@ function ListDisplay({ list, lang, user, refetch }) {
     }
   };
 
+  // LIST LIKES MANAGEMENT
+  const handleLikes = async () => {
+    if (user) {
+      try {
+        await axios.put(
+          `${process.env.REACT_APP_API_URL}/list/${list?.id}/like/${user}`
+        );
+        refetch();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   useEffect(() => {
     getUserById();
   }, [list]);
@@ -95,8 +112,11 @@ function ListDisplay({ list, lang, user, refetch }) {
     setOpenDeleteModal(true);
   };
 
+  // CHECK IF USER LIKED THE LIST
+  const isLiked = list?.liked_by?.find((userLike) => userLike.id === user);
+
   return (
-    <div className="flex w-full flex-col rounded-md bg-myWhite pl-3 pr-3 pb-3 pt-6 shadow-md md:mx-4">
+    <div className="flex w-full flex-col rounded-md bg-myWhite pl-3 pr-3 pb-3 pt-3 shadow-md sm:pt-6 md:mx-4">
       {/* HEADING */}
       <div className="flex flex-row items-center justify-between sm:ml-6 sm:mr-3">
         {/* Title */}
@@ -115,13 +135,13 @@ function ListDisplay({ list, lang, user, refetch }) {
               >
                 {creator.avatar ? (
                   <img
-                    className="mr-2 h-8 w-8 rounded-full object-cover"
+                    className="mr-2 h-6 w-6 rounded-full object-cover sm:h-8 sm:w-8"
                     src={creator.avatar}
                     alt=""
                   />
                 ) : (
                   creator?.user_name && (
-                    <div className="mr-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-secondary">
+                    <div className="mr-2 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-secondary text-sm sm:h-8 sm:w-8 sm:text-base">
                       <p className="text-center text-xl text-myWhite">
                         {creator?.user_name[0].toUpperCase()}
                       </p>
@@ -152,7 +172,8 @@ function ListDisplay({ list, lang, user, refetch }) {
               </Link>
               <button
                 type="button"
-                className="relative -ml-px inline-flex items-center rounded-r-md border border-gray-300 bg-myWhite px-3 py-2 text-sm font-medium text-secondary hover:bg-gray-50 focus:z-10 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4"
+                className="relative -ml-px inline-flex items-center rounded-r-md border border-gray-300 bg-myWhite px-3 py-2 text-sm font-medium text-secondary hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4"
+                onClick={() => setOpenLikesModal(true)}
               >
                 <HeartIcon className="text-myRed h-5 w-5" />
               </button>
@@ -176,6 +197,23 @@ function ListDisplay({ list, lang, user, refetch }) {
         rightStepValue={200}
       />
 
+      {/* SOCIAL */}
+      <div className="w-full pt-3 sm:px-4 sm:py-2">
+        {/* Likes */}
+        <div className="flex flex-row items-center gap-2">
+          <button type="button" className="" onClick={() => handleLikes()}>
+            <HeartIcon
+              className={`h-w-6 w-6 ${
+                isLiked ? "text-red-600" : "text-myGray"
+              }`}
+            />
+          </button>
+          <p className="-mb-[2px] text-sm font-medium text-smokyBlack">
+            {list.likes} {trad[lang].global.likes}
+          </p>
+        </div>
+      </div>
+
       {/* CREATOR MODAL */}
       {creator && (
         <CreatorDisplayCard
@@ -196,6 +234,14 @@ function ListDisplay({ list, lang, user, refetch }) {
         description={trad[lang].listEdition.deleteListConfirmation}
         cancelLabel={trad[lang].listEdition.cancel}
         confirmLabel={trad[lang].listEdition.delete}
+      />
+
+      {/* LIKES MODAL */}
+      <LikesModal
+        lang={lang}
+        likes={list.liked_by}
+        open={openLikesModal}
+        setOpen={setOpenLikesModal}
       />
     </div>
   );
