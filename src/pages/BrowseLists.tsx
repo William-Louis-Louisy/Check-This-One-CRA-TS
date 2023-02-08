@@ -56,7 +56,7 @@ function BrowseLists() {
   }, [userId, searchQuery]);
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
+    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pt-16">
       {/*----- PAGE HEADING -----*/}
       <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
@@ -95,7 +95,7 @@ function BrowseLists() {
       </div>
 
       {/*----- PAGE CONTENT -----*/}
-      <div className="flex w-full flex-col items-center gap-8 md:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
+      <div className="mb-16 flex w-full flex-col items-center gap-8 md:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
         {/* RESULTS */}
         {lists.length > 0 ? (
           lists.map((list: any) => (

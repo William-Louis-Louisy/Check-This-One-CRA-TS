@@ -4,7 +4,7 @@ import trad from "../../lang/traduction";
 
 function PageLoader({ lang }: { lang: string }) {
   return (
-    <div className="flex h-[calc(100vh-64px)] w-full items-center justify-center bg-myLightGray">
+    <div className="flex h-screen w-full items-center justify-center bg-myLightGray py-16">
       <div className="flex animate-pulse flex-col items-center gap-2 ">
         <CircularProgress />
         <p className="font-bold uppercase text-secondary">

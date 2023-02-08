@@ -55,7 +55,7 @@ function Home() {
   }
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pb-16">
+    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
       {/* Hero section */}
       <div className="relative w-full md:my-16">
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100" />
