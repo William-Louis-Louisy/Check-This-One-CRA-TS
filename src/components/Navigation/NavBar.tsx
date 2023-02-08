@@ -70,7 +70,10 @@ function NavBar() {
   ];
 
   return (
-    <Disclosure as="nav" className="bg-myWhite shadow-xl">
+    <Disclosure
+      as="nav"
+      className="fixed z-[99999] w-full bg-myWhite shadow-xl"
+    >
       {({ open }) => (
         <>
           <div className="flex flex-row items-center justify-between px-2 sm:px-4 md:justify-center lg:px-8">
@@ -218,7 +221,7 @@ function NavBar() {
             </div>
           </div>
 
-          <Disclosure.Panel className="absolute z-[99999] h-[calc(100vh-64px)] w-full bg-myWhite lg:hidden">
+          <Disclosure.Panel className="absolute z-[99999] h-screen w-full bg-myWhite py-16 lg:hidden">
             <div className="space-y-1 pt-2 pb-3">
               <Disclosure.Button
                 as="a"

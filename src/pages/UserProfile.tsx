@@ -14,7 +14,7 @@ function UserProfile() {
   }
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
+    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
       <div className="my-8 w-full border-b border-primary pb-5 sm:flex sm:items-center lg:h-[59px] lg:w-[70%]">
         <h3 className="ml-8 text-lg font-medium leading-6 text-primary">
           {trad[lang].navbar.myProfile}

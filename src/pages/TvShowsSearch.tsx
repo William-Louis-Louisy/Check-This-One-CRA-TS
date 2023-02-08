@@ -69,7 +69,7 @@ function TvShowsSearch() {
   }, [user?.id]);
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray">
+    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
       <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">
