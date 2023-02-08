@@ -189,6 +189,19 @@ function NavBar() {
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
+                            <Link
+                              to="/userLikedLists"
+                              className={classNames(
+                                active ? "bg-myWhite" : "",
+                                "block px-4 py-2 text-sm text-myBlack"
+                              )}
+                            >
+                              {trad[lang].navbar.userLikedLists}
+                            </Link>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
                             <button
                               type="button"
                               onClick={() => logout()}

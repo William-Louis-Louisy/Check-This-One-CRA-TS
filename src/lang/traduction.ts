@@ -101,6 +101,7 @@ const trad = {
       openMainMenu: "Ouvrir le menu principal",
       viewNotifications: "Voir les notifications",
       openUserMenu: "Ouvrir le menu utilisateur",
+      userLikedLists: "Listes aimées",
     },
     pageTitles: {
       home: "Accueil",
@@ -300,6 +301,7 @@ const trad = {
       openMainMenu: "Open main menu",
       viewNotifications: "View notifications",
       openUserMenu: "Open user menu",
+      userLikedLists: "Liked lists",
     },
     pageTitles: {
       home: "Home",
