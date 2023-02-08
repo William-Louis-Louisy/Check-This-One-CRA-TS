@@ -12,6 +12,9 @@ const trad = {
       backToHome: "Retour à l'accueil",
       noLists: "Aucune liste disponible",
       loading: "Chargement",
+      likes: "J'aime",
+      likedBy: "Aimé par",
+      seeProfile: "Voir le profil",
     },
     home: {
       title1: "Créez vos listes",
@@ -208,6 +211,9 @@ const trad = {
       backToHome: "Go back home",
       noLists: "No lists",
       loading: "Loading",
+      likes: "Likes",
+      likedBy: "Liked by",
+      seeProfile: "See profile",
     },
     home: {
       title1: "List it up",
