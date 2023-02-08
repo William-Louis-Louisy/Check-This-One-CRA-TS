@@ -144,7 +144,7 @@ function MovieDetails() {
   if (loading) return <PageLoader lang={lang} />;
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray pb-16">
+    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
       {/*----- PAGE HEADING -----*/}
       <div className="my-8 w-[90%] border-b border-primary pb-3 sm:flex sm:items-center sm:justify-between sm:pb-5 lg:w-[70%]">
         {/* TITLE */}

@@ -7,10 +7,10 @@ function Error404() {
   const { lang } = useContext(AppContext);
   return (
     <div
-      className="h-[calc(100vh-64px)] bg-cover bg-top sm:bg-top"
+      className="h-screen bg-cover bg-top py-16 sm:bg-top"
       style={{
         backgroundImage:
-          'url("https://ucarecdn.com/04f5c44f-63a8-4584-a9b3-7134439a8ee2/danieljensenUDleHDOhBZ8unsplash.jpg")',
+          'url("https://ucarecdn.com/7d432c76-2ac4-4f37-8964-643115529778/danieljensenUDleHDOhBZ8unsplash.jpg")',
       }}
     >
       <div className="mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8 lg:py-48">
