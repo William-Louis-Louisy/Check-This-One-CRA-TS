@@ -14,6 +14,7 @@ import TvShowDetails from "../pages/TvShowDetails";
 import NavBar from "../components/Navigation/NavBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PodcastsSearch from "../pages/PodcastsSearch";
+import UserLikedLists from "../pages/UserLikedLists";
 
 export default function PublicRoutes() {
   return (
@@ -35,6 +36,7 @@ export default function PublicRoutes() {
         {/* USER */}
         <Route path="userProfile" element={<UserProfile />} />
         <Route path="userLists" element={<UserLists />} />
+        <Route path="userLikedLists" element={<UserLikedLists />} />
 
         {/* CONTENT DETAILS */}
         <Route path="movieDetails/:movieId" element={<MovieDetails />} />

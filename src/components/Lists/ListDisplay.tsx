@@ -112,6 +112,8 @@ function ListDisplay({ list, lang, user, refetch }) {
     setOpenDeleteModal(true);
   };
 
+  console.log("LIST", list);
+
   // CHECK IF USER LIKED THE LIST
   const isLiked = list?.liked_by?.find((userLike) => userLike.id === user);
 
@@ -205,7 +207,7 @@ function ListDisplay({ list, lang, user, refetch }) {
             <HeartIcon
               className={`h-w-6 w-6 ${
                 isLiked ? "text-red-600" : "text-myGray"
-              }`}
+              } ${list.liked_by ? "" : "text-red-600"}`}
             />
           </button>
           <p className="-mb-[2px] text-sm font-medium text-smokyBlack">
