@@ -16,6 +16,7 @@ import { Link, useLocation } from "react-router-dom";
 import CreatorDisplayCard from "../Modals/CreatorDisplayCard";
 import DeleteConfirmation from "../Modals/DeleteConfirmation";
 import LikesModal from "../Modals/LikesModal";
+import ActionPannelMobile from "../Common/ActionPannelMobile";
 
 interface ICreator {
   avatar: string;
@@ -112,8 +113,6 @@ function ListDisplay({ list, lang, user, refetch }) {
     setOpenDeleteModal(true);
   };
 
-  console.log("LIST", list);
-
   // CHECK IF USER LIKED THE LIST
   const isLiked = list?.liked_by?.find((userLike) => userLike.id === user);
 
@@ -158,28 +157,32 @@ function ListDisplay({ list, lang, user, refetch }) {
 
           {/* Creator action pannel */}
           {user === list.creator_id && pathName === "/userLists" && (
-            <span className="relative z-0 inline-flex rounded-md shadow-sm">
-              <button
-                type="button"
-                onClick={() => openModal(list.id)}
-                className="relative inline-flex items-center rounded-l-md border border-gray-300 bg-myWhite px-3 py-2 text-sm font-medium hover:bg-gray-50 focus:z-10 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4"
-              >
-                <TrashIcon className="h-5 w-5 text-red-600" />
-              </button>
-              <Link
-                to={`/listEdition/${list.id}`}
-                className="relative -ml-px inline-flex items-center border border-gray-300 bg-myWhite px-3 py-2 text-sm font-medium text-secondary hover:bg-gray-50 focus:z-10 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4"
-              >
-                <PencilAltIcon className="h-5 w-5" />
-              </Link>
-              <button
-                type="button"
-                className="relative -ml-px inline-flex items-center rounded-r-md border border-gray-300 bg-myWhite px-3 py-2 text-sm font-medium text-secondary hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4"
-                onClick={() => setOpenLikesModal(true)}
-              >
-                <HeartIcon className="text-myRed h-5 w-5" />
-              </button>
-            </span>
+            <>
+              <span className="relative z-0 hidden rounded-md shadow-sm sm:inline-flex">
+                <button
+                  type="button"
+                  onClick={() => openModal(list.id)}
+                  className="relative inline-flex items-center rounded-l-md border border-gray-300 bg-myWhite px-3 py-2 text-sm font-medium hover:bg-gray-50 focus:z-10 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4"
+                >
+                  <TrashIcon className="h-5 w-5 text-red-600" />
+                </button>
+                <Link
+                  to={`/listEdition/${list.id}`}
+                  className="relative -ml-px inline-flex items-center rounded-r-md border border-gray-300 bg-myWhite px-3 py-2 text-sm font-medium text-secondary hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4"
+                >
+                  <PencilAltIcon className="h-5 w-5" />
+                </Link>
+              </span>
+
+              <ActionPannelMobile
+                link={`/listEdition/${list.id}`}
+                action={() => openModal(list.id)}
+                linkLabel={trad[lang].labels.editList}
+                actionLabel={trad[lang].labels.deleteList}
+                linkIcon={<PencilAltIcon className="h-4 w-4" />}
+                actionIcon={<TrashIcon className="h-4 w-4 text-red-600" />}
+              />
+            </>
           )}
         </div>
       </div>
@@ -210,9 +213,15 @@ function ListDisplay({ list, lang, user, refetch }) {
               } ${list.liked_by ? "" : "text-red-600"}`}
             />
           </button>
-          <p className="-mb-[2px] text-sm font-medium text-smokyBlack">
-            {list.likes} {trad[lang].global.likes}
-          </p>
+          <button
+            className="-mb-[2px]"
+            type="button"
+            onClick={() => setOpenLikesModal(true)}
+          >
+            <p className="text-sm font-medium text-smokyBlack">
+              {list.likes} {trad[lang].global.likes}
+            </p>
+          </button>
         </div>
       </div>
 

@@ -24,6 +24,9 @@ const trad = {
       signUpNow: "Inscrivez-vous maintenant",
       upcomingMovies: "Films à venir",
       topRatedShows: "Séries les mieux notées",
+      lists: "Listes",
+      accumulatedLikes: "Likes cumulés",
+      usersTop: "Top utilisateurs",
     },
     labels: {
       previousPage: "Page précédente",
@@ -32,6 +35,8 @@ const trad = {
       addToAList: "Ajouter à une liste",
       see: "Voir",
       seeMyLists: "Voir mes listes",
+      editList: "Modifier la liste",
+      deleteList: "Supprimer la liste",
     },
     listEdition: {
       title: "Edition de la liste",
@@ -83,6 +88,8 @@ const trad = {
       recommendations: "Recommandations",
       streamingProviders: "Plateformes de streaming",
       thisMovieappearsIn: "Déjà dans",
+      informations: "Informations",
+      cast: "Casting",
     },
     navbar: {
       home: "Accueil",
@@ -224,6 +231,9 @@ const trad = {
       signUpNow: "Sign up now",
       upcomingMovies: "Upcoming movies",
       topRatedShows: "Top rated shows",
+      lists: "Lists",
+      accumulatedLikes: "Accumulated likes",
+      usersTop: "Users top",
     },
     labels: {
       previousPage: "Previous page",
@@ -232,6 +242,8 @@ const trad = {
       addToAList: "Add to a list",
       see: "See",
       seeMyLists: "See my lists",
+      editList: "Edit the list",
+      deleteList: "Delete the list",
     },
     listEdition: {
       title: "Edit the list",
@@ -283,6 +295,8 @@ const trad = {
       recommendations: "Recommendations",
       streamingProviders: "Streaming providers",
       thisMovieappearsIn: "Already in",
+      informations: "Informations",
+      cast: "Cast",
     },
     navbar: {
       home: "Home",
