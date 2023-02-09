@@ -10,6 +10,7 @@ import { handleCountry, handleLang } from "../utils/RequestLanguageHandler";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import PageLoader from "../components/Common/PageLoader";
 import TopRatedUserCard from "../components/Cards/TopRatedUserCard";
+import { toast } from "react-toastify";
 
 const topUsers = [
   {
