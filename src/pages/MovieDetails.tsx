@@ -14,6 +14,8 @@ import { handleLang } from "../utils/RequestLanguageHandler";
 import CreateListForm from "../components/Modals/CreateListForm";
 import { ClipboardListIcon, EyeIcon } from "@heroicons/react/outline";
 import PageLoader from "../components/Common/PageLoader";
+import Tabs from "../components/Navigation/Tabs";
+import CastCard from "../components/Cards/CastCard";
 
 function MovieDetails() {
   // GET MOVIE ID FROM URL
@@ -27,6 +29,7 @@ function MovieDetails() {
   const [open, setOpen] = useState(false);
   const [listsCount, setListsCount] = useState<Number>(0);
   const [movie, setMovie] = useState<IMovieDetails>();
+  const [cast, setCast] = useState([]);
   const [contentToList, setContentToList] = useState();
   const [contentTitle, setContentTitle] = useState("");
   const [openNewList, setOpenNewList] = useState(false);
@@ -35,6 +38,21 @@ function MovieDetails() {
   const [similarMovies, setSimilarMovies] = useState<IMovie[]>([]);
   const [filteredProviders, setFilteredProviders] = useState<IMovieProvider>();
   const [loading, setLoading] = useState(true);
+  const [dataDisplayed, setDataDisplayed] = useState("informations");
+
+  // TABS
+  const tabs = [
+    {
+      name: trad[lang].movieDetails.informations,
+      action: () => setDataDisplayed("informations"),
+      current: dataDisplayed === "informations",
+    },
+    {
+      name: trad[lang].movieDetails.cast,
+      action: () => setDataDisplayed("cast"),
+      current: dataDisplayed === "cast",
+    },
+  ];
 
   // GET MOVIE BY ID
   const getMovie = async () => {
@@ -100,6 +118,24 @@ function MovieDetails() {
     }
   };
 
+  // GET CAST BY MOVIE ID
+  const getCasting = async () => {
+    if (movieId) {
+      try {
+        const data = await axios.get(
+          `${process.env.REACT_APP_TMDB_MOVIE_URL}/${
+            movieId.movieId
+          }/credits?api_key=${
+            process.env.REACT_APP_TMDB_API_KEY
+          }&language=${handleLang(lang)}`
+        );
+        setCast(data.data.cast);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   // FILTER WATCH PROVIDERS BY COUNTRY
   const filterWatchProviders = () => {
     if (watchProviders) {
@@ -135,6 +171,7 @@ function MovieDetails() {
     getWatchProviders();
     getSimilarMovies();
     getListsCount();
+    getCasting();
   }, [movieId, lang]);
 
   useEffect(() => {
@@ -151,7 +188,7 @@ function MovieDetails() {
         <h3 className="text-xl font-medium leading-6 text-primary sm:text-2xl">
           {movie?.title}
         </h3>
-        <div className="mt-3 flex flex-row items-center gap-3 sm:mt-0">
+        <div className="mt-3 flex flex-row items-center justify-end gap-3 sm:mt-0">
           {/* LISTS COUNT */}
           {listsCount > 0 && (
             <Link
@@ -159,7 +196,10 @@ function MovieDetails() {
               className="rounded-md border border-secondary px-2 py-1 sm:px-4 sm:py-2"
             >
               <span className="flex flex-row items-center gap-2 text-sm font-medium text-secondary">
-                <EyeIcon className="h-5 w-5" aria-hidden="true" />
+                <EyeIcon
+                  className="hidden h-5 w-5 sm:flex"
+                  aria-hidden="true"
+                />
                 {trad[lang].movieDetails.thisMovieappearsIn} {listsCount}{" "}
                 {listsCount > 1
                   ? trad[lang].global.lists
@@ -174,7 +214,10 @@ function MovieDetails() {
               className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-2 py-1 text-sm font-medium text-myWhite shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:px-4 sm:py-2 sm:text-base"
               onClick={() => handleAddToList(movie)}
             >
-              <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />
+              <ClipboardListIcon
+                className="hidden h-5 w-5 sm:flex"
+                aria-hidden="true"
+              />
               {trad[lang].labels.addToAList}
             </button>
           )}
@@ -191,7 +234,7 @@ function MovieDetails() {
                 ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
                 : Poster
             }
-            className="w-80 rounded-md md:h-[480px]"
+            className="w-64 rounded-md md:h-[480px] md:w-80"
             alt=""
           />
 
@@ -244,91 +287,111 @@ function MovieDetails() {
 
         {/* MOVIE INFORMATIONS */}
         <div className="flex w-[90%] flex-col items-center gap-5 sm:ml-5 sm:w-3/5 sm:items-start">
+          {/* Tabs */}
+          <Tabs tabs={tabs} />
           {/* Main Informations */}
-          <div className="flex w-full flex-col items-start">
-            {/* Original title */}
-            <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
-              <span className="font-bold text-primary">
-                {trad[lang].movieDetails.originalTitle}:
-              </span>{" "}
-              {movie?.original_title}
-            </span>
-
-            {/* Release date */}
-            {movie?.release_date && (
-              <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
-                <span className="font-bold text-primary">
-                  {trad[lang].movieDetails.releaseDate}:
-                </span>{" "}
-                {lang === "fr"
-                  ? formatDateUsToFr(movie?.release_date)
-                  : movie?.release_date}
-              </span>
-            )}
-
-            {/* Runtime */}
-            <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
-              <span className="font-bold text-primary">
-                {trad[lang].movieDetails.runtime}:
-              </span>{" "}
-              {movie?.runtime} min
-            </span>
-          </div>
-
-          {/* Genres */}
-          <div className="flex w-full flex-col items-start text-sm sm:text-base">
-            <span className="font-bold text-primary">
-              {trad[lang].movieDetails.genres}:
-            </span>
-
-            <div className="mt-1 flex flex-wrap items-center gap-1 sm:gap-2">
-              {movie?.genres.map((genre) => (
-                <span
-                  className="rounded-full bg-[#FBFBFB] py-1 px-3 text-sm text-smokyBlack"
-                  key={`genre-${genre.id}`}
-                >
-                  {genre.name}
+          {dataDisplayed === "informations" && (
+            <>
+              <div className="flex w-full flex-col items-start">
+                {/* Original title */}
+                <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                  <span className="font-bold text-primary">
+                    {trad[lang].movieDetails.originalTitle}:
+                  </span>{" "}
+                  {movie?.original_title}
                 </span>
-              ))}
-            </div>
-          </div>
 
-          {/* Overview */}
-          <div className="flex w-full flex-col items-start text-sm sm:text-base">
-            <span className="font-bold text-primary">
-              {trad[lang].movieDetails.overview}:
-            </span>
-            <span className="italic text-smokyBlack">{movie?.overview}</span>
-          </div>
+                {/* Release date */}
+                {movie?.release_date && (
+                  <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                    <span className="font-bold text-primary">
+                      {trad[lang].movieDetails.releaseDate}:
+                    </span>{" "}
+                    {lang === "fr"
+                      ? formatDateUsToFr(movie?.release_date)
+                      : movie?.release_date}
+                  </span>
+                )}
 
-          {/* Similar Movies */}
-          <div className="flex flex-col items-start">
-            <span className="text-sm font-bold text-primary sm:text-base">
-              {trad[lang].movieDetails.recommendations}:
-            </span>
-            <div className="flex flex-row flex-wrap items-center gap-3 sm:gap-5">
-              {similarMovies?.slice(0, 12).map(
-                (movie) =>
-                  movie?.poster_path && (
-                    <Link
-                      to={`/movieDetails/${movie.id}`}
-                      key={`similar-movie-${movie.id}`}
+                {/* Runtime */}
+                <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                  <span className="font-bold text-primary">
+                    {trad[lang].movieDetails.runtime}:
+                  </span>{" "}
+                  {movie?.runtime} min
+                </span>
+              </div>
+              {/* Genres */}
+              <div className="flex w-full flex-col items-start text-sm sm:text-base">
+                <span className="font-bold text-primary">
+                  {trad[lang].movieDetails.genres}:
+                </span>
+
+                <div className="mt-1 flex flex-wrap items-center gap-1 sm:gap-2">
+                  {movie?.genres.map((genre) => (
+                    <span
+                      className="rounded-full bg-[#FBFBFB] py-1 px-3 text-sm text-smokyBlack"
+                      key={`genre-${genre.id}`}
                     >
-                      <img
-                        src={
-                          movie?.poster_path
-                            ? "https://image.tmdb.org/t/p/w500" +
-                              movie.poster_path
-                            : "/src/assets/poster.jpg"
-                        }
-                        className="w-24 rounded-md"
-                        alt=""
-                      />
-                    </Link>
-                  )
-              )}
-            </div>
-          </div>
+                      {genre.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              {/* Overview */}
+              <div className="flex w-full flex-col items-start text-sm sm:text-base">
+                <span className="font-bold text-primary">
+                  {trad[lang].movieDetails.overview}:
+                </span>
+                <span className="italic text-smokyBlack">
+                  {movie?.overview}
+                </span>
+              </div>
+              {/* Similar Movies */}
+              <div className="flex flex-col items-start">
+                <span className="text-sm font-bold text-primary sm:text-base">
+                  {trad[lang].movieDetails.recommendations}:
+                </span>
+                <div className="flex flex-row flex-wrap items-center gap-3 sm:gap-5">
+                  {similarMovies?.slice(0, 12).map(
+                    (movie) =>
+                      movie?.poster_path && (
+                        <Link
+                          to={`/movieDetails/${movie.id}`}
+                          key={`similar-movie-${movie.id}`}
+                        >
+                          <img
+                            src={
+                              movie?.poster_path
+                                ? "https://image.tmdb.org/t/p/w500" +
+                                  movie.poster_path
+                                : "/src/assets/poster.jpg"
+                            }
+                            className="w-24 rounded-md"
+                            alt=""
+                          />
+                        </Link>
+                      )
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Cast */}
+          {dataDisplayed === "cast" && (
+            <ul className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3">
+              {cast.map((actor) => (
+                <CastCard
+                  id={actor.id}
+                  name={actor.name}
+                  department={actor.known_for_department}
+                  role={actor.character}
+                  imageUrl={actor.profile_path}
+                />
+              ))}
+            </ul>
+          )}
         </div>
       </div>
       {/* ADD TO LIST MODAL */}

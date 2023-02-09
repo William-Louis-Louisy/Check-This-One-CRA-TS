@@ -114,7 +114,7 @@ function NavBar() {
                 </Disclosure.Button>
               </div>
               <div className="hidden lg:ml-4 lg:flex lg:items-center">
-                {user?.user_name && (
+                {/* {user?.user_name && (
                   <button
                     type="button"
                     className="hover:text-myborder-myGray flex-shrink-0 rounded-full bg-myWhite p-1 text-myGray focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
@@ -124,7 +124,7 @@ function NavBar() {
                     </span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
-                )}
+                )} */}
 
                 {/* Profile dropdown */}
                 {user && user.email !== "" ? (
@@ -234,7 +234,9 @@ function NavBar() {
             </div>
           </div>
 
-          <Disclosure.Panel className="absolute z-[99999] h-screen w-full bg-myWhite py-16 lg:hidden">
+          {/* MOBILE - MAIN MENU */}
+          <Disclosure.Panel className="absolute z-[99999] h-screen w-full bg-myWhite lg:hidden">
+            {/* MOBILE - NAVIGATION */}
             <div className="space-y-1 pt-2 pb-3">
               <Disclosure.Button
                 as="a"
@@ -264,6 +266,8 @@ function NavBar() {
                 </Disclosure.Button>
               ))}
             </div>
+
+            {/* MOBILE - USER MENU */}
             {user && user?.user_name && user?.id ? (
               <div className="border-t border-myGray pt-4 pb-3">
                 <div className="flex items-center px-4">
@@ -276,14 +280,14 @@ function NavBar() {
                     <div className="flex-shrink-0">
                       {user?.avatar ? (
                         <img
-                          className="h-10 w-10 rounded-full object-cover"
+                          className="h-6 w-6 rounded-full object-cover"
                           src={user?.avatar}
                           alt=""
                         />
                       ) : (
                         user?.user_name && (
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
-                            <p className="text-center text-2xl text-myWhite">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-secondary">
+                            <p className="text-center text-xl text-myWhite">
                               {user?.user_name[0].toUpperCase()}
                             </p>
                           </div>
@@ -298,7 +302,7 @@ function NavBar() {
                   </Disclosure.Button>
 
                   {/* Notification Bell */}
-                  <button
+                  {/* <button
                     type="button"
                     className="hover:text-myborder-myGray ml-auto flex-shrink-0 rounded-full bg-myWhite p-1 text-myGray focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
                   >
@@ -306,7 +310,7 @@ function NavBar() {
                       {trad[lang].navbar.viewNotifications}
                     </span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  </button> */}
                 </div>
                 <div className="mt-3 space-y-1">
                   <Disclosure.Button
@@ -315,6 +319,13 @@ function NavBar() {
                     className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
                   >
                     {trad[lang].navbar.myLists}
+                  </Disclosure.Button>
+                  <Disclosure.Button
+                    as="a"
+                    href="/userLikedLists"
+                    className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
+                  >
+                    {trad[lang].navbar.userLikedLists}
                   </Disclosure.Button>
                   <Disclosure.Button
                     className="text-myborder-myGray block px-4 py-2 text-base font-medium hover:bg-myWhite hover:text-myBlack"
@@ -337,7 +348,7 @@ function NavBar() {
               </div>
             )}
             {/* Language Toggle */}
-            <div className="absolute bottom-5 flex w-full flex-row items-center justify-end pr-5">
+            <div className="mt-6 flex w-full flex-row items-center justify-end pr-5">
               <LangToggle />
             </div>
           </Disclosure.Panel>

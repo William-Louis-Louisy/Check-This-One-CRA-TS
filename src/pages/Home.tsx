@@ -9,6 +9,46 @@ import { useContext, useEffect, useState } from "react";
 import { handleCountry, handleLang } from "../utils/RequestLanguageHandler";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import PageLoader from "../components/Common/PageLoader";
+import TopRatedUserCard from "../components/Cards/TopRatedUserCard";
+
+const topUsers = [
+  {
+    img: "https://images.unsplash.com/photo-1617914309185-9e63b3badfca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    name: "John Doe",
+    lists_nb: 5,
+    likes_nb: 100,
+  },
+  {
+    img: "https://images.unsplash.com/photo-1617914309185-9e63b3badfca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    name: "John Doe",
+    lists_nb: 12,
+    likes_nb: 240,
+  },
+  {
+    img: "https://images.unsplash.com/photo-1617914309185-9e63b3badfca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    name: "John Doe",
+    lists_nb: 24,
+    likes_nb: 256,
+  },
+  {
+    img: "https://images.unsplash.com/photo-1617914309185-9e63b3badfca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    name: "John Doe",
+    lists_nb: 8,
+    likes_nb: 187,
+  },
+  {
+    img: "https://images.unsplash.com/photo-1617914309185-9e63b3badfca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    name: "John Doe",
+    lists_nb: 17,
+    likes_nb: 972,
+  },
+  {
+    img: "https://images.unsplash.com/photo-1617914309185-9e63b3badfca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    name: "John Doe",
+    lists_nb: 15,
+    likes_nb: 98,
+  },
+];
 
 function Home() {
   const { lang } = useContext(AppContext);
@@ -121,8 +161,8 @@ function Home() {
             sliderId="upcomingMovies"
             leftButton={<ChevronLeftIcon className="h-8" />}
             rightButton={<ChevronRightIcon className="h-8" />}
-            leftStepValue={200}
-            rightStepValue={200}
+            leftStepValue={213}
+            rightStepValue={213}
           />
         </div>
       )}
@@ -152,11 +192,35 @@ function Home() {
             sliderId="topRatedShows"
             leftButton={<ChevronLeftIcon className="h-8" />}
             rightButton={<ChevronRightIcon className="h-8" />}
-            leftStepValue={200}
-            rightStepValue={200}
+            leftStepValue={213}
+            rightStepValue={213}
           />
         </div>
       )}
+
+      {/* TOP RATED USERS */}
+      {/* <div className="mt-8 flex w-full flex-col items-center justify-start px-3 sm:mt-16 sm:w-4/5 sm:px-0">
+        <h2 className="mb-3 w-full text-left text-lg font-bold text-primary sm:pl-3 md:text-3xl">
+          {trad[lang].home.usersTop}
+        </h2>
+        <Slider
+          content={topUsers?.map((user, index) => (
+            <TopRatedUserCard
+              key={`user-${index}`}
+              img={user.img}
+              name={user.name}
+              lists_nb={user.lists_nb}
+              likes_nb={user.likes_nb}
+              lang={lang}
+            />
+          ))}
+          sliderId="usersTop"
+          leftButton={<ChevronLeftIcon className="h-8" />}
+          rightButton={<ChevronRightIcon className="h-8" />}
+          leftStepValue={240}
+          rightStepValue={240}
+        />
+      </div> */}
     </div>
   );
 }

@@ -120,7 +120,7 @@ function AddToList({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative inline-block transform overflow-hidden rounded-lg bg-myWhite px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
+            <div className="relative inline-block w-[90%] transform overflow-hidden rounded-lg bg-myWhite px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
               <div>
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary">
                   <ClipboardListIcon
@@ -147,7 +147,7 @@ function AddToList({
                             setOpen(false);
                             setOpenNewList(!openNewList);
                           }}
-                          className="whitespace-nowrap rounded-md border border-secondary bg-myWhite px-4 py-2 text-base text-secondary duration-150 hover:border-primary hover:text-primary"
+                          className="whitespace-nowrap rounded-md border border-secondary bg-myWhite px-3 py-2 text-sm text-secondary duration-150 hover:border-primary hover:text-primary sm:px-4 sm:text-base"
                         >
                           {trad[lang].modals.createNewList}
                         </button>

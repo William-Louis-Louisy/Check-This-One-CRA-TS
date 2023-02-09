@@ -1,9 +1,9 @@
 import axios from "axios";
 import trad from "../lang/traduction";
-import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../contexts/AppContext";
-import { UserContext } from "../contexts/UserContext";
 import { SearchIcon } from "@heroicons/react/solid";
+import { UserContext } from "../contexts/UserContext";
+import { useContext, useState, useEffect } from "react";
 import ListDisplay from "../components/Lists/ListDisplay";
 
 function UserLikedLists() {
@@ -18,7 +18,6 @@ function UserLikedLists() {
         const data = await axios.get(
           `${process.env.REACT_APP_API_URL}/user/${user?.id}/lists`
         );
-        console.log(data.data.lists);
         setLists(data.data.lists);
       } catch (error) {
         console.error(error);
@@ -36,7 +35,7 @@ function UserLikedLists() {
       <div className="my-8 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">
-          {trad[lang].navbar.myLists}
+          {trad[lang].navbar.userLikedLists}
         </h3>
         <div className="mt-3 sm:mt-0 sm:ml-4">
           {/* SEARCH BAR */}
@@ -70,9 +69,9 @@ function UserLikedLists() {
       </div>
 
       {/*----- PAGE CONTENT -----*/}
-      <div className="my-12 flex w-full flex-col items-center gap-8 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
+      <div className="flex w-full flex-col items-center gap-8 sm:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
         {/* RESULTS */}
-        {lists ? (
+        {lists && lists.length > 0 ? (
           lists.map((list: any) => (
             <ListDisplay
               key={`list-${list.id}`}

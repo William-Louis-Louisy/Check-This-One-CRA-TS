@@ -12,7 +12,7 @@ function LikesModal({ likes, lang, open, setOpen }) {
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={setOpen}
         >
-          <div className="flex min-h-screen justify-center px-4 py-10 text-center sm:block sm:p-0">
+          <div className="flex min-h-screen items-center justify-center px-4 py-10 text-center sm:block sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -39,7 +39,7 @@ function LikesModal({ likes, lang, open, setOpen }) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <div className="relative inline-block w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
+              <div className="relative inline-block max-h-[60vh] w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
                 <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
                   <button
                     type="button"
@@ -71,9 +71,12 @@ function LikesModal({ likes, lang, open, setOpen }) {
                         )}
                       </div>
                       <div className="my-2 h-[1px] w-full bg-myGray"></div>
-                      <div className="mt-3 flex w-full flex-col">
+                      <div className="mt-3 flex max-h-52 w-full flex-col overflow-y-scroll bg-white py-2 pr-0">
                         {likes.map((like) => (
-                          <div className="flex flex-row items-center space-x-3">
+                          <div
+                            key={`userLike-${like.id}`}
+                            className="flex w-full flex-row items-center space-x-3 px-2"
+                          >
                             {like?.avatar ? (
                               <img
                                 className="inline-block h-10 w-10 rounded-full"

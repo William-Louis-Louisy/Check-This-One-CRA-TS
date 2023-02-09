@@ -1,0 +1,75 @@
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { DotsVerticalIcon } from "@heroicons/react/solid";
+import { Link } from "react-router-dom";
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
+function ActionPannelMobile({
+  link,
+  action,
+  linkLabel,
+  actionLabel,
+  linkIcon,
+  actionIcon,
+}) {
+  return (
+    <Menu as="div" className="relative inline-block text-left sm:hidden">
+      <div>
+        <Menu.Button className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-transparent">
+          <span className="sr-only">Open options</span>
+          <DotsVerticalIcon className="h-5 w-5" aria-hidden="true" />
+        </Menu.Button>
+      </div>
+
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1">
+            {/* LINK */}
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to={link}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "flex flex-row items-center gap-3 px-4 py-2 text-sm"
+                  )}
+                >
+                  {linkIcon} {linkLabel}
+                </Link>
+              )}
+            </Menu.Item>
+
+            {/* ACTION */}
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  type="button"
+                  onClick={action}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "flex flex-row items-center gap-3 px-4 py-2 text-sm"
+                  )}
+                >
+                  {actionIcon} {actionLabel}
+                </button>
+              )}
+            </Menu.Item>
+          </div>
+        </Menu.Items>
+      </Transition>
+    </Menu>
+  );
+}
+
+export default ActionPannelMobile;
