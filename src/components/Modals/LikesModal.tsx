@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import trad from "../../lang/traduction";
 import { XIcon } from "@heroicons/react/outline";
 import { Dialog, Transition } from "@headlessui/react";
+import { Link } from "react-router-dom";
 
 function LikesModal({ likes, lang, open, setOpen }) {
   return (
@@ -71,7 +72,7 @@ function LikesModal({ likes, lang, open, setOpen }) {
                         )}
                       </div>
                       <div className="my-2 h-[1px] w-full bg-myGray"></div>
-                      <div className="mt-3 flex max-h-52 w-full flex-col overflow-y-scroll bg-white py-2 pr-0">
+                      <div className="card mt-3 flex max-h-52 w-full flex-col gap-4 overflow-y-scroll bg-white py-2 pr-0">
                         {likes.map((like) => (
                           <div
                             key={`userLike-${like.id}`}
@@ -79,7 +80,7 @@ function LikesModal({ likes, lang, open, setOpen }) {
                           >
                             {like?.avatar ? (
                               <img
-                                className="inline-block h-10 w-10 rounded-full"
+                                className="inline-block h-10 w-10 rounded-full object-cover"
                                 src={like.avatar}
                                 alt=""
                               />
@@ -98,12 +99,12 @@ function LikesModal({ likes, lang, open, setOpen }) {
                                 <h3 className="text-sm font-medium sm:text-base">
                                   {like.user_name}
                                 </h3>
-                                <button
-                                  type="button"
+                                <Link
+                                  to={`/browseLists/${like.id}`}
                                   className="rounded-md bg-secondary px-2 py-1 text-white"
                                 >
                                   {trad[lang].global.seeProfile}
-                                </button>
+                                </Link>
                               </div>
                             </div>
                           </div>

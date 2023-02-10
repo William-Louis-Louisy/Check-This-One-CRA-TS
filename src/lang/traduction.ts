@@ -14,7 +14,7 @@ const trad = {
       loading: "Chargement",
       likes: "J'aime",
       likedBy: "Aimé par",
-      seeProfile: "Voir le profil",
+      seeProfile: "Voir ses listes",
     },
     home: {
       title1: "Créez vos listes",
@@ -221,7 +221,7 @@ const trad = {
       loading: "Loading",
       likes: "Likes",
       likedBy: "Liked by",
-      seeProfile: "See profile",
+      seeProfile: "See his lists",
     },
     home: {
       title1: "List it up",
