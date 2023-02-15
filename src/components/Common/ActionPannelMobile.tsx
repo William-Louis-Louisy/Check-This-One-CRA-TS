@@ -14,11 +14,12 @@ function ActionPannelMobile({
   actionLabel,
   linkIcon,
   actionIcon,
+  darkMode,
 }) {
   return (
     <Menu as="div" className="relative inline-block text-left sm:hidden">
       <div>
-        <Menu.Button className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-transparent">
+        <Menu.Button className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-transparent">
           <span className="sr-only">Open options</span>
           <DotsVerticalIcon className="h-5 w-5" aria-hidden="true" />
         </Menu.Button>
@@ -33,7 +34,11 @@ function ActionPannelMobile({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-40 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items
+          className={`absolute right-0 z-40 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+            darkMode ? "bg-darkSec text-gray-300" : "bg-white text-smokyBlack"
+          }`}
+        >
           <div className="py-1">
             {/* LINK */}
             <Menu.Item>
@@ -41,7 +46,6 @@ function ActionPannelMobile({
                 <Link
                   to={link}
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "flex flex-row items-center gap-3 px-4 py-2 text-sm"
                   )}
                 >
@@ -57,7 +61,6 @@ function ActionPannelMobile({
                   type="button"
                   onClick={action}
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "flex flex-row items-center gap-3 px-4 py-2 text-sm"
                   )}
                 >

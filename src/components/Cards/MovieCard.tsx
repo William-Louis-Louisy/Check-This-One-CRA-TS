@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import trad from "../../lang/traduction";
 import Poster from "../../assets/poster.jpg";
 
-function MovieCard({ movie, lang, handleAddToList, user }) {
+function MovieCard({ movie, lang, handleAddToList, user, darkMode }) {
   // FORMAT DATE
   const dateFormater = (date) => {
     let [yy, mm, dd] = date.split("-");
@@ -24,7 +24,11 @@ function MovieCard({ movie, lang, handleAddToList, user }) {
   const screenWidth = window.innerWidth;
 
   return (
-    <div className="relative flex w-[90%] flex-col items-center overflow-hidden rounded-xl px-3 py-3 duration-100 sm:w-full md:h-[564px] md:w-60">
+    <div
+      className={`relative flex w-[90%] flex-col items-center overflow-hidden rounded-xl px-3 py-3 duration-100 sm:w-full md:h-[564px] md:w-60 ${
+        darkMode ? "text-gray-300" : "text-smokyBlack"
+      }`}
+    >
       <Link
         to={`/movieDetails/${movie.id}`}
         className="flex w-4/5 flex-col items-center sm:w-full"
@@ -40,7 +44,7 @@ function MovieCard({ movie, lang, handleAddToList, user }) {
         />
       </Link>
 
-      <h2 className="mt-3 mb-2 w-[90%] truncate text-center text-lg font-semibold text-myBlack sm:w-full sm:text-ellipsis sm:whitespace-nowrap">
+      <h2 className="mt-3 mb-2 w-[90%] truncate text-center text-lg font-semibold sm:w-full sm:text-ellipsis sm:whitespace-nowrap">
         {screenWidth > 400 ? titleLength(movie.title) : movie.title}
       </h2>
       {movie.release_date ? (
@@ -51,7 +55,7 @@ function MovieCard({ movie, lang, handleAddToList, user }) {
         ""
       )}
       {movie && movie?.overview && (
-        <p className="card mt-2 h-[90px] overflow-y-scroll text-ellipsis px-4 text-center text-sm text-myBlack">
+        <p className="card mt-2 h-[90px] overflow-y-scroll text-ellipsis px-4 text-center text-sm">
           {movie.overview}
         </p>
       )}
@@ -59,9 +63,12 @@ function MovieCard({ movie, lang, handleAddToList, user }) {
       <div className="mt-4 mb-2 flex flex-row items-center gap-6 md:absolute md:bottom-1">
         {user?.id ? (
           <button
-            className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-4 py-2 text-base font-medium text-myWhite shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            className={`inline-flex items-center gap-2 rounded-md border border-transparent ${
+              darkMode
+                ? "bg-altSecondary text-darkBg"
+                : "bg-secondary text-myWhite"
+            } px-4 py-2 text-base font-medium shadow-sm duration-150 hover:bg-primary focus:outline-none  focus:ring-0 focus:ring-offset-0`}
             onClick={() => handleAddToList(movie)}
-            // style={{ display: isAdded ? "none" : "flex" }}
           >
             <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />
             {trad[lang].labels.addToAList}
@@ -69,10 +76,14 @@ function MovieCard({ movie, lang, handleAddToList, user }) {
         ) : (
           <Link
             to="/login"
-            className="rounded-md border border-secondary px-4 py-2 shadow-sm"
+            className={`rounded-md border px-4 py-2 shadow-sm ${
+              darkMode
+                ? "border-altSecondary text-altSecondary"
+                : "border-secondary text-secondary"
+            }`}
           >
-            <p className="text-center text-xs italic text-secondary">
-              Connectez-vous pour ajouter du contenu à des listes
+            <p className="text-center text-xs italic">
+              {trad[lang].global.loginToAddContentToYourLists}
             </p>
           </Link>
         )}

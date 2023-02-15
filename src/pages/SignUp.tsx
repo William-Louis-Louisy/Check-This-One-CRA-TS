@@ -5,10 +5,11 @@ import { useContext, useState, useEffect } from "react";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { dark } from "@mui/material/styles/createPalette";
 
 function SignUp() {
   const navigate = useNavigate();
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   const [signupForm, setSignupForm] = useState({
     username: "",
     email: "",
@@ -114,6 +115,7 @@ function SignUp() {
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
+          theme: darkMode ? "dark" : "light",
         });
         navigate("/login");
       } else {
@@ -127,16 +129,23 @@ function SignUp() {
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
+        theme: darkMode ? "dark" : "light",
       });
     }
   };
 
   return (
-    <div className="flex h-screen">
+    <div
+      className={`flex h-screen ${darkMode ? "bg-darkBg" : "bg-myLightGray"}`}
+    >
       <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
-            <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+            <h2
+              className={`mt-6 text-3xl font-extrabold ${
+                darkMode ? "text-gray-300" : "text-gray-900"
+              }`}
+            >
               {trad[lang].signup.title}
             </h2>
           </div>
@@ -148,7 +157,9 @@ function SignUp() {
                 <div>
                   <label
                     htmlFor="username"
-                    className="block text-sm font-medium text-gray-700"
+                    className={`block text-sm font-medium ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
                   >
                     {trad[lang].signup.username}
                   </label>
@@ -161,7 +172,11 @@ function SignUp() {
                       required
                       minLength={5}
                       maxLength={16}
-                      className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-secondary focus:outline-none focus:ring-secondary sm:text-sm"
+                      className={`block w-full appearance-none rounded-md border ${
+                        darkMode
+                          ? "customInput bg-darkQuin text-gray-300 placeholder-gray-300 focus:border-altSecondary"
+                          : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
+                      }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
                       onChange={(e) =>
                         setSignupForm({
                           ...signupForm,
@@ -193,7 +208,9 @@ function SignUp() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
+                    className={`block text-sm font-medium ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
                   >
                     {trad[lang].signup.email}
                   </label>
@@ -204,7 +221,11 @@ function SignUp() {
                       type="email"
                       autoComplete="email"
                       required
-                      className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-secondary focus:outline-none focus:ring-secondary sm:text-sm"
+                      className={`block w-full appearance-none rounded-md border ${
+                        darkMode
+                          ? "customInput bg-darkQuin text-gray-300 placeholder-gray-300 focus:border-altSecondary"
+                          : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
+                      }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
                       onChange={(e) =>
                         setSignupForm({
                           ...signupForm,
@@ -233,7 +254,9 @@ function SignUp() {
                 <div className="space-y-1">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
+                    className={`block text-sm font-medium ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
                   >
                     {trad[lang].signup.password}
                   </label>
@@ -244,7 +267,11 @@ function SignUp() {
                       type="password"
                       autoComplete="current-password"
                       required
-                      className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-secondary focus:outline-none focus:ring-secondary sm:text-sm"
+                      className={`block w-full appearance-none rounded-md border ${
+                        darkMode
+                          ? "customInput bg-darkQuin text-gray-300 placeholder-gray-300 focus:border-altSecondary"
+                          : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
+                      }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
                       onChange={(e) =>
                         setSignupForm({
                           ...signupForm,
@@ -276,7 +303,9 @@ function SignUp() {
                 <div className="space-y-1">
                   <label
                     htmlFor="confirm-password"
-                    className="block text-sm font-medium text-gray-700"
+                    className={`block text-sm font-medium ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
                   >
                     {trad[lang].signup.confirmPassword}
                   </label>
@@ -287,7 +316,11 @@ function SignUp() {
                       type="password"
                       autoComplete="current-password"
                       required
-                      className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-secondary focus:outline-none focus:ring-secondary sm:text-sm"
+                      className={`block w-full appearance-none rounded-md border ${
+                        darkMode
+                          ? "customInput bg-darkQuin text-gray-300 placeholder-gray-300 focus:border-altSecondary"
+                          : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
+                      }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
                       onChange={(e) =>
                         setSignupForm({
                           ...signupForm,
@@ -322,7 +355,9 @@ function SignUp() {
                   <div className="text-sm">
                     <a
                       href="/login"
-                      className="font-medium text-secondary hover:text-secondary"
+                      className={`font-medium hover:text-primary ${
+                        darkMode ? " text-altSecondary" : "text-secondary"
+                      }`}
                     >
                       {trad[lang].signup.alreadyHaveAnAccount}
                     </a>
@@ -335,11 +370,11 @@ function SignUp() {
                     type="submit"
                     disabled={!isFormValid}
                     onClick={() => postData()}
-                    className={`${
-                      !isFormValid
-                        ? "cursor-not-allowed bg-gray-200 text-myBlack focus:ring-gray-200"
-                        : "bg-secondary text-myWhite hover:bg-secondary focus:ring-secondary"
-                    }, flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2`}
+                    className={`flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium shadow-sm hover:bg-primary focus:outline-none focus:ring-offset-0 ${
+                      darkMode
+                        ? "bg-altSecondary text-darkBg focus:ring-0"
+                        : "bg-secondary text-myWhite focus:ring-0"
+                    }`}
                   >
                     {trad[lang].signup.submit}
                   </button>

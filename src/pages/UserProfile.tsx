@@ -6,7 +6,7 @@ import EditUserCard from "../components/Cards/EditUserCard";
 import trad from "../lang/traduction";
 
 function UserProfile() {
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   const { user, refetchUser } = useContext(UserContext);
 
   if (user.id === 0) {
@@ -14,15 +14,29 @@ function UserProfile() {
   }
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
+    <div
+      className={`flex h-full min-h-screen w-full flex-col items-center ${
+        darkMode ? "bg-darkBg" : "bg-myLightGray"
+      } pt-16`}
+    >
       <div className="my-8 w-full border-b border-primary pb-5 sm:flex sm:items-center lg:h-[59px] lg:w-[70%]">
         <h3 className="ml-8 text-lg font-medium leading-6 text-primary">
           {trad[lang].navbar.myProfile}
         </h3>
       </div>
       <div className="mb-16 flex w-full flex-col items-center gap-4  lg:w-[70%] lg:flex-row lg:items-start lg:justify-between">
-        <UserCard user={user} avatar={user.avatar} />
-        <EditUserCard lang={lang} user={user} refetch={refetchUser} />
+        <UserCard
+          user={user}
+          avatar={user.avatar}
+          darkMode={darkMode}
+          lang={lang}
+        />
+        <EditUserCard
+          lang={lang}
+          user={user}
+          darkMode={darkMode}
+          refetch={refetchUser}
+        />
       </div>
     </div>
   );

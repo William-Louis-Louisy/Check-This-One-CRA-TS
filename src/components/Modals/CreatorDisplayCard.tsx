@@ -1,10 +1,10 @@
-import { Fragment, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { XIcon } from "@heroicons/react/outline";
-import trad from "../../lang/traduction";
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
+import trad from "../../lang/traduction";
+import { XIcon } from "@heroicons/react/outline";
+import { Dialog, Transition } from "@headlessui/react";
 
-function CreatorDisplayCard({ open, setOpen, creator, lang }) {
+function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -22,7 +22,11 @@ function CreatorDisplayCard({ open, setOpen, creator, lang }) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <Dialog.Overlay
+              className={`fixed inset-0 bg-opacity-75 transition-opacity ${
+                darkMode ? "bg-gray-900" : "bg-gray-500"
+              }`}
+            />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
@@ -41,11 +45,15 @@ function CreatorDisplayCard({ open, setOpen, creator, lang }) {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative inline-block transform overflow-hidden rounded-lg bg-myWhite px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
+            <div
+              className={`relative inline-block transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
+                darkMode ? "bg-darkTert" : "bg-myWhite"
+              }`}
+            >
               <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
                 <button
                   type="button"
-                  className="rounded-md bg-myWhite text-gray-400 hover:text-gray-500"
+                  className="rounded-md text-gray-400 hover:text-gray-500"
                   onClick={() => setOpen(false)}
                 >
                   <span className="sr-only">Close</span>
@@ -54,7 +62,7 @@ function CreatorDisplayCard({ open, setOpen, creator, lang }) {
               </div>
 
               {/* CREATOR CARD */}
-              <div className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-myWhite text-center">
+              <div className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg text-center">
                 <div className="flex flex-1 flex-col p-8">
                   {creator.avatar ? (
                     <img
@@ -78,17 +86,31 @@ function CreatorDisplayCard({ open, setOpen, creator, lang }) {
                   <dl className="mt-1 flex flex-grow flex-col justify-between">
                     <dt className="sr-only">{trad[lang].user.location}</dt>
                     <dd className="">
-                      <span className="rounded-full bg-orange-50 px-2 py-1 text-xs font-medium text-primary">
+                      <span
+                        className={`rounded-full px-2 py-1 text-xs font-medium ${
+                          darkMode
+                            ? "bg-darkSec text-primary"
+                            : "bg-orange-50 text-primary"
+                        }`}
+                      >
                         {creator.city}, {creator.country}
                       </span>
                     </dd>
                     <dt className="sr-only">{trad[lang].user.catchline}</dt>
-                    <dd className="mt-3 text-sm italic text-gray-600">
+                    <dd
+                      className={`mt-3 text-sm italic ${
+                        darkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
+                    >
                       "{creator.catchline}"
                     </dd>
 
                     <dt className="sr-only">{trad[lang].user.introduction}</dt>
-                    <dd className="mt-3 text-sm text-gray-500">
+                    <dd
+                      className={`mt-3 text-sm italic ${
+                        darkMode ? "text-gray-300" : "text-gray-500"
+                      }`}
+                    >
                       {creator.introduction}
                     </dd>
                   </dl>
@@ -99,12 +121,20 @@ function CreatorDisplayCard({ open, setOpen, creator, lang }) {
                       <Link
                         to={`/browseLists/${creator.id}`}
                         onClick={() => setOpen(false)}
-                        className="group relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-secondary duration-150 hover:text-primary"
+                        className={`group relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium duration-150 hover:text-primary ${
+                          darkMode ? "text-altSecondary" : "text-secondary"
+                        }`}
                       >
                         <span className="ml-3">
                           {trad[lang].labels.seeMyLists}
                         </span>
-                        <span className="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-secondary duration-150 group-hover:bg-orange-50 group-hover:text-primary">
+                        <span
+                          className={`ml-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium duration-150 group-hover:bg-orange-50 group-hover:text-primary ${
+                            darkMode
+                              ? "bg-darkSec text-altSecondary"
+                              : "bg-blue-100 text-secondary"
+                          }`}
+                        >
                           {creator.publicListsCount}
                         </span>
                       </Link>

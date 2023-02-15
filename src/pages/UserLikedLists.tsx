@@ -7,7 +7,7 @@ import { useContext, useState, useEffect } from "react";
 import ListDisplay from "../components/Lists/ListDisplay";
 
 function UserLikedLists() {
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   const { user } = useContext(UserContext);
   const [lists, setLists] = useState([]);
 
@@ -30,7 +30,11 @@ function UserLikedLists() {
   }, [user]);
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
+    <div
+      className={`flex h-full min-h-screen w-full flex-col items-center ${
+        darkMode ? "bg-darkBg text-gray-300" : "bg-myLightGray text-smokyBlack"
+      } pt-16`}
+    >
       {/*----- PAGE HEADING -----*/}
       <div className="my-8 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
@@ -78,6 +82,7 @@ function UserLikedLists() {
               list={list}
               user={user.id}
               lang={lang}
+              darkMode={darkMode}
               refetch={getLists}
             />
           ))

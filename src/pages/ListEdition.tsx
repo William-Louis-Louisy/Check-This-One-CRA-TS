@@ -30,7 +30,7 @@ function ListEdition() {
   // GET LIST ID FROM URL
   const listId = useParams();
   // GET LANG FROM CONTEXT
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   // GET USER FROM CONTEXT
   const { user } = useContext(UserContext);
   // GET SCREEN HEIGHT
@@ -103,6 +103,7 @@ function ListEdition() {
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
+        theme: darkMode ? "dark" : "light",
       });
     } catch (error) {
       console.error(error);
@@ -112,6 +113,7 @@ function ListEdition() {
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
+        theme: darkMode ? "dark" : "light",
       });
     }
   };
@@ -144,6 +146,7 @@ function ListEdition() {
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
+          theme: darkMode ? "dark" : "light",
         });
         navigate(-1);
       } catch (error) {
@@ -154,13 +157,18 @@ function ListEdition() {
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
+          theme: darkMode ? "dark" : "light",
         });
       }
     }
   };
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
+    <div
+      className={`flex h-full min-h-screen w-full flex-col items-center ${
+        darkMode ? "bg-darkBg" : "bg-myLightGray"
+      } pt-16`}
+    >
       {/*----- PAGE HEADING -----*/}
       <div className="my-8 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
@@ -178,7 +186,9 @@ function ListEdition() {
             <span className="flex flex-grow flex-col">
               <Switch.Label
                 as="span"
-                className="text-sm font-medium text-gray-900"
+                className={`text-sm font-medium ${
+                  darkMode ? "text-gray-300" : "text-gray-700"
+                }`}
                 passive
               >
                 {trad[lang].listEdition.privacy}
@@ -209,11 +219,12 @@ function ListEdition() {
                 aria-hidden="true"
                 className={classNames(
                   privacy ? "translate-x-5" : "translate-x-0",
-                  "pointer-events-none flex h-5 w-5 transform items-center justify-center rounded-full bg-myWhite shadow ring-0 transition duration-200 ease-in-out"
+                  darkMode ? "bg-darkSec" : "bg-myWhite",
+                  "pointer-events-none flex h-5 w-5 transform items-center justify-center rounded-full shadow ring-0 transition duration-200 ease-in-out"
                 )}
               >
                 {privacy ? (
-                  <EyeIcon className="h-3 w-3 text-green-600" />
+                  <EyeIcon className={`h-3 w-3 text-green-600`} />
                 ) : (
                   <EyeOffIcon className="h-3 w-3 text-red-600" />
                 )}
@@ -225,7 +236,9 @@ function ListEdition() {
           <div className="flex w-full flex-col gap-1">
             <label
               htmlFor="listTitle"
-              className="w-full text-left text-sm font-medium text-gray-700"
+              className={`w-full text-left text-sm font-medium ${
+                darkMode ? "text-gray-300" : "text-gray-500"
+              }`}
             >
               {trad[lang].listEdition.name}:
             </label>
@@ -235,7 +248,11 @@ function ListEdition() {
                 name="listTitle"
                 id="listTitle"
                 defaultValue={list?.title}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+                className={`block w-full rounded-md ${
+                  darkMode
+                    ? "bg-darkQuin text-gray-300 focus:border-darkTert"
+                    : "bg-myWhite focus:border-myGray"
+                } border-gray-300 shadow-sm focus:border-primary focus:ring-0 sm:text-sm`}
                 onChange={(e) =>
                   setNewListForm({
                     ...newListForm,
@@ -250,7 +267,9 @@ function ListEdition() {
           <div className="flex w-full flex-col gap-1">
             <label
               htmlFor="description"
-              className="w-full text-left text-sm font-medium text-gray-700"
+              className={`w-full text-left text-sm font-medium ${
+                darkMode ? "text-gray-300" : "text-gray-500"
+              }`}
             >
               {trad[lang].listEdition.description}:
             </label>
@@ -259,7 +278,11 @@ function ListEdition() {
                 rows={4}
                 name="description"
                 id="description"
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+                className={`block w-full rounded-md ${
+                  darkMode
+                    ? "bg-darkQuin text-gray-300 focus:border-darkTert"
+                    : "bg-myWhite focus:border-myGray"
+                } border-gray-300 shadow-sm focus:border-primary focus:ring-0 sm:text-sm`}
                 defaultValue={list?.description}
                 onChange={(e) =>
                   setNewListForm({
@@ -276,7 +299,12 @@ function ListEdition() {
             {/* Cancel button */}
             <button
               type="button"
-              className="inline-flex w-full justify-center rounded-md border border-secondary px-4 py-2 text-sm font-medium text-secondary shadow-sm duration-150 hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto"
+              className={classNames(
+                darkMode
+                  ? "border-altSecondary text-altSecondary"
+                  : "border-secondary text-secondary",
+                "inline-flex w-full justify-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm duration-150 hover:border-primary hover:text-primary focus:outline-none  focus:ring-0 focus:ring-offset-0 sm:w-auto"
+              )}
               onClick={() => navigate(-1)}
             >
               {trad[lang].listEdition.cancel}
@@ -285,7 +313,12 @@ function ListEdition() {
             {/* Save button */}
             <button
               type="button"
-              className="hover:bg-primaryDark inline-flex w-full justify-center rounded-md border border-transparent bg-secondary px-4 py-2 text-sm font-medium text-myWhite shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto"
+              className={classNames(
+                darkMode
+                  ? "bg-altSecondary text-darkBg"
+                  : "bg-secondary text-myWhite",
+                "hover:bg-primaryDark inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm duration-150 hover:bg-primary focus:outline-none  focus:ring-0 focus:ring-offset-0 sm:w-auto"
+              )}
               onClick={() => {
                 updateList();
               }}
@@ -298,12 +331,16 @@ function ListEdition() {
         <div className="mt-6 flex w-full flex-col items-center gap-1 px-2 md:my-0 md:w-1/2 md:px-0">
           <label
             htmlFor="content"
-            className="w-full text-left text-sm font-medium text-gray-700"
+            className={`w-full text-left text-sm font-medium ${
+              darkMode ? "text-gray-300" : "text-gray-500"
+            }`}
           >
             {trad[lang].listEdition.deleteElement}:
           </label>
           <div
-            className={`card mt-1 flex h-[calc(100vh*0.70)] w-full flex-wrap gap-8 overflow-y-scroll rounded-md border border-gray-300 p-4 shadow-inner`}
+            className={`card mt-1 flex h-[calc(100vh*0.70)] w-full flex-wrap gap-8 overflow-y-scroll rounded-md border ${
+              darkMode ? "border-darkTert" : "border-gray-300"
+            } p-4 shadow-inner`}
           >
             {list?.content.map((c) => {
               return (
@@ -312,7 +349,11 @@ function ListEdition() {
                   <button
                     type="button"
                     onClick={() => openModal(c.id)}
-                    className="relative flex w-full flex-row items-center justify-center gap-2 rounded-md border border-gray-300 bg-myWhite px-4 py-2 text-sm text-red-600 duration-300 hover:border-red-600"
+                    className={`relative flex w-full flex-row items-center justify-center gap-2 rounded-md border ${
+                      darkMode
+                        ? "border-darkTert bg-darkQuin text-red-400 hover:border-red-400"
+                        : "bg-myWhite"
+                    } border-gray-300 px-4 py-2 text-sm text-red-600 duration-300 hover:border-red-600`}
                   >
                     <TrashIcon className="h-5 w-5" />{" "}
                     {trad[lang].listEdition.delete}
@@ -334,6 +375,7 @@ function ListEdition() {
         description={trad[lang].listEdition.deleteElementConfirmation}
         cancelLabel={trad[lang].listEdition.cancel}
         confirmLabel={trad[lang].listEdition.delete}
+        darkMode={darkMode}
       />
     </div>
   );

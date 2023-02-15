@@ -27,7 +27,7 @@ export default function PublicRoutes() {
         <Route path="moviesSearch" element={<MoviesSearch />} />
         <Route path="showsSearch" element={<TvShowsSearch />} />
         <Route path="youtubeSearch" element={<YoutubeSearch />} />
-        <Route path="podcastsSearch" element={<PodcastsSearch />} />
+        {/* <Route path="podcastsSearch" element={<PodcastsSearch />} /> */}
 
         {/* AUTHENTICATION */}
         <Route path="login" element={<Login />} />

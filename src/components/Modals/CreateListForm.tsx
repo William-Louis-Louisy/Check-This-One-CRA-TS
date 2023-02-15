@@ -14,6 +14,7 @@ function CreateListForm({
   open,
   setOpen,
   refetch,
+  darkMode,
 }) {
   const cancelButtonRef = useRef(null);
   const [newListForm, setNewListForm] = useState({
@@ -46,6 +47,7 @@ function CreateListForm({
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
+        theme: darkMode ? "dark" : "light",
       });
     } catch (error) {
       console.error(error);
@@ -55,6 +57,7 @@ function CreateListForm({
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
+        theme: darkMode ? "dark" : "light",
       });
     } finally {
       onClose();
@@ -89,7 +92,11 @@ function CreateListForm({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <Dialog.Overlay
+              className={`fixed inset-0 bg-opacity-75 transition-opacity ${
+                darkMode ? "bg-gray-900" : "bg-gray-500"
+              }`}
+            />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
@@ -108,30 +115,44 @@ function CreateListForm({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative inline-block transform overflow-hidden rounded-lg bg-myWhite px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
+            <div
+              className={`relative inline-block w-[90%] transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
+                darkMode ? "bg-darkTert" : "bg-myWhite"
+              }`}
+            >
               <div>
                 <div className="mx-auto hidden h-12 w-12 items-center justify-center rounded-full bg-primary sm:flex">
                   <ClipboardListIcon
-                    className="h-6 w-6 text-myWhite"
+                    className={`h-6 w-6 ${
+                      darkMode ? "text-darkQuin" : "text-myWhite"
+                    }`}
                     aria-hidden="true"
                   />
                 </div>
                 <div className="mt-3 text-center sm:mt-5">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className={`font-medium leading-6 sm:text-lg ${
+                      darkMode ? "text-gray-300" : "text-gray-900"
+                    }`}
                   >
                     {trad[lang].listEdition.createANewList}
                   </Dialog.Title>
                   <div className="mt-2">
                     <fieldset>
                       {/* NEW LIST FORM */}
-                      <div className="mt-4 flex flex-col gap-4 border border-gray-200 p-4">
+                      <div
+                        className={`mt-4 flex flex-col gap-4 border p-4 ${
+                          darkMode ? "border-gray-400" : "border-gray-200"
+                        }`}
+                      >
                         {/* List title */}
                         <div className="flex flex-col gap-1">
                           <label
                             htmlFor="listTitle"
-                            className="w-full text-left text-sm font-medium text-gray-700"
+                            className={`w-full text-left text-sm font-medium ${
+                              darkMode ? "text-gray-300" : "text-gray-700"
+                            }`}
                           >
                             {trad[lang].listEdition.listName}:
                           </label>
@@ -140,7 +161,11 @@ function CreateListForm({
                               type="text"
                               name="listTitle"
                               id="listTitle"
-                              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+                              className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-0 sm:text-sm ${
+                                darkMode
+                                  ? "bg-darkQuin text-gray-300"
+                                  : "bg-myWhite text-smokyBlack"
+                              }`}
                               onChange={(e) =>
                                 setNewListForm({
                                   ...newListForm,
@@ -155,7 +180,9 @@ function CreateListForm({
                         <div className="flex flex-col gap-1">
                           <label
                             htmlFor="description"
-                            className="w-full text-left text-sm font-medium text-gray-700"
+                            className={`w-full text-left text-sm font-medium ${
+                              darkMode ? "text-gray-300" : "text-gray-700"
+                            }`}
                           >
                             {trad[lang].listEdition.listDescription}:
                           </label>
@@ -164,7 +191,11 @@ function CreateListForm({
                               rows={4}
                               name="description"
                               id="description"
-                              className="block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-primary focus:ring-primary sm:text-base"
+                              className={`block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-primary focus:ring-0 sm:text-base ${
+                                darkMode
+                                  ? "bg-darkQuin text-gray-300"
+                                  : "bg-myWhite text-smokyBlack"
+                              }`}
                               defaultValue={""}
                               onChange={(e) =>
                                 setNewListForm({
@@ -180,7 +211,9 @@ function CreateListForm({
                         <div className="flex flex-col gap-1">
                           <label
                             htmlFor="select"
-                            className="w-full text-left text-sm font-medium text-gray-700"
+                            className={`w-full text-left text-sm font-medium ${
+                              darkMode ? "text-gray-300" : "text-gray-700"
+                            }`}
                           >
                             {trad[lang].listEdition.listTags}:
                           </label>
@@ -188,7 +221,11 @@ function CreateListForm({
                             <select
                               name="select"
                               id="select"
-                              className="block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-primary focus:ring-primary sm:text-base"
+                              className={`block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-primary focus:ring-0 sm:text-base ${
+                                darkMode
+                                  ? "bg-darkQuin text-gray-300"
+                                  : "bg-myWhite text-smokyBlack"
+                              }`}
                               defaultValue={""}
                               onChange={(e) => handleTagSelect(e)}
                             >
@@ -211,7 +248,11 @@ function CreateListForm({
                                 return (
                                   <div
                                     key={tag.name}
-                                    className="flex items-center gap-2 rounded-md bg-gray-100 px-2 py-1"
+                                    className={`flex items-center gap-2 rounded-md px-2 py-1 ${
+                                      darkMode
+                                        ? "bg-darkQuin text-gray-300"
+                                        : "bg-gray-100 text-smokyBlack"
+                                    }`}
                                   >
                                     <span className="text-sm">
                                       {lang === "en" ? tag.name : tag.name_fr}
@@ -244,14 +285,22 @@ function CreateListForm({
               <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                 <button
                   type="button"
-                  className="inline-flex w-full justify-center rounded-md border border-transparent bg-secondary py-2 text-sm font-medium text-myWhite shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:col-start-2 sm:px-4 sm:text-base"
+                  className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm hover:bg-primary focus:outline-none  focus:ring-0 focus:ring-offset-0 sm:col-start-2 sm:text-base ${
+                    darkMode
+                      ? "bg-altSecondary text-darkTert"
+                      : "bg-secondary text-myWhite"
+                  }`}
                   onClick={() => postNewList()}
                 >
                   {trad[lang].modals.add}
                 </button>
                 <button
                   type="button"
-                  className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-myWhite py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:px-4 sm:text-base"
+                  className={`mt-3 inline-flex w-full justify-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none  focus:ring-0 focus:ring-offset-0 sm:col-start-1 sm:mt-0 sm:text-base ${
+                    darkMode
+                      ? "border-altSecondary bg-darkTert text-altSecondary hover:bg-darkSec"
+                      : "border-secondary bg-myWhite text-secondary hover:bg-gray-100"
+                  }`}
                   onClick={() => onClose()}
                   ref={cancelButtonRef}
                 >
