@@ -2,11 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import trad from "../../lang/traduction";
 
-function TopRatedUserCard({ img, name, likes_nb, lang, user_id }) {
+function TopRatedUserCard({ img, name, likes_nb, lang, user_id, darkMode }) {
   return (
     <Link to={`/browseLists/${user_id}`}>
       <div className="topRated flex h-40 w-60 flex-col items-center rounded-md sm:h-80 sm:w-60">
-        <div className="flex h-full w-full flex-col items-center gap-2 rounded-md  bg-white bg-opacity-70 p-2 duration-300 hover:bg-opacity-50 sm:gap-6 sm:p-6">
+        <div
+          className={`group flex h-full w-full flex-col items-center gap-2  rounded-md ${
+            darkMode ? "bg-darkBg" : "bg-myWhite"
+          } bg-opacity-70 p-2 duration-300 hover:bg-opacity-0 sm:gap-6 sm:p-6`}
+        >
           {img ? (
             <img
               src={img}
@@ -23,12 +27,16 @@ function TopRatedUserCard({ img, name, likes_nb, lang, user_id }) {
             )
           )}
 
-          <div className="flex flex-col items-center rounded-md bg-white py-3 px-4 font-medium shadow-sm sm:gap-3 sm:font-semibold">
+          <div
+            className={`flex flex-col items-center rounded-md ${
+              darkMode ? "bg-darkTert text-gray-300" : "bg-myWhite"
+            } py-3 px-4 font-medium shadow-sm sm:gap-3 sm:font-semibold`}
+          >
             <span className="text-sm uppercase text-primary underline underline-offset-4 sm:text-base">
               {name}
             </span>
 
-            <div className="text-sm text-black sm:text-base">
+            <div className="text-sm sm:text-base">
               <span className="font-semibold text-primary">{likes_nb}</span>{" "}
               <span>{trad[lang].home.accumulatedLikes}</span>
             </div>

@@ -4,23 +4,32 @@ import { AppContext } from "../contexts/AppContext";
 import trad from "../lang/traduction";
 
 function Error404() {
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   return (
     <div
       className="h-screen bg-cover bg-top py-16 sm:bg-top"
       style={{
-        backgroundImage:
-          'url("https://ucarecdn.com/7d432c76-2ac4-4f37-8964-643115529778/danieljensenUDleHDOhBZ8unsplash.jpg")',
+        backgroundImage: darkMode
+          ? 'url("https://ucarecdn.com/6f07a73e-dc6b-4c7b-81e4-4df47e7f7bc9/renebohmer7QGSJtuuqHIunsplash.jpg")'
+          : 'url("https://ucarecdn.com/7d432c76-2ac4-4f37-8964-643115529778/danieljensenUDleHDOhBZ8unsplash.jpg")',
       }}
     >
       <div className="mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8 lg:py-48">
-        <p className="text-sm font-semibold uppercase tracking-wide text-smokyBlack text-opacity-50">
+        <p
+          className={`text-sm font-semibold uppercase tracking-wide ${
+            darkMode ? "text-white" : "text-smokyBlack"
+          } text-opacity-50`}
+        >
           {trad[lang].global.errorFourOFour}
         </p>
         <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-primary sm:text-5xl">
           {trad[lang].global.youreLost}
         </h1>
-        <p className="mt-2 text-lg font-medium text-smokyBlack text-opacity-50">
+        <p
+          className={`mt-2 text-lg font-medium ${
+            darkMode ? "text-white" : "text-smokyBlack"
+          } text-opacity-50`}
+        >
           {trad[lang].global.errorFourOFourMessage}
         </p>
         <div className="mt-6">

@@ -15,6 +15,8 @@ const trad = {
       likes: "J'aime",
       likedBy: "Aimé par",
       seeProfile: "Voir ses listes",
+      loginToAddContentToYourLists:
+        "Connectez-vous pour ajouter du contenu à vos listes !",
     },
     home: {
       title1: "Créez vos listes",
@@ -222,6 +224,7 @@ const trad = {
       likes: "Likes",
       likedBy: "Liked by",
       seeProfile: "See his lists",
+      loginToAddContentToYourLists: "Login to add content to your lists",
     },
     home: {
       title1: "List it up",

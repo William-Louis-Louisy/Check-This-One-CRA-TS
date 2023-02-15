@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon, XIcon } from "@heroicons/react/outline";
 
@@ -11,6 +11,7 @@ function DeleteConfirmation({
   cancelLabel,
   confirmLabel,
   elementToDelete,
+  darkMode,
 }) {
   // HANDLE DELETE
   const handleDelete = (id) => {
@@ -24,7 +25,7 @@ function DeleteConfirmation({
         className="fixed inset-0 z-10 overflow-y-auto"
         onClose={setOpen}
       >
-        <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="flex min-h-screen items-center justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -34,7 +35,11 @@ function DeleteConfirmation({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <Dialog.Overlay
+              className={`fixed inset-0 bg-opacity-75 transition-opacity ${
+                darkMode ? "bg-gray-900" : "bg-gray-500"
+              }`}
+            />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
@@ -53,11 +58,15 @@ function DeleteConfirmation({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative inline-block transform overflow-hidden rounded-lg bg-myWhite px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
+            <div
+              className={`relative inline-block w-[90%] transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
+                darkMode ? "bg-darkTert" : "bg-myWhite"
+              }`}
+            >
               <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
                 <button
                   type="button"
-                  className="rounded-md bg-myWhite text-gray-400 hover:text-gray-500"
+                  className="rounded-md text-gray-400 hover:text-gray-500"
                   onClick={() => setOpen(false)}
                 >
                   <span className="sr-only">Close</span>
@@ -74,26 +83,40 @@ function DeleteConfirmation({
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className={`font-medium leading-6 sm:text-lg ${
+                      darkMode ? "text-gray-300" : "text-gray-900"
+                    }`}
                   >
                     {label}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">{description}</p>
+                    <p
+                      className={`text-sm ${
+                        darkMode ? "text-gray-400" : "text-gray-500"
+                      }`}
+                    >
+                      {description}
+                    </p>
                   </div>
                 </div>
               </div>
               <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 <button
                   type="button"
-                  className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-myWhite shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                  className={`inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-myWhite shadow-sm hover:bg-red-700 focus:outline-none focus:ring-red-500 focus:ring-offset-0 sm:ml-3 sm:w-auto sm:text-sm ${
+                    darkMode ? "text-darkTert" : "text-myWhite"
+                  }`}
                   onClick={() => handleDelete(elementToDelete)}
                 >
                   {confirmLabel}
                 </button>
                 <button
                   type="button"
-                  className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-myWhite px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
+                  className={`mt-3 inline-flex w-full justify-center rounded-md border px-4 py-2 text-base font-medium shadow-sm focus:outline-none focus:ring-transparent focus:ring-offset-0 sm:mt-0 sm:w-auto sm:text-sm ${
+                    darkMode
+                      ? "border-altSecondary bg-darkTert text-altSecondary hover:text-altSecondary"
+                      : "border-gray-300 bg-myWhite text-gray-700 hover:text-gray-500"
+                  }`}
                   onClick={() => setOpen(false)}
                 >
                   {cancelLabel}

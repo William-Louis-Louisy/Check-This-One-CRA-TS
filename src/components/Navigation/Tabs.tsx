@@ -4,11 +4,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Tabs({ tabs }) {
+function Tabs({ tabs, darkMode }) {
   return (
     <div className="block">
       <nav
-        className="relative z-0 flex divide-x divide-gray-200 rounded-lg shadow"
+        className={`relative z-0 flex divide-x ${
+          darkMode ? "divide-darkQuin" : "divide-gray-300"
+        } rounded-lg shadow`}
         aria-label="Tabs"
       >
         {tabs &&
@@ -17,12 +19,14 @@ function Tabs({ tabs }) {
               key={tab.name}
               onClick={tab.action}
               className={classNames(
-                tab.current
-                  ? "text-primary"
-                  : "text-secondary hover:text-primary",
+                tab.current ? "text-primary" : "text-secondary",
+                darkMode
+                  ? "bg-darkTert hover:bg-darkSec"
+                  : "bg-white hover:bg-gray-50",
+                darkMode && !tab.current ? "text-altSecondary" : "",
                 tabIdx === 0 ? "rounded-l-lg" : "",
                 tabIdx === tabs.length - 1 ? "rounded-r-lg" : "",
-                "group relative min-w-[104px] flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10"
+                "group relative min-w-[104px] flex-1 overflow-hidden py-4 px-4 text-center text-sm font-medium focus:z-10"
               )}
               aria-current={tab.current ? "page" : undefined}
             >

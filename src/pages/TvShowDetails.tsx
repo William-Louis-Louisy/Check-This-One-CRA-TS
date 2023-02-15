@@ -20,7 +20,7 @@ function TvShowDetails() {
   // GET MOVIE ID FROM URL
   const tvShowId = useParams();
   // GET LANG FROM CONTEXT
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   // GET USER FROM CONTEXT
   const { user } = useContext(UserContext);
   // STATES
@@ -179,10 +179,14 @@ function TvShowDetails() {
     setContentTitle(content.name);
   };
 
-  if (loading) return <PageLoader lang={lang} />;
+  if (loading) return <PageLoader lang={lang} darkMode={darkMode} />;
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
+    <div
+      className={`flex h-full min-h-screen w-full flex-col items-center py-16 ${
+        darkMode ? "bg-darkBg" : "bg-myLightGray"
+      }`}
+    >
       {/*----- PAGE HEADING -----*/}
       <div className="my-8 w-[90%] border-b border-primary pb-3 sm:flex sm:items-center sm:justify-between sm:pb-5 lg:w-[70%]">
         {/* TITLE */}
@@ -212,7 +216,11 @@ function TvShowDetails() {
           {/* ADD TO LIST BUTTON */}
           {user?.id && (
             <button
-              className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-2 py-1 text-sm font-medium text-myWhite shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:px-4 sm:py-2 sm:text-base"
+              className={`inline-flex items-center gap-2 rounded-md border border-transparent px-2 py-1 text-sm font-medium shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-0  focus:ring-offset-0 sm:px-4 sm:py-2 sm:text-base ${
+                darkMode
+                  ? "bg-altSecondary text-darkBg"
+                  : "bg-secondary text-myWhite"
+              }`}
               onClick={() => handleAddToList(show)}
             >
               <ClipboardListIcon
@@ -240,23 +248,26 @@ function TvShowDetails() {
           />
 
           {/* WATCH PROVIDERS */}
-          <div className="mt-3 flex w-80 flex-col items-center rounded-md bg-[#FBFBFB] p-3">
+          <div
+            className={`mt-3 flex w-80 flex-col items-center rounded-md ${
+              darkMode ? "bg-darkTert text-gray-300" : "bg-[#FBFBFB]"
+            }  p-3`}
+          >
             {/* Title */}
             <h5 className="mb-3 w-full border-b border-primary text-lg font-medium leading-6 text-primary">
               {trad[lang].movieDetails.streamingProviders}
             </h5>
             {/* Country selector */}
             <div className="flex w-full flex-col items-start gap-1">
-              <label
-                htmlFor="location"
-                className="block text-sm font-medium text-smokyBlack"
-              >
+              <label htmlFor="location" className="block text-sm font-medium">
                 {trad[lang].movieDetails.selectYourLocation}
               </label>
               <select
                 id="location"
                 name="location"
-                className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base text-smokyBlack focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
+                className={`mt-1 block w-full rounded-md ${
+                  darkMode ? "bg-darkQuin" : "bg-white"
+                } border-gray-300 py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-0 sm:text-sm`}
                 defaultValue="FR"
                 onChange={(e) => setSelectedCountry(e.target.value)}
               >
@@ -287,15 +298,19 @@ function TvShowDetails() {
         </div>
 
         {/* SHOW INFORMATIONS */}
-        <div className="flex w-[90%] flex-col items-center gap-5 sm:ml-5 sm:w-3/5 sm:items-start">
+        <div
+          className={`flex w-[90%] flex-col items-center gap-5 ${
+            darkMode ? "text-gray-300" : "text-smokyBlack"
+          } sm:ml-5 sm:w-3/5 sm:items-start`}
+        >
           {/* Tabs */}
-          <Tabs tabs={tabs} />
+          <Tabs tabs={tabs} darkMode={darkMode} />
           {/* Main Informations */}
           {dataDisplayed === "informations" && (
             <>
               <div className="flex w-full flex-col items-start">
                 {/* Original title */}
-                <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                <span className="flex w-full flex-row justify-between text-sm sm:text-base">
                   <span className="font-bold text-primary">
                     {trad[lang].showDetails.originalName}:
                   </span>{" "}
@@ -304,7 +319,7 @@ function TvShowDetails() {
 
                 {/* Release date */}
                 {show?.first_air_date && (
-                  <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                  <span className="flex w-full flex-row justify-between text-sm sm:text-base">
                     <span className="font-bold text-primary">
                       {trad[lang].showDetails.firstAirDate}:
                     </span>{" "}
@@ -318,7 +333,7 @@ function TvShowDetails() {
               <div className="flex w-full flex-col items-start">
                 {/* Runtime */}
                 {show?.episode_run_time?.length > 0 && show?.episode_run_time && (
-                  <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                  <span className="flex w-full flex-row justify-between text-sm sm:text-base">
                     <span className="font-bold text-primary">
                       {trad[lang].showDetails.episodeRunTime}:
                     </span>{" "}
@@ -328,7 +343,7 @@ function TvShowDetails() {
 
                 {/* Number of episodes */}
                 {show?.number_of_episodes && (
-                  <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                  <span className="flex w-full flex-row justify-between text-sm sm:text-base">
                     <span className="font-bold text-primary">
                       {trad[lang].showDetails.numberOfEpisodes}:
                     </span>{" "}
@@ -338,7 +353,7 @@ function TvShowDetails() {
 
                 {/* Number of seasons */}
                 {show?.number_of_seasons && (
-                  <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                  <span className="flex w-full flex-row justify-between text-sm sm:text-base">
                     <span className="font-bold text-primary">
                       {trad[lang].showDetails.numberOfSeasons}:
                     </span>{" "}
@@ -357,7 +372,9 @@ function TvShowDetails() {
                   <div className="mt-1 flex flex-wrap items-center gap-1 sm:gap-2">
                     {show?.genres.map((genre) => (
                       <span
-                        className="rounded-full bg-[#FBFBFB] py-1 px-3 text-sm text-smokyBlack"
+                        className={`rounded-full ${
+                          darkMode ? "bg-darkTert" : "bg-[#FBFBFB]"
+                        } py-1 px-3 text-sm`}
                         key={`genre-${genre.id}`}
                       >
                         {genre.name}
@@ -373,9 +390,7 @@ function TvShowDetails() {
                   <span className="font-bold text-primary">
                     {trad[lang].showDetails.overview}:
                   </span>
-                  <span className="italic text-smokyBlack">
-                    {show?.overview}
-                  </span>
+                  <span className="italic">{show?.overview}</span>
                 </div>
               )}
 
@@ -422,6 +437,7 @@ function TvShowDetails() {
                   department={actor.known_for_department}
                   role={actor.character}
                   imageUrl={actor.profile_path}
+                  darkMode={darkMode}
                 />
               ))}
             </ul>
@@ -440,6 +456,7 @@ function TvShowDetails() {
           openNewList={openNewList}
           setOpenNewList={setOpenNewList}
           lists={lists}
+          darkMode={darkMode}
         />
       )}
 
@@ -453,6 +470,7 @@ function TvShowDetails() {
           lang={lang}
           user={user}
           refetch={getLists}
+          darkMode={darkMode}
         />
       )}
     </div>

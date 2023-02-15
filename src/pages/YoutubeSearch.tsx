@@ -32,7 +32,7 @@ interface IContentToList {
 }
 
 function YoutubeSearch() {
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -129,15 +129,19 @@ function YoutubeSearch() {
   };
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
-      <div className="my-8 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+    <div
+      className={`flex h-full min-h-screen flex-col items-center ${
+        darkMode ? "bg-darkBg" : "bg-myLightGray"
+      } py-16`}
+    >
+      <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">
           {trad[lang].pageTitles.youtubeSearch}
         </h3>
         <div className="mt-3 sm:mt-0 sm:ml-4">
           {/* SEARCH BAR */}
-          <div className="flex w-[90%] items-center justify-center px-2 md:w-[400px] lg:justify-end">
+          <div className="flex w-full items-center justify-center sm:px-2 md:w-[400px] lg:justify-end">
             <div className="w-full max-w-lg lg:max-w-xl">
               <label htmlFor="search" className="sr-only">
                 {trad[lang].placeholders.searchYoutube}
@@ -160,11 +164,22 @@ function YoutubeSearch() {
                 <input
                   id="search"
                   name="search"
-                  className="placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray bg-myWhite py-2 pl-10 pr-3 leading-5 focus:border-myGray focus:placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm"
+                  className={`placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray ${
+                    darkMode
+                      ? "bg-darkQuin text-gray-300 focus:border-darkTert"
+                      : "bg-myWhite focus:border-myGray"
+                  } py-2 pl-10 pr-3 leading-5 placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm`}
                   placeholder={trad[lang].placeholders.searchYoutube}
                   type="search"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      getYoutubeData();
+                      setIsFetching(true);
+                      setIsTrending(false);
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -174,13 +189,14 @@ function YoutubeSearch() {
       {/* RESULTS */}
 
       {isTrending && mostPopular && (
-        <div className="flex w-full flex-col items-center py-10">
+        <div className="flex w-full flex-col items-center">
           {mostPopular?.items.map((item) => (
             <YoutubeVideoCard
               key={`${item.etag}-${item.id.kind}`}
               addToList={handleAddToList}
               item={item}
               lang={lang}
+              darkMode={darkMode}
             />
           ))}
         </div>
@@ -192,7 +208,7 @@ function YoutubeSearch() {
             <CircularProgress sx={{ color: "#F58426" }} />
           </div>
         ) : (
-          <div className="flex w-full flex-col items-center py-10">
+          <div className="flex w-full flex-col items-center">
             {results?.items.map((item) =>
               item.id.kind === "youtube#video" ? (
                 <YoutubeVideoCard
@@ -200,6 +216,7 @@ function YoutubeSearch() {
                   addToList={handleAddToList}
                   item={item}
                   lang={lang}
+                  darkMode={darkMode}
                 />
               ) : (
                 <YoutubeChannelCard
@@ -250,6 +267,7 @@ function YoutubeSearch() {
           openNewList={openNewList}
           setOpenNewList={setOpenNewList}
           lists={lists}
+          darkMode={darkMode}
         />
       )}
 
@@ -263,6 +281,7 @@ function YoutubeSearch() {
           lang={lang}
           user={user}
           refetch={getLists}
+          darkMode={darkMode}
         />
       )}
     </div>

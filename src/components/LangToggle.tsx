@@ -8,15 +8,15 @@ function classNames(...classes: string[]) {
 
 function LangToggle() {
   const [enabled, setEnabled] = useState(false);
-  const { lang, storeLang } = useContext(AppContext);
+  const { lang, storeLang, darkMode } = useContext(AppContext);
 
   return (
-    <Switch.Group as="div" className="flex items-center">
-      <Switch.Label as="span" className="mr-3">
+    <Switch.Group as="div" className="ml-6 flex items-center">
+      {/* <Switch.Label as="span" className="mr-3">
         <span className="text-sm font-medium text-myWhite">
           {lang === "en" ? "EN" : "FR"}
         </span>
-      </Switch.Label>
+      </Switch.Label> */}
       <Switch
         checked={enabled}
         onChange={(value) => {
@@ -24,7 +24,8 @@ function LangToggle() {
           storeLang(value ? "en" : "fr");
         }}
         className={classNames(
-          "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-myGray transition-colors duration-300 ease-in-out"
+          darkMode ? "bg-darkQuin" : "bg-myGray",
+          "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-300 ease-in-out"
         )}
       >
         <span

@@ -11,6 +11,14 @@
   color: inherit;
 }
 
+.customInput:-webkit-autofill,
+.customInput:-webkit-autofill:hover,
+.customInput:-webkit-autofill:focus,
+.customInput:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #40444b inset !important;
+  -webkit-text-fill-color: #d1d5db !important;
+}
+
 body {
   height: 100vh;
   background-color: "#F0F2F4";
@@ -20,22 +28,21 @@ body {
 /* Firefox */
 .card {
   scrollbar-width: auto;
-  scrollbar-color: #f58426 #f0f2f4;
+  scrollbar-color: #f58426 transparent;
 }
 
 /* Chrome, Edge, and Safari */
 .card::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 .card::-webkit-scrollbar-track {
-  background: #f0f2f4;
+  background: transparent;
 }
 
 .card::-webkit-scrollbar-thumb {
   background-color: #f58426;
   border-radius: 6px;
-  border: 3px solid #f0f2f4;
 }
 
 /* ===== Slider CSS ===== */

@@ -8,7 +8,7 @@ import trad from "../lang/traduction";
 
 function Login() {
   const navigate = useNavigate();
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   const { storeUser } = useContext(UserContext);
   const [loginForm, setLoginForm] = useState({
     email: "",
@@ -34,6 +34,7 @@ function Login() {
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
+          theme: darkMode ? "dark" : "light",
         });
       }
     } catch (error) {
@@ -44,6 +45,7 @@ function Login() {
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
+        theme: darkMode ? "dark" : "light",
       });
     } finally {
       navigate("/");
@@ -51,11 +53,17 @@ function Login() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div
+      className={`${darkMode ? "bg-darkBg" : "bg-myLightGray"} flex h-screen`}
+    >
       <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
-            <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+            <h2
+              className={`mt-6 text-3xl font-extrabold ${
+                darkMode ? "text-gray-300" : "text-gray-900"
+              }`}
+            >
               {trad[lang].login.title}
             </h2>
           </div>
@@ -66,7 +74,9 @@ function Login() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
+                    className={`block text-sm font-medium ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
                   >
                     {trad[lang].login.email}
                   </label>
@@ -77,7 +87,11 @@ function Login() {
                       type="email"
                       autoComplete="email"
                       required
-                      className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-secondary focus:outline-none focus:ring-secondary sm:text-sm"
+                      className={`block w-full appearance-none rounded-md border ${
+                        darkMode
+                          ? "customInput bg-darkQuin text-gray-300 placeholder-gray-300 focus:border-darkTert"
+                          : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-myGray"
+                      }  px-3 py-2 shadow-sm focus:border-secondary focus:outline-none focus:ring-0 sm:text-sm`}
                       onChange={(e) =>
                         setLoginForm({
                           ...loginForm,
@@ -91,7 +105,9 @@ function Login() {
                 <div className="space-y-1">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
+                    className={`block text-sm font-medium ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
                   >
                     {trad[lang].login.password}
                   </label>
@@ -102,7 +118,11 @@ function Login() {
                       type="password"
                       autoComplete="current-password"
                       required
-                      className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-secondary focus:outline-none focus:ring-secondary sm:text-sm"
+                      className={`block w-full appearance-none rounded-md border ${
+                        darkMode
+                          ? "customInput bg-darkQuin text-gray-300 placeholder-gray-300 focus:border-darkTert"
+                          : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-myGray"
+                      }  px-3 py-2 shadow-sm focus:border-secondary focus:outline-none focus:ring-0 sm:text-sm`}
                       onChange={(e) =>
                         setLoginForm({
                           ...loginForm,
@@ -119,7 +139,9 @@ function Login() {
                       id="remember-me"
                       name="remember-me"
                       type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-secondary focus:ring-secondary"
+                      className={`h-4 w-4 rounded ${
+                        darkMode ? "bg-darkQuin" : "bg-myWhite"
+                      } border-gray-300 text-secondary focus:ring-0`}
                       onChange={(e) =>
                         setLoginForm({
                           ...loginForm,
@@ -129,7 +151,9 @@ function Login() {
                     />
                     <label
                       htmlFor="remember-me"
-                      className="ml-2 block text-sm text-gray-900"
+                      className={`block text-sm font-medium ${
+                        darkMode ? "text-gray-300" : "text-gray-900"
+                      } ml-2`}
                     >
                       {trad[lang].login.rememberMe}
                     </label>
@@ -138,7 +162,9 @@ function Login() {
                   <div className="text-sm">
                     <a
                       href="/signup"
-                      className="font-medium text-secondary hover:text-secondary"
+                      className={`block text-sm font-medium underline-offset-4 hover:underline ${
+                        darkMode ? "text-altSecondary" : "text-secondary"
+                      }`}
                     >
                       {trad[lang].login.dontHaveAnAccount}
                     </a>
@@ -148,7 +174,11 @@ function Login() {
                 <div>
                   <button
                     type="button"
-                    className="flex w-full justify-center rounded-md border border-transparent bg-secondary py-2 px-4 text-sm font-medium text-myWhite shadow-sm hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+                    className={`flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium ${
+                      darkMode
+                        ? "bg-altSecondary text-darkBg hover:bg-altSecondary focus:ring-altSecondary"
+                        : "bg-secondary text-myWhite hover:bg-secondary focus:ring-0"
+                    } shadow-sm focus:outline-none  focus:ring-offset-0`}
                     onClick={() => login()}
                   >
                     {trad[lang].login.submit}
