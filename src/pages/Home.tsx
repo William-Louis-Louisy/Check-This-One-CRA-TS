@@ -12,7 +12,7 @@ import PageLoader from "../components/Common/PageLoader";
 import TopRatedUserCard from "../components/Cards/TopRatedUserCard";
 
 function Home() {
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   const { user } = useContext(UserContext);
 
   const [upcomingMovies, setUpcomingMovies] = useState([]);
@@ -65,17 +65,23 @@ function Home() {
     getTopUsers();
   }, [lang]);
 
-  console.log(topUsers);
-
   if (!upcomingMovies || !topRatedShows) {
-    <PageLoader lang={lang} />;
+    <PageLoader lang={lang} darkMode={darkMode} />;
   }
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
+    <div
+      className={`flex h-full min-h-screen w-full flex-col items-center ${
+        darkMode ? "bg-darkBg" : "bg-myLightGray"
+      } py-16`}
+    >
       {/* Hero section */}
       <div className="relative w-full md:my-16">
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100" />
+        <div
+          className={`absolute inset-x-0 bottom-0 h-1/2 ${
+            darkMode ? "bg-darkBg" : "bg-bg-myLightGray"
+          }`}
+        />
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
             <div className="absolute inset-0 shadow-2xl">
@@ -102,7 +108,11 @@ function Home() {
                 <div className="mt-8 flex w-full flex-col items-center">
                   <Link
                     to="/signup"
-                    className="rounded-md bg-secondary px-4 py-3 text-myWhite"
+                    className={`rounded-md px-4 py-3 ${
+                      darkMode
+                        ? "bg-altSecondary text-darkBg"
+                        : "bg-secondary text-myWhite"
+                    }`}
                   >
                     {trad[lang].home.signUpNow}
                   </Link>
@@ -127,11 +137,24 @@ function Home() {
               name={user.user_user_name}
               likes_nb={user.total_likes}
               lang={lang}
+              darkMode={darkMode}
             />
           ))}
           sliderId="usersTop"
-          leftButton={<ChevronLeftIcon className="h-8" />}
-          rightButton={<ChevronRightIcon className="h-8" />}
+          leftButton={
+            <ChevronLeftIcon
+              className={`h-8 ${
+                darkMode ? "text-altSecondary" : "text-secondary"
+              }`}
+            />
+          }
+          rightButton={
+            <ChevronRightIcon
+              className={`h-8 ${
+                darkMode ? "text-altSecondary" : "text-secondary"
+              }`}
+            />
+          }
           leftStepValue={240}
           rightStepValue={240}
         />
@@ -160,8 +183,20 @@ function Home() {
               </a>
             ))}
             sliderId="upcomingMovies"
-            leftButton={<ChevronLeftIcon className="h-8" />}
-            rightButton={<ChevronRightIcon className="h-8" />}
+            leftButton={
+              <ChevronLeftIcon
+                className={`h-8 ${
+                  darkMode ? "text-altSecondary" : "text-secondary"
+                }`}
+              />
+            }
+            rightButton={
+              <ChevronRightIcon
+                className={`h-8 ${
+                  darkMode ? "text-altSecondary" : "text-secondary"
+                }`}
+              />
+            }
             leftStepValue={213}
             rightStepValue={213}
           />
@@ -191,8 +226,20 @@ function Home() {
               </a>
             ))}
             sliderId="topRatedShows"
-            leftButton={<ChevronLeftIcon className="h-8" />}
-            rightButton={<ChevronRightIcon className="h-8" />}
+            leftButton={
+              <ChevronLeftIcon
+                className={`h-8 ${
+                  darkMode ? "text-altSecondary" : "text-secondary"
+                }`}
+              />
+            }
+            rightButton={
+              <ChevronRightIcon
+                className={`h-8 ${
+                  darkMode ? "text-altSecondary" : "text-secondary"
+                }`}
+              />
+            }
             leftStepValue={213}
             rightStepValue={213}
           />

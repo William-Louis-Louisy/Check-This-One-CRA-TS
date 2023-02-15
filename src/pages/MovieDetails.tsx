@@ -21,7 +21,7 @@ function MovieDetails() {
   // GET MOVIE ID FROM URL
   const movieId = useParams();
   // GET LANG FROM CONTEXT
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   // GET USER FROM CONTEXT
   const { user } = useContext(UserContext);
   // STATES
@@ -178,10 +178,14 @@ function MovieDetails() {
     filterWatchProviders();
   }, [watchProviders, selectedCountry]);
 
-  if (loading) return <PageLoader lang={lang} />;
+  if (loading) return <PageLoader lang={lang} darkMode={darkMode} />;
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
+    <div
+      className={`flex h-full min-h-screen w-full flex-col items-center py-16 ${
+        darkMode ? "bg-darkBg" : "bg-myLightGray"
+      }`}
+    >
       {/*----- PAGE HEADING -----*/}
       <div className="my-8 w-[90%] border-b border-primary pb-3 sm:flex sm:items-center sm:justify-between sm:pb-5 lg:w-[70%]">
         {/* TITLE */}
@@ -193,9 +197,13 @@ function MovieDetails() {
           {listsCount > 0 && (
             <Link
               to="#"
-              className="rounded-md border border-secondary px-2 py-1 sm:px-4 sm:py-2"
+              className={`rounded-md border ${
+                darkMode
+                  ? "border-altSecondary text-altSecondary"
+                  : "border-secondary text-secondary"
+              } px-2 py-1 sm:px-4 sm:py-2`}
             >
-              <span className="flex flex-row items-center gap-2 text-sm font-medium text-secondary">
+              <span className="flex flex-row items-center gap-2 text-sm font-medium">
                 <EyeIcon
                   className="hidden h-5 w-5 sm:flex"
                   aria-hidden="true"
@@ -211,7 +219,11 @@ function MovieDetails() {
           {/* ADD TO LIST BUTTON */}
           {user?.id && (
             <button
-              className="inline-flex items-center gap-2 rounded-md border border-transparent bg-secondary px-2 py-1 text-sm font-medium text-myWhite shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:px-4 sm:py-2 sm:text-base"
+              className={`inline-flex items-center gap-2 rounded-md border border-transparent px-2 py-1 text-sm font-medium shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-0  focus:ring-offset-0 sm:px-4 sm:py-2 sm:text-base ${
+                darkMode
+                  ? "bg-altSecondary text-darkBg"
+                  : "bg-secondary text-myWhite"
+              }`}
               onClick={() => handleAddToList(movie)}
             >
               <ClipboardListIcon
@@ -239,23 +251,26 @@ function MovieDetails() {
           />
 
           {/* WATCH PROVIDERS */}
-          <div className="mt-3 flex w-80 flex-col items-center rounded-md bg-[#FBFBFB] p-3">
+          <div
+            className={`mt-3 flex w-80 flex-col items-center rounded-md ${
+              darkMode ? "bg-darkTert text-gray-300" : "bg-[#FBFBFB]"
+            }  p-3`}
+          >
             {/* Title */}
             <h5 className="mb-3 w-full border-b border-primary text-lg font-medium leading-6 text-primary">
               {trad[lang].movieDetails.streamingProviders}
             </h5>
             {/* Country selector */}
             <div className="flex w-full flex-col items-start gap-1">
-              <label
-                htmlFor="location"
-                className="block text-sm font-medium text-smokyBlack"
-              >
+              <label htmlFor="location" className="block text-sm font-medium">
                 {trad[lang].movieDetails.selectYourLocation}
               </label>
               <select
                 id="location"
                 name="location"
-                className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base text-smokyBlack focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
+                className={`mt-1 block w-full rounded-md ${
+                  darkMode ? "bg-darkQuin" : "bg-white"
+                } border-gray-300 py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-0 sm:text-sm`}
                 defaultValue="FR"
                 onChange={(e) => setSelectedCountry(e.target.value)}
               >
@@ -286,15 +301,19 @@ function MovieDetails() {
         </div>
 
         {/* MOVIE INFORMATIONS */}
-        <div className="flex w-[90%] flex-col items-center gap-5 sm:ml-5 sm:w-3/5 sm:items-start">
+        <div
+          className={`flex w-[90%] flex-col items-center gap-5 ${
+            darkMode ? "text-gray-300" : "text-smokyBlack"
+          } sm:ml-5 sm:w-3/5 sm:items-start`}
+        >
           {/* Tabs */}
-          <Tabs tabs={tabs} />
+          <Tabs tabs={tabs} darkMode={darkMode} />
           {/* Main Informations */}
           {dataDisplayed === "informations" && (
             <>
               <div className="flex w-full flex-col items-start">
                 {/* Original title */}
-                <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                <span className="flex w-full flex-row justify-between text-sm sm:text-base">
                   <span className="font-bold text-primary">
                     {trad[lang].movieDetails.originalTitle}:
                   </span>{" "}
@@ -303,7 +322,7 @@ function MovieDetails() {
 
                 {/* Release date */}
                 {movie?.release_date && (
-                  <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                  <span className="flex w-full flex-row justify-between text-sm sm:text-base">
                     <span className="font-bold text-primary">
                       {trad[lang].movieDetails.releaseDate}:
                     </span>{" "}
@@ -314,7 +333,7 @@ function MovieDetails() {
                 )}
 
                 {/* Runtime */}
-                <span className="flex w-full flex-row justify-between text-sm text-smokyBlack sm:text-base">
+                <span className="flex w-full flex-row justify-between text-sm sm:text-base">
                   <span className="font-bold text-primary">
                     {trad[lang].movieDetails.runtime}:
                   </span>{" "}
@@ -330,7 +349,9 @@ function MovieDetails() {
                 <div className="mt-1 flex flex-wrap items-center gap-1 sm:gap-2">
                   {movie?.genres.map((genre) => (
                     <span
-                      className="rounded-full bg-[#FBFBFB] py-1 px-3 text-sm text-smokyBlack"
+                      className={`rounded-full ${
+                        darkMode ? "bg-darkTert" : "bg-[#FBFBFB]"
+                      } py-1 px-3 text-sm`}
                       key={`genre-${genre.id}`}
                     >
                       {genre.name}
@@ -343,9 +364,7 @@ function MovieDetails() {
                 <span className="font-bold text-primary">
                   {trad[lang].movieDetails.overview}:
                 </span>
-                <span className="italic text-smokyBlack">
-                  {movie?.overview}
-                </span>
+                <span className="italic">{movie?.overview}</span>
               </div>
               {/* Similar Movies */}
               <div className="flex flex-col items-start">
@@ -388,6 +407,7 @@ function MovieDetails() {
                   department={actor.known_for_department}
                   role={actor.character}
                   imageUrl={actor.profile_path}
+                  darkMode={darkMode}
                 />
               ))}
             </ul>
@@ -406,6 +426,7 @@ function MovieDetails() {
           openNewList={openNewList}
           setOpenNewList={setOpenNewList}
           lists={lists}
+          darkMode={darkMode}
         />
       )}
 
@@ -419,6 +440,7 @@ function MovieDetails() {
           lang={lang}
           user={user}
           refetch={getLists}
+          darkMode={darkMode}
         />
       )}
     </div>

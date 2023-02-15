@@ -7,18 +7,21 @@ function CastCard({
   department,
   role,
   imageUrl,
+  darkMode,
 }: {
   id: number;
   name: string;
   department: string;
   role: string;
   imageUrl: string;
+  darkMode: boolean;
 }) {
-  console.log(id);
   return (
     <li
       key={`content-${id}`}
-      className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
+      className={`col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg ${
+        darkMode ? "bg-darkQuin" : "bg-white"
+      } text-center shadow`}
     >
       <div className="flex flex-1 flex-col p-3 sm:p-8">
         <img
@@ -26,13 +29,31 @@ function CastCard({
           src={imageUrl ? "https://image.tmdb.org/t/p/w500" + imageUrl : Poster}
           alt=""
         />
-        <h3 className="mt-6 text-sm font-medium text-gray-900">{name}</h3>
+        <h3
+          className={`mt-6 text-sm font-medium ${
+            darkMode ? "text-gray-300" : "text-gray-900"
+          } `}
+        >
+          {name}
+        </h3>
         <dl className="mt-1 flex flex-grow flex-col justify-between">
           <dt className="sr-only">Role</dt>
-          <dd className="text-sm text-gray-500">{role}</dd>
+          <dd
+            className={`text-sm ${
+              darkMode ? "text-gray-400" : "text-gray-500"
+            } text-gray-500`}
+          >
+            {role}
+          </dd>
           <dt className="sr-only">Department</dt>
           <dd className="mt-3">
-            <span className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
+            <span
+              className={`rounded-full px-2 py-1 text-xs font-medium ${
+                darkMode
+                  ? "bg-darkTert text-gray-300"
+                  : "bg-gray-100 text-gray-800"
+              }`}
+            >
               {department}
             </span>
           </dd>

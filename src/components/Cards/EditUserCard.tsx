@@ -11,10 +11,12 @@ function EditUserCard({
   lang,
   user,
   refetch,
+  darkMode,
 }: {
   lang: string;
   user: IUser;
   refetch: () => void;
+  darkMode: boolean;
 }) {
   // NAVIGATE
   const navigate = useNavigate();
@@ -47,6 +49,7 @@ function EditUserCard({
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
+          theme: darkMode ? "dark" : "light",
         });
         refetch();
       } catch (error) {
@@ -57,6 +60,7 @@ function EditUserCard({
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
+          theme: darkMode ? "dark" : "light",
         });
       }
     } else {
@@ -64,23 +68,30 @@ function EditUserCard({
     }
   };
 
-  console.log(profileForm.avatar);
-
   return (
-    <div className="space-y-8 divide-y divide-gray-200 rounded-md bg-myWhite p-8 shadow-lg">
-      <div className="space-y-4 sm:space-y-5">
+    <div
+      className={`space-y-8 divide-y divide-gray-200 rounded-md p-8 shadow-lg ${
+        darkMode ? "bg-darkTert" : "bg-myWhite"
+      }`}
+    >
+      <div
+        className={`space-y-4 sm:space-y-5 ${
+          darkMode ? "text-gray-300" : "text-gray-700"
+        }`}
+      >
         <div className="mb-3">
-          <h3 className="text-lg font-medium leading-6 text-smokyBlack">
+          <h3
+            className={`text-lg font-medium leading-6 ${
+              darkMode ? "text-gray-300" : "text-smokyBlack"
+            }`}
+          >
             {trad[lang].user.editProfile}
           </h3>
         </div>
 
         {/* AVATAR */}
         <div className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 sm:pt-5">
-          <label
-            htmlFor="photo"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="photo" className="block text-sm font-medium">
             {trad[lang].user.avatar}
           </label>
           <div className="avatarUpload mt-1 sm:col-span-2 sm:mt-0">
@@ -104,7 +115,7 @@ function EditUserCard({
         <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
           <label
             htmlFor="username"
-            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            className="block text-sm font-medium sm:mt-px sm:pt-2"
           >
             {trad[lang].user.username}
           </label>
@@ -115,7 +126,11 @@ function EditUserCard({
               id="username"
               autoComplete="username"
               defaultValue={user.user_name}
-              className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:max-w-xs sm:text-sm"
+              className={`block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:ring-0 sm:max-w-xs sm:text-sm ${
+                darkMode
+                  ? "bg-darkQuin focus:border-altSecondary"
+                  : "bg-myWhite focus:border-secondary"
+              }`}
               onChange={(e) => {
                 setProfileForm({
                   ...profileForm,
@@ -130,7 +145,7 @@ function EditUserCard({
         <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
           <label
             htmlFor="country"
-            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            className="block text-sm font-medium sm:mt-px sm:pt-2"
           >
             {trad[lang].user.country}
           </label>
@@ -140,7 +155,11 @@ function EditUserCard({
               name="country"
               autoComplete="country-name"
               defaultValue={user.country}
-              className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:max-w-xs sm:text-sm"
+              className={`block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:ring-0 sm:max-w-xs sm:text-sm ${
+                darkMode
+                  ? "bg-darkQuin focus:border-altSecondary"
+                  : "bg-myWhite focus:border-secondary"
+              }`}
               onChange={(e) => {
                 setProfileForm({
                   ...profileForm,
@@ -159,7 +178,7 @@ function EditUserCard({
         <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
           <label
             htmlFor="city"
-            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            className="block text-sm font-medium sm:mt-px sm:pt-2"
           >
             {trad[lang].user.city}
           </label>
@@ -170,7 +189,11 @@ function EditUserCard({
               id="city"
               autoComplete="address-level2"
               defaultValue={user.city}
-              className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:max-w-xs sm:text-sm"
+              className={`block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:ring-0 sm:max-w-xs sm:text-sm ${
+                darkMode
+                  ? "bg-darkQuin focus:border-altSecondary"
+                  : "bg-myWhite focus:border-secondary"
+              }`}
               onChange={(e) => {
                 setProfileForm({
                   ...profileForm,
@@ -185,7 +208,7 @@ function EditUserCard({
         <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
           <label
             htmlFor="catchline"
-            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            className="block text-sm font-medium sm:mt-px sm:pt-2"
           >
             {trad[lang].user.catchline}
           </label>
@@ -194,7 +217,11 @@ function EditUserCard({
               id="catchline"
               name="catchline"
               rows={2}
-              className="card block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
+              className={`card block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:ring-0 sm:text-sm ${
+                darkMode
+                  ? "bg-darkQuin focus:border-altSecondary"
+                  : "bg-myWhite focus:border-secondary"
+              }`}
               defaultValue={user.catchline}
               onChange={(e) => {
                 setProfileForm({
@@ -203,7 +230,7 @@ function EditUserCard({
                 });
               }}
             />
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-gray-400">
               {trad[lang].user.giveUsYourBestQuote}
             </p>
           </div>
@@ -213,7 +240,7 @@ function EditUserCard({
         <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
           <label
             htmlFor="about"
-            className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            className="block text-sm font-medium sm:mt-px sm:pt-2"
           >
             {trad[lang].user.introduction}
           </label>
@@ -222,7 +249,11 @@ function EditUserCard({
               id="about"
               name="about"
               rows={3}
-              className="card block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm"
+              className={`card block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:ring-0 sm:text-sm ${
+                darkMode
+                  ? "bg-darkQuin focus:border-altSecondary"
+                  : "bg-myWhite focus:border-secondary"
+              }`}
               defaultValue={user.introduction}
               onChange={(e) => {
                 setProfileForm({
@@ -231,7 +262,7 @@ function EditUserCard({
                 });
               }}
             />
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-gray-400">
               {trad[lang].user.tellUsAboutYou}
             </p>
           </div>
@@ -242,7 +273,11 @@ function EditUserCard({
         <div className="flex justify-end">
           <button
             type="button"
-            className="rounded-md border border-gray-300 bg-myWhite py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+            className={`rounded-md border bg-myWhite py-2 px-4 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none  focus:ring-0 focus:ring-offset-0 ${
+              darkMode
+                ? "border-altSecondary bg-darkTert text-altSecondary"
+                : "border-secondary bg-myWhite text-secondary"
+            }`}
             onClick={() => navigate(-1)}
           >
             {trad[lang].user.cancel}
@@ -250,7 +285,11 @@ function EditUserCard({
           <button
             type="button"
             onClick={() => updateProfile()}
-            className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-secondary py-2 px-4 text-sm font-medium text-myWhite shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+            className={`ml-3 inline-flex justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium shadow-sm hover:bg-primary focus:outline-none  focus:ring-0 focus:ring-offset-0 ${
+              darkMode
+                ? "bg-altSecondary text-darkTert"
+                : "bg-secondary text-myWhite"
+            }`}
           >
             {trad[lang].user.update}
           </button>

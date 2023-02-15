@@ -34,7 +34,7 @@ export type UserContextType = {
 export const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   const [user, setUser] = useState<IUser>({
     id: 0,
     email: "",
@@ -99,6 +99,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
+        theme: darkMode ? "dark" : "light",
       });
       setUser({
         id: 0,
@@ -120,6 +121,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
+        theme: darkMode ? "dark" : "light",
       });
     }
   };

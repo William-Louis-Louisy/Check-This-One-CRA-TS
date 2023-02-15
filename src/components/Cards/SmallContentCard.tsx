@@ -24,7 +24,7 @@ function SmallContentCard({ data }) {
           : `/${handleType(data.type)}/${data.provider_id}`
       }
     >
-      <div className="h-40 w-[106px] md:h-48 md:max-w-[192px]">
+      <div className="h-40 md:h-48 md:max-w-[192px]">
         <img
           src={
             data.type === "youtube"

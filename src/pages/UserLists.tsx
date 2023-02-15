@@ -7,7 +7,7 @@ import { SearchIcon } from "@heroicons/react/solid";
 import ListDisplay from "../components/Lists/ListDisplay";
 
 function UserLists() {
-  const { lang } = useContext(AppContext);
+  const { lang, darkMode } = useContext(AppContext);
   const { user } = useContext(UserContext);
   const [lists, setLists] = useState([]);
   const [total, setTotal] = useState(0);
@@ -36,7 +36,11 @@ function UserLists() {
   }
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center bg-myLightGray py-16">
+    <div
+      className={`flex h-full min-h-screen w-full flex-col items-center ${
+        darkMode ? "bg-darkBg" : "bg-myLightGray"
+      } pt-16`}
+    >
       {/*----- PAGE HEADING -----*/}
       <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
@@ -63,7 +67,11 @@ function UserLists() {
                 <input
                   id="search"
                   name="search"
-                  className="placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray bg-myWhite py-2 pl-10 pr-3 leading-5 focus:border-myGray focus:placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm"
+                  className={`placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray ${
+                    darkMode
+                      ? "bg-darkQuin text-gray-300 focus:border-darkTert"
+                      : "bg-myWhite focus:border-myGray"
+                  } py-2 pl-10 pr-3 leading-5 placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm`}
                   placeholder={trad[lang].placeholders.searchLists}
                   type="text"
                   onChange={(e) => console.log(e.target.value)}
@@ -84,6 +92,7 @@ function UserLists() {
               list={list}
               user={user.id}
               lang={lang}
+              darkMode={darkMode}
               refetch={getLists}
             />
           ))
