@@ -92,12 +92,12 @@ function NavBar() {
                       to={tab.link}
                       className={classNames(
                         tab.current
-                          ? "border-primary text-primary"
-                          : "border-transparent hover:border-secondary hover:text-secondary",
+                          ? "border-primary text-primary hover:border-primary hover:text-primary"
+                          : "border-transparent",
                         darkMode && !tab.current
                           ? "text-altSecondary hover:border-altSecondary hover:text-altSecondary"
-                          : "",
-                        "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium text-secondary duration-150"
+                          : "border-transparent text-secondary hover:border-secondary hover:text-secondary",
+                        "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium duration-150"
                       )}
                       aria-current={tab.current ? "page" : undefined}
                     >
