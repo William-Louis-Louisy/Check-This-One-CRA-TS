@@ -1,4 +1,5 @@
 import { SearchIcon } from "@heroicons/react/outline";
+import { PlusIcon, XIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -6,6 +7,7 @@ import ListDisplay from "../components/Lists/ListDisplay";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
+import { tagsList } from "../utils/TagsList";
 
 function BrowseLists() {
   // GET USER ID FROM PARAMS
@@ -20,6 +22,8 @@ function BrowseLists() {
   // LISTS
   const [lists, setLists] = useState([]);
   const [searchQuery, setSearchQuery] = useSearchParams({ query: "" });
+  const [filters, setFilters] = useState(false);
+  const [tags, setTags] = useState([]);
 
   // HANDLE SEARCH
   const handleSearch = (event) => {
@@ -29,20 +33,31 @@ function BrowseLists() {
   // GET LISTS
   const getLists = async () => {
     try {
-      if (userId.userId || searchQuery) {
-        const data = await axios.get(
+      if (userId.userId || searchQuery.get("query")) {
+        const data = await axios.post(
           `${
             process.env.REACT_APP_API_URL
           }/lists/getAllListsFiltered?creator_id=${
             userId.userId || ""
-          }&title=${searchQuery.get("query")}`
+          }&title=${searchQuery.get("query")}`,
+          { tags: tags.map((tag) => tag.name) }
         );
         setLists(data.data.lists);
 
         return;
       }
 
-      const data = await axios.get(
+      if (tags.length > 0) {
+        const data = await axios.post(
+          `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/`,
+          { tags: tags.map((tag) => tag.name) }
+        );
+        setLists(data.data.lists);
+
+        return;
+      }
+
+      const data = await axios.post(
         `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/`
       );
       setLists(data.data.lists);
@@ -51,9 +66,15 @@ function BrowseLists() {
     }
   };
 
+  const handleTagSelect = (e) => {
+    const selectedTag = tagsList.find((tag) => tag.name === e.target.value);
+
+    setTags([...tags, selectedTag]);
+  };
+
   useEffect(() => {
     getLists();
-  }, [userId, searchQuery]);
+  }, [userId, searchQuery, tags]);
 
   return (
     <div
@@ -62,14 +83,14 @@ function BrowseLists() {
       } pt-16`}
     >
       {/*----- PAGE HEADING -----*/}
-      <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+      <div className="mt-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">
           {trad[lang].navbar.browseLists}
         </h3>
         <div className="mt-3 sm:mt-0 sm:ml-4">
           {/* SEARCH BAR */}
-          <div className="flex w-full items-center justify-center sm:px-2 md:w-[400px] lg:justify-end">
+          <div className="flex w-full flex-col items-center justify-center sm:px-2 md:w-[400px] lg:justify-end">
             <div className="w-full max-w-lg lg:max-w-xl">
               <label htmlFor="search" className="sr-only">
                 {trad[lang].placeholders.searchLists}
@@ -100,6 +121,77 @@ function BrowseLists() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* FILTER BY TAGS */}
+      <div
+        className={`my-2 flex w-full flex-col items-end px-2 lg:w-[70%] ${
+          darkMode ? "text-altSecondary" : "text-secondary"
+        }`}
+      >
+        <button
+          id="add-filters-button"
+          className="flex flex-row items-center gap-2 text-sm"
+          onClick={() => setFilters(!filters)}
+        >
+          <PlusIcon className="h-4 w-4" />
+          <p>Ajouter des filtres</p>
+        </button>
+
+        {filters && (
+          <div className="mt-2">
+            <select
+              name="select"
+              id="select"
+              className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-0 sm:text-sm ${
+                darkMode
+                  ? "bg-darkQuin text-gray-300"
+                  : "bg-myWhite text-smokyBlack"
+              }`}
+              defaultValue={""}
+              onChange={(e) => handleTagSelect(e)}
+            >
+              <option>{trad[lang].placeholders.chooseATag}</option>
+              {tagsList.map((tag) => {
+                return (
+                  <option key={tag.name} value={tag.name}>
+                    {lang === "en" ? tag.name : tag.name_fr}
+                  </option>
+                );
+              })}
+            </select>
+
+            {tags && tags.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-2">
+                {tags.map((tag) => {
+                  return (
+                    <div
+                      key={tag.name}
+                      className={`flex items-center gap-2 rounded-md px-2 py-1 ${
+                        darkMode
+                          ? "bg-darkQuin text-gray-300"
+                          : "bg-gray-100 text-smokyBlack"
+                      }`}
+                    >
+                      <span className="text-sm">
+                        {lang === "en" ? tag.name : tag.name_fr}
+                      </span>
+                      <button
+                        type="button"
+                        className="text-gray-400 hover:text-gray-500"
+                        onClick={() => {
+                          setTags(tags.filter((item) => item !== tag));
+                        }}
+                      >
+                        <XIcon className="h-4 w-4" />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/*----- PAGE CONTENT -----*/}
