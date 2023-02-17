@@ -84,7 +84,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    if (user.id) {
+    if (user?.id) {
       refetchUser();
     }
   }, []);
@@ -111,7 +111,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         introduction: "",
         catchline: "",
       });
-      await localStorage.clear();
+      await localStorage.removeItem("user");
       window.location.replace("/");
     } catch (error) {
       console.error(error);
