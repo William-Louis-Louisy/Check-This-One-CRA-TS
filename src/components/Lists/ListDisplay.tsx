@@ -236,7 +236,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
       />
 
       {/* SOCIAL */}
-      <div className="w-full pt-3 sm:px-4 sm:py-2">
+      <div className="flex w-full flex-row items-center justify-between pt-3 sm:px-4 sm:py-3">
         {/* Likes */}
         <div className="flex flex-row items-center gap-2">
           <button type="button" className="" onClick={() => handleLikes()}>
@@ -259,6 +259,26 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
               {list.likes} {trad[lang].global.likes}
             </p>
           </button>
+        </div>
+
+        {/* Tags */}
+        <div className="flex flex-row items-center gap-2">
+          {list.tags &&
+            list.tags.length > 0 &&
+            list.tags.slice(0, 2).map((tag: any, index: number) => (
+              <div
+                key={tag.name}
+                className={`flex items-center gap-2 rounded-md px-2 py-1 ${
+                  darkMode
+                    ? "bg-darkSec text-gray-300"
+                    : "bg-gray-100 text-smokyBlack"
+                }`}
+              >
+                <span className="text-sm">
+                  {lang === "en" ? tag.name : tag.name_fr}
+                </span>
+              </div>
+            ))}
         </div>
       </div>
 

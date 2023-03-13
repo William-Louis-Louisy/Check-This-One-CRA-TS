@@ -18,7 +18,6 @@ function CastCard({
 }) {
   return (
     <li
-      key={`content-${id}`}
       className={`col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg ${
         darkMode ? "bg-darkQuin" : "bg-white"
       } text-center shadow`}

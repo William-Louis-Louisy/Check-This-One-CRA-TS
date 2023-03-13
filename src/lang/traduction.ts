@@ -17,6 +17,8 @@ const trad = {
       seeProfile: "Voir ses listes",
       loginToAddContentToYourLists:
         "Connectez-vous pour ajouter du contenu à vos listes !",
+      tags: "Tags",
+      addFilters: "Ajouter des filtres",
     },
     home: {
       title1: "Créez vos listes",
@@ -225,6 +227,8 @@ const trad = {
       likedBy: "Liked by",
       seeProfile: "See his lists",
       loginToAddContentToYourLists: "Login to add content to your lists",
+      tags: "Tags",
+      addFilters: "Add filters",
     },
     home: {
       title1: "List it up",

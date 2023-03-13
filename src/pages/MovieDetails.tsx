@@ -180,6 +180,8 @@ function MovieDetails() {
 
   if (loading) return <PageLoader lang={lang} darkMode={darkMode} />;
 
+  console.log(watchProviders);
+
   return (
     <div
       className={`flex h-full min-h-screen w-full flex-col items-center py-16 ${
