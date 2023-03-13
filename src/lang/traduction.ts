@@ -19,6 +19,8 @@ const trad = {
         "Connectez-vous pour ajouter du contenu à vos listes !",
       tags: "Tags",
       addFilters: "Ajouter des filtres",
+      cardsList: "Liste",
+      table: "Tableau",
     },
     home: {
       title1: "Créez vos listes",
@@ -41,6 +43,11 @@ const trad = {
       seeMyLists: "Voir mes listes",
       editList: "Modifier la liste",
       deleteList: "Supprimer la liste",
+      name: "Nom",
+      description: "Description",
+      type: "Type",
+      itemsNb: "Nb. d'éléments",
+      likes: "Likes",
     },
     listEdition: {
       title: "Edition de la liste",
@@ -229,6 +236,8 @@ const trad = {
       loginToAddContentToYourLists: "Login to add content to your lists",
       tags: "Tags",
       addFilters: "Add filters",
+      cardsList: "Cards list",
+      table: "Table",
     },
     home: {
       title1: "List it up",
@@ -251,6 +260,11 @@ const trad = {
       seeMyLists: "See my lists",
       editList: "Edit the list",
       deleteList: "Delete the list",
+      name: "Name",
+      description: "Description",
+      type: "Type",
+      itemsNb: "Items nb.",
+      likes: "Likes",
     },
     listEdition: {
       title: "Edit the list",

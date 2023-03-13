@@ -11,6 +11,7 @@ function UserLists() {
   const { user } = useContext(UserContext);
   const [lists, setLists] = useState([]);
   const [total, setTotal] = useState(0);
+  const [tableView, setTableView] = useState(false);
 
   // GET LISTS BY USER ID
   const getLists = async () => {
@@ -84,7 +85,7 @@ function UserLists() {
 
       {/*----- PAGE CONTENT -----*/}
       <div className="flex w-full flex-col items-center gap-8 sm:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
-        {/* RESULTS */}
+        {/* RESULTS / Cards view */}
         {total > 0 ? (
           lists.map((list: any) => (
             <ListDisplay
