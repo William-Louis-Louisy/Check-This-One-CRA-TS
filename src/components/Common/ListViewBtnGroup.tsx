@@ -1,13 +1,22 @@
 import { BsCardList, BsTable } from "react-icons/bs";
 import trad from "../../lang/traduction";
 
-function ListViewBtnGroup({ state, setState, lang }) {
+function ListViewBtnGroup({ state, setState, lang, darkMode }) {
+  console.log(darkMode, state);
   return (
     <span className="relative z-0 inline-flex rounded-md shadow-sm">
       <button
         type="button"
-        className={`relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-gray-50 focus:z-10 focus:border-gray-300 focus:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-transparent ${
-          state === false ? "text-primary" : "text-secondary"
+        className={`relative inline-flex items-center rounded-l-md border px-4 py-2 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-transparent  ${
+          (darkMode && !state) || !state
+            ? "text-primary"
+            : darkMode
+            ? "text-altSecondary"
+            : "text-secondary"
+        } ${
+          darkMode
+            ? "border-gray-400 bg-darkQuin hover:bg-darkQuar focus:border-gray-400 focus:bg-darkQuar"
+            : "border-gray-300 bg-white hover:bg-gray-50 focus:border-gray-300 focus:bg-gray-100"
         }`}
         title={trad[lang].global.cardsList}
         onClick={() => setState(false)}
@@ -17,9 +26,17 @@ function ListViewBtnGroup({ state, setState, lang }) {
       </button>
       <button
         type="button"
-        className={`relative -ml-px inline-flex items-center rounded-r-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-gray-50 focus:z-10 focus:border-gray-300 focus:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-transparent ${
-          state === true ? "text-primary" : "text-secondary"
-        }`}
+        className={`relative -ml-px inline-flex items-center rounded-r-md border px-4 py-2 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-transparent  ${
+          (darkMode && state) || state
+            ? "text-primary"
+            : darkMode
+            ? "text-altSecondary"
+            : "text-secondary"
+        } ${
+          darkMode
+            ? "border-gray-400 bg-darkQuin hover:bg-darkQuar focus:border-gray-400 focus:bg-darkQuar"
+            : "border-gray-300 bg-white hover:bg-gray-50 focus:border-gray-300 focus:bg-gray-100"
+        }}`}
         title={trad[lang].global.table}
         onClick={() => setState(true)}
       >

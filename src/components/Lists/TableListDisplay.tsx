@@ -5,8 +5,12 @@ import { typeToIcon } from "../../utils/TypeToIcon";
 function TableListDisplay({ lang, lists, darkMode }) {
   return (
     <div className="w-full overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-      <table className="min-w-full divide-y divide-gray-300">
-        <thead className="bg-gray-50">
+      <table
+        className={`min-w-full divide-y ${
+          darkMode ? "divide-darkSec" : "divide-gray-300"
+        }`}
+      >
+        <thead className={`${darkMode ? "bg-darkSec" : "bg-gray-50"}`}>
           <tr>
             <th
               scope="col"
@@ -16,7 +20,7 @@ function TableListDisplay({ lang, lists, darkMode }) {
             </th>
             <th
               scope="col"
-              className="px-3 py-3.5 text-left text-sm font-semibold text-primary"
+              className="hidden px-3 py-3.5 text-left text-sm font-semibold text-primary sm:table-cell"
             >
               {trad[lang].labels.description}
             </th>
@@ -28,7 +32,7 @@ function TableListDisplay({ lang, lists, darkMode }) {
             </th>
             <th
               scope="col"
-              className="whitespace-nowrap px-3 py-3.5 text-center text-sm font-semibold text-primary"
+              className="hidden whitespace-nowrap px-3 py-3.5 text-center text-sm font-semibold text-primary sm:table-cell"
             >
               {trad[lang].labels.itemsNb}
             </th>
@@ -40,22 +44,32 @@ function TableListDisplay({ lang, lists, darkMode }) {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200 bg-white">
+        <tbody
+          className={`divide-y ${
+            darkMode
+              ? "divide-gray-500 bg-darkQuin text-gray-300"
+              : "divide-gray-200 bg-white text-gray-500"
+          }`}
+        >
           {lists.map((list) => (
             <tr key={list.email}>
-              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-secondary sm:pl-6">
+              <td
+                className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6 ${
+                  darkMode ? "text-altSecondary" : "text-secondary"
+                }`}
+              >
                 {list.title}
               </td>
-              <td className="max-w-lg truncate px-3 py-4 text-sm text-gray-500">
+              <td className="hidden max-w-lg truncate px-3 py-4 text-sm sm:table-cell">
                 {list.description}
               </td>
-              <td className="flex justify-center whitespace-nowrap px-3 py-4 text-center text-sm text-gray-500">
+              <td className="flex justify-center whitespace-nowrap px-3 py-4 text-center text-sm">
                 {typeToIcon(list.type)}
               </td>
-              <td className="whitespace-nowrap px-3 py-4 text-center text-sm text-gray-500">
+              <td className="hidden whitespace-nowrap px-3 py-4 text-center text-sm sm:table-cell">
                 {list.content.length}
               </td>
-              <td className="whitespace-nowrap px-3 py-4 text-center text-sm text-gray-500">
+              <td className="whitespace-nowrap px-3 py-4 text-center text-sm">
                 {list.likes}
               </td>
             </tr>

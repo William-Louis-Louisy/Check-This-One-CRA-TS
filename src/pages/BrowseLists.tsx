@@ -139,6 +139,7 @@ function BrowseLists() {
             state={tableView}
             setState={setTableView}
             lang={lang}
+            darkMode={darkMode}
           />
 
           {/* Add filters button */}
