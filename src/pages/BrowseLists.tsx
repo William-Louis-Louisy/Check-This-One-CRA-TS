@@ -125,7 +125,7 @@ function BrowseLists() {
 
       {/* FILTER BY TAGS */}
       <div
-        className={`my-2 flex w-full flex-col items-end px-2 lg:w-[70%] ${
+        className={`my-5 flex w-4/5 flex-col items-end lg:my-2 lg:w-[70%] lg:px-2 ${
           darkMode ? "text-altSecondary" : "text-secondary"
         }`}
       >
@@ -135,61 +135,71 @@ function BrowseLists() {
           onClick={() => setFilters(!filters)}
         >
           <PlusIcon className="h-4 w-4" />
-          <p>Ajouter des filtres</p>
+          <p>{trad[lang].global.addFilters}</p>
         </button>
 
         {filters && (
-          <div className="mt-2">
-            <select
-              name="select"
-              id="select"
-              className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-0 sm:text-sm ${
-                darkMode
-                  ? "bg-darkQuin text-gray-300"
-                  : "bg-myWhite text-smokyBlack"
+          <div className="w-full md:w-96">
+            <label
+              htmlFor="select"
+              className={`w-full text-left text-sm font-medium ${
+                darkMode ? "text-gray-300" : "text-gray-700"
               }`}
-              defaultValue={""}
-              onChange={(e) => handleTagSelect(e)}
             >
-              <option>{trad[lang].placeholders.chooseATag}</option>
-              {tagsList.map((tag) => {
-                return (
-                  <option key={tag.name} value={tag.name}>
-                    {lang === "en" ? tag.name : tag.name_fr}
-                  </option>
-                );
-              })}
-            </select>
-
-            {tags && tags.length > 0 && (
-              <div className="mt-2 flex flex-wrap gap-2">
-                {tags.map((tag) => {
+              {trad[lang].global.tags}:
+            </label>
+            <div className="mt-1">
+              <select
+                name="select"
+                id="select"
+                className={`block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-primary focus:ring-0 ${
+                  darkMode
+                    ? "bg-darkQuin text-gray-300"
+                    : "bg-myWhite text-smokyBlack"
+                }`}
+                defaultValue={""}
+                onChange={(e) => handleTagSelect(e)}
+              >
+                <option>{trad[lang].placeholders.chooseATag}</option>
+                {tagsList.map((tag) => {
                   return (
-                    <div
-                      key={tag.name}
-                      className={`flex items-center gap-2 rounded-md px-2 py-1 ${
-                        darkMode
-                          ? "bg-darkQuin text-gray-300"
-                          : "bg-gray-100 text-smokyBlack"
-                      }`}
-                    >
-                      <span className="text-sm">
-                        {lang === "en" ? tag.name : tag.name_fr}
-                      </span>
-                      <button
-                        type="button"
-                        className="text-gray-400 hover:text-gray-500"
-                        onClick={() => {
-                          setTags(tags.filter((item) => item !== tag));
-                        }}
-                      >
-                        <XIcon className="h-4 w-4" />
-                      </button>
-                    </div>
+                    <option key={tag.name} value={tag.name}>
+                      {lang === "en" ? tag.name : tag.name_fr}
+                    </option>
                   );
                 })}
-              </div>
-            )}
+              </select>
+
+              {tags && tags.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {tags.map((tag) => {
+                    return (
+                      <div
+                        key={tag.name}
+                        className={`flex items-center gap-2 rounded-md px-2 py-1 ${
+                          darkMode
+                            ? "bg-darkQuin text-gray-300"
+                            : "bg-myWhite text-smokyBlack"
+                        }`}
+                      >
+                        <span className="text-sm">
+                          {lang === "en" ? tag.name : tag.name_fr}
+                        </span>
+                        <button
+                          type="button"
+                          className="text-gray-400 hover:text-gray-500"
+                          onClick={() => {
+                            setTags(tags.filter((item) => item !== tag));
+                          }}
+                        >
+                          <XIcon className="h-4 w-4" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
