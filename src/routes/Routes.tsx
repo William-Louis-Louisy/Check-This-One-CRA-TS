@@ -15,6 +15,7 @@ import NavBar from "../components/Navigation/NavBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PodcastsSearch from "../pages/PodcastsSearch";
 import UserLikedLists from "../pages/UserLikedLists";
+import ListDetails from "../pages/ListDetails";
 
 export default function PublicRoutes() {
   return (
@@ -48,6 +49,7 @@ export default function PublicRoutes() {
         {/* BROWSE LISTS */}
         <Route path="browseLists" element={<BrowseLists />} />
         <Route path="browseLists/:userId" element={<BrowseLists />} />
+        <Route path="listDetails/:id" element={<ListDetails />} />
       </Routes>
     </BrowserRouter>
   );

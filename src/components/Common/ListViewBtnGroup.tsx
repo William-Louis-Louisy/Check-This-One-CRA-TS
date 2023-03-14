@@ -2,7 +2,6 @@ import { BsCardList, BsTable } from "react-icons/bs";
 import trad from "../../lang/traduction";
 
 function ListViewBtnGroup({ state, setState, lang, darkMode }) {
-  console.log(darkMode, state);
   return (
     <span className="relative z-0 inline-flex rounded-md shadow-sm">
       <button

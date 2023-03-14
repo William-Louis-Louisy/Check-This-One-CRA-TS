@@ -5,6 +5,8 @@ import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import { SearchIcon } from "@heroicons/react/solid";
 import ListDisplay from "../components/Lists/ListDisplay";
+import ListViewBtnGroup from "../components/Common/ListViewBtnGroup";
+import TableListDisplay from "../components/Lists/TableListDisplay";
 
 function UserLists() {
   const { lang, darkMode } = useContext(AppContext);
@@ -43,7 +45,7 @@ function UserLists() {
       } pt-16`}
     >
       {/*----- PAGE HEADING -----*/}
-      <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+      <div className="mt-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">
           {trad[lang].navbar.myLists}
@@ -83,22 +85,49 @@ function UserLists() {
         </div>
       </div>
 
+      <div className="my-5 flex w-4/5 flex-col items-end lg:my-2 lg:w-[70%] lg:pr-2">
+        <div className="flex w-full flex-row items-center justify-between">
+          {/* List view buttons */}
+          <ListViewBtnGroup
+            state={tableView}
+            setState={setTableView}
+            lang={lang}
+            darkMode={darkMode}
+          />
+        </div>
+      </div>
+
       {/*----- PAGE CONTENT -----*/}
-      <div className="flex w-full flex-col items-center gap-8 sm:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
-        {/* RESULTS / Cards view */}
-        {total > 0 ? (
-          lists.map((list: any) => (
-            <ListDisplay
-              key={`list-${list.id}`}
-              list={list}
-              user={user.id}
-              lang={lang}
-              darkMode={darkMode}
-              refetch={getLists}
-            />
-          ))
+      <div
+        className={`mb-16 flex w-full flex-col items-center gap-8 md:my-8 md:flex-row md:flex-wrap md:justify-center md:gap-10 ${
+          tableView ? "lg:w-[70%]" : "lg:w-3/5"
+        }`}
+      >
+        {tableView ? (
+          <>
+            {/* RESULTS / Table view */}
+            <TableListDisplay lang={lang} lists={lists} darkMode={darkMode} />
+          </>
         ) : (
-          <p>{trad[lang].global.noLists}</p>
+          <>
+            {/* RESULTS / Cards view */}
+            {lists.length > 0 ? (
+              lists.map((list: any) => (
+                <ListDisplay
+                  key={`list-${list.id}`}
+                  list={list}
+                  user={user?.id}
+                  lang={lang}
+                  darkMode={darkMode}
+                  refetch={getLists}
+                />
+              ))
+            ) : (
+              <p className={`${darkMode ? "text-gray-300" : "text-myBlack"}`}>
+                {trad[lang].global.noLists}
+              </p>
+            )}
+          </>
         )}
       </div>
     </div>

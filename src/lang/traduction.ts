@@ -48,6 +48,8 @@ const trad = {
       type: "Type",
       itemsNb: "Nb. d'éléments",
       likes: "Likes",
+      tags: "Tags",
+      requiredFields: "Les champs marqués d'un * sont obligatoires",
     },
     listEdition: {
       title: "Edition de la liste",
@@ -265,6 +267,8 @@ const trad = {
       type: "Type",
       itemsNb: "Items nb.",
       likes: "Likes",
+      tags: "Tags",
+      requiredFields: "Fields marked with an * are required",
     },
     listEdition: {
       title: "Edit the list",

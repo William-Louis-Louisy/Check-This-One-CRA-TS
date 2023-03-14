@@ -1,5 +1,11 @@
 import { IContent } from "./Content";
 
+interface ILikedBy {
+  avatar: string;
+  id: number;
+  user_name: string;
+}
+
 export interface IList {
   id: number;
   title: string;
@@ -10,4 +16,16 @@ export interface IList {
   privacy: any;
   type: string;
   content: IContent[];
+  tags?: any;
+  liked_by: ILikedBy[];
+}
+
+export interface ICreator {
+  avatar: string;
+  catchline: string;
+  city: string;
+  country: string;
+  email: string;
+  introduction: string;
+  user_name: string;
 }

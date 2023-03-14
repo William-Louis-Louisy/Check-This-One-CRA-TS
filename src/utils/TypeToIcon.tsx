@@ -8,17 +8,12 @@ import {
 export const typeToIcon = (type) => {
   switch (type) {
     case "movie":
-      return <IoFilmOutline className="h-6 w-6 text-primary" title="Movies" />;
+      return <IoFilmOutline className="h-6 w-6" title="Movies" />;
     case "show":
-      return <IoTvSharp className="h-6 w-6 text-primary" title="TV Shows" />;
+      return <IoTvSharp className="h-6 w-6" title="TV Shows" />;
     case "youtube":
-      return (
-        <IoLogoYoutube
-          className="h-6 w-6 text-primary"
-          title="Youtube videos"
-        />
-      );
+      return <IoLogoYoutube className="h-6 w-6" title="Youtube videos" />;
     default:
-      return <IoListSharp className="h-6 w-6 text-primary" title="Mixed" />;
+      return <IoListSharp className="h-6 w-6" title="Mixed" />;
   }
 };

@@ -116,7 +116,7 @@ function CreateListForm({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              className={`relative inline-block w-[90%] transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
+              className={`relative mt-16 inline-block w-[90%] transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
                 darkMode ? "bg-darkTert" : "bg-myWhite"
               }`}
             >
@@ -154,7 +154,7 @@ function CreateListForm({
                               darkMode ? "text-gray-300" : "text-gray-700"
                             }`}
                           >
-                            {trad[lang].listEdition.listName}:
+                            {trad[lang].listEdition.listName} *
                           </label>
                           <div className="mt-1">
                             <input
@@ -184,7 +184,7 @@ function CreateListForm({
                               darkMode ? "text-gray-300" : "text-gray-700"
                             }`}
                           >
-                            {trad[lang].listEdition.listDescription}:
+                            {trad[lang].listEdition.listDescription} *
                           </label>
                           <div className="mt-1">
                             <textarea
@@ -215,7 +215,7 @@ function CreateListForm({
                               darkMode ? "text-gray-300" : "text-gray-700"
                             }`}
                           >
-                            {trad[lang].listEdition.listTags}:
+                            {trad[lang].listEdition.listTags}
                           </label>
                           <div className="mt-1">
                             <select
@@ -277,6 +277,11 @@ function CreateListForm({
                             </div>
                           )}
                         </div>
+
+                        {/* Required fields */}
+                        <span className="text-sm italic text-altRed">
+                          {trad[lang].labels.requiredFields}
+                        </span>
                       </div>
                     </fieldset>
                   </div>

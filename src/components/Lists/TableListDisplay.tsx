@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import trad from "../../lang/traduction";
 import { typeToIcon } from "../../utils/TypeToIcon";
 
@@ -52,7 +53,11 @@ function TableListDisplay({ lang, lists, darkMode }) {
           }`}
         >
           {lists.map((list) => (
-            <tr key={list.email}>
+            <Link
+              key={list.id}
+              className="table-row"
+              to={`/listDetails/${list.id}`}
+            >
               <td
                 className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6 ${
                   darkMode ? "text-altSecondary" : "text-secondary"
@@ -72,7 +77,7 @@ function TableListDisplay({ lang, lists, darkMode }) {
               <td className="whitespace-nowrap px-3 py-4 text-center text-sm">
                 {list.likes}
               </td>
-            </tr>
+            </Link>
           ))}
         </tbody>
       </table>

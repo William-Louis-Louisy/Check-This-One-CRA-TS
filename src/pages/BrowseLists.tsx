@@ -145,7 +145,7 @@ function BrowseLists() {
           {/* Add filters button */}
           <button
             id="add-filters-button"
-            className="flex flex-row items-center gap-2 text-sm"
+            className="flex flex-row items-center gap-2 text-sm duration-150 hover:text-primary"
             onClick={() => setFilters(!filters)}
           >
             <PlusIcon className="h-4 w-4" />
@@ -221,7 +221,7 @@ function BrowseLists() {
 
       {/*----- PAGE CONTENT -----*/}
       <div
-        className={`mb-16 flex w-full flex-col items-center gap-8 md:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 ${
+        className={`mb-16 flex w-full flex-col items-center gap-8 md:my-8 md:flex-row md:flex-wrap md:justify-center md:gap-10 ${
           tableView ? "lg:w-[70%]" : "lg:w-3/5"
         }`}
       >
@@ -251,7 +251,6 @@ function BrowseLists() {
             )}
           </>
         )}
-        {/* RESULTS / Table view */}
       </div>
     </div>
   );

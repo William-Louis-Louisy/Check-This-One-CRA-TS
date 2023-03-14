@@ -17,16 +17,7 @@ import CreatorDisplayCard from "../Modals/CreatorDisplayCard";
 import DeleteConfirmation from "../Modals/DeleteConfirmation";
 import LikesModal from "../Modals/LikesModal";
 import ActionPannelMobile from "../Common/ActionPannelMobile";
-
-interface ICreator {
-  avatar: string;
-  catchline: string;
-  city: string;
-  country: string;
-  email: string;
-  introduction: string;
-  user_name: string;
-}
+import { ICreator } from "../../types/List";
 
 interface IListToDelete {
   id: number;
@@ -127,10 +118,15 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
       {/* HEADING */}
       <div className="flex flex-row items-center justify-between sm:ml-6 sm:mr-3">
         {/* Title */}
-        <div className="flex flex-row items-center gap-2 sm:gap-4">
+        <Link
+          to={`/listDetails/${list.id}`}
+          className={`flex flex-row items-center gap-2 duration-150 hover:text-primary sm:gap-4 ${
+            darkMode ? "text-altSecondary" : "text-secondary"
+          }`}
+        >
           <div>{typeToIcon(list.type)}</div>
-          <h4 className="truncate text-base text-primary">{list.title}</h4>
-        </div>
+          <h4 className="truncate text-base">{list.title}</h4>
+        </Link>
 
         {/* Creator */}
         <div className="flex flex-col items-center gap-3 md:flex-row">
@@ -138,7 +134,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
             <span className="flex flex-row items-center gap-3">
               <button
                 onClick={() => setCreatorModal(true)}
-                className={`flex flex-row items-center text-sm ${
+                className={`flex flex-row items-center text-sm duration-150 hover:text-primary ${
                   darkMode ? "text-altSecondary" : "text-secondary"
                 }`}
               >
