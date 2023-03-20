@@ -194,7 +194,7 @@ function MovieDetails() {
         </h3>
         <div className="mt-3 flex flex-row items-center justify-end gap-3 sm:mt-0">
           {/* LISTS COUNT */}
-          {listsCount > 0 && (
+          {/* {listsCount > 0 && (
             <Link
               to="#"
               className={`rounded-md border ${
@@ -214,7 +214,7 @@ function MovieDetails() {
                   : trad[lang].global.list}
               </span>
             </Link>
-          )}
+          )} */}
 
           {/* ADD TO LIST BUTTON */}
           {user?.id && (

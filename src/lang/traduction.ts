@@ -63,6 +63,7 @@ const trad = {
       country: "Pays",
       city: "Ville",
       lists: "Listes",
+      trendingVideos: "Vidéos en tendances",
     },
     listEdition: {
       title: "Edition de la liste",
@@ -297,6 +298,7 @@ const trad = {
       country: "Country",
       city: "City",
       lists: "Lists",
+      trendingVideos: "Trending videos",
     },
     listEdition: {
       title: "Edit the list",

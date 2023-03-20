@@ -6,7 +6,6 @@ import { AppContext } from "../contexts/AppContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import YoutubeVideoCard from "../components/Cards/YoutubeVideoCard";
-import YoutubeChannelCard from "../components/Cards/YoutubeChannelCard";
 import { UserContext } from "../contexts/UserContext";
 import AddToList from "../components/Modals/AddToList";
 import CreateListForm from "../components/Modals/CreateListForm";
@@ -61,11 +60,14 @@ function YoutubeSearch() {
     }
   };
 
+  // SET REGION CODE ACCORDING TO LANG
+  const regionCode = lang === "fr" ? "FR" : "US";
+
   // GET MOST POPULAR
   const getMostPopular = async () => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_YTB_SEARCH_URL}&chart=mostPopular&locale=France&type=video&key=${process.env.REACT_APP_YTB_API_KEY}`
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&regionCode=${regionCode}&maxResults=25&key=${process.env.REACT_APP_YTB_API_KEY}`
       );
       setMostPopular(data);
     } catch (error) {
@@ -77,7 +79,7 @@ function YoutubeSearch() {
 
   useEffect(() => {
     getMostPopular();
-  }, []);
+  }, [regionCode]);
 
   // GET LISTS BY USER ID
   const getLists = async () => {
@@ -190,6 +192,9 @@ function YoutubeSearch() {
 
       {isTrending && mostPopular && (
         <div className="flex w-full flex-col items-center">
+          <h4 className={`mb-4 text-xl font-semibold text-primary`}>
+            {trad[lang].labels.trendingVideos}
+          </h4>
           {mostPopular?.items.map((item) => (
             <YoutubeVideoCard
               key={`${item.etag}-${item.id.kind}`}
@@ -197,6 +202,7 @@ function YoutubeSearch() {
               item={item}
               lang={lang}
               darkMode={darkMode}
+              user={user}
             />
           ))}
         </div>
@@ -217,13 +223,9 @@ function YoutubeSearch() {
                   item={item}
                   lang={lang}
                   darkMode={darkMode}
+                  user={user}
                 />
-              ) : (
-                <YoutubeChannelCard
-                  key={`${item.etag}-${item.id.kind}`}
-                  item={item}
-                />
-              )
+              ) : null
             )}
             <div className="my-5 flex w-full flex-row justify-end gap-8 md:w-3/5">
               {results?.prevPageToken && (

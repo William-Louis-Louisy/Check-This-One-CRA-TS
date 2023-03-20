@@ -73,18 +73,16 @@ function TvShowCard({ serie, lang, handleAddToList, darkMode, user }) {
             {trad[lang].labels.addToAList}
           </button>
         ) : (
-          <Link
-            to="/login"
-            className={`rounded-md border px-4 py-2 shadow-sm ${
-              darkMode
-                ? "border-altSecondary text-altSecondary"
-                : "border-secondary text-secondary"
-            }`}
+          <button
+            className={`inline-flex items-center gap-2 rounded-md border border-transparent ${
+              darkMode ? "bg-gray-500 text-darkSec" : "bg-gray-400 text-myWhite"
+            } cursor-not-allowed px-4 py-2 text-base font-medium shadow-sm  focus:outline-none focus:ring-0 focus:ring-offset-0`}
+            disabled
+            title={trad[lang].global.loginToAddContentToYourLists}
           >
-            <p className="text-center text-xs italic">
-              {trad[lang].global.loginToAddContentToYourLists}
-            </p>
-          </Link>
+            <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />
+            {trad[lang].labels.addToAList}
+          </button>
         )}
       </div>
     </div>

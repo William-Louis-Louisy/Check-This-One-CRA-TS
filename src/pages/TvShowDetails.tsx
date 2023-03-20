@@ -195,7 +195,7 @@ function TvShowDetails() {
         </h3>
         <div className="mt-3 flex flex-row items-center justify-end gap-3 sm:mt-0">
           {/* LISTS COUNT */}
-          {listsCount > 0 && (
+          {/* {listsCount > 0 && (
             <Link
               to="#"
               className="rounded-md border border-secondary px-2 py-1 sm:px-4 sm:py-2"
@@ -211,7 +211,7 @@ function TvShowDetails() {
                   : trad[lang].global.list}
               </span>
             </Link>
-          )}
+          )} */}
 
           {/* ADD TO LIST BUTTON */}
           {user?.id && (
