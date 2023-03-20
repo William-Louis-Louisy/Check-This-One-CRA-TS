@@ -102,6 +102,11 @@ const trad = {
       lists: "Listes",
       cancel: "Annuler",
       createNewList: "Créer une nouvelle liste",
+      shareAList: "Partager une liste",
+      share: "Partager",
+      close: "Fermer",
+      qrExplanations:
+        "Enregistrez l'image du QR Code et partagez la à vos amis !",
     },
     movieDetails: {
       originalTitle: "Titre original",
@@ -337,6 +342,10 @@ const trad = {
       lists: "Lists",
       cancel: "Cancel",
       createNewList: "Create a new list",
+      shareAList: "Share a list",
+      share: "Share",
+      close: "Close",
+      qrExplanations: "Save this QR code and share it with your friends !",
     },
     movieDetails: {
       originalTitle: "Titre original",

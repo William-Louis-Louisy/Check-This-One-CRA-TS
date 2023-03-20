@@ -64,7 +64,7 @@ function BrowseLists() {
       const data = await axios.post(
         `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/`
       );
-      setLists(data.data.lists);
+      setLists(data.data.listsWithQRCodes);
     } catch (error) {
       console.error(error);
     }

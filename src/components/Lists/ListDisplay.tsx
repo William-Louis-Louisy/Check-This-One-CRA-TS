@@ -18,6 +18,8 @@ import DeleteConfirmation from "../Modals/DeleteConfirmation";
 import LikesModal from "../Modals/LikesModal";
 import ActionPannelMobile from "../Common/ActionPannelMobile";
 import { ICreator } from "../../types/List";
+import { ShareIcon } from "@heroicons/react/outline";
+import ShareModal from "../Modals/ShareModal";
 
 interface IListToDelete {
   id: number;
@@ -38,6 +40,9 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
 
   // LIKES MODAL
   const [openLikesModal, setOpenLikesModal] = useState(false);
+
+  // SHARE MODAL
+  const [openShareModal, setOpenShareModal] = useState(false);
 
   // HANDLE DELETE LIST
   const handleDeleteList = async () => {
@@ -263,24 +268,43 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
           </button>
         </div>
 
-        {/* Tags */}
-        <div className="flex flex-row items-center gap-2">
-          {list.tags &&
-            list.tags.length > 0 &&
-            list.tags.slice(0, 2).map((tag: any, index: number) => (
-              <div
-                key={tag.name}
-                className={`flex items-center gap-2 rounded-md px-2 py-1 ${
-                  darkMode
-                    ? "bg-darkSec text-gray-300"
-                    : "bg-gray-100 text-smokyBlack"
-                }`}
+        <div className="flex flex-row items-center gap-6">
+          {/* Share */}
+          {pathName !== "/userLists" && pathName !== "/userLikedLists" && (
+            <div className="flex flex-row items-center gap-2">
+              <button
+                type="button"
+                className="flex flex-row items-center gap-2"
+                onClick={() => setOpenShareModal(true)}
               >
-                <span className="text-sm">
-                  {lang === "en" ? tag.name : tag.name_fr}
-                </span>
-              </div>
-            ))}
+                <ShareIcon
+                  className={`h-6 w-6 duration-150 hover:text-primary ${
+                    darkMode ? "text-altSecondary" : "text-secondary"
+                  }`}
+                />
+              </button>
+            </div>
+          )}
+
+          {/* Tags */}
+          <div className="flex flex-row items-center gap-2">
+            {list.tags &&
+              list.tags.length > 0 &&
+              list.tags.slice(0, 2).map((tag: any, index: number) => (
+                <div
+                  key={tag.name}
+                  className={`flex items-center gap-2 rounded-md px-2 py-1 ${
+                    darkMode
+                      ? "bg-darkSec text-gray-300"
+                      : "bg-gray-100 text-smokyBlack"
+                  }`}
+                >
+                  <span className="text-sm">
+                    {lang === "en" ? tag.name : tag.name_fr}
+                  </span>
+                </div>
+              ))}
+          </div>
         </div>
       </div>
 
@@ -315,6 +339,15 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
         open={openLikesModal}
         setOpen={setOpenLikesModal}
         darkMode={darkMode}
+      />
+
+      {/* SHARE MODAL */}
+      <ShareModal
+        lang={lang}
+        open={openShareModal}
+        setOpen={setOpenShareModal}
+        darkMode={darkMode}
+        qrCode={list.qrCodeDataURL}
       />
     </div>
   );
