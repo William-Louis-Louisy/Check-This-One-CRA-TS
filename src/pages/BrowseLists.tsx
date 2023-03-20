@@ -1,9 +1,12 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import { PlusIcon, XIcon } from "@heroicons/react/solid";
+import { dividerClasses } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
+import ListViewBtnGroup from "../components/Common/ListViewBtnGroup";
 import ListDisplay from "../components/Lists/ListDisplay";
+import TableListDisplay from "../components/Lists/TableListDisplay";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
@@ -24,6 +27,7 @@ function BrowseLists() {
   const [searchQuery, setSearchQuery] = useSearchParams({ query: "" });
   const [filters, setFilters] = useState(false);
   const [tags, setTags] = useState([]);
+  const [tableView, setTableView] = useState(false);
 
   // HANDLE SEARCH
   const handleSearch = (event) => {
@@ -125,18 +129,29 @@ function BrowseLists() {
 
       {/* FILTER BY TAGS */}
       <div
-        className={`my-5 flex w-4/5 flex-col items-end lg:my-2 lg:w-[70%] lg:px-2 ${
+        className={`my-5 flex w-4/5 flex-col items-end lg:my-2 lg:w-[70%] lg:pr-2 ${
           darkMode ? "text-altSecondary" : "text-secondary"
         }`}
       >
-        <button
-          id="add-filters-button"
-          className="flex flex-row items-center gap-2 text-sm"
-          onClick={() => setFilters(!filters)}
-        >
-          <PlusIcon className="h-4 w-4" />
-          <p>{trad[lang].global.addFilters}</p>
-        </button>
+        <div className="flex w-full flex-row items-center justify-between">
+          {/* List view buttons */}
+          <ListViewBtnGroup
+            state={tableView}
+            setState={setTableView}
+            lang={lang}
+            darkMode={darkMode}
+          />
+
+          {/* Add filters button */}
+          <button
+            id="add-filters-button"
+            className="flex flex-row items-center gap-2 text-sm duration-150 hover:text-primary"
+            onClick={() => setFilters(!filters)}
+          >
+            <PlusIcon className="h-4 w-4" />
+            <p>{trad[lang].global.addFilters}</p>
+          </button>
+        </div>
 
         {filters && (
           <div className="w-full md:w-96">
@@ -205,23 +220,36 @@ function BrowseLists() {
       </div>
 
       {/*----- PAGE CONTENT -----*/}
-      <div className="mb-16 flex w-full flex-col items-center gap-8 md:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
-        {/* RESULTS */}
-        {lists.length > 0 ? (
-          lists.map((list: any) => (
-            <ListDisplay
-              key={`list-${list.id}`}
-              list={list}
-              user={user?.id}
-              lang={lang}
-              darkMode={darkMode}
-              refetch={getLists}
-            />
-          ))
+      <div
+        className={`mb-16 flex w-full flex-col items-center gap-8 md:my-8 md:flex-row md:flex-wrap md:justify-center md:gap-10 ${
+          tableView ? "lg:w-[70%]" : "lg:w-3/5"
+        }`}
+      >
+        {tableView ? (
+          <>
+            {/* RESULTS / Table view */}
+            <TableListDisplay lang={lang} lists={lists} darkMode={darkMode} />
+          </>
         ) : (
-          <p className={`${darkMode ? "text-gray-300" : "text-myBlack"}`}>
-            {trad[lang].global.noLists}
-          </p>
+          <>
+            {/* RESULTS / Cards view */}
+            {lists.length > 0 ? (
+              lists.map((list: any) => (
+                <ListDisplay
+                  key={`list-${list.id}`}
+                  list={list}
+                  user={user?.id}
+                  lang={lang}
+                  darkMode={darkMode}
+                  refetch={getLists}
+                />
+              ))
+            ) : (
+              <p className={`${darkMode ? "text-gray-300" : "text-myBlack"}`}>
+                {trad[lang].global.noLists}
+              </p>
+            )}
+          </>
         )}
       </div>
     </div>

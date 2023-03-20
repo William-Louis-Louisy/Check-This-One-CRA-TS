@@ -1,6 +1,12 @@
 const trad = {
   /* --↓↓↓--FRENCH VERSION--↓↓↓-- */
   fr: {
+    admin: {
+      totalUsers: "Nombre total d'utilisateurs",
+      totalLists: "Nombre total de listes",
+      totalLikes: "Nombre total de likes",
+      viewAll: "Voir tout",
+    },
     global: {
       error: "Un problème est survenu.",
       lists: "Listes",
@@ -19,6 +25,10 @@ const trad = {
         "Connectez-vous pour ajouter du contenu à vos listes !",
       tags: "Tags",
       addFilters: "Ajouter des filtres",
+      cardsList: "Liste",
+      table: "Tableau",
+      haveYouSeenIt: "L'avez-vous vu ?",
+      youHaveSeenIt: "Vous l'avez vu",
     },
     home: {
       title1: "Créez vos listes",
@@ -41,6 +51,18 @@ const trad = {
       seeMyLists: "Voir mes listes",
       editList: "Modifier la liste",
       deleteList: "Supprimer la liste",
+      name: "Nom",
+      description: "Description",
+      type: "Type",
+      itemsNb: "Nb. d'éléments",
+      likes: "Likes",
+      tags: "Tags",
+      requiredFields: "Les champs marqués d'un * sont obligatoires",
+      username: "Nom d'utilisateur",
+      email: "Email",
+      country: "Pays",
+      city: "Ville",
+      lists: "Listes",
     },
     listEdition: {
       title: "Edition de la liste",
@@ -113,6 +135,8 @@ const trad = {
       viewNotifications: "Voir les notifications",
       openUserMenu: "Ouvrir le menu utilisateur",
       userLikedLists: "Listes aimées",
+      admin: "Administration",
+      adminDashboard: "Tableau de bord",
     },
     pageTitles: {
       home: "Accueil",
@@ -211,6 +235,12 @@ const trad = {
   },
   /* --↓↓↓--ENGLISH VERSION--↓↓↓-- */
   en: {
+    admin: {
+      totalUsers: "Total number of users",
+      totalLists: "Total number of lists",
+      totalLikes: "Total number of likes",
+      viewAll: "View all",
+    },
     global: {
       error: "Language changed.",
       lists: "Lists",
@@ -229,6 +259,10 @@ const trad = {
       loginToAddContentToYourLists: "Login to add content to your lists",
       tags: "Tags",
       addFilters: "Add filters",
+      cardsList: "Cards list",
+      table: "Table",
+      haveYouSeenIt: "Have you seen it",
+      youHaveSeenIt: "You have seen it",
     },
     home: {
       title1: "List it up",
@@ -251,6 +285,18 @@ const trad = {
       seeMyLists: "See my lists",
       editList: "Edit the list",
       deleteList: "Delete the list",
+      name: "Name",
+      description: "Description",
+      type: "Type",
+      itemsNb: "Items nb.",
+      likes: "Likes",
+      tags: "Tags",
+      requiredFields: "Fields marked with an * are required",
+      username: "Username",
+      email: "Email",
+      country: "Country",
+      city: "City",
+      lists: "Lists",
     },
     listEdition: {
       title: "Edit the list",
@@ -323,6 +369,8 @@ const trad = {
       viewNotifications: "View notifications",
       openUserMenu: "Open user menu",
       userLikedLists: "Liked lists",
+      admin: "Admin",
+      adminDashboard: "Dashboard",
     },
     pageTitles: {
       home: "Home",
