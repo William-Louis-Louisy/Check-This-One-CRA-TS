@@ -17,16 +17,7 @@ import CreatorDisplayCard from "../Modals/CreatorDisplayCard";
 import DeleteConfirmation from "../Modals/DeleteConfirmation";
 import LikesModal from "../Modals/LikesModal";
 import ActionPannelMobile from "../Common/ActionPannelMobile";
-
-interface ICreator {
-  avatar: string;
-  catchline: string;
-  city: string;
-  country: string;
-  email: string;
-  introduction: string;
-  user_name: string;
-}
+import { ICreator } from "../../types/List";
 
 interface IListToDelete {
   id: number;
@@ -127,10 +118,15 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
       {/* HEADING */}
       <div className="flex flex-row items-center justify-between sm:ml-6 sm:mr-3">
         {/* Title */}
-        <div className="flex flex-row items-center gap-2 sm:gap-4">
+        <Link
+          to={`/listDetails/${list.id}`}
+          className={`flex flex-row items-center gap-2 duration-150 hover:text-primary sm:gap-4 ${
+            darkMode ? "text-altSecondary" : "text-secondary"
+          }`}
+        >
           <div>{typeToIcon(list.type)}</div>
-          <h4 className="truncate text-base text-primary">{list.title}</h4>
-        </div>
+          <h4 className="truncate text-base">{list.title}</h4>
+        </Link>
 
         {/* Creator */}
         <div className="flex flex-col items-center gap-3 md:flex-row">
@@ -138,7 +134,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
             <span className="flex flex-row items-center gap-3">
               <button
                 onClick={() => setCreatorModal(true)}
-                className={`flex flex-row items-center text-sm ${
+                className={`flex flex-row items-center text-sm duration-150 hover:text-primary ${
                   darkMode ? "text-altSecondary" : "text-secondary"
                 }`}
               >
@@ -214,7 +210,13 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
       {/* SLIDER */}
       <Slider
         content={list.content.map((c: any, index: number) => (
-          <ContentCard key={`card-${index}`} data={c} />
+          <ContentCard
+            key={`card-${index}`}
+            data={c}
+            lang={lang}
+            userId={user}
+            refetch={refetch}
+          />
         ))}
         sliderId={list.id}
         leftButton={
@@ -236,7 +238,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
       />
 
       {/* SOCIAL */}
-      <div className="w-full pt-3 sm:px-4 sm:py-2">
+      <div className="flex w-full flex-row items-center justify-between pt-3 sm:px-4 sm:py-3">
         {/* Likes */}
         <div className="flex flex-row items-center gap-2">
           <button type="button" className="" onClick={() => handleLikes()}>
@@ -259,6 +261,26 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
               {list.likes} {trad[lang].global.likes}
             </p>
           </button>
+        </div>
+
+        {/* Tags */}
+        <div className="flex flex-row items-center gap-2">
+          {list.tags &&
+            list.tags.length > 0 &&
+            list.tags.slice(0, 2).map((tag: any, index: number) => (
+              <div
+                key={tag.name}
+                className={`flex items-center gap-2 rounded-md px-2 py-1 ${
+                  darkMode
+                    ? "bg-darkSec text-gray-300"
+                    : "bg-gray-100 text-smokyBlack"
+                }`}
+              >
+                <span className="text-sm">
+                  {lang === "en" ? tag.name : tag.name_fr}
+                </span>
+              </div>
+            ))}
         </div>
       </div>
 

@@ -129,17 +129,19 @@ function Home() {
           {trad[lang].home.usersTop}
         </h2>
         <Slider
-          content={topUsers?.map((user, index) => (
-            <TopRatedUserCard
-              key={`user-${index}`}
-              user_id={user.user_id}
-              img={user.user_avatar}
-              name={user.user_user_name}
-              likes_nb={user.total_likes}
-              lang={lang}
-              darkMode={darkMode}
-            />
-          ))}
+          content={topUsers
+            ?.filter((user) => user.total_likes > 0)
+            .map((user, index) => (
+              <TopRatedUserCard
+                key={`user-${index}`}
+                user_id={user.user_id}
+                img={user.user_avatar}
+                name={user.user_user_name}
+                likes_nb={user.total_likes}
+                lang={lang}
+                darkMode={darkMode}
+              />
+            ))}
           sliderId="usersTop"
           leftButton={
             <ChevronLeftIcon

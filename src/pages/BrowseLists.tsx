@@ -1,9 +1,12 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import { PlusIcon, XIcon } from "@heroicons/react/solid";
+import { dividerClasses } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
+import ListViewBtnGroup from "../components/Common/ListViewBtnGroup";
 import ListDisplay from "../components/Lists/ListDisplay";
+import TableListDisplay from "../components/Lists/TableListDisplay";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
@@ -24,6 +27,7 @@ function BrowseLists() {
   const [searchQuery, setSearchQuery] = useSearchParams({ query: "" });
   const [filters, setFilters] = useState(false);
   const [tags, setTags] = useState([]);
+  const [tableView, setTableView] = useState(false);
 
   // HANDLE SEARCH
   const handleSearch = (event) => {
@@ -125,93 +129,127 @@ function BrowseLists() {
 
       {/* FILTER BY TAGS */}
       <div
-        className={`my-2 flex w-full flex-col items-end px-2 lg:w-[70%] ${
+        className={`my-5 flex w-4/5 flex-col items-end lg:my-2 lg:w-[70%] lg:pr-2 ${
           darkMode ? "text-altSecondary" : "text-secondary"
         }`}
       >
-        <button
-          id="add-filters-button"
-          className="flex flex-row items-center gap-2 text-sm"
-          onClick={() => setFilters(!filters)}
-        >
-          <PlusIcon className="h-4 w-4" />
-          <p>Ajouter des filtres</p>
-        </button>
+        <div className="flex w-full flex-row items-center justify-between">
+          {/* List view buttons */}
+          <ListViewBtnGroup
+            state={tableView}
+            setState={setTableView}
+            lang={lang}
+            darkMode={darkMode}
+          />
+
+          {/* Add filters button */}
+          <button
+            id="add-filters-button"
+            className="flex flex-row items-center gap-2 text-sm duration-150 hover:text-primary"
+            onClick={() => setFilters(!filters)}
+          >
+            <PlusIcon className="h-4 w-4" />
+            <p>{trad[lang].global.addFilters}</p>
+          </button>
+        </div>
 
         {filters && (
-          <div className="mt-2">
-            <select
-              name="select"
-              id="select"
-              className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-0 sm:text-sm ${
-                darkMode
-                  ? "bg-darkQuin text-gray-300"
-                  : "bg-myWhite text-smokyBlack"
+          <div className="w-full md:w-96">
+            <label
+              htmlFor="select"
+              className={`w-full text-left text-sm font-medium ${
+                darkMode ? "text-gray-300" : "text-gray-700"
               }`}
-              defaultValue={""}
-              onChange={(e) => handleTagSelect(e)}
             >
-              <option>{trad[lang].placeholders.chooseATag}</option>
-              {tagsList.map((tag) => {
-                return (
-                  <option key={tag.name} value={tag.name}>
-                    {lang === "en" ? tag.name : tag.name_fr}
-                  </option>
-                );
-              })}
-            </select>
-
-            {tags && tags.length > 0 && (
-              <div className="mt-2 flex flex-wrap gap-2">
-                {tags.map((tag) => {
+              {trad[lang].global.tags}:
+            </label>
+            <div className="mt-1">
+              <select
+                name="select"
+                id="select"
+                className={`block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-primary focus:ring-0 ${
+                  darkMode
+                    ? "bg-darkQuin text-gray-300"
+                    : "bg-myWhite text-smokyBlack"
+                }`}
+                defaultValue={""}
+                onChange={(e) => handleTagSelect(e)}
+              >
+                <option>{trad[lang].placeholders.chooseATag}</option>
+                {tagsList.map((tag) => {
                   return (
-                    <div
-                      key={tag.name}
-                      className={`flex items-center gap-2 rounded-md px-2 py-1 ${
-                        darkMode
-                          ? "bg-darkQuin text-gray-300"
-                          : "bg-gray-100 text-smokyBlack"
-                      }`}
-                    >
-                      <span className="text-sm">
-                        {lang === "en" ? tag.name : tag.name_fr}
-                      </span>
-                      <button
-                        type="button"
-                        className="text-gray-400 hover:text-gray-500"
-                        onClick={() => {
-                          setTags(tags.filter((item) => item !== tag));
-                        }}
-                      >
-                        <XIcon className="h-4 w-4" />
-                      </button>
-                    </div>
+                    <option key={tag.name} value={tag.name}>
+                      {lang === "en" ? tag.name : tag.name_fr}
+                    </option>
                   );
                 })}
-              </div>
-            )}
+              </select>
+
+              {tags && tags.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {tags.map((tag) => {
+                    return (
+                      <div
+                        key={tag.name}
+                        className={`flex items-center gap-2 rounded-md px-2 py-1 ${
+                          darkMode
+                            ? "bg-darkQuin text-gray-300"
+                            : "bg-myWhite text-smokyBlack"
+                        }`}
+                      >
+                        <span className="text-sm">
+                          {lang === "en" ? tag.name : tag.name_fr}
+                        </span>
+                        <button
+                          type="button"
+                          className="text-gray-400 hover:text-gray-500"
+                          onClick={() => {
+                            setTags(tags.filter((item) => item !== tag));
+                          }}
+                        >
+                          <XIcon className="h-4 w-4" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
 
       {/*----- PAGE CONTENT -----*/}
-      <div className="mb-16 flex w-full flex-col items-center gap-8 md:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
-        {/* RESULTS */}
-        {lists.length > 0 ? (
-          lists.map((list: any) => (
-            <ListDisplay
-              key={`list-${list.id}`}
-              list={list}
-              user={user?.id}
-              lang={lang}
-              darkMode={darkMode}
-              refetch={getLists}
-            />
-          ))
+      <div
+        className={`mb-16 flex w-full flex-col items-center gap-8 md:my-8 md:flex-row md:flex-wrap md:justify-center md:gap-10 ${
+          tableView ? "lg:w-[70%]" : "lg:w-3/5"
+        }`}
+      >
+        {tableView ? (
+          <>
+            {/* RESULTS / Table view */}
+            <TableListDisplay lang={lang} lists={lists} darkMode={darkMode} />
+          </>
         ) : (
-          <p className={`${darkMode ? "text-gray-300" : "text-myBlack"}`}>
-            {trad[lang].global.noLists}
-          </p>
+          <>
+            {/* RESULTS / Cards view */}
+            {lists.length > 0 ? (
+              lists.map((list: any) => (
+                <ListDisplay
+                  key={`list-${list.id}`}
+                  list={list}
+                  user={user?.id}
+                  lang={lang}
+                  darkMode={darkMode}
+                  refetch={getLists}
+                />
+              ))
+            ) : (
+              <p className={`${darkMode ? "text-gray-300" : "text-myBlack"}`}>
+                {trad[lang].global.noLists}
+              </p>
+            )}
+          </>
         )}
       </div>
     </div>

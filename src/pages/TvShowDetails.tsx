@@ -432,6 +432,7 @@ function TvShowDetails() {
             <ul className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3">
               {cast.map((actor) => (
                 <CastCard
+                  key={`actor-${actor.id}`}
                   id={actor.id}
                   name={actor.name}
                   department={actor.known_for_department}

@@ -184,6 +184,24 @@ function NavBar() {
                             </Link>
                           )}
                         </Menu.Item>
+
+                        {/* ADMIN */}
+                        {user?.user_name === "admin" && (
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/adminDashboard"
+                                className={classNames(
+                                  darkMode ? "text-gray-300" : "text-myBlack",
+                                  "block px-4 py-2 text-sm hover:text-primary"
+                                )}
+                              >
+                                {trad[lang].navbar.admin}
+                              </Link>
+                            )}
+                          </Menu.Item>
+                        )}
+
                         <Menu.Item>
                           {({ active }) => (
                             <Link
