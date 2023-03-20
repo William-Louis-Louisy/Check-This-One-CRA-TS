@@ -20,6 +20,8 @@ export interface IUser {
   city?: string;
   introduction?: string;
   catchline?: string;
+  seenContent?: any[];
+  seenCount?: number;
 }
 
 export type UserContextType = {

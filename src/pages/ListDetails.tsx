@@ -7,6 +7,7 @@ import PageLoader from "../components/Common/PageLoader";
 import Slider from "../components/Common/Slider";
 import CreatorDisplayCard from "../components/Modals/CreatorDisplayCard";
 import { AppContext } from "../contexts/AppContext";
+import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
 import { ICreator, IList } from "../types/List";
 import { typeToIcon } from "../utils/TypeToIcon";
@@ -19,6 +20,7 @@ function ListDetails() {
 
   // GET LANG FROM CONTEXT
   const { lang, darkMode } = useContext(AppContext);
+  const { user, refetchUser } = useContext(UserContext);
 
   // GET LIST BY ID
   const getListById = async () => {
@@ -106,7 +108,13 @@ function ListDetails() {
         {/* SLIDER */}
         <Slider
           content={list.content.map((c: any, index: number) => (
-            <ContentCard key={`card-${index}`} data={c} />
+            <ContentCard
+              key={`card-${index}`}
+              data={c}
+              lang={lang}
+              userId={user.id}
+              refetch={getListById}
+            />
           ))}
           sliderId={list.id.toString()}
           leftButton={

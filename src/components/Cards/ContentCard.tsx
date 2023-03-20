@@ -1,6 +1,9 @@
+import axios from "axios";
 import React from "react";
+import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
+import trad from "../../lang/traduction";
 
-function ContentCard({ data }) {
+function ContentCard({ data, lang, userId, refetch }) {
   // HANLE TYPE
   const handleType = (type) => {
     switch (type) {
@@ -15,6 +18,29 @@ function ContentCard({ data }) {
     }
   };
 
+  // HANDLE SEEN CONTENT
+  const handleSeen = async () => {
+    if (userId) {
+      try {
+        await axios.put(
+          `${process.env.REACT_APP_API_URL}/content/${data?.id}/seen/${userId}`
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  // CHECK IF DATA.ID EXIST IN SEENCONTENT
+  const isSeen = data?.seen_by?.find((item) => item.id === userId);
+
+  // HANDLE CLICK BUTTON
+  const handleClick = (e) => {
+    e.preventDefault();
+    handleSeen();
+    refetch();
+  };
+
   return (
     <a
       href={
@@ -23,7 +49,7 @@ function ContentCard({ data }) {
           : `/${handleType(data.type)}/${data.provider_id}`
       }
     >
-      <div className="h-40 w-[106px] md:h-80 md:w-[213px]">
+      <div className="relative h-40 w-[106px] md:h-80 md:w-[213px]">
         <img
           src={
             data.type === "youtube"
@@ -41,6 +67,23 @@ function ContentCard({ data }) {
           }`}
           alt=""
         />
+        {isSeen ? (
+          <button
+            className="absolute top-1.5 right-1.5 rounded-md bg-gray-500 bg-opacity-90 px-3 py-1 text-green-500"
+            title={trad[lang].global.youHaveSeenIt}
+            onClick={handleClick}
+          >
+            <HiOutlineEye />
+          </button>
+        ) : (
+          <button
+            className="absolute top-1.5 right-1.5 rounded-md bg-gray-500 bg-opacity-90 px-3 py-1 text-white"
+            title={trad[lang].global.haveYouSeenIt}
+            onClick={handleClick}
+          >
+            <HiOutlineEyeOff />
+          </button>
+        )}
       </div>
     </a>
   );

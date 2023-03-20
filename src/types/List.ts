@@ -28,4 +28,6 @@ export interface ICreator {
   email: string;
   introduction: string;
   user_name: string;
+  seenContent: any;
+  seenContentCount: number;
 }

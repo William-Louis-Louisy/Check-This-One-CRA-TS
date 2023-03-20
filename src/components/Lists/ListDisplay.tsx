@@ -210,7 +210,13 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
       {/* SLIDER */}
       <Slider
         content={list.content.map((c: any, index: number) => (
-          <ContentCard key={`card-${index}`} data={c} />
+          <ContentCard
+            key={`card-${index}`}
+            data={c}
+            lang={lang}
+            userId={user}
+            refetch={refetch}
+          />
         ))}
         sliderId={list.id}
         leftButton={
