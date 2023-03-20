@@ -137,9 +137,9 @@ function ListDetails() {
       </div>
 
       {/*----- LIST DETAILS -----*/}
-      <div className="flex w-[70%] items-start justify-between">
+      <div className="flex w-full flex-col items-start justify-between lg:w-[70%] lg:flex-row">
         {/* LEFT SIDE */}
-        <div className="flex w-2/5 flex-col gap-4 p-4">
+        <div className="flex flex-col gap-4 p-4 lg:w-2/5">
           {/* Description */}
           <div className="flex flex-col items-start">
             <span className="text-primary">
@@ -181,7 +181,7 @@ function ListDetails() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="w-2/5 p-4">
+        <div className="p-4 lg:w-2/5">
           <div className="flex flex-col items-start">
             <span className="text-primary">{trad[lang].labels.likes}:</span>
             <div className="card mt-1 flex max-h-32 flex-row flex-wrap items-center gap-3">

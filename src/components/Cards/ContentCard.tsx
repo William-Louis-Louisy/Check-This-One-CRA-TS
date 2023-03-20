@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import trad from "../../lang/traduction";
 
@@ -18,6 +17,8 @@ function ContentCard({ data, lang, userId, refetch }) {
     }
   };
 
+  // CHECK IF DATA.ID EXIST IN SEENCONTENT
+  const isSeen = data?.seen_by?.find((item: any) => item.id === userId);
   // HANDLE SEEN CONTENT
   const handleSeen = async () => {
     if (userId) {
@@ -25,20 +26,18 @@ function ContentCard({ data, lang, userId, refetch }) {
         await axios.put(
           `${process.env.REACT_APP_API_URL}/content/${data?.id}/seen/${userId}`
         );
+
+        refetch();
       } catch (error) {
         console.error(error);
       }
     }
   };
 
-  // CHECK IF DATA.ID EXIST IN SEENCONTENT
-  const isSeen = data?.seen_by?.find((item) => item.id === userId);
-
   // HANDLE CLICK BUTTON
   const handleClick = (e) => {
     e.preventDefault();
     handleSeen();
-    refetch();
   };
 
   return (
