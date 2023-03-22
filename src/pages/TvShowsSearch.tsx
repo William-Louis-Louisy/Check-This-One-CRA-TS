@@ -57,7 +57,7 @@ function TvShowsSearch() {
   const getLists = async () => {
     try {
       const data = await axios.get(
-        `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
+        `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}?paginate=false`
       );
       setLists(data.data.results);
     } catch (error) {

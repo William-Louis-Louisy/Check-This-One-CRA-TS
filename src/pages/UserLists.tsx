@@ -14,16 +14,17 @@ function UserLists() {
   const [lists, setLists] = useState([]);
   const [total, setTotal] = useState(0);
   const [tableView, setTableView] = useState(false);
+  const [page, setPage] = useState(1);
 
   // GET LISTS BY USER ID
   const getLists = async () => {
     if (user?.id) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
+          `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}?page=${page}&limit=10&paginate=true`
         );
         setLists(data.data.results);
-        setTotal(data.data.total);
+        setTotal(data.data.totalPages);
       } catch (error) {
         console.error(error);
       }
@@ -32,7 +33,7 @@ function UserLists() {
 
   useEffect(() => {
     getLists();
-  }, [user]);
+  }, [user, page]);
 
   if (!user?.id) {
     return <div>Vous devez être connecté pour accéder à cette page</div>;
@@ -128,6 +129,51 @@ function UserLists() {
               </p>
             )}
           </>
+        )}
+
+        {/* PAGINATION */}
+        {total > 1 && (
+          <div className="flex w-full flex-row items-center justify-around">
+            <button
+              disabled={page === 1}
+              className={`${
+                (darkMode && page === 1) || page === 1
+                  ? "cursor-not-allowed text-gray-300"
+                  : darkMode
+                  ? "text-altSecondary hover:text-primary"
+                  : "text-secondary hover:text-primary"
+              } ${
+                darkMode ? "bg-darkTert" : "bg-myWhite"
+              } rounded-l-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
+              onClick={() => setPage(page - 1)}
+            >
+              {trad[lang].global.previous}
+            </button>
+            <span
+              className={`${
+                darkMode
+                  ? "bg-darkTert text-gray-300"
+                  : "bg-myWhite text-myBlack"
+              } border-t border-b border-myGray px-4 py-2`}
+            >
+              {page}
+            </span>
+            <button
+              disabled={page === total}
+              className={`${
+                (darkMode && page === total) || page === total
+                  ? "cursor-not-allowed text-gray-300"
+                  : darkMode
+                  ? "text-altSecondary hover:text-primary"
+                  : "text-secondary hover:text-primary"
+              } ${
+                darkMode ? "bg-darkTert" : "bg-myWhite"
+              } rounded-r-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
+              onClick={() => setPage(page + 1)}
+            >
+              {trad[lang].global.next}
+            </button>
+          </div>
         )}
       </div>
     </div>

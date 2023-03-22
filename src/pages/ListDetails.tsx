@@ -112,7 +112,7 @@ function ListDetails() {
               key={`card-${index}`}
               data={c}
               lang={lang}
-              userId={user.id}
+              userId={user?.id}
               refetch={getListById}
             />
           ))}
