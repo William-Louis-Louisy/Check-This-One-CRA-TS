@@ -29,6 +29,8 @@ const trad = {
       table: "Tableau",
       haveYouSeenIt: "L'avez-vous vu ?",
       youHaveSeenIt: "Vous l'avez vu",
+      previous: "Précédent",
+      next: "Suivant",
     },
     home: {
       title1: "Créez vos listes",
@@ -272,6 +274,8 @@ const trad = {
       table: "Table",
       haveYouSeenIt: "Have you seen it",
       youHaveSeenIt: "You have seen it",
+      previous: "Previous",
+      next: "Next",
     },
     home: {
       title1: "List it up",
