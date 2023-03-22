@@ -178,11 +178,14 @@ const trad = {
       submit: "Créer mon compte",
       alreadyHaveAnAccount: "Vous avez déjà un compte ?",
       usernameLength:
-        "Votre nom d'utilisateur doit faire entre 5 et 16 caractères.",
+        "Le nom d'utilisateur doit contenir entre 5 et 16 caractères.",
       verifyEmail: "Vérifiez votre adresse email",
       verifyPassword:
         "Votre mot de passe doit contenir au moins un caractère majuscule, au moins un chiffre et au moins 8 caractères au total.",
       passwordConfirmError: "Vos mots de passe ne correspondent pas.",
+      usernameAlreadyExists: "Ce nom d'utilisateur est déjà utilisé.",
+      emailAlreadyExists: "Cette adresse email est déjà utilisée.",
+      verificationError: "Une erreur est survenue lors de la vérification.",
     },
     toasts: {
       success: {
@@ -421,6 +424,9 @@ const trad = {
       verifyPassword:
         "Your password must contain at least one uppercase character, at least one digit and at least 8 characters in total.",
       passwordConfirmError: "Your passwords don't match.",
+      usernameAlreadyExists: "This username is already taken.",
+      emailAlreadyExists: "This email address is already taken.",
+      verificationError: "An error occurred while verifying your account.",
     },
     toasts: {
       success: {
