@@ -64,7 +64,7 @@ body {
 .slider {
   display: flex;
   height: 100%;
-  width: 100%;
+  width: 100vw;
   overflow-x: scroll;
   scroll-behavior: smooth;
   scroll-snap-type: x var(--tw-scroll-snap-strictness);

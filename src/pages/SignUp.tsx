@@ -1,101 +1,111 @@
 import axios from "axios";
 import trad from "../lang/traduction";
 import { AppContext } from "../contexts/AppContext";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { dark } from "@mui/material/styles/createPalette";
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
+
+interface SignupForm {
+  username: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
+
+const initialState: SignupForm = {
+  username: "",
+  email: "",
+  password: "",
+  passwordConfirm: "",
+};
 
 function SignUp() {
   const navigate = useNavigate();
   const { lang, darkMode } = useContext(AppContext);
-  const [signupForm, setSignupForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
-  });
-  const [formErrors, setFormErrors] = useState({
-    username: false,
-    email: false,
-    password: false,
-    passwordConfirm: false,
-  });
+  const [signupForm, setSignupForm] = useState<SignupForm>(initialState);
+  const [validationMessages, setValidationMessages] = useState<{
+    [key: string]: string;
+  }>({});
   const [isFormValid, setIsFormValid] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
-  // VERIFY USERNAME LENGTH
-  function isValidUsername(username: string): boolean {
-    return username.length > 1 && username.length < 5;
-  }
-  const handleUsernameChange = (username: string) => {
-    if (isValidUsername(username)) {
-      setFormErrors({ ...formErrors, username: true });
-    } else {
-      setFormErrors({ ...formErrors, username: false });
-    }
+  // HANDLE INPUT CHANGE
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setSignupForm({
+      ...signupForm,
+      [name]: value,
+    });
   };
 
-  // VERIFY EMAIL FORMAT
-  function isValidEmail(email: string): boolean {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(email);
-  }
-  const handleEmailChange = (email: string) => {
-    if (email.length > 3 && !isValidEmail(email)) {
-      setFormErrors({ ...formErrors, email: true });
-    } else {
-      setFormErrors({ ...formErrors, email: false });
-    }
-  };
+  //  FORM VALIDATION FUNCTION
+  const validateField = async (fieldName: keyof SignupForm) => {
+    let errorMessage = "";
 
-  // VERIFY PASSWORD LENGTH AND USAGE OF NUMBERS AND AT LEAST A CAPITAL LETTER
-  function isValidPassword(password: string): boolean {
-    const re = /^(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
-    return re.test(password);
-  }
-  const handlePasswordChange = (password: string) => {
-    if (password.length > 1 && !isValidPassword(password)) {
-      setFormErrors({ ...formErrors, password: true });
-    } else {
-      setFormErrors({ ...formErrors, password: false });
+    switch (fieldName) {
+      case "username":
+        if (signupForm.username.length < 5 || signupForm.username.length > 16) {
+          errorMessage = trad[lang].signup.usernameLength;
+        } else {
+          try {
+            const usernameResponse = await axios.get(
+              `${process.env.REACT_APP_API_URL}/users/check-username-availability`,
+              { params: { user_name: signupForm.username } }
+            );
+            if (!usernameResponse.data.available) {
+              errorMessage = trad[lang].signup.usernameAlreadyExists;
+            }
+          } catch (error) {
+            console.error(
+              "Erreur lors de la vérification du nom d'utilisateur:",
+              error
+            );
+            errorMessage = trad[lang].signup.verificationError;
+          }
+        }
+        break;
+      case "email":
+        const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+        if (!emailRegex.test(signupForm.email)) {
+          errorMessage = "Le format de l'email est incorrect.";
+        } else {
+          try {
+            const emailResponse = await axios.get(
+              `${process.env.REACT_APP_API_URL}/users/check-email-availability`,
+              { params: { email: signupForm.email } }
+            );
+            if (!emailResponse.data.available) {
+              errorMessage = trad[lang].signup.emailAlreadyExists;
+            }
+          } catch (error) {
+            console.error("Erreur lors de la vérification de l'email:", error);
+            errorMessage = trad[lang].signup.verificationError;
+          }
+        }
+        break;
+      case "password":
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (!passwordRegex.test(signupForm.password)) {
+          errorMessage = trad[lang].signup.verifyPassword;
+        }
+        break;
+      case "passwordConfirm":
+        if (signupForm.password !== signupForm.passwordConfirm) {
+          errorMessage = trad[lang].signup.passwordConfirmError;
+        }
+        break;
     }
-  };
 
-  // VERIFY PASSWORD CONFIRMATION
-  function isValidPasswordConfirm(password: string): boolean {
-    return password === signupForm.password;
-  }
-  const handlePasswordConfirmChange = (passwordConfirm: string) => {
-    if (
-      passwordConfirm.length > 3 &&
-      !isValidPasswordConfirm(passwordConfirm)
-    ) {
-      setFormErrors({ ...formErrors, passwordConfirm: true });
-    } else {
-      setFormErrors({ ...formErrors, passwordConfirm: false });
-    }
-  };
+    setValidationMessages({
+      ...validationMessages,
+      [fieldName]: errorMessage,
+    });
 
-  // VERIFY IF ALL FIELDS ARE VALID
-  const handleFormValidation = () => {
-    if (signupForm.username.length < 5 || signupForm.username.length > 16) {
-      setIsFormValid(true);
-    }
-    if (!isValidEmail(signupForm.email)) {
-      setIsFormValid(true);
-    }
-    if (!isValidPassword(signupForm.password)) {
-      setIsFormValid(true);
-    }
-    if (!isValidPasswordConfirm(signupForm.passwordConfirm)) {
-      setIsFormValid(true);
-    }
+    return errorMessage === "";
   };
-
-  useEffect(() => {
-    handleFormValidation();
-  }, [signupForm]);
 
   // POST DATA
   const postData = async () => {
@@ -134,6 +144,43 @@ function SignUp() {
     }
   };
 
+  // HANDLE BLUR
+  const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    await validateField(name as keyof SignupForm);
+
+    // Update isFormValid by checking the validity of all fields
+    const isValidUsername = !validationMessages.username;
+    const isValidEmail = !validationMessages.email;
+    const isValidPassword = !validationMessages.password;
+    const isValidPasswordConfirm = !validationMessages.passwordConfirm;
+
+    setIsFormValid(
+      isValidUsername &&
+        isValidEmail &&
+        isValidPassword &&
+        isValidPasswordConfirm
+    );
+  };
+
+  // HANDLE SUBMIT
+  const handleSubmit = async () => {
+    const isValidUsername = await validateField("username");
+    const isValidEmail = await validateField("email");
+    const isValidPassword = await validateField("password");
+    const isValidPasswordConfirm = await validateField("passwordConfirm");
+
+    if (
+      isValidUsername &&
+      isValidEmail &&
+      isValidPassword &&
+      isValidPasswordConfirm
+    ) {
+      // Post data
+      postData();
+    }
+  };
+
   return (
     <div
       className={`flex h-screen ${darkMode ? "bg-darkBg" : "bg-myLightGray"}`}
@@ -167,6 +214,7 @@ function SignUp() {
                     <input
                       id="username"
                       name="username"
+                      value={signupForm.username}
                       type="text"
                       autoComplete="username"
                       required
@@ -177,28 +225,12 @@ function SignUp() {
                           ? "customInput bg-darkQuin text-gray-300 placeholder-gray-300 focus:border-altSecondary"
                           : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
                       }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
-                      onChange={(e) =>
-                        setSignupForm({
-                          ...signupForm,
-                          username: e.target.value,
-                        })
-                      }
-                      onBlur={() => handleUsernameChange(signupForm.username)}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
                     />
-                    {formErrors.username && (
-                      <div className="pointer-events-none absolute top-2.5 right-0 flex items-center pr-3">
-                        <ExclamationCircleIcon
-                          className="h-5 w-5 text-red-500"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    )}
-                    {formErrors.username && (
-                      <p
-                        className="mt-2 text-sm text-red-600"
-                        id="username-error"
-                      >
-                        {trad[lang].signup.usernameLength}
+                    {validationMessages.username && (
+                      <p className="mt-1 flex gap-1 text-xs text-red-500">
+                        {validationMessages.username}
                       </p>
                     )}
                   </div>
@@ -218,6 +250,7 @@ function SignUp() {
                     <input
                       id="email"
                       name="email"
+                      value={signupForm.email}
                       type="email"
                       autoComplete="email"
                       required
@@ -226,25 +259,12 @@ function SignUp() {
                           ? "customInput bg-darkQuin text-gray-300 placeholder-gray-300 focus:border-altSecondary"
                           : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
                       }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
-                      onChange={(e) =>
-                        setSignupForm({
-                          ...signupForm,
-                          email: e.target.value,
-                        })
-                      }
-                      onBlur={() => handleEmailChange(signupForm.email)}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
                     />
-                    {formErrors.email && (
-                      <div className="pointer-events-none absolute top-2.5 right-0 flex items-center pr-3">
-                        <ExclamationCircleIcon
-                          className="h-5 w-5 text-red-500"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    )}
-                    {formErrors.email && (
-                      <p className="mt-2 text-sm text-red-600" id="email-error">
-                        {trad[lang].signup.verifyEmail}
+                    {validationMessages.email && (
+                      <p className="mt-1 flex gap-1 text-xs text-red-500">
+                        {validationMessages.email}
                       </p>
                     )}
                   </div>
@@ -264,7 +284,8 @@ function SignUp() {
                     <input
                       id="password"
                       name="password"
-                      type="password"
+                      value={signupForm.password}
+                      type={showPassword ? "text" : "password"}
                       autoComplete="current-password"
                       required
                       className={`block w-full appearance-none rounded-md border ${
@@ -272,28 +293,27 @@ function SignUp() {
                           ? "customInput bg-darkQuin text-gray-300 placeholder-gray-300 focus:border-altSecondary"
                           : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
                       }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
-                      onChange={(e) =>
-                        setSignupForm({
-                          ...signupForm,
-                          password: e.target.value,
-                        })
-                      }
-                      onBlur={() => handlePasswordChange(signupForm.password)}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
                     />
-                    {formErrors.password && (
-                      <div className="pointer-events-none absolute top-2.5 right-0 flex items-center pr-3">
-                        <ExclamationCircleIcon
-                          className="h-5 w-5 text-red-500"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    )}
-                    {formErrors.password && (
-                      <p
-                        className="mt-2 text-sm text-red-600"
-                        id="password-error"
-                      >
-                        {trad[lang].signup.verifyPassword}
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className={`absolute right-2 top-[19px] inline-flex -translate-y-1/2 items-center rounded-full p-1 duration-150 hover:text-primary ${
+                        darkMode
+                          ? "bg-darkQuin text-altSecondary"
+                          : "bg-myWhite text-secondary"
+                      }`}
+                    >
+                      {showPassword ? (
+                        <EyeIcon className="h-4 w-4" />
+                      ) : (
+                        <EyeOffIcon className="h-4 w-4" />
+                      )}
+                    </button>
+                    {validationMessages.password && (
+                      <p className="mt-1 flex gap-1 text-xs text-red-500">
+                        {validationMessages.password}
                       </p>
                     )}
                   </div>
@@ -309,11 +329,12 @@ function SignUp() {
                   >
                     {trad[lang].signup.confirmPassword}
                   </label>
-                  <div className="mt-1">
+                  <div className="relative mt-1">
                     <input
                       id="confirm-password"
-                      name="confirm-password"
-                      type="password"
+                      name="passwordConfirm"
+                      value={signupForm.passwordConfirm}
+                      type={showPasswordConfirm ? "text" : "password"}
                       autoComplete="current-password"
                       required
                       className={`block w-full appearance-none rounded-md border ${
@@ -321,30 +342,29 @@ function SignUp() {
                           ? "customInput bg-darkQuin text-gray-300 placeholder-gray-300 focus:border-altSecondary"
                           : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
                       }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
-                      onChange={(e) =>
-                        setSignupForm({
-                          ...signupForm,
-                          passwordConfirm: e.target.value,
-                        })
-                      }
-                      onBlur={() =>
-                        handlePasswordConfirmChange(signupForm.passwordConfirm)
-                      }
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
                     />
-                    {formErrors.passwordConfirm && (
-                      <div className="pointer-events-none absolute top-2.5 right-0 flex items-center pr-3">
-                        <ExclamationCircleIcon
-                          className="h-5 w-5 text-red-500"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    )}
-                    {formErrors.passwordConfirm && (
-                      <p
-                        className="mt-2 text-sm text-red-600"
-                        id="password-error"
-                      >
-                        {trad[lang].signup.verifyPassword}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setShowPasswordConfirm(!showPasswordConfirm)
+                      }
+                      className={`absolute right-2 top-[19px] inline-flex -translate-y-1/2 items-center rounded-full p-1 duration-150 hover:text-primary ${
+                        darkMode
+                          ? "bg-darkQuin text-altSecondary"
+                          : "bg-myWhite text-secondary"
+                      }`}
+                    >
+                      {showPasswordConfirm ? (
+                        <EyeIcon className="h-4 w-4" />
+                      ) : (
+                        <EyeOffIcon className="h-4 w-4" />
+                      )}
+                    </button>
+                    {validationMessages.passwordConfirm && (
+                      <p className="mt-1 flex gap-1 text-xs text-red-500">
+                        {validationMessages.passwordConfirm}
                       </p>
                     )}
                   </div>
@@ -367,13 +387,15 @@ function SignUp() {
                 {/* SIGN UP BUTTON */}
                 <div>
                   <button
-                    type="submit"
+                    type="button"
                     disabled={!isFormValid}
-                    onClick={() => postData()}
+                    onClick={() => handleSubmit()}
                     className={`flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium shadow-sm hover:bg-primary focus:outline-none focus:ring-offset-0 ${
-                      darkMode
-                        ? "bg-altSecondary text-darkBg focus:ring-0"
-                        : "bg-secondary text-myWhite focus:ring-0"
+                      (darkMode && !isFormValid) || !isFormValid
+                        ? "cursor-not-allowed bg-gray-400 text-myWhite hover:bg-gray-400 focus:ring-0"
+                        : darkMode
+                        ? "cursor-pointer bg-altSecondary text-darkBg hover:bg-primary focus:ring-0"
+                        : "cursor-pointer bg-secondary text-myWhite hover:bg-primary focus:ring-0"
                     }`}
                   >
                     {trad[lang].signup.submit}
