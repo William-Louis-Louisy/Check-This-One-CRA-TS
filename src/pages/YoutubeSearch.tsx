@@ -85,7 +85,7 @@ function YoutubeSearch() {
   const getLists = async () => {
     try {
       const data = await axios.get(
-        `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}?paginate=false`
+        `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
       );
       setLists(data.data.results);
     } catch (error) {
@@ -227,30 +227,29 @@ function YoutubeSearch() {
                 />
               ) : null
             )}
-            <div className="my-5 flex w-full flex-row justify-end gap-8 md:w-3/5">
-              {results?.prevPageToken && (
-                <button
-                  className="flex flex-row items-center font-medium"
-                  onClick={() => {
-                    handlePreviousPage();
-                  }}
-                >
-                  <ChevronLeftIcon className="h-6 w-6 text-secondary" />
-                  <p className="font-semibold text-secondary">
-                    {trad[lang].labels.previousPage}
-                  </p>
-                </button>
-              )}
+            <div className="my-5 flex w-full flex-row justify-between gap-8 md:w-3/5">
               <button
-                className="flex flex-row items-center font-medium"
+                className={`${
+                  darkMode
+                    ? "bg-darkTert text-altSecondary hover:text-primary"
+                    : "bg-myWhite text-secondary hover:text-primary"
+                } rounded-l-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
                 onClick={() => {
-                  handleNextPage();
+                  handlePreviousPage();
                 }}
               >
-                <p className="font-semibold text-secondary">
-                  {trad[lang].labels.nextPage}
-                </p>
-                <ChevronRightIcon className="h-6 w-6 text-secondary" />
+                {trad[lang].global.previous}
+              </button>
+
+              <button
+                className={`${
+                  darkMode
+                    ? "bg-darkTert text-altSecondary hover:text-primary"
+                    : "bg-myWhite text-secondary hover:text-primary"
+                } rounded-r-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
+                onClick={handleNextPage}
+              >
+                {trad[lang].global.next}
               </button>
             </div>
           </div>

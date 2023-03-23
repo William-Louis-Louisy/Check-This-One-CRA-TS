@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import ListViewBtnGroup from "../components/Common/ListViewBtnGroup";
+import Pagination from "../components/Common/Pagination";
 import ListDisplay from "../components/Lists/ListDisplay";
 import TableListDisplay from "../components/Lists/TableListDisplay";
 import { AppContext } from "../contexts/AppContext";
@@ -28,6 +29,9 @@ function BrowseLists() {
   const [filters, setFilters] = useState(false);
   const [tags, setTags] = useState([]);
   const [tableView, setTableView] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pagesToDisplay, setPagesToDisplay] = useState([]);
 
   // HANDLE SEARCH
   const handleSearch = (event) => {
@@ -43,9 +47,12 @@ function BrowseLists() {
             process.env.REACT_APP_API_URL
           }/lists/getAllListsFiltered?creator_id=${
             userId.userId || ""
-          }&title=${searchQuery.get("query")}`,
+          }&title=${searchQuery.get(
+            "query"
+          )}&page=${page}&limit=10&paginate=true`,
           { tags: tags.map((tag) => tag.name) }
         );
+        setTotal(data.data.totalPages);
         setLists(data.data.lists);
 
         return;
@@ -53,21 +60,43 @@ function BrowseLists() {
 
       if (tags.length > 0) {
         const data = await axios.post(
-          `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/`,
+          `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/?page=${page}&limit=10&paginate=true`,
           { tags: tags.map((tag) => tag.name) }
         );
+        setTotal(data.data.totalPages);
         setLists(data.data.lists);
 
         return;
       }
 
       const data = await axios.post(
-        `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/`
+        `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/?page=${page}&limit=10&paginate=true`
       );
+      setTotal(data.data.totalPages);
       setLists(data.data.listsWithQRCodes);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handlePageToDisplay = () => {
+    if (total < 10)
+      setPagesToDisplay(Array.from({ length: total }, (_, i) => i + 1));
+    else if (page < 7)
+      setPagesToDisplay(Array.from({ length: 10 }, (_, i) => i + 1));
+    else if (total > page + 4)
+      setPagesToDisplay(Array.from({ length: 10 }, (_, i) => page - 5 + i));
+    else setPagesToDisplay(Array.from({ length: 10 }, (_, i) => total - 9 + i));
+  };
+
+  const handleNextPage = () => {
+    if (page < total) setPage(page + 1);
+    handlePageToDisplay();
+  };
+
+  const handlePrevPage = () => {
+    if (page > 1) setPage(page - 1);
+    handlePageToDisplay();
   };
 
   const handleTagSelect = (e) => {
@@ -78,7 +107,8 @@ function BrowseLists() {
 
   useEffect(() => {
     getLists();
-  }, [userId, searchQuery, tags]);
+    handlePageToDisplay();
+  }, [userId, searchQuery, tags, page, total]);
 
   return (
     <div
@@ -251,6 +281,18 @@ function BrowseLists() {
             )}
           </>
         )}
+
+        {/* PAGINATION */}
+        <Pagination
+          page={page}
+          setPage={setPage}
+          total={total}
+          handleNextPage={handleNextPage}
+          handlePrevPage={handlePrevPage}
+          pagesToDisplay={pagesToDisplay}
+          darkMode={darkMode}
+          lang={lang}
+        />
       </div>
     </div>
   );

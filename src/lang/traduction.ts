@@ -31,6 +31,7 @@ const trad = {
       youHaveSeenIt: "Vous l'avez vu",
       previous: "Précédent",
       next: "Suivant",
+      noResults: "Aucun résultat",
     },
     home: {
       title1: "Créez vos listes",
@@ -276,6 +277,7 @@ const trad = {
       youHaveSeenIt: "You have seen it",
       previous: "Previous",
       next: "Next",
+      noResults: "No results",
     },
     home: {
       title1: "List it up",
