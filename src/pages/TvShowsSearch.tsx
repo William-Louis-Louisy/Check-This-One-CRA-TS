@@ -19,6 +19,7 @@ function TvShowsSearch() {
   const [contentToList, setContentToList] = useState();
   const [contentTitle, setContentTitle] = useState("");
   const [lists, setLists] = useState([]);
+  const [page, setPage] = useState(1);
 
   // LANGUAGE HANDLER
   const handleLang = (lang) => {
@@ -35,6 +36,7 @@ function TvShowsSearch() {
   // HANDLE SEARCH
   const handleSearch = (event) => {
     setSearch({ query: event.target.value });
+    setPage(1);
   };
 
   useEffect(() => {
@@ -42,10 +44,12 @@ function TvShowsSearch() {
       .get(
         `${process.env.REACT_APP_TMDB_SHOWS_SEARCH_URL}?api_key=${
           process.env.REACT_APP_TMDB_API_KEY
-        }&query=${search.get("query")}&language=${handleLang(lang)}`
+        }&query=${search.get("query")}&language=${handleLang(
+          lang
+        )}&page=${page}`
       )
       .then((res) => setShowsData(res.data.results));
-  }, [search, lang]);
+  }, [search, lang, page]);
 
   const handleAddToList = (content) => {
     setOpen(true);
@@ -127,6 +131,56 @@ function TvShowsSearch() {
           />
         ))}
       </div>
+
+      {/* PAGINATION */}
+      {showsData.length === 20 && (
+        <div className="flex w-full flex-row items-center justify-between lg:w-3/5">
+          {/* Previous button */}
+          <button
+            disabled={page === 1}
+            className={`${
+              (darkMode && page === 1) || page === 1
+                ? "cursor-not-allowed text-gray-300"
+                : darkMode
+                ? "text-altSecondary hover:text-primary"
+                : "text-secondary hover:text-primary"
+            } ${
+              darkMode ? "bg-darkTert" : "bg-myWhite"
+            } rounded-l-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
+            onClick={() => setPage(page - 1)}
+          >
+            {trad[lang].global.previous}
+          </button>
+
+          <span
+            className={`${
+              darkMode
+                ? "bg-darkTert text-altSecondary"
+                : "bg-myWhite text-secondary"
+            } h-10 border-t border-b px-4 py-2`}
+          >
+            {page}
+          </span>
+
+          {/* Next button */}
+          <button
+            disabled={showsData.length < 20}
+            className={`${
+              (darkMode && showsData.length < 20) || showsData.length < 20
+                ? "cursor-not-allowed text-gray-300"
+                : darkMode
+                ? "text-altSecondary hover:text-primary"
+                : "text-secondary hover:text-primary"
+            } ${
+              darkMode ? "bg-darkTert" : "bg-myWhite"
+            } rounded-r-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
+            onClick={() => setPage(page + 1)}
+          >
+            {trad[lang].global.next}
+          </button>
+        </div>
+      )}
+
       {/* ADD TO LIST MODAL */}
       {user?.id && (
         <AddToList

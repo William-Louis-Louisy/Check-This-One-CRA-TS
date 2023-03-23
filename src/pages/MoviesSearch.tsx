@@ -20,10 +20,12 @@ function MoviesSearch() {
   const [contentToList, setContentToList] = useState();
   const [contentTitle, setContentTitle] = useState("");
   const [openNewList, setOpenNewList] = useState(false);
+  const [page, setPage] = useState(1);
 
   // HANDLE SEARCH
   const handleSearch = (event) => {
     setSearch({ query: event.target.value });
+    setPage(1);
   };
 
   useEffect(() => {
@@ -31,10 +33,12 @@ function MoviesSearch() {
       .get(
         `${process.env.REACT_APP_TMDB_SEARCH_URL}?api_key=${
           process.env.REACT_APP_TMDB_API_KEY
-        }&query=${search.get("query")}&language=${handleLang(lang)}`
+        }&query=${search.get("query")}&language=${handleLang(
+          lang
+        )}&page=${page}`
       )
       .then((res) => setMoviesData(res.data.results));
-  }, [search, lang]);
+  }, [search, lang, page]);
 
   const handleAddToList = (content) => {
     setOpen(true);
@@ -105,18 +109,77 @@ function MoviesSearch() {
       </div>
 
       {/* RESULTS */}
-      <div className="flex w-full flex-col items-center gap-8 sm:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
-        {moviesData?.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            movie={movie}
-            lang={lang}
-            user={user}
-            darkMode={darkMode}
-            handleAddToList={handleAddToList}
-          />
-        ))}
-      </div>
+      {moviesData.length > 0 ? (
+        <div className="flex w-full flex-col items-center gap-8 sm:my-12 md:flex-row md:flex-wrap md:justify-center md:gap-10 lg:w-3/5 lg:min-w-[900px]">
+          {moviesData?.map((movie) => (
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              lang={lang}
+              user={user}
+              darkMode={darkMode}
+              handleAddToList={handleAddToList}
+            />
+          ))}
+        </div>
+      ) : (
+        <p
+          className={`${
+            darkMode ? "text-gray-300" : "text-gray-700"
+          } text-lg font-medium`}
+        >
+          {trad[lang].global.noResults}
+        </p>
+      )}
+
+      {/* PAGINATION */}
+      {moviesData.length === 20 && (
+        <div className="flex w-full flex-row items-center justify-between lg:w-3/5">
+          {/* Previous button */}
+          <button
+            disabled={page === 1}
+            className={`${
+              (darkMode && page === 1) || page === 1
+                ? "cursor-not-allowed text-gray-300"
+                : darkMode
+                ? "text-altSecondary hover:text-primary"
+                : "text-secondary hover:text-primary"
+            } ${
+              darkMode ? "bg-darkTert" : "bg-myWhite"
+            } rounded-l-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
+            onClick={() => setPage(page - 1)}
+          >
+            {trad[lang].global.previous}
+          </button>
+
+          <span
+            className={`${
+              darkMode
+                ? "bg-darkTert text-altSecondary"
+                : "bg-myWhite text-secondary"
+            } h-10 border-t border-b px-4 py-2`}
+          >
+            {page}
+          </span>
+
+          {/* Next button */}
+          <button
+            disabled={moviesData.length < 20}
+            className={`${
+              (darkMode && moviesData.length < 20) || moviesData.length < 20
+                ? "cursor-not-allowed text-gray-300"
+                : darkMode
+                ? "text-altSecondary hover:text-primary"
+                : "text-secondary hover:text-primary"
+            } ${
+              darkMode ? "bg-darkTert" : "bg-myWhite"
+            } rounded-r-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
+            onClick={() => setPage(page + 1)}
+          >
+            {trad[lang].global.next}
+          </button>
+        </div>
+      )}
 
       {/* ADD TO LIST MODAL */}
       {user?.id && (

@@ -15,6 +15,7 @@ function UserLists() {
   const [total, setTotal] = useState(0);
   const [tableView, setTableView] = useState(false);
   const [page, setPage] = useState(1);
+  const [pagesToDisplay, setPagesToDisplay] = useState([]);
 
   // GET LISTS BY USER ID
   const getLists = async () => {
@@ -31,9 +32,30 @@ function UserLists() {
     }
   };
 
+  const handlePageToDisplay = () => {
+    if (total < 10)
+      setPagesToDisplay(Array.from({ length: total }, (_, i) => i + 1));
+    else if (page < 7)
+      setPagesToDisplay(Array.from({ length: 10 }, (_, i) => i + 1));
+    else if (total > page + 4)
+      setPagesToDisplay(Array.from({ length: 10 }, (_, i) => page - 5 + i));
+    else setPagesToDisplay(Array.from({ length: 10 }, (_, i) => total - 9 + i));
+  };
+
+  const handleNextPage = () => {
+    if (page < total) setPage(page + 1);
+    handlePageToDisplay();
+  };
+
+  const handlePrevPage = () => {
+    if (page > 1) setPage(page - 1);
+    handlePageToDisplay();
+  };
+
   useEffect(() => {
     getLists();
-  }, [user, page]);
+    handlePageToDisplay();
+  }, [user, page, total]);
 
   if (!user?.id) {
     return <div>Vous devez être connecté pour accéder à cette page</div>;
@@ -133,7 +155,8 @@ function UserLists() {
 
         {/* PAGINATION */}
         {total > 1 && (
-          <div className="flex w-full flex-row items-center justify-around">
+          <div className="flex w-full flex-row items-center justify-between">
+            {/* Previous button */}
             <button
               disabled={page === 1}
               className={`${
@@ -145,19 +168,29 @@ function UserLists() {
               } ${
                 darkMode ? "bg-darkTert" : "bg-myWhite"
               } rounded-l-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
-              onClick={() => setPage(page - 1)}
+              onClick={handlePrevPage}
             >
               {trad[lang].global.previous}
             </button>
-            <span
-              className={`${
-                darkMode
-                  ? "bg-darkTert text-gray-300"
-                  : "bg-myWhite text-myBlack"
-              } border-t border-b border-myGray px-4 py-2`}
-            >
-              {page}
-            </span>
+
+            <div className="flex h-10 flex-row items-center overflow-x-hidden">
+              {pagesToDisplay?.map((pageNb: number, i) => (
+                <span
+                  onClick={() => setPage(pageNb)}
+                  className={`${
+                    (darkMode && page === pageNb) || page === pageNb
+                      ? "border-primary text-primary"
+                      : darkMode
+                      ? "bg-darkTert text-altSecondary"
+                      : "bg-myWhite text-secondary"
+                  } h-10 cursor-pointer border-t border-b px-4 py-2 duration-150 hover:text-primary`}
+                >
+                  {pageNb}
+                </span>
+              ))}
+            </div>
+
+            {/* Next button */}
             <button
               disabled={page === total}
               className={`${
@@ -169,7 +202,7 @@ function UserLists() {
               } ${
                 darkMode ? "bg-darkTert" : "bg-myWhite"
               } rounded-r-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
-              onClick={() => setPage(page + 1)}
+              onClick={handleNextPage}
             >
               {trad[lang].global.next}
             </button>
