@@ -17,9 +17,13 @@ function ActionPannelMobile({
   darkMode,
 }) {
   return (
-    <Menu as="div" className="relative inline-block text-left sm:hidden">
+    <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-transparent">
+        <Menu.Button
+          className={`flex items-center rounded-full duration-150 hover:text-primary focus:outline-none focus:ring-transparent ${
+            darkMode ? "text-altSecondary" : "text-secondary"
+          }`}
+        >
           <span className="sr-only">Open options</span>
           <DotsVerticalIcon className="h-5 w-5" aria-hidden="true" />
         </Menu.Button>

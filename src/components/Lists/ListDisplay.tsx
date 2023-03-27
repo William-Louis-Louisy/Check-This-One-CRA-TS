@@ -134,7 +134,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
         </Link>
 
         {/* Creator */}
-        <div className="flex flex-col items-center gap-3 md:flex-row">
+        <div className="flex flex-row items-center gap-2">
           {pathName !== "/userLists" && creator && (
             <span className="flex flex-row items-center gap-3">
               <button
@@ -158,39 +158,13 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
                     </div>
                   )
                 )}
-
-                {creator.user_name}
               </button>
             </span>
           )}
 
           {/* Creator action pannel */}
-          {user === list.creator_id && pathName === "/userLists" && (
+          {user === list.creator_id && (
             <>
-              <span className="relative z-0 hidden rounded-md shadow-sm sm:inline-flex">
-                <button
-                  type="button"
-                  onClick={() => openModal(list.id)}
-                  className={`relative inline-flex items-center rounded-l-md border ${
-                    darkMode
-                      ? "border-darkQuin bg-darkTert text-red-400 hover:bg-darkSec"
-                      : "border-gray-300 bg-myWhite text-red-600 hover:bg-gray-50"
-                  } px-3 py-2 text-sm font-medium focus:z-10 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4`}
-                >
-                  <TrashIcon className="h-5 w-5" />
-                </button>
-                <Link
-                  to={`/listEdition/${list.id}`}
-                  className={`relative -ml-px inline-flex items-center rounded-r-md border ${
-                    darkMode
-                      ? "border-darkQuin bg-darkTert text-altSecondary hover:bg-darkSec"
-                      : "border-gray-300 bg-myWhite text-secondary hover:bg-gray-50"
-                  } px-3 py-2 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-transparent sm:px-4`}
-                >
-                  <PencilAltIcon className="h-5 w-5" />
-                </Link>
-              </span>
-
               <ActionPannelMobile
                 link={`/listEdition/${list.id}`}
                 action={() => openModal(list.id)}
@@ -290,7 +264,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
           <div className="flex flex-row items-center gap-2">
             {list.tags &&
               list.tags.length > 0 &&
-              list.tags.slice(0, 2).map((tag: any, index: number) => (
+              list.tags.slice(0, 1).map((tag: any, index: number) => (
                 <div
                   key={tag.name}
                   className={`flex items-center gap-2 rounded-md px-2 py-1 ${

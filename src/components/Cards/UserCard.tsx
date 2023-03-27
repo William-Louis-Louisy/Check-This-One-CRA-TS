@@ -14,8 +14,6 @@ function UserCard({
   darkMode: boolean;
   lang: string;
 }) {
-  // GET LANG FROM CONTEXT
-
   return (
     <div
       className={`w-full rounded-md shadow-lg md:w-1/2 ${
@@ -43,33 +41,40 @@ function UserCard({
           <dl className="mt-1 flex flex-grow flex-col justify-between">
             <dt className="sr-only">{trad[lang].user.location}</dt>
             <dd className="">
-              <span
-                className={`rounded-full px-2 py-1 text-xs font-medium ${
-                  darkMode
-                    ? "bg-darkSec text-primary"
-                    : "bg-orange-50 text-primary"
-                }`}
-              >
-                {user.city}, {user.country}
-              </span>
-            </dd>
-            <dt className="sr-only">{trad[lang].user.catchline}</dt>
-            <dd
-              className={`mt-3 text-sm italic ${
-                darkMode ? "text-gray-400" : "text-gray-600"
-              }`}
-            >
-              "{user.catchline}"
+              {user.city && user.country && (
+                <span
+                  className={`rounded-full px-2 py-1 text-xs font-medium ${
+                    darkMode
+                      ? "bg-darkSec text-primary"
+                      : "bg-orange-50 text-primary"
+                  }`}
+                >
+                  {user.city}, {user.country}
+                </span>
+              )}
             </dd>
 
+            <dt className="sr-only">{trad[lang].user.catchline}</dt>
+            {user.catchline && (
+              <dd
+                className={`mt-3 text-sm italic ${
+                  darkMode ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                "{user.catchline}"
+              </dd>
+            )}
+
             <dt className="sr-only">{trad[lang].user.introduction}</dt>
-            <dd
-              className={`mt-3 text-sm italic ${
-                darkMode ? "text-gray-300" : "text-gray-500"
-              }`}
-            >
-              {user.introduction}
-            </dd>
+            {user.introduction && (
+              <dd
+                className={`mt-3 text-sm italic ${
+                  darkMode ? "text-gray-300" : "text-gray-500"
+                }`}
+              >
+                {user.introduction}
+              </dd>
+            )}
           </dl>
         </div>
       </div>
