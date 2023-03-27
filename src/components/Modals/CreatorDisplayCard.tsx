@@ -85,34 +85,41 @@ function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
                   </h3>
                   <dl className="mt-1 flex flex-grow flex-col justify-between">
                     <dt className="sr-only">{trad[lang].user.location}</dt>
-                    <dd className="">
-                      <span
-                        className={`rounded-full px-2 py-1 text-xs font-medium ${
-                          darkMode
-                            ? "bg-darkSec text-primary"
-                            : "bg-orange-50 text-primary"
+                    {creator.city && creator.country && (
+                      <dd className="">
+                        <span
+                          className={`rounded-full px-2 py-1 text-xs font-medium ${
+                            darkMode
+                              ? "bg-darkSec text-primary"
+                              : "bg-orange-50 text-primary"
+                          }`}
+                        >
+                          {creator.city}, {creator.country}
+                        </span>
+                      </dd>
+                    )}
+
+                    <dt className="sr-only">{trad[lang].user.catchline}</dt>
+                    {creator.catchline && (
+                      <dd
+                        className={`mt-3 text-sm italic ${
+                          darkMode ? "text-gray-400" : "text-gray-600"
                         }`}
                       >
-                        {creator.city}, {creator.country}
-                      </span>
-                    </dd>
-                    <dt className="sr-only">{trad[lang].user.catchline}</dt>
-                    <dd
-                      className={`mt-3 text-sm italic ${
-                        darkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      "{creator.catchline}"
-                    </dd>
+                        "{creator.catchline}"
+                      </dd>
+                    )}
 
                     <dt className="sr-only">{trad[lang].user.introduction}</dt>
-                    <dd
-                      className={`mt-3 text-sm italic ${
-                        darkMode ? "text-gray-300" : "text-gray-500"
-                      }`}
-                    >
-                      {creator.introduction}
-                    </dd>
+                    {creator.introduction && (
+                      <dd
+                        className={`mt-3 text-sm italic ${
+                          darkMode ? "text-gray-300" : "text-gray-500"
+                        }`}
+                      >
+                        {creator.introduction}
+                      </dd>
+                    )}
                   </dl>
                 </div>
                 <div>
