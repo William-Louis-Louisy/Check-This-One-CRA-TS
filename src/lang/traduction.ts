@@ -110,6 +110,11 @@ const trad = {
       close: "Fermer",
       qrExplanations:
         "Enregistrez l'image du QR Code et partagez la à vos amis !",
+      socialShare: "Partagez le lien sur les réseaux sociaux",
+      copyToClipboard: "Copier le lien dans le presse-papier",
+      copyToClipboardSuccess: "Lien copié dans le presse-papier",
+      copyToClipboardError:
+        "Impossible de copier le lien dans le presse-papier",
     },
     movieDetails: {
       originalTitle: "Titre original",
@@ -355,6 +360,11 @@ const trad = {
       share: "Share",
       close: "Close",
       qrExplanations: "Save this QR code and share it with your friends !",
+      socialShare: "Share on social networks",
+      copyToClipboard: "Copy to clipboard",
+      copyToClipboardSuccess: "Link copied to clipboard",
+      copyToClipboardError:
+        "An error occurred while copying the link to the clipboard",
     },
     movieDetails: {
       originalTitle: "Titre original",

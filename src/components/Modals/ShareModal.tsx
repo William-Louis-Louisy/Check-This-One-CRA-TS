@@ -1,9 +1,13 @@
-import { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/outline";
+import { Fragment, useState } from "react";
 import trad from "../../lang/traduction";
+import ShareButtons from "../Lists/ShareButtons";
+import { Dialog, Transition } from "@headlessui/react";
 
-function ShareModal({ lang, open, setOpen, darkMode, qrCode }) {
+function ShareModal({ lang, open, setOpen, darkMode, qrCode, listData }) {
+  const shareUrl = `https://checkthisone.vercel.app/listDetails/${listData.id}`;
+  const title = listData.title;
+  const [showQrCode, setShowQrCode] = useState(false);
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -45,7 +49,7 @@ function ShareModal({ lang, open, setOpen, darkMode, qrCode }) {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              className={`relative inline-block w-[90%] transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
+              className={`relative mt-16 inline-block w-[90%] transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
                 darkMode ? "bg-darkTert" : "bg-myWhite"
               }`}
             >
@@ -59,16 +63,43 @@ function ShareModal({ lang, open, setOpen, darkMode, qrCode }) {
                   >
                     {trad[lang].modals.shareAList}
                   </Dialog.Title>
-                  <div className="my-8 flex flex-col items-center justify-center">
-                    <img src={qrCode} alt="" />
-                    <p
-                      className={`mt-8 italic ${
-                        darkMode ? "text-gray-300" : "text-gray-900"
-                      }`}
-                    >
-                      {trad[lang].modals.qrExplanations}
-                    </p>
-                  </div>
+
+                  {/* QR CODE */}
+                  {showQrCode && (
+                    <>
+                      <div className="my-8 flex flex-col items-center justify-center">
+                        <img
+                          src={qrCode}
+                          alt="qr code"
+                          className="rounded-md"
+                        />
+                        <p
+                          className={`mt-8 text-sm italic ${
+                            darkMode ? "text-gray-300" : "text-gray-900"
+                          }`}
+                        >
+                          {trad[lang].modals.qrExplanations}
+                        </p>
+                      </div>
+
+                      {/* DIVIDER */}
+                      <div
+                        className={`mb-8 h-px w-full ${
+                          darkMode ? "bg-gray-300" : "bg-gray-900"
+                        }`}
+                      ></div>
+                    </>
+                  )}
+
+                  {/* SHARE BUTTONS */}
+                  <ShareButtons
+                    url={shareUrl}
+                    title={title}
+                    darkMode={darkMode}
+                    showQrCode={showQrCode}
+                    setShowQrCode={setShowQrCode}
+                    lang={lang}
+                  />
                 </div>
               </div>
               <div className="mt-5 sm:mt-6">

@@ -322,6 +322,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
         setOpen={setOpenShareModal}
         darkMode={darkMode}
         qrCode={list.qrCodeDataURL}
+        listData={list}
       />
     </div>
   );
