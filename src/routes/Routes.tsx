@@ -32,6 +32,7 @@ export default function PublicRoutes() {
           {/* BASICS */}
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Error404 />} />
+
           {/* SEARCH */}
           <Route path="moviesSearch" element={<MoviesSearch />} />
           <Route path="showsSearch" element={<TvShowsSearch />} />
