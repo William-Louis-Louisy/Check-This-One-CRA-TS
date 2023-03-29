@@ -68,7 +68,7 @@ function UserLists() {
       } pt-16`}
     >
       {/*----- PAGE HEADING -----*/}
-      <div className="mt-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+      <div className="mt-8 w-full border-b border-primary px-4 sm:flex sm:items-center sm:justify-between sm:pb-5 lg:w-[70%] lg:px-0">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">
           {trad[lang].navbar.myLists}
@@ -108,7 +108,7 @@ function UserLists() {
         </div>
       </div>
 
-      <div className="my-5 flex w-4/5 flex-col items-end lg:my-2 lg:w-[70%] lg:pr-2">
+      <div className="my-5 flex w-full flex-col items-end px-4 lg:my-2 lg:w-[70%] lg:px-0 lg:pr-2">
         <div className="flex w-full flex-row items-center justify-between">
           {/* List view buttons */}
           <ListViewBtnGroup

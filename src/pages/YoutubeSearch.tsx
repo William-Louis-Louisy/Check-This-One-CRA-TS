@@ -136,7 +136,7 @@ function YoutubeSearch() {
         darkMode ? "bg-darkBg" : "bg-myLightGray"
       } py-16`}
     >
-      <div className="my-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+      <div className="my-8 w-full border-b border-primary px-4 pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%] lg:px-0">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">
           {trad[lang].pageTitles.youtubeSearch}

@@ -12,7 +12,7 @@ function PodcastsSearch() {
       );
       if (data) return setPodcasts(data.results);
     } catch (error) {
-      console.log(`Error occured: ${error.message}`);
+      console.error(`Error occured: ${error.message}`);
     }
     return null;
   };

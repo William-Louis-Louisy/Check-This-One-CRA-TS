@@ -188,7 +188,7 @@ function TvShowDetails() {
       }`}
     >
       {/*----- PAGE HEADING -----*/}
-      <div className="my-8 w-[90%] border-b border-primary pb-3 sm:flex sm:items-center sm:justify-between sm:pb-5 lg:w-[70%]">
+      <div className="mt-5 mb-8 flex w-full flex-col-reverse gap-4 border-b border-primary px-4 pb-3 sm:mt-8 sm:mb-8 sm:flex-row sm:items-center sm:justify-between sm:gap-0 sm:px-0 sm:pb-5 lg:w-[70%]">
         {/* TITLE */}
         <h3 className="text-xl font-medium leading-6 text-primary sm:text-2xl">
           {show?.name}
