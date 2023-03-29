@@ -53,7 +53,7 @@ function ShareButtons({
   };
 
   return (
-    <div className="my-8 flex w-full flex-row items-center justify-center gap-6 text-3xl">
+    <div className="my-8 flex w-full flex-row flex-wrap items-center justify-center gap-6 text-3xl">
       {/* FACEBOOK */}
       <button
         title="Facebook"

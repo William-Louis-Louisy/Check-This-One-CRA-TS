@@ -1,6 +1,7 @@
 import axios from "axios";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import trad from "../../lang/traduction";
+import LazyImage from "../Common/LazyImage";
 
 function ContentCard({ data, lang, userId, refetch }) {
   // HANLE TYPE
@@ -49,7 +50,7 @@ function ContentCard({ data, lang, userId, refetch }) {
       }
     >
       <div className="relative h-40 w-[106px] md:h-80 md:w-[213px]">
-        <img
+        <LazyImage
           src={
             data.type === "youtube"
               ? data.poster_path

@@ -10,6 +10,7 @@ import { handleCountry, handleLang } from "../utils/RequestLanguageHandler";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import PageLoader from "../components/Common/PageLoader";
 import TopRatedUserCard from "../components/Cards/TopRatedUserCard";
+import LazyImage from "../components/Common/LazyImage";
 
 function Home() {
   const { lang, darkMode } = useContext(AppContext);
@@ -172,7 +173,7 @@ function Home() {
             content={upcomingMovies?.map((movie) => (
               <a key={`movie-${movie.id}`} href={`/movieDetails/${movie.id}`}>
                 <div className="h-40 w-[106px] md:h-80 md:w-[213px]">
-                  <img
+                  <LazyImage
                     src={
                       movie.poster_path
                         ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
@@ -215,7 +216,7 @@ function Home() {
             content={topRatedShows?.map((show) => (
               <a key={`show-${show.id}`} href={`/tvDetails/${show.id}`}>
                 <div className="h-40 w-[106px] md:h-80 md:w-[213px]">
-                  <img
+                  <LazyImage
                     src={
                       show.poster_path
                         ? "https://image.tmdb.org/t/p/w500" + show.poster_path
