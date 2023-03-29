@@ -18,6 +18,7 @@ export interface IList {
   content: IContent[];
   tags?: any;
   liked_by: ILikedBy[];
+  qrCodeDataURL?: string;
 }
 
 export interface ICreator {

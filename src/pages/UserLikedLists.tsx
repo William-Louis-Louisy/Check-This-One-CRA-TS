@@ -36,7 +36,7 @@ function UserLikedLists() {
       } pt-16`}
     >
       {/*----- PAGE HEADING -----*/}
-      <div className="my-8 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+      <div className="mt-8 mb-8 w-full border-b border-primary px-4 sm:mb-0 sm:flex sm:items-center sm:justify-between sm:pb-5 lg:w-[70%] lg:px-0">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">
           {trad[lang].navbar.userLikedLists}

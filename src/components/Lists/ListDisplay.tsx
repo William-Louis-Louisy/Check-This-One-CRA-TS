@@ -111,12 +111,19 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
     setOpenDeleteModal(true);
   };
 
+  // HANDLE OPEN LIKES MODAL
+  const handleOpenLikesModal = (list) => {
+    if (list.liked_by.length > 0) {
+      setOpenLikesModal(true);
+    }
+  };
+
   // CHECK IF USER LIKED THE LIST
   const isLiked = list?.liked_by?.find((userLike) => userLike.id === user);
 
   return (
     <div
-      className={`flex w-full flex-col rounded-md ${
+      className={`flex w-full flex-col sm:rounded-md ${
         darkMode ? "bg-darkQuin" : "bg-myWhite"
       } pl-3 pr-3 pb-3 pt-3 shadow-md sm:pt-6 md:mx-4`}
     >
@@ -134,7 +141,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
         </Link>
 
         {/* Creator */}
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row items-center">
           {pathName !== "/userLists" && creator && (
             <span className="flex flex-row items-center gap-3">
               <button
@@ -145,13 +152,13 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
               >
                 {creator.avatar ? (
                   <img
-                    className="mr-2 h-6 w-6 rounded-full object-cover sm:h-8 sm:w-8"
+                    className="h-6 w-6 rounded-full object-cover sm:h-8 sm:w-8"
                     src={creator.avatar}
                     alt=""
                   />
                 ) : (
                   creator?.user_name && (
-                    <div className="mr-2 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-secondary text-sm sm:h-8 sm:w-8 sm:text-base">
+                    <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-secondary text-sm sm:h-8 sm:w-8 sm:text-base">
                       <p className="text-center text-xl text-myWhite">
                         {creator?.user_name[0].toUpperCase()}
                       </p>
@@ -230,7 +237,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
           <button
             className="-mb-[2px]"
             type="button"
-            onClick={() => setOpenLikesModal(true)}
+            onClick={() => handleOpenLikesModal(list)}
           >
             <p
               className={`text-sm font-medium ${
@@ -243,23 +250,6 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
         </div>
 
         <div className="flex flex-row items-center gap-6">
-          {/* Share */}
-          {pathName !== "/userLists" && pathName !== "/userLikedLists" && (
-            <div className="flex flex-row items-center gap-2">
-              <button
-                type="button"
-                className="flex flex-row items-center gap-2"
-                onClick={() => setOpenShareModal(true)}
-              >
-                <ShareIcon
-                  className={`h-6 w-6 duration-150 hover:text-primary ${
-                    darkMode ? "text-altSecondary" : "text-secondary"
-                  }`}
-                />
-              </button>
-            </div>
-          )}
-
           {/* Tags */}
           <div className="flex flex-row items-center gap-2">
             {list.tags &&
@@ -278,6 +268,21 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
                   </span>
                 </div>
               ))}
+          </div>
+
+          {/* Share */}
+          <div className="flex flex-row items-center gap-2">
+            <button
+              type="button"
+              className="flex flex-row items-center gap-2"
+              onClick={() => setOpenShareModal(true)}
+            >
+              <ShareIcon
+                className={`h-6 w-6 duration-150 hover:text-primary ${
+                  darkMode ? "text-altSecondary" : "text-secondary"
+                }`}
+              />
+            </button>
           </div>
         </div>
       </div>

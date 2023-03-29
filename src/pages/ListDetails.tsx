@@ -1,4 +1,8 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ShareIcon,
+} from "@heroicons/react/outline";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -6,6 +10,7 @@ import ContentCard from "../components/Cards/ContentCard";
 import PageLoader from "../components/Common/PageLoader";
 import Slider from "../components/Common/Slider";
 import CreatorDisplayCard from "../components/Modals/CreatorDisplayCard";
+import ShareModal from "../components/Modals/ShareModal";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
@@ -17,10 +22,11 @@ function ListDetails() {
   const [list, setList] = useState<IList>();
   const [creator, setCreator] = useState<ICreator>();
   const [creatorModal, setCreatorModal] = useState(false);
+  const [openShareModal, setOpenShareModal] = useState(false);
 
   // GET LANG FROM CONTEXT
   const { lang, darkMode } = useContext(AppContext);
-  const { user, refetchUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   // GET LIST BY ID
   const getListById = async () => {
@@ -68,14 +74,28 @@ function ListDetails() {
       } pt-16`}
     >
       {/*----- PAGE HEADING -----*/}
-      <div className="mt-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+      <div className="mt-5 mb-8 flex w-full flex-col-reverse gap-4 border-b border-primary px-4 pb-3 sm:mt-8 sm:mb-8 sm:flex-row sm:items-center sm:justify-between sm:gap-0 sm:px-0 sm:pb-5 lg:w-[70%]">
         {/* TITLE */}
         <div className="flex flex-row items-center gap-2 text-primary sm:gap-4">
           <div>{typeToIcon(list.type)}</div>
           <h3 className="text-lg font-medium leading-6">{list.title}</h3>
         </div>
         <div className="mt-3 sm:mt-0 sm:ml-4">
-          <span className="flex flex-row items-center gap-3">
+          <span className="flex flex-row items-center justify-end gap-3">
+            {/* SHARE BUTTON */}
+            <button
+              type="button"
+              className="flex flex-row items-center gap-2"
+              onClick={() => setOpenShareModal(true)}
+            >
+              <ShareIcon
+                className={`h-6 w-6 duration-150 hover:text-primary ${
+                  darkMode ? "text-altSecondary" : "text-secondary"
+                }`}
+              />
+            </button>
+
+            {/* CREATOR CARD */}
             <button
               onClick={() => setCreatorModal(true)}
               className={`flex flex-row items-center text-sm ${
@@ -84,27 +104,25 @@ function ListDetails() {
             >
               {creator?.avatar ? (
                 <img
-                  className="mr-2 h-6 w-6 rounded-full object-cover sm:h-8 sm:w-8"
+                  className="h-8 w-8 rounded-full object-cover"
                   src={creator?.avatar}
                   alt=""
                 />
               ) : (
                 creator?.user_name && (
-                  <div className="mr-2 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-secondary text-sm sm:h-8 sm:w-8 sm:text-base">
+                  <div className="mr-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-secondary text-sm sm:text-base">
                     <p className="text-center text-xl text-myWhite">
                       {creator?.user_name[0].toUpperCase()}
                     </p>
                   </div>
                 )
               )}
-
-              {creator?.user_name}
             </button>
           </span>
         </div>
       </div>
 
-      <div className="mt-4 w-full lg:w-[70%]">
+      <div className="mt-4 w-full px-4 sm:px-0 lg:w-[70%]">
         {/* SLIDER */}
         <Slider
           content={list.content.map((c: any, index: number) => (
@@ -157,63 +175,68 @@ function ListDetails() {
           <div className="h-px w-full bg-gray-300"></div>
 
           {/* Tags */}
-          <div className="flex flex-col items-start">
-            <span className="text-primary">{trad[lang].labels.tags}:</span>
-            <div className="mt-1 flex flex-row flex-wrap items-center gap-2">
-              {list.tags &&
-                list.tags.length > 0 &&
-                list.tags.map((tag: any, index: number) => (
+          {list.tags && list.tags.length > 0 && (
+            <div className="flex flex-col items-start">
+              <span className="text-primary">{trad[lang].labels.tags}:</span>
+              <div className="mt-1 flex flex-row flex-wrap items-center gap-2">
+                {list.tags &&
+                  list.tags.length > 0 &&
+                  list.tags.map((tag: any, index: number) => (
+                    <div
+                      key={tag.name}
+                      className={`flex items-center gap-2 rounded-md px-2 py-1 ${
+                        darkMode
+                          ? "bg-darkSec text-gray-300"
+                          : "bg-myWhite text-smokyBlack"
+                      }`}
+                    >
+                      <span className="text-sm">
+                        {lang === "en" ? tag.name : tag.name_fr}
+                      </span>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* RIGHT SIDE */}
+        <div className="p-4 lg:w-2/5">
+          {/* Likes */}
+          {list.liked_by && list.liked_by.length > 0 && (
+            <div className="flex flex-col items-start">
+              <span className="text-primary">{trad[lang].labels.likes}:</span>
+              <div className="card mt-1 flex max-h-32 flex-row flex-wrap items-center gap-3">
+                {list.liked_by.map((user: any, index: number) => (
                   <div
-                    key={tag.name}
-                    className={`flex items-center gap-2 rounded-md px-2 py-1 ${
+                    key={user.id}
+                    className={`flex flex-row items-center gap-1 rounded-l-full rounded-r-full pr-3 text-sm ${
                       darkMode
                         ? "bg-darkSec text-gray-300"
                         : "bg-myWhite text-smokyBlack"
                     }`}
                   >
-                    <span className="text-sm">
-                      {lang === "en" ? tag.name : tag.name_fr}
-                    </span>
+                    {user.avatar ? (
+                      <img
+                        className="h-6 w-6 rounded-full object-cover sm:h-8 sm:w-8"
+                        src={user.avatar}
+                        alt=""
+                      />
+                    ) : (
+                      user.user_name && (
+                        <div className="mr-2 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-secondary text-sm sm:h-8 sm:w-8 sm:text-base">
+                          <p className="text-center text-xl text-myWhite">
+                            {user.user_name[0].toUpperCase()}
+                          </p>
+                        </div>
+                      )
+                    )}
+                    <span className="text-sm">{user.user_name}</span>
                   </div>
                 ))}
+              </div>
             </div>
-          </div>
-        </div>
-
-        {/* RIGHT SIDE */}
-        <div className="p-4 lg:w-2/5">
-          <div className="flex flex-col items-start">
-            <span className="text-primary">{trad[lang].labels.likes}:</span>
-            <div className="card mt-1 flex max-h-32 flex-row flex-wrap items-center gap-3">
-              {list.liked_by.map((user: any, index: number) => (
-                <div
-                  key={user.id}
-                  className={`flex flex-row items-center gap-1 rounded-l-full rounded-r-full pr-3 text-sm ${
-                    darkMode
-                      ? "bg-darkSec text-gray-300"
-                      : "bg-myWhite text-smokyBlack"
-                  }`}
-                >
-                  {user.avatar ? (
-                    <img
-                      className="h-6 w-6 rounded-full object-cover sm:h-8 sm:w-8"
-                      src={user.avatar}
-                      alt=""
-                    />
-                  ) : (
-                    user.user_name && (
-                      <div className="mr-2 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-secondary text-sm sm:h-8 sm:w-8 sm:text-base">
-                        <p className="text-center text-xl text-myWhite">
-                          {user.user_name[0].toUpperCase()}
-                        </p>
-                      </div>
-                    )
-                  )}
-                  <span className="text-sm">{user.user_name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -228,6 +251,16 @@ function ListDetails() {
           darkMode={darkMode}
         />
       )}
+
+      {/* SHARE MODAL */}
+      <ShareModal
+        lang={lang}
+        open={openShareModal}
+        setOpen={setOpenShareModal}
+        darkMode={darkMode}
+        qrCode={list.qrCodeDataURL}
+        listData={list}
+      />
     </div>
   );
 }

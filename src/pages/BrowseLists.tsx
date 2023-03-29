@@ -117,7 +117,7 @@ function BrowseLists() {
       } pt-16`}
     >
       {/*----- PAGE HEADING -----*/}
-      <div className="mt-8 w-4/5 border-b border-primary pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%]">
+      <div className="mt-8 w-full border-b border-primary px-4 pb-5 sm:flex sm:items-center sm:justify-between lg:w-[70%] lg:px-0">
         {/* TITLE */}
         <h3 className="text-lg font-medium leading-6 text-primary">
           {trad[lang].navbar.browseLists}
@@ -159,7 +159,7 @@ function BrowseLists() {
 
       {/* FILTER BY TAGS */}
       <div
-        className={`my-5 flex w-4/5 flex-col items-end lg:my-2 lg:w-[70%] lg:pr-2 ${
+        className={`my-5 flex w-full flex-col items-end px-4 lg:my-2 lg:w-[70%] lg:px-0 lg:pr-2 ${
           darkMode ? "text-altSecondary" : "text-secondary"
         }`}
       >
@@ -184,7 +184,7 @@ function BrowseLists() {
         </div>
 
         {filters && (
-          <div className="w-full md:w-96">
+          <div className="mt-4 w-full md:mt-0 md:w-96">
             <label
               htmlFor="select"
               className={`w-full text-left text-sm font-medium ${
@@ -197,7 +197,7 @@ function BrowseLists() {
               <select
                 name="select"
                 id="select"
-                className={`block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-primary focus:ring-0 ${
+                className={`block w-full rounded-md border-myGray text-sm shadow-sm focus:border-primary focus:ring-0 ${
                   darkMode
                     ? "bg-darkQuin text-gray-300"
                     : "bg-myWhite text-smokyBlack"

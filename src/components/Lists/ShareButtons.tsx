@@ -5,7 +5,7 @@ import {
   IoQrCodeOutline,
   IoClipboardOutline,
 } from "react-icons/io5";
-import { SiMessenger, SiFacebook } from "react-icons/si";
+import { SiMessenger, SiFacebook, SiReddit } from "react-icons/si";
 import { toast } from "react-toastify";
 import trad from "../../lang/traduction";
 
@@ -24,6 +24,7 @@ function ShareButtons({
   const messengerShareUrl = `fb-messenger://share/?link=${encodedUrl}&app_id=${process.env.REACT_APP_MESSENGER_API_KEY}`;
   const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
   const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
+  const redditShareUrl = `https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`;
 
   const openPopup = (shareUrl) => {
     window.open(shareUrl, "_blank", "width=600, height=400");
@@ -109,6 +110,24 @@ function ShareButtons({
         }}
       >
         <IoLogoWhatsapp />
+      </button>
+
+      {/* REDDIT */}
+      <button
+        title="Reddit"
+        className={`duration-150 hover:text-primary ${
+          darkMode ? "text-altSecondary" : "text-secondary"
+        }`}
+        onClick={(e) => {
+          e.preventDefault();
+          openPopup(redditShareUrl);
+        }}
+      >
+        <SiReddit
+          className={`duration-150 hover:text-primary ${
+            darkMode ? "text-altSecondary" : "text-secondary"
+          }`}
+        />
       </button>
 
       {/* QR CODE */}

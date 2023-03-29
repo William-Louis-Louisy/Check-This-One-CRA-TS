@@ -20,7 +20,7 @@ function ActionPannelMobile({
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button
-          className={`flex items-center rounded-full duration-150 hover:text-primary focus:outline-none focus:ring-transparent ${
+          className={`ml-3 flex items-center rounded-full duration-150 hover:text-primary focus:outline-none focus:ring-transparent ${
             darkMode ? "text-altSecondary" : "text-secondary"
           }`}
         >
