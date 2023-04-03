@@ -56,12 +56,12 @@ function NavBar() {
       current: pathname === "/youtubeSearch",
       icon: <FaYoutube className="mr-2 h-4 w-4" />,
     },
-    // {
-    //   name: trad[lang].navbar.podcasts,
-    //   link: "podcastsSearch",
-    //   current: pathname === "/podcastsSearch",
-    //   icon: <FaPodcast className="mr-2 h-4 w-4" />,
-    // },
+    {
+      name: trad[lang].navbar.podcasts,
+      link: "podcastsSearch",
+      current: pathname === "/podcastsSearch",
+      icon: <FaPodcast className="mr-2 h-4 w-4" />,
+    },
     {
       name: trad[lang].navbar.browseLists,
       link: "browseLists",
@@ -278,9 +278,11 @@ function NavBar() {
                 as="a"
                 href="/"
                 className={classNames(
-                  pathname === "/"
+                  (darkMode && pathname === "/") || pathname === "/"
                     ? "border-primary text-primary"
-                    : "border-transparent text-myGray",
+                    : darkMode
+                    ? "border-transparent text-altSecondary"
+                    : "border-transparent text-secondary",
                   "flex flex-row items-center border-l-4 py-4 pl-3 pr-4 text-base font-medium"
                 )}
               >
@@ -292,9 +294,11 @@ function NavBar() {
                   key={i}
                   href={`/${t.link}`}
                   className={classNames(
-                    t.current
+                    (darkMode && t.current) || t.current
                       ? "border-primary text-primary"
-                      : "border-transparent text-myGray",
+                      : darkMode
+                      ? "border-transparent text-altSecondary"
+                      : "border-transparent text-secondary",
                     "flex flex-row items-center border-l-4 py-4 pl-3 pr-4 text-base font-medium"
                   )}
                 >
@@ -352,7 +356,18 @@ function NavBar() {
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </button> */}
                 </div>
+
                 <div className="mt-3 space-y-1">
+                  {user?.user_name === "admin" && (
+                    <Disclosure.Button
+                      as="a"
+                      href="/adminDashboard"
+                      className="block px-4 py-2 text-base font-medium"
+                    >
+                      {trad[lang].navbar.admin}
+                    </Disclosure.Button>
+                  )}
+
                   <Disclosure.Button
                     as="a"
                     href="/userLists"

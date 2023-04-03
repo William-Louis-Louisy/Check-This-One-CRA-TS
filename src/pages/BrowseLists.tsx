@@ -12,6 +12,7 @@ import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
 import { tagsList } from "../utils/TagsList";
+import { typesList } from "../utils/TypesList";
 
 function BrowseLists() {
   // GET USER ID FROM PARAMS
@@ -28,6 +29,7 @@ function BrowseLists() {
   const [searchQuery, setSearchQuery] = useSearchParams({ query: "" });
   const [filters, setFilters] = useState(false);
   const [tags, setTags] = useState([]);
+  const [type, setType] = useState("");
   const [tableView, setTableView] = useState(false);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -41,39 +43,23 @@ function BrowseLists() {
   // GET LISTS
   const getLists = async () => {
     try {
-      if (userId.userId || searchQuery.get("query")) {
-        const data = await axios.post(
-          `${
-            process.env.REACT_APP_API_URL
-          }/lists/getAllListsFiltered?creator_id=${
-            userId.userId || ""
-          }&title=${searchQuery.get(
-            "query"
-          )}&page=${page}&limit=10&paginate=true`,
-          { tags: tags.map((tag) => tag.name) }
-        );
-        setTotal(data.data.totalPages);
-        setLists(data.data.lists);
-
-        return;
+      let url = `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/?page=${page}&limit=10&paginate=true`;
+      if (userId.userId) {
+        url += `&creator_id=${userId.userId}`;
+      }
+      if (searchQuery.get("query")) {
+        url += `&title=${searchQuery.get("query")}`;
+      }
+      if (type) {
+        url += `&type=${type}`;
       }
 
-      if (tags.length > 0) {
-        const data = await axios.post(
-          `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/?page=${page}&limit=10&paginate=true`,
-          { tags: tags.map((tag) => tag.name) }
-        );
-        setTotal(data.data.totalPages);
-        setLists(data.data.lists);
+      const requestBody =
+        tags.length > 0 ? { tags: tags.map((tag) => tag.name) } : {};
 
-        return;
-      }
-
-      const data = await axios.post(
-        `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/?page=${page}&limit=10&paginate=true`
-      );
+      const data = await axios.post(url, requestBody);
       setTotal(data.data.totalPages);
-      setLists(data.data.listsWithQRCodes);
+      setLists(data.data.lists);
     } catch (error) {
       console.error(error);
     }
@@ -105,10 +91,14 @@ function BrowseLists() {
     setTags([...tags, selectedTag]);
   };
 
+  const handleTypeSelect = (e) => {
+    setType(e.target.value);
+  };
+
   useEffect(() => {
     getLists();
     handlePageToDisplay();
-  }, [userId, searchQuery, tags, page, total]);
+  }, [userId, searchQuery, tags, page, total, type]);
 
   return (
     <div
@@ -184,66 +174,103 @@ function BrowseLists() {
         </div>
 
         {filters && (
-          <div className="mt-4 w-full md:mt-0 md:w-96">
-            <label
-              htmlFor="select"
-              className={`w-full text-left text-sm font-medium ${
-                darkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
-              {trad[lang].global.tags}:
-            </label>
-            <div className="mt-1">
-              <select
-                name="select"
-                id="select"
-                className={`block w-full rounded-md border-myGray text-sm shadow-sm focus:border-primary focus:ring-0 ${
-                  darkMode
-                    ? "bg-darkQuin text-gray-300"
-                    : "bg-myWhite text-smokyBlack"
+          <div className="flex w-full flex-col md:flex-row md:justify-end md:gap-4">
+            <div className="mt-4 w-full md:mt-0 md:w-96">
+              <label
+                htmlFor="select-type"
+                className={`w-full text-left text-sm font-medium ${
+                  darkMode ? "text-gray-300" : "text-gray-700"
                 }`}
-                defaultValue={""}
-                onChange={(e) => handleTagSelect(e)}
               >
-                <option>{trad[lang].placeholders.chooseATag}</option>
-                {tagsList.map((tag) => {
-                  return (
-                    <option key={tag.name} value={tag.name}>
-                      {lang === "en" ? tag.name : tag.name_fr}
-                    </option>
-                  );
-                })}
-              </select>
-
-              {tags && tags.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {tags.map((tag) => {
+                {trad[lang].global.type}:
+              </label>
+              <div className="mt-1">
+                <select
+                  name="select-type"
+                  id="select-type"
+                  className={`block w-full rounded-md border-myGray text-sm shadow-sm focus:border-primary focus:ring-0 ${
+                    darkMode
+                      ? "bg-darkQuin text-gray-300"
+                      : "bg-myWhite text-smokyBlack"
+                  }`}
+                  defaultValue={""}
+                  onChange={(e) => handleTypeSelect(e)}
+                >
+                  <option value="">
+                    {trad[lang].placeholders.chooseAType}
+                  </option>
+                  {typesList.map((t) => {
                     return (
-                      <div
-                        key={tag.name}
-                        className={`flex items-center gap-2 rounded-md px-2 py-1 ${
-                          darkMode
-                            ? "bg-darkQuin text-gray-300"
-                            : "bg-myWhite text-smokyBlack"
-                        }`}
-                      >
-                        <span className="text-sm">
-                          {lang === "en" ? tag.name : tag.name_fr}
-                        </span>
-                        <button
-                          type="button"
-                          className="text-gray-400 hover:text-gray-500"
-                          onClick={() => {
-                            setTags(tags.filter((item) => item !== tag));
-                          }}
-                        >
-                          <XIcon className="h-4 w-4" />
-                        </button>
-                      </div>
+                      <option key={t.name} value={t.value}>
+                        {lang === "en" ? t.name : t.name_fr}
+                      </option>
                     );
                   })}
-                </div>
-              )}
+                </select>
+              </div>
+            </div>
+
+            <div className="mt-4 w-full md:mt-0 md:w-96">
+              <label
+                htmlFor="select-tags"
+                className={`w-full text-left text-sm font-medium ${
+                  darkMode ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                {trad[lang].global.tags}:
+              </label>
+              <div className="mt-1">
+                <select
+                  name="select-tags"
+                  id="select-tags"
+                  className={`block w-full rounded-md border-myGray text-sm shadow-sm focus:border-primary focus:ring-0 ${
+                    darkMode
+                      ? "bg-darkQuin text-gray-300"
+                      : "bg-myWhite text-smokyBlack"
+                  }`}
+                  defaultValue={""}
+                  onChange={(e) => handleTagSelect(e)}
+                >
+                  <option value="">{trad[lang].placeholders.chooseATag}</option>
+                  {tagsList.map((tag) => {
+                    return (
+                      <option key={tag.name} value={tag.name}>
+                        {lang === "en" ? tag.name : tag.name_fr}
+                      </option>
+                    );
+                  })}
+                </select>
+
+                {tags && tags.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {tags.map((tag) => {
+                      return (
+                        <div
+                          key={tag.name}
+                          className={`flex items-center gap-2 rounded-md px-2 py-1 ${
+                            darkMode
+                              ? "bg-darkQuin text-gray-300"
+                              : "bg-myWhite text-smokyBlack"
+                          }`}
+                        >
+                          <span className="text-sm">
+                            {lang === "en" ? tag.name : tag.name_fr}
+                          </span>
+                          <button
+                            type="button"
+                            className="text-gray-400 hover:text-gray-500"
+                            onClick={() => {
+                              setTags(tags.filter((item) => item !== tag));
+                            }}
+                          >
+                            <XIcon className="h-4 w-4" />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
@@ -263,7 +290,7 @@ function BrowseLists() {
         ) : (
           <>
             {/* RESULTS / Cards view */}
-            {lists.length > 0 ? (
+            {lists?.length > 0 ? (
               lists.map((list: any) => (
                 <ListDisplay
                   key={`list-${list.id}`}

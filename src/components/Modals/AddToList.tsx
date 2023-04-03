@@ -26,6 +26,7 @@ function AddToList({
 
   // HANDLE CONTENT TYPE
   const handleContentType = (content) => {
+    if (content?.podcast) return "podcast";
     if (content?.release_date) return "movie";
     if (content?.first_air_date) return "show";
     if (content?.etag) return "youtube";

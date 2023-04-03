@@ -32,12 +32,13 @@ const trad = {
       previous: "Précédent",
       next: "Suivant",
       noResults: "Aucun résultat",
+      type: "Type",
     },
     home: {
       title1: "Créez vos listes",
       title2: "avec nous !",
       subtitle:
-        "Rejoignez la communauté et partagez avec nous vos films, séries et vidéos Youtube préférés !",
+        "Rejoignez la communauté et partagez avec nous vos films, séries, podcasts et vidéos Youtube préférés !",
       signUpNow: "Inscrivez-vous maintenant",
       upcomingMovies: "Films à venir",
       topRatedShows: "Séries les mieux notées",
@@ -159,6 +160,7 @@ const trad = {
       moviesSearch: "Recherche de films",
       tvShowsSearch: "Recherche de séries",
       youtubeSearch: "Recherche de vidéos Youtube",
+      podcastsSearch: "Recherche de podcasts",
     },
     placeholders: {
       searchYoutube: "Rechercher une vidéo Youtube...",
@@ -166,6 +168,13 @@ const trad = {
       searchTvShows: "Rechercher une série...",
       searchLists: "Rechercher une liste...",
       chooseATag: "Choisissez un ou plusieurs tags...",
+      searchPodcasts: "Rechercher un podcast...",
+      chooseAType: "Choisissez un type de liste...",
+    },
+    podcasts: {
+      trendingPodcasts: "Podcasts en tendances",
+      resultsFor: "Résultats pour",
+      noResults: "Aucun résultat",
     },
     showDetails: {
       originalName: "Nom original",
@@ -283,12 +292,13 @@ const trad = {
       previous: "Previous",
       next: "Next",
       noResults: "No results",
+      type: "Type",
     },
     home: {
       title1: "List it up",
       title2: "with us!",
       subtitle:
-        "Join the community and share with us your must-see movies, TV shows and Youtube videos !",
+        "Join the community and share with us your must-see movies, TV shows, podcasts and Youtube videos !",
       signUpNow: "Sign up now",
       upcomingMovies: "Upcoming movies",
       topRatedShows: "Top rated shows",
@@ -409,6 +419,7 @@ const trad = {
       moviesSearch: "Movies search",
       tvShowsSearch: "TV Shows search",
       youtubeSearch: "Youtube search",
+      podcastsSearch: "Podcasts search",
     },
     placeholders: {
       searchYoutube: "Search a Youtube video...",
@@ -416,6 +427,13 @@ const trad = {
       searchTvShows: "Search a TV Show...",
       searchLists: "Search a list...",
       chooseATag: "Choose one or more tags...",
+      searchPodcasts: "Search a podcast...",
+      chooseAType: "Choose a list type...",
+    },
+    podcasts: {
+      trendingPodcasts: "Trending podcasts",
+      resultsFor: "Results for",
+      noResults: "No results",
     },
     showDetails: {
       originalName: "Original name",

@@ -1,5 +1,5 @@
 import React from "react";
-import Poster from "../../assets/poster.jpg";
+import Poster from "../../assets/avatar-ph.png";
 
 function CastCard({
   id,
