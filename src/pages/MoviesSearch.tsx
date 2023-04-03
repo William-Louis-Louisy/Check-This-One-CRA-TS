@@ -9,6 +9,8 @@ import { useContext, useState, useEffect } from "react";
 import { handleLang } from "../utils/RequestLanguageHandler";
 import CreateListForm from "../components/Modals/CreateListForm";
 import { useSearchParams } from "react-router-dom";
+import SearchInput from "../components/Common/SearchInput";
+import { XIcon } from "@heroicons/react/outline";
 
 function MoviesSearch() {
   const { lang, darkMode } = useContext(AppContext);
@@ -25,6 +27,14 @@ function MoviesSearch() {
   // HANDLE SEARCH
   const handleSearch = (event) => {
     setSearch({ query: event.target.value });
+    setPage(1);
+  };
+
+  // HANDLE CLEAR SEARCH
+  const handleClearSearch = () => {
+    let input = document.getElementById("search") as HTMLInputElement;
+    input.value = "";
+    setSearch({ query: "a" });
     setPage(1);
   };
 
@@ -93,7 +103,7 @@ function MoviesSearch() {
                 <input
                   id="search"
                   name="search"
-                  className={`placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray ${
+                  className={`block w-full rounded-md border border-myGray ${
                     darkMode
                       ? "bg-darkQuin text-gray-300 focus:border-darkTert"
                       : "bg-myWhite focus:border-myGray"
@@ -102,6 +112,12 @@ function MoviesSearch() {
                   type="text"
                   onChange={handleSearch}
                 />
+                <button
+                  className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3"
+                  onClick={() => handleClearSearch()}
+                >
+                  <XIcon className="h-5 w-5 text-myGray" aria-hidden="true" />
+                </button>
               </div>
             </div>
           </div>

@@ -7,6 +7,7 @@ import trad from "../lang/traduction";
 import AddToList from "../components/Modals/AddToList";
 import CreateListForm from "../components/Modals/CreateListForm";
 import PodcastCard from "../components/Cards/PodcastCard";
+import SearchInput from "../components/Common/SearchInput";
 
 interface IContentToList {
   podcast: boolean;
@@ -41,11 +42,25 @@ function PodcastsSearch() {
     return null;
   };
 
+  // HANDLE REGION CHANGE
+  const handleRegionChange = (lang: string) => {
+    switch (lang) {
+      case "fr":
+        return "fr";
+      case "en":
+        return "us";
+      default:
+        return "fr";
+    }
+  };
+
   // GET TRENDING PODCASTS
   const getTrendingPodcasts = async () => {
     try {
       const { data } = await axios.get(
-        `https://itunes.apple.com/fr/rss/toppodcasts/limit=50/json`
+        `https://itunes.apple.com/${handleRegionChange(
+          lang
+        )}/rss/toppodcasts/limit=50/json`
       );
       setTrendingPodcasts(data.feed.entry);
     } catch (error) {
@@ -92,7 +107,7 @@ function PodcastsSearch() {
 
   useEffect(() => {
     getTrendingPodcasts();
-  }, []);
+  }, [lang]);
 
   return (
     <div
@@ -108,49 +123,17 @@ function PodcastsSearch() {
         </h3>
         <div className="mt-3 sm:mt-0 sm:ml-4">
           {/* SEARCH BAR */}
-          <div className="flex w-full items-center justify-center sm:px-2 md:w-[400px] lg:justify-end">
-            <div className="w-full max-w-lg lg:max-w-xl">
-              <label htmlFor="search" className="sr-only">
-                {trad[lang].placeholders.searchPodcasts}
-              </label>
-              <div className="relative">
-                <button
-                  id="search-button"
-                  className="absolute inset-y-0 left-0 flex cursor-pointer items-center pl-3"
-                  onClick={() => {
-                    searchPodcasts();
-                  }}
-                >
-                  <SearchIcon
-                    className="h-5 w-5 text-myGray"
-                    aria-hidden="true"
-                  />
-                </button>
-                <input
-                  id="search"
-                  name="search"
-                  className={`placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray ${
-                    darkMode
-                      ? "bg-darkQuin text-gray-300 focus:border-darkTert"
-                      : "bg-myWhite focus:border-myGray"
-                  } py-2 pl-10 pr-3 leading-5 placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm`}
-                  placeholder={trad[lang].placeholders.searchPodcasts}
-                  type="search"
-                  value={keyword}
-                  onChange={(e) => setKeyword(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      searchPodcasts();
-                    }
-                  }}
-                />
-              </div>
-            </div>
-          </div>
+          <SearchInput
+            darkMode={darkMode}
+            searchFunction={searchPodcasts}
+            searchValue={keyword}
+            setSearchValue={setKeyword}
+            placeholder={trad[lang].placeholders.searchPodcasts}
+          />
         </div>
       </div>
 
-      {searchResults.length > 0 ? (
+      {searchResults.length > 0 && keyword !== "" ? (
         <>
           {/* SEARCH RESULTS */}
           {keyword && (
@@ -159,7 +142,7 @@ function PodcastsSearch() {
             </h4>
           )}
 
-          <div className="flex w-[70%] flex-row flex-wrap justify-center gap-6">
+          <div className="flex flex-row flex-wrap justify-center gap-6 md:w-[70%]">
             {searchResults.map((item) => (
               <PodcastCard
                 key={item.trackId}
@@ -181,7 +164,7 @@ function PodcastsSearch() {
           <h4 className={`mb-8 text-xl font-semibold text-primary`}>
             {trad[lang].podcasts.trendingPodcasts}
           </h4>
-          <div className="flex w-[70%] flex-row flex-wrap justify-center gap-6">
+          <div className="flex flex-row flex-wrap justify-center gap-6 md:w-[70%]">
             {trendingPodcasts.map((item) => (
               <PodcastCard
                 key={item.id.attributes["im:id"]}

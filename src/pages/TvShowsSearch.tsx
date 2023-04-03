@@ -8,6 +8,7 @@ import AddToList from "../components/Modals/AddToList";
 import { UserContext } from "../contexts/UserContext";
 import CreateListForm from "../components/Modals/CreateListForm";
 import { useSearchParams } from "react-router-dom";
+import { XIcon } from "@heroicons/react/outline";
 
 function TvShowsSearch() {
   const { lang, darkMode } = useContext(AppContext);
@@ -36,6 +37,14 @@ function TvShowsSearch() {
   // HANDLE SEARCH
   const handleSearch = (event) => {
     setSearch({ query: event.target.value });
+    setPage(1);
+  };
+
+  // HANDLE CLEAR SEARCH
+  const handleClearSearch = () => {
+    let input = document.getElementById("search") as HTMLInputElement;
+    input.value = "";
+    setSearch({ query: "a" });
     setPage(1);
   };
 
@@ -112,6 +121,12 @@ function TvShowsSearch() {
                   type="text"
                   onChange={handleSearch}
                 />
+                <button
+                  className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3"
+                  onClick={() => handleClearSearch()}
+                >
+                  <XIcon className="h-5 w-5 text-myGray" aria-hidden="true" />
+                </button>
               </div>
             </div>
           </div>

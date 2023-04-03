@@ -23,17 +23,17 @@ function PodcastCard({
   return (
     <div
       key={id}
-      className={`flex w-[170px] flex-col gap-2 rounded-md rounded-b-md text-center shadow-md duration-150 ${
+      className={`flex w-full text-center shadow-md duration-150 md:w-[170px] md:flex-col md:gap-2 md:rounded-md md:rounded-b-md ${
         darkMode
           ? "bg-darkTert text-gray-300 shadow-gray-900"
           : "bg-myWhite text-smokyBlack shadow-gray-300"
       }`}
     >
       <a href={href} target="_blank" rel="noopener noreferrer">
-        <img src={img} alt={title} className="rounded-t-md" />
+        <img src={img} alt={title} className="max-h-[170px] md:rounded-t-md" />
       </a>
 
-      <div className="flex h-full flex-col items-center justify-between gap-2 pb-4">
+      <div className="flex h-full w-full flex-col items-center justify-between gap-2 py-2 md:pt-0 md:pb-4">
         <span className="max-h-12 overflow-hidden px-2">{title}</span>
 
         <button

@@ -32,6 +32,7 @@ const trad = {
       previous: "Précédent",
       next: "Suivant",
       noResults: "Aucun résultat",
+      type: "Type",
     },
     home: {
       title1: "Créez vos listes",
@@ -168,6 +169,7 @@ const trad = {
       searchLists: "Rechercher une liste...",
       chooseATag: "Choisissez un ou plusieurs tags...",
       searchPodcasts: "Rechercher un podcast...",
+      chooseAType: "Choisissez un type de liste...",
     },
     podcasts: {
       trendingPodcasts: "Podcasts en tendances",
@@ -290,6 +292,7 @@ const trad = {
       previous: "Previous",
       next: "Next",
       noResults: "No results",
+      type: "Type",
     },
     home: {
       title1: "List it up",
@@ -425,6 +428,7 @@ const trad = {
       searchLists: "Search a list...",
       chooseATag: "Choose one or more tags...",
       searchPodcasts: "Search a podcast...",
+      chooseAType: "Choose a list type...",
     },
     podcasts: {
       trendingPodcasts: "Trending podcasts",
