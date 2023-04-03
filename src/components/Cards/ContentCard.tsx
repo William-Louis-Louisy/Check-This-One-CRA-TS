@@ -1,7 +1,12 @@
+/* eslint-disable react/jsx-no-target-blank */
 import axios from "axios";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import trad from "../../lang/traduction";
 import LazyImage from "../Common/LazyImage";
+
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(" ");
+}
 
 function ContentCard({ data, lang, userId, refetch }) {
   // HANLE TYPE
@@ -46,13 +51,30 @@ function ContentCard({ data, lang, userId, refetch }) {
       href={
         data.type === "youtube"
           ? `https://www.youtube.com/watch?v=${data.provider_id_string}}`
+          : data.type === "podcast"
+          ? `https://podcasts.apple.com/fr/podcast/miracle-fajr-podcast/id${data.provider_id_string}?uo=2`
           : `/${handleType(data.type)}/${data.provider_id}`
       }
+      target={
+        data.type === "youtube" || data.type === "podcast" ? "_blank" : ""
+      }
+      rel={
+        data.type === "youtube" || data.type === "podcast"
+          ? "noopener noreferrer"
+          : ""
+      }
     >
-      <div className="relative h-40 w-[106px] md:h-80 md:w-[213px]">
+      <div
+        className={classNames(
+          data.type === "youtube" || data.type === "podcast"
+            ? "topRated flex items-center justify-center rounded-md"
+            : "",
+          "relative h-40 w-[106px] md:h-80 md:w-[213px]"
+        )}
+      >
         <LazyImage
           src={
-            data.type === "youtube"
+            data.type === "youtube" || data.type === "podcast"
               ? data.poster_path
                 ? data.poster_path
                 : "/src/assets/poster.jpg"
@@ -61,8 +83,8 @@ function ContentCard({ data, lang, userId, refetch }) {
               : "/src/assets/poster.jpg"
           }
           className={`${
-            data.type === "youtube"
-              ? "h-40 object-contain md:h-80"
+            data.type === "youtube" || data.type === "podcast"
+              ? "h-40 object-contain"
               : "h-40 rounded-md md:h-80"
           }`}
           alt=""
