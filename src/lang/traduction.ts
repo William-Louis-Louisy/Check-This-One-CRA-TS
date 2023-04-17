@@ -33,6 +33,7 @@ const trad = {
       next: "Suivant",
       noResults: "Aucun résultat",
       type: "Type",
+      goToTheTop: "Retour en haut",
     },
     home: {
       title1: "Créez vos listes",
@@ -304,6 +305,7 @@ const trad = {
       next: "Next",
       noResults: "No results",
       type: "Type",
+      goToTheTop: "Go to the top",
     },
     home: {
       title1: "List it up",
