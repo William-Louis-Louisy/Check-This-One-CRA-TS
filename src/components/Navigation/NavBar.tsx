@@ -17,6 +17,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import DarkModeToggle from "../Common/DarkModeToggle";
+import NotificationsDropDown from "./NotificationsDropDown";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -28,7 +29,7 @@ function NavBar() {
 
   // CONTEXT IMPORTS
   const { lang, darkMode } = useContext(AppContext);
-  const { user, logout } = useContext(UserContext);
+  const { user, logout, notifications } = useContext(UserContext);
 
   // TABS STATE
   const tabs = [
@@ -120,17 +121,7 @@ function NavBar() {
                 </Disclosure.Button>
               </div>
               <div className="hidden lg:ml-4 lg:flex lg:items-center">
-                {/* {user?.user_name && (
-                  <button
-                    type="button"
-                    className="hover:flex-shrink-0 rounded-full bg-myWhite p-1 text-myGray focus:outline-none  focus:ring-0 focus:ring-offset-0"
-                  >
-                    <span className="sr-only">
-                      {trad[lang].navbar.viewNotifications}
-                    </span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                )} */}
+                {user?.user_name && <NotificationsDropDown />}
 
                 {/* Profile dropdown */}
                 {user && user.email !== "" ? (
@@ -299,7 +290,7 @@ function NavBar() {
                       : darkMode
                       ? "border-transparent text-altSecondary"
                       : "border-transparent text-secondary",
-                    "flex flex-row items-center border-l-4 py-4 pl-3 pr-4 text-base font-medium"
+                    "flex flex-row items-center border-l-4 py-3 pl-3 pr-4 text-base font-medium"
                   )}
                 >
                   {t.icon} {t.name}
@@ -314,7 +305,7 @@ function NavBar() {
                   darkMode ? "text-gray-300" : "text-gray-500"
                 }`}
               >
-                <div className="flex items-center px-4">
+                <div className="flex w-full flex-row items-center justify-between px-4">
                   {/* Username and Avatar */}
                   <Disclosure.Button
                     as="a"
@@ -346,15 +337,21 @@ function NavBar() {
                   </Disclosure.Button>
 
                   {/* Notification Bell */}
-                  {/* <button
-                    type="button"
-                    className="hover:ml-auto flex-shrink-0 rounded-full bg-myWhite p-1 text-myGray focus:outline-none  focus:ring-0 focus:ring-offset-0"
-                  >
-                    <span className="sr-only">
-                      {trad[lang].navbar.viewNotifications}
-                    </span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button> */}
+                  {user && user.id !== 0 && (
+                    <Disclosure.Button
+                      as="a"
+                      href={`/notifications/${user.id}`}
+                      className="relative flex-shrink-0 rounded-full p-1 text-myGray hover:ml-auto focus:outline-none focus:ring-0 focus:ring-offset-0"
+                    >
+                      <span className="sr-only">
+                        {trad[lang].navbar.viewNotifications}
+                      </span>
+                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      {notifications && notifications.length > 0 && (
+                        <span className="absolute bottom-0 right-1 rounded-full bg-red-600 p-1 text-center"></span>
+                      )}
+                    </Disclosure.Button>
+                  )}
                 </div>
 
                 <div className="mt-3 space-y-1">

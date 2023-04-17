@@ -5,10 +5,12 @@ import { SearchIcon } from "@heroicons/react/solid";
 import { UserContext } from "../contexts/UserContext";
 import { useContext, useState, useEffect } from "react";
 import ListDisplay from "../components/Lists/ListDisplay";
+import PageLoader from "../components/Common/PageLoader";
 
 function UserLikedLists() {
   const { lang, darkMode } = useContext(AppContext);
   const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const [lists, setLists] = useState([]);
 
   // GET LISTS LIKED BY USER
@@ -21,6 +23,8 @@ function UserLikedLists() {
         setLists(data.data.lists);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -28,6 +32,8 @@ function UserLikedLists() {
   useEffect(() => {
     getLists();
   }, [user]);
+
+  if (loading) return <PageLoader lang={lang} darkMode={darkMode} />;
 
   return (
     <div

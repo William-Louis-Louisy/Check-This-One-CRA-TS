@@ -45,7 +45,7 @@ function EditUserCard({
         });
         toast.success(`${trad[lang].toasts.success.userProfileUpdated}`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -56,7 +56,7 @@ function EditUserCard({
         console.error(error);
         toast.error(`${trad[lang].toasts.success.userProfileUpdatedError}`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -70,7 +70,7 @@ function EditUserCard({
 
   return (
     <div
-      className={`space-y-8 divide-y divide-gray-200 rounded-md p-8 shadow-lg ${
+      className={`w-full space-y-8 divide-y divide-gray-200 rounded-md p-8 shadow-lg md:w-1/2 ${
         darkMode ? "bg-darkTert" : "bg-myWhite"
       }`}
     >

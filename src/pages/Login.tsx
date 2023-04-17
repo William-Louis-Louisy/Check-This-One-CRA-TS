@@ -30,7 +30,7 @@ function Login() {
         storeUser(data.user);
         toast.success(`${trad[lang].toasts.success.login}`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -41,7 +41,7 @@ function Login() {
       console.error(error);
       toast.error(`${trad[lang].toasts.error.login}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,

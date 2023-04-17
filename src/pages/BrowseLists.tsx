@@ -1,6 +1,5 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import { PlusIcon, XIcon } from "@heroicons/react/solid";
-import { dividerClasses } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -13,6 +12,7 @@ import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
 import { tagsList } from "../utils/TagsList";
 import { typesList } from "../utils/TypesList";
+import PageLoader from "../components/Common/PageLoader";
 
 function BrowseLists() {
   // GET USER ID FROM PARAMS
@@ -24,7 +24,8 @@ function BrowseLists() {
   // GET USER FROM CONTEXT
   const { user } = useContext(UserContext);
 
-  // LISTS
+  // STATES
+  const [loading, setLoading] = useState(true);
   const [lists, setLists] = useState([]);
   const [searchQuery, setSearchQuery] = useSearchParams({ query: "" });
   const [filters, setFilters] = useState(false);
@@ -62,6 +63,8 @@ function BrowseLists() {
       setLists(data.data.lists);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,6 +102,8 @@ function BrowseLists() {
     getLists();
     handlePageToDisplay();
   }, [userId, searchQuery, tags, page, total, type]);
+
+  if (loading) return <PageLoader lang={lang} darkMode={darkMode} />;
 
   return (
     <div

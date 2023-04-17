@@ -1,10 +1,39 @@
-import { Fragment } from "react";
+import _ from "lodash";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import trad from "../../lang/traduction";
-import { XIcon } from "@heroicons/react/outline";
+import { IBadge } from "../../types/Badges";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  XIcon,
+} from "@heroicons/react/outline";
+import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
+  const [badges, setBadges] = useState<IBadge[]>();
+  const [showBadges, setShowBadges] = useState(false);
+
+  // GET USER BADGES
+  const getUserBadges = async () => {
+    try {
+      if (creator) {
+        const data = await axios.get(
+          `${process.env.REACT_APP_API_URL}/user/${creator.id}/badges`
+        );
+        setBadges(data.data.badges);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const debouncedGetUserBadges = _.debounce(getUserBadges, 1000);
+
+  useEffect(() => {
+    debouncedGetUserBadges();
+  }, [creator]);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -12,7 +41,7 @@ function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
         className="fixed inset-0 z-10 overflow-y-auto"
         onClose={setOpen}
       >
-        <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="flex min-h-screen items-center justify-center px-4 pt-4 pb-20 text-center sm:flex sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -120,6 +149,64 @@ function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
                         {creator.introduction}
                       </dd>
                     )}
+
+                    <dt
+                      className="mt-3 flex cursor-pointer flex-row items-center justify-center gap-2 text-primary"
+                      onClick={() => setShowBadges(!showBadges)}
+                    >
+                      {trad[lang].user.badges}{" "}
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium duration-150 ${
+                          darkMode ? "bg-darkSec" : "bg-orange-100"
+                        }`}
+                      >
+                        {badges?.length}
+                      </span>
+                      {showBadges ? (
+                        <ChevronUpIcon className="h-4 w-4" />
+                      ) : (
+                        <ChevronDownIcon className="h-4 w-4" />
+                      )}
+                    </dt>
+                    {showBadges &&
+                      (badges && badges.length > 0 ? (
+                        <dd
+                          className={`mt-3 flex flex-row flex-wrap items-start justify-center gap-4 text-sm italic ${
+                            darkMode ? "text-gray-300" : "text-gray-500"
+                          }`}
+                        >
+                          {badges.map((badge) => {
+                            return (
+                              <div
+                                key={`badge-${badge.id}`}
+                                className="flex min-h-full w-[96px] cursor-help flex-col items-center justify-start"
+                                title={
+                                  lang === "fr"
+                                    ? badge.description
+                                    : badge.description_en
+                                }
+                              >
+                                <img
+                                  className="h-14 w-14 rounded-full object-cover shadow-md"
+                                  src={badge.icon}
+                                  alt={badge.name_en}
+                                />
+                                <span className="mt-2 text-xs">
+                                  {lang === "fr" ? badge.name : badge.name_en}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </dd>
+                      ) : (
+                        <span
+                          className={`mt-2 text-sm italic ${
+                            darkMode ? "text-gray-300" : "text-gray-500"
+                          }`}
+                        >
+                          {trad[lang].user.noBadgesUnlockedYet}
+                        </span>
+                      ))}
                   </dl>
                 </div>
                 <div>

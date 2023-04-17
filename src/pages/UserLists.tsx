@@ -7,10 +7,12 @@ import { SearchIcon } from "@heroicons/react/solid";
 import ListDisplay from "../components/Lists/ListDisplay";
 import ListViewBtnGroup from "../components/Common/ListViewBtnGroup";
 import TableListDisplay from "../components/Lists/TableListDisplay";
+import PageLoader from "../components/Common/PageLoader";
 
 function UserLists() {
   const { lang, darkMode } = useContext(AppContext);
   const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const [lists, setLists] = useState([]);
   const [total, setTotal] = useState(0);
   const [tableView, setTableView] = useState(false);
@@ -28,6 +30,8 @@ function UserLists() {
         setTotal(data.data.totalPages);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -57,9 +61,11 @@ function UserLists() {
     handlePageToDisplay();
   }, [user, page, total]);
 
-  if (!user?.id) {
-    return <div>Vous devez être connecté pour accéder à cette page</div>;
-  }
+  // if (!user?.id) {
+  //   return <div>Vous devez être connecté pour accéder à cette page</div>;
+  // }
+
+  if (loading) return <PageLoader lang={lang} darkMode={darkMode} />;
 
   return (
     <div

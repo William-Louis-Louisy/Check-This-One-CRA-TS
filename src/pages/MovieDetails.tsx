@@ -271,19 +271,69 @@ function MovieDetails() {
                 className={`mt-1 block w-full rounded-md ${
                   darkMode ? "bg-darkQuin" : "bg-white"
                 } border-gray-300 py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-0 sm:text-sm`}
-                defaultValue="FR"
+                defaultValue={lang === "fr" ? "FR" : "US"}
                 onChange={(e) => setSelectedCountry(e.target.value)}
               >
-                <option value={"FR"}>France</option>
-                <option value={"GB"}>United Kingdom</option>
-                <option value={"US"}>United States</option>
+                <option value="AR">Argentina</option>
+                <option value="AT">Austria</option>
+                <option value="AU">Australia</option>
+                <option value="BB">Barbados</option>
+                <option value="BG">Bulgaria</option>
+                <option value="BO">Bolivia</option>
+                <option value="BR">Brazil</option>
+                <option value="BS">Bahamas</option>
+                <option value="CA">Canada</option>
+                <option value="CH">Switzerland</option>
+                <option value="CL">Chile</option>
+                <option value="CO">Colombia</option>
+                <option value="CR">Costa Rica</option>
+                <option value="CZ">Czech Republic</option>
+                <option value="DE">Germany</option>
+                <option value="DK">Denmark</option>
+                <option value="DO">Dominican Republic</option>
+                <option value="EC">Ecuador</option>
+                <option value="ES">Spain</option>
+                <option value="FI">Finland</option>
+                <option value="FR">France</option>
+                <option value="GB">United Kingdom</option>
+                <option value="GF">French Guiana</option>
+                <option value="GT">Guatemala</option>
+                <option value="HK">Hong Kong</option>
+                <option value="HN">Honduras</option>
+                <option value="HU">Hungary</option>
+                <option value="ID">Indonesia</option>
+                <option value="IE">Ireland</option>
+                <option value="JM">Jamaica</option>
+                <option value="MD">Moldova</option>
+                <option value="MX">Mexico</option>
+                <option value="MY">Malaysia</option>
+                <option value="NL">Netherlands</option>
+                <option value="NO">Norway</option>
+                <option value="NZ">New Zealand</option>
+                <option value="PA">Panama</option>
+                <option value="PE">Peru</option>
+                <option value="PH">Philippines</option>
+                <option value="PL">Poland</option>
+                <option value="PT">Portugal</option>
+                <option value="PY">Paraguay</option>
+                <option value="RO">Romania</option>
+                <option value="SE">Sweden</option>
+                <option value="SG">Singapore</option>
+                <option value="SK">Slovakia</option>
+                <option value="SV">El Salvador</option>
+                <option value="TH">Thailand</option>
+                <option value="TT">Trinidad and Tobago</option>
+                <option value="TW">Taiwan</option>
+                <option value="US">United States</option>
+                <option value="UY">Uruguay</option>
+                <option value="VE">Venezuela</option>
               </select>
             </div>
             {/* Divider */}
             <div className="my-3 h-[1px] w-full bg-gray-300"></div>
 
             {/* Providers */}
-            <div className="flex flex-row items-center gap-2">
+            <div className="flex flex-row flex-wrap items-center justify-center gap-2">
               {filteredProviders?.flatrate?.length > 0 ? (
                 filteredProviders?.flatrate?.map((provider) => (
                   <img

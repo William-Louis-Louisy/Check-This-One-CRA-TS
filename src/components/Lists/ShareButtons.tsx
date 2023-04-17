@@ -35,7 +35,7 @@ function ShareButtons({
       await navigator.clipboard.writeText(url);
       toast.success(trad[lang].modals.copyToClipboardSuccess, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -44,7 +44,7 @@ function ShareButtons({
     } catch (err) {
       toast.error(trad[lang].modals.copyToClipboardError, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,

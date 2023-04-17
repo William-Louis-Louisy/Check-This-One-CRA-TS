@@ -99,7 +99,7 @@ function ListEdition() {
       getListById();
       toast.success(`${trad[lang].toasts.success.removeToList}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -109,7 +109,7 @@ function ListEdition() {
       console.error(error);
       toast.error(`${trad[lang].toasts.error.removeToList}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -142,7 +142,7 @@ function ListEdition() {
         getListById();
         toast.success(`${trad[lang].toasts.success.listUpdated}`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -153,7 +153,7 @@ function ListEdition() {
         console.error(error);
         toast.error(`${trad[lang].toasts.success.listUpdatedError}`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,

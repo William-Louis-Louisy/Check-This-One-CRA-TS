@@ -24,6 +24,16 @@ export interface IUser {
   seenCount?: number;
 }
 
+export interface INotifs {
+  id: number;
+  message: string;
+  message_en: string;
+  seen: boolean;
+  updated_at?: string;
+  user: IUser;
+  type?: string;
+}
+
 export type UserContextType = {
   user: IUser;
   setUser: Dispatch<SetStateAction<IUser>>;
@@ -31,6 +41,8 @@ export type UserContextType = {
   logout: () => void;
   refetchUser: () => void;
   getUser: () => void;
+  notifications: INotifs[];
+  getUserNotifications: () => void;
 };
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -47,6 +59,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     introduction: "",
     catchline: "",
   });
+  const [notifications, setNotifications] = useState<INotifs[]>();
 
   // STORE USER IN ASYNC STORAGE
   const storeUser = async (value: IUser) => {
@@ -91,13 +104,40 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
+  // GET USER NOTIFICATIONS
+  const getUserNotifications = async () => {
+    try {
+      if (user) {
+        const data = await axios.get(
+          `${process.env.REACT_APP_API_URL}/user/${user.id}/notifications/unseen`
+        );
+        setNotifications(data.data.notifications);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.id) {
+      getUserNotifications();
+
+      const notificationInterval = setInterval(() => {
+        getUserNotifications();
+      }, 60000);
+      return () => {
+        clearInterval(notificationInterval);
+      };
+    }
+  }, [user?.id]);
+
   // LOGOUT
   const logout = async () => {
     try {
       await axios.get(`${process.env.REACT_APP_API_URL}/logout`);
       toast.success(`${trad[lang].toasts.success.logout}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -119,7 +159,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.error(error);
       toast.error(`${trad[lang].toasts.error.logout}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -137,6 +177,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         logout,
         getUser,
         refetchUser,
+        notifications,
+        getUserNotifications,
       }}
     >
       {children}
