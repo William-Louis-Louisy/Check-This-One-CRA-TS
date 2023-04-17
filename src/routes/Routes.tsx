@@ -19,6 +19,7 @@ import ListDetails from "../pages/ListDetails";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import AdminDashboard from "../pages/AdminDashboard";
+import Notifications from "../pages/Notifications";
 
 export default function PublicRoutes() {
   const { user } = useContext(UserContext);
@@ -27,7 +28,7 @@ export default function PublicRoutes() {
     <BrowserRouter>
       <NavBar />
       <Routes>
-        {/* PUBLIC ROUTES */}
+        {/* --- PUBLIC ROUTES --- */}
         <>
           {/* BASICS */}
           <Route path="/" element={<Home />} />
@@ -52,7 +53,8 @@ export default function PublicRoutes() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
         </>
-        {/* PRIVATE ROUTES */}
+
+        {/* --- PRIVATE ROUTES --- */}
         {user && user?.id !== 0 && (
           <>
             {/* USER */}
@@ -62,10 +64,13 @@ export default function PublicRoutes() {
 
             {/* LIST EDITION */}
             <Route path="listEdition/:listId" element={<ListEdition />} />
+
+            {/* USER NOTIFICATIONS */}
+            <Route path="notifications/:id" element={<Notifications />} />
           </>
         )}
 
-        {/* ADMIN ROUTES */}
+        {/* --- ADMIN ROUTES --- */}
         {user && user?.user_name === "admin" && (
           <>
             <Route path="adminDashboard" element={<AdminDashboard />} />

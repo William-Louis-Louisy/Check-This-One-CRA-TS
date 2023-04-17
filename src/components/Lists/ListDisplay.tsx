@@ -51,7 +51,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
         await axios.delete(`${process.env.REACT_APP_API_URL}/list/${list?.id}`);
         toast.success(`${trad[lang].toasts.success.listDeleted}`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -61,7 +61,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
         console.error(error);
         toast.error(`${trad[lang].toasts.listDeletedError}`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,

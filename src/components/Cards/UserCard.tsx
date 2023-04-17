@@ -1,18 +1,22 @@
-import { useContext } from "react";
-import { AppContext } from "../../contexts/AppContext";
 import { IUser } from "../../contexts/UserContext";
 import trad from "../../lang/traduction";
+import { IUserStats } from "../../pages/UserProfile";
+import { IBadge } from "../../types/Badges";
+import StatCard from "./StatCard";
 
 function UserCard({
   user,
-  avatar,
   darkMode,
   lang,
+  badges,
+  userStats,
 }: {
   user: IUser;
   avatar: string;
   darkMode: boolean;
   lang: string;
+  badges: IBadge[];
+  userStats: IUserStats;
 }) {
   return (
     <div
@@ -75,9 +79,108 @@ function UserCard({
                 {user.introduction}
               </dd>
             )}
+
+            <dt className="mt-3 text-primary">{trad[lang].user.badges}</dt>
+            {badges && badges.length > 0 ? (
+              <dd
+                className={`mt-3 flex flex-row flex-wrap items-start justify-center gap-4 text-sm italic ${
+                  darkMode ? "text-gray-300" : "text-gray-500"
+                }`}
+              >
+                {badges.map((badge) => {
+                  return (
+                    <div
+                      key={`badge-${badge.id}`}
+                      className="flex min-h-full w-[96px] cursor-help flex-col items-center justify-start"
+                      title={
+                        lang === "fr" ? badge.description : badge.description_en
+                      }
+                    >
+                      <img
+                        className="h-14 w-14 rounded-full object-cover shadow-md"
+                        src={badge.icon}
+                        alt={badge.name_en}
+                      />
+                      <span className="mt-2 text-xs">
+                        {lang === "fr" ? badge.name : badge.name_en}
+                      </span>
+                    </div>
+                  );
+                })}
+              </dd>
+            ) : (
+              <span
+                className={`mt-2 text-sm italic ${
+                  darkMode ? "text-gray-300" : "text-gray-500"
+                }`}
+              >
+                {trad[lang].user.noBadgesUnlockedYet}
+              </span>
+            )}
           </dl>
         </div>
       </div>
+
+      {/* STATS */}
+      {userStats && (
+        <div className="flex flex-row flex-wrap items-center justify-center gap-4 p-4">
+          {userStats.listCount > 0 && (
+            <StatCard
+              data={userStats.listCount}
+              label={trad[lang].user.lists}
+              darkMode={darkMode}
+            />
+          )}
+
+          {userStats.moviesListCount > 0 && (
+            <StatCard
+              data={userStats.moviesListCount}
+              label={trad[lang].user.moviesLists}
+              darkMode={darkMode}
+            />
+          )}
+
+          {userStats.showsListCount > 0 && (
+            <StatCard
+              data={userStats.showsListCount}
+              label={trad[lang].user.showsLists}
+              darkMode={darkMode}
+            />
+          )}
+
+          {userStats.podcastsListCount > 0 && (
+            <StatCard
+              data={userStats.podcastsListCount}
+              label={trad[lang].user.podcastsLists}
+              darkMode={darkMode}
+            />
+          )}
+
+          {userStats.youtubesListCount > 0 && (
+            <StatCard
+              data={userStats.youtubesListCount}
+              label={trad[lang].user.youtubeLists}
+              darkMode={darkMode}
+            />
+          )}
+
+          {userStats.mixedListCount > 0 && (
+            <StatCard
+              data={userStats.mixedListCount}
+              label={trad[lang].user.mixedLists}
+              darkMode={darkMode}
+            />
+          )}
+
+          {userStats.likesCount > 0 && (
+            <StatCard
+              data={userStats.likesCount}
+              label={trad[lang].user.likes}
+              darkMode={darkMode}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

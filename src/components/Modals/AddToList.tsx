@@ -48,7 +48,7 @@ function AddToList({
       });
       toast.success(`${trad[lang].toasts.success.contentAddedToList}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -58,7 +58,7 @@ function AddToList({
       console.error(error);
       toast.error(`${trad[lang].toasts.error.contentAddedToListError}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,

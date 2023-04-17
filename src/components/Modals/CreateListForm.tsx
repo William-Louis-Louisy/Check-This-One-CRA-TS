@@ -43,7 +43,7 @@ function CreateListForm({
       );
       toast.success(`${trad[lang].toasts.success.listCreated}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -53,7 +53,7 @@ function CreateListForm({
       console.error(error);
       toast.error(`${trad[lang].toasts.error.listCreatedError}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,

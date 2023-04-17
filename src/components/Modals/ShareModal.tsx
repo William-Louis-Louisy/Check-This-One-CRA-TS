@@ -15,7 +15,7 @@ function ShareModal({ lang, open, setOpen, darkMode, qrCode, listData }) {
         className="fixed inset-0 z-10 overflow-y-auto"
         onClose={setOpen}
       >
-        <div className="flex min-h-screen items-center justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="flex min-h-screen items-center justify-center px-4 pt-4 pb-20 text-center sm:flex sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -26,7 +26,7 @@ function ShareModal({ lang, open, setOpen, darkMode, qrCode, listData }) {
             leaveTo="opacity-0"
           >
             <Dialog.Overlay
-              className={`fixed inset-0 mt-16 bg-opacity-75 transition-opacity ${
+              className={`fixed inset-0 bg-opacity-75 transition-opacity ${
                 darkMode ? "bg-gray-900" : "bg-gray-500"
               }`}
             />

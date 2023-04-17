@@ -121,7 +121,7 @@ function SignUp() {
       if (data) {
         toast.success(`${trad[lang].toasts.success.signup}`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -135,7 +135,7 @@ function SignUp() {
       console.error(error);
       toast.error(`${trad[lang].toasts.error.signup}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
