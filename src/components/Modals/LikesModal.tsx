@@ -13,7 +13,7 @@ function LikesModal({ likes, lang, open, setOpen, darkMode }) {
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={setOpen}
         >
-          <div className="flex min-h-screen items-center justify-center px-4 py-10 text-center sm:block sm:p-0">
+          <div className="flex min-h-screen flex-col items-center justify-end pt-4 text-center sm:block sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"

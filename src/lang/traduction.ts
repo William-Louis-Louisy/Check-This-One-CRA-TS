@@ -18,7 +18,7 @@ const trad = {
       backToHome: "Retour à l'accueil",
       noLists: "Aucune liste disponible",
       loading: "Chargement",
-      likes: "J'aime",
+      likes: "Likes",
       likedBy: "Aimé par",
       seeProfile: "Voir ses listes",
       loginToAddContentToYourLists:
@@ -40,6 +40,8 @@ const trad = {
       title2: "avec nous !",
       subtitle:
         "Rejoignez la communauté et partagez avec nous vos films, séries, podcasts et vidéos Youtube préférés !",
+      subtitle2:
+        "Ensemble, construisons une bibliothèque collaborative de contenus incontournables.",
       signUpNow: "Inscrivez-vous maintenant",
       upcomingMovies: "Films à venir",
       topRatedShows: "Séries les mieux notées",
@@ -312,6 +314,8 @@ const trad = {
       title2: "with us!",
       subtitle:
         "Join the community and share with us your must-see movies, TV shows, podcasts and Youtube videos !",
+      subtitle2:
+        "Together, let's build a collaborative library of must-see content.",
       signUpNow: "Sign up now",
       upcomingMovies: "Upcoming movies",
       topRatedShows: "Top rated shows",

@@ -102,7 +102,7 @@ function Home() {
                   {trad[lang].home.title2}
                 </span>
               </h1>
-              <p className="mx-auto mt-6 max-w-lg text-center text-xl text-myWhite sm:max-w-3xl">
+              <p className="mx-auto mt-6 max-w-md text-center text-xl text-myWhite sm:max-w-3xl">
                 {trad[lang].home.subtitle}
               </p>
               {!user?.user_name && (
