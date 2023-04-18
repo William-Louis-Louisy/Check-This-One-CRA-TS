@@ -82,7 +82,7 @@ function CreateListForm({
         initialFocus={cancelButtonRef}
         onClose={onClose}
       >
-        <div className="flex min-h-screen items-center justify-center px-4 pt-4 text-center sm:block sm:p-0">
+        <div className="flex min-h-screen flex-col items-center justify-end pt-4 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -116,7 +116,7 @@ function CreateListForm({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              className={`relative mt-16 inline-block w-[90%] transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
+              className={`relative mt-16 inline-block max-h-[95%] w-full transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
                 darkMode ? "bg-darkTert" : "bg-myWhite"
               }`}
             >

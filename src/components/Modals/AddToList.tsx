@@ -48,7 +48,7 @@ function AddToList({
       });
       toast.success(`${trad[lang].toasts.success.contentAddedToList}`, {
         position: "top-right",
-        autoClose: 2500,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -58,7 +58,7 @@ function AddToList({
       console.error(error);
       toast.error(`${trad[lang].toasts.error.contentAddedToListError}`, {
         position: "top-right",
-        autoClose: 2500,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -95,7 +95,7 @@ function AddToList({
         initialFocus={cancelButtonRef}
         onClose={setOpen}
       >
-        <div className="flex min-h-screen items-center justify-center px-4 pt-4 text-center sm:block sm:p-0">
+        <div className="flex min-h-screen flex-col items-center justify-end pt-4 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -129,7 +129,7 @@ function AddToList({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              className={`relative inline-block w-[90%] transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
+              className={`relative inline-block max-h-[95%] w-full transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
                 darkMode ? "bg-darkTert" : "bg-myWhite"
               }`}
             >

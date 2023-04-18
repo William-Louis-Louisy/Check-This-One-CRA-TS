@@ -41,7 +41,7 @@ function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
         className="fixed inset-0 z-10 overflow-y-auto"
         onClose={setOpen}
       >
-        <div className="flex min-h-screen items-center justify-center px-4 pt-4 pb-20 text-center sm:flex sm:p-0">
+        <div className="flex min-h-screen flex-col items-center justify-end pt-4 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -92,7 +92,7 @@ function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
 
               {/* CREATOR CARD */}
               <div className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg text-center">
-                <div className="flex flex-1 flex-col p-8">
+                <div className="card flex flex-col p-8">
                   {creator.avatar ? (
                     <img
                       className="mx-auto h-32 w-32 flex-shrink-0 rounded-full object-cover"
@@ -108,106 +108,109 @@ function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
                       </div>
                     )
                   )}
-
-                  <h3 className="mt-2 font-bold text-primary">
-                    {creator.user_name}
-                  </h3>
-                  <dl className="mt-1 flex flex-grow flex-col justify-between">
-                    <dt className="sr-only">{trad[lang].user.location}</dt>
-                    {creator.city && creator.country && (
-                      <dd className="">
-                        <span
-                          className={`rounded-full px-2 py-1 text-xs font-medium ${
-                            darkMode
-                              ? "bg-darkSec text-primary"
-                              : "bg-orange-50 text-primary"
-                          }`}
-                        >
-                          {creator.city}, {creator.country}
-                        </span>
-                      </dd>
-                    )}
-
-                    <dt className="sr-only">{trad[lang].user.catchline}</dt>
-                    {creator.catchline && (
-                      <dd
-                        className={`mt-3 text-sm italic ${
-                          darkMode ? "text-gray-400" : "text-gray-600"
-                        }`}
-                      >
-                        "{creator.catchline}"
-                      </dd>
-                    )}
-
-                    <dt className="sr-only">{trad[lang].user.introduction}</dt>
-                    {creator.introduction && (
-                      <dd
-                        className={`mt-3 text-sm italic ${
-                          darkMode ? "text-gray-300" : "text-gray-500"
-                        }`}
-                      >
-                        {creator.introduction}
-                      </dd>
-                    )}
-
-                    <dt
-                      className="mt-3 flex cursor-pointer flex-row items-center justify-center gap-2 text-primary"
-                      onClick={() => setShowBadges(!showBadges)}
-                    >
-                      {trad[lang].user.badges}{" "}
-                      <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium duration-150 ${
-                          darkMode ? "bg-darkSec" : "bg-orange-100"
-                        }`}
-                      >
-                        {badges?.length}
-                      </span>
-                      {showBadges ? (
-                        <ChevronUpIcon className="h-4 w-4" />
-                      ) : (
-                        <ChevronDownIcon className="h-4 w-4" />
-                      )}
-                    </dt>
-                    {showBadges &&
-                      (badges && badges.length > 0 ? (
-                        <dd
-                          className={`mt-3 flex flex-row flex-wrap items-start justify-center gap-4 text-sm italic ${
-                            darkMode ? "text-gray-300" : "text-gray-500"
-                          }`}
-                        >
-                          {badges.map((badge) => {
-                            return (
-                              <div
-                                key={`badge-${badge.id}`}
-                                className="flex min-h-full w-[96px] cursor-help flex-col items-center justify-start"
-                                title={
-                                  lang === "fr"
-                                    ? badge.description
-                                    : badge.description_en
-                                }
-                              >
-                                <img
-                                  className="h-14 w-14 rounded-full object-cover shadow-md"
-                                  src={badge.icon}
-                                  alt={badge.name_en}
-                                />
-                                <span className="mt-2 text-xs">
-                                  {lang === "fr" ? badge.name : badge.name_en}
-                                </span>
-                              </div>
-                            );
-                          })}
+                  <div className="max-h-72 overflow-y-scroll">
+                    <h3 className="mt-2 font-bold text-primary">
+                      {creator.user_name}
+                    </h3>
+                    <dl className="mt-1 flex flex-grow flex-col justify-between">
+                      <dt className="sr-only">{trad[lang].user.location}</dt>
+                      {creator.city && creator.country && (
+                        <dd className="">
+                          <span
+                            className={`rounded-full px-2 py-1 text-xs font-medium ${
+                              darkMode
+                                ? "bg-darkSec text-primary"
+                                : "bg-orange-50 text-primary"
+                            }`}
+                          >
+                            {creator.city}, {creator.country}
+                          </span>
                         </dd>
-                      ) : (
-                        <span
-                          className={`mt-2 text-sm italic ${
+                      )}
+
+                      <dt className="sr-only">{trad[lang].user.catchline}</dt>
+                      {creator.catchline && (
+                        <dd
+                          className={`mt-3 text-sm italic ${
+                            darkMode ? "text-gray-400" : "text-gray-600"
+                          }`}
+                        >
+                          "{creator.catchline}"
+                        </dd>
+                      )}
+
+                      <dt className="sr-only">
+                        {trad[lang].user.introduction}
+                      </dt>
+                      {creator.introduction && (
+                        <dd
+                          className={`mt-3 text-sm italic ${
                             darkMode ? "text-gray-300" : "text-gray-500"
                           }`}
                         >
-                          {trad[lang].user.noBadgesUnlockedYet}
+                          {creator.introduction}
+                        </dd>
+                      )}
+
+                      <dt
+                        className="mt-3 flex cursor-pointer flex-row items-center justify-center gap-2 text-primary"
+                        onClick={() => setShowBadges(!showBadges)}
+                      >
+                        {trad[lang].user.badges}{" "}
+                        <span
+                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium duration-150 ${
+                            darkMode ? "bg-darkSec" : "bg-orange-100"
+                          }`}
+                        >
+                          {badges?.length}
                         </span>
-                      ))}
-                  </dl>
+                        {showBadges ? (
+                          <ChevronUpIcon className="h-4 w-4" />
+                        ) : (
+                          <ChevronDownIcon className="h-4 w-4" />
+                        )}
+                      </dt>
+                      {showBadges &&
+                        (badges && badges.length > 0 ? (
+                          <dd
+                            className={`mt-3 flex flex-row flex-wrap items-start justify-center gap-4 text-sm italic ${
+                              darkMode ? "text-gray-300" : "text-gray-500"
+                            }`}
+                          >
+                            {badges.map((badge) => {
+                              return (
+                                <div
+                                  key={`badge-${badge.id}`}
+                                  className="flex min-h-full w-[96px] cursor-help flex-col items-center justify-start"
+                                  title={
+                                    lang === "fr"
+                                      ? badge.description
+                                      : badge.description_en
+                                  }
+                                >
+                                  <img
+                                    className="h-14 w-14 rounded-full object-cover shadow-md"
+                                    src={badge.icon}
+                                    alt={badge.name_en}
+                                  />
+                                  <span className="mt-2 text-xs">
+                                    {lang === "fr" ? badge.name : badge.name_en}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </dd>
+                        ) : (
+                          <span
+                            className={`mt-2 text-sm italic ${
+                              darkMode ? "text-gray-300" : "text-gray-500"
+                            }`}
+                          >
+                            {trad[lang].user.noBadgesUnlockedYet}
+                          </span>
+                        ))}
+                    </dl>
+                  </div>
                 </div>
                 <div>
                   <div className="-mt-px flex">

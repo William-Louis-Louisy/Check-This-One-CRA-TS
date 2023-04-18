@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { UserContext } from "../contexts/UserContext";
-import { AppContext } from "../contexts/AppContext";
-import trad from "../lang/traduction";
 import axios from "axios";
+import { useContext, useState } from "react";
+import trad from "../lang/traduction";
+import { useParams } from "react-router-dom";
+import { AppContext } from "../contexts/AppContext";
+import { UserContext } from "../contexts/UserContext";
 import { notifTypeToIcon } from "../utils/TypeToIcon";
 
 function classNames(...classes) {
