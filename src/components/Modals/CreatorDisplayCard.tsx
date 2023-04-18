@@ -75,7 +75,7 @@ function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              className={`relative inline-block transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
+              className={`relative inline-block max-h-[95%] w-full transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle ${
                 darkMode ? "bg-darkTert" : "bg-myWhite"
               }`}
             >
@@ -108,7 +108,7 @@ function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
                       </div>
                     )
                   )}
-                  <div className="max-h-72 overflow-y-scroll">
+                  <div className="card max-h-72 overflow-y-scroll">
                     <h3 className="mt-2 font-bold text-primary">
                       {creator.user_name}
                     </h3>
