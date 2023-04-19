@@ -1,5 +1,6 @@
 import React from "react";
 import trad from "../../lang/traduction";
+import { IUser } from "../../contexts/UserContext";
 
 function PodcastCard({
   item,
@@ -10,6 +11,7 @@ function PodcastCard({
   href,
   img,
   title,
+  user,
 }: {
   item: any;
   darkMode: boolean;
@@ -19,6 +21,7 @@ function PodcastCard({
   href: string;
   img: string;
   title: string;
+  user: IUser;
 }) {
   return (
     <div
@@ -36,16 +39,29 @@ function PodcastCard({
       <div className="flex h-full w-full flex-col items-center justify-between gap-2 py-2 md:pt-0 md:pb-4">
         <span className="max-h-12 overflow-hidden px-2">{title}</span>
 
-        <button
-          className={`w-fit rounded-md px-3 py-2 text-sm ${
-            darkMode
-              ? "bg-altSecondary text-darkTert"
-              : "bg-secondary text-myWhite"
-          }`}
-          onClick={() => handleAddToList(item)}
-        >
-          {trad[lang].labels.addToAList}
-        </button>
+        {user && user.id !== 0 ? (
+          <button
+            className={`w-fit rounded-md px-3 py-2 text-sm ${
+              darkMode
+                ? "bg-altSecondary text-darkTert"
+                : "bg-secondary text-myWhite"
+            }`}
+            onClick={() => handleAddToList(item)}
+          >
+            {trad[lang].labels.addToAList}
+          </button>
+        ) : (
+          <button
+            className={`w-fit cursor-not-allowed rounded-md px-3 py-2 text-sm ${
+              darkMode ? "bg-gray-500 text-darkSec" : "bg-gray-400 text-myWhite"
+            }`}
+            onClick={() => handleAddToList(item)}
+            disabled
+            title={trad[lang].global.loginToAddContentToYourLists}
+          >
+            {trad[lang].labels.addToAList}
+          </button>
+        )}
       </div>
     </div>
   );

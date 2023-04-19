@@ -154,6 +154,7 @@ function PodcastsSearch() {
                 href={item.trackViewUrl}
                 img={item.artworkUrl600}
                 title={item.trackName}
+                user={user}
               />
             ))}
           </div>
@@ -176,6 +177,7 @@ function PodcastsSearch() {
                 href={item.link.attributes.href}
                 img={item["im:image"][2].label}
                 title={item["im:name"].label}
+                user={user}
               />
             ))}
           </div>
