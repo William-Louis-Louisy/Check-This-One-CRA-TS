@@ -4,6 +4,7 @@ import {
   HiOutlineUsers,
 } from "react-icons/hi";
 import trad from "../../lang/traduction";
+import { RiMedalLine } from "react-icons/ri";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -15,6 +16,7 @@ function StatsCard({
   totalUsers,
   totalLists,
   totalLikes,
+  totalBadges,
   dataDisplayed,
   setDataDisplayed,
 }: {
@@ -23,6 +25,7 @@ function StatsCard({
   totalUsers: number;
   totalLists: number;
   totalLikes: number;
+  totalBadges: number;
   dataDisplayed: number;
   setDataDisplayed: React.Dispatch<React.SetStateAction<number>>;
 }) {
@@ -44,6 +47,12 @@ function StatsCard({
       name: trad[lang].admin.totalLikes,
       stat: totalLikes,
       icon: HiOutlineHeart,
+    },
+    {
+      id: 4,
+      name: trad[lang].admin.totalBadges,
+      stat: totalBadges,
+      icon: RiMedalLine,
     },
   ];
 

@@ -66,6 +66,8 @@ function MovieDetails() {
         setMovie(data.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -80,8 +82,6 @@ function MovieDetails() {
         setListsCount(data.data.count);
       } catch (error) {
         console.error(error);
-      } finally {
-        setLoading(false);
       }
     }
   };
@@ -361,89 +361,114 @@ function MovieDetails() {
           {/* Main Informations */}
           {dataDisplayed === "informations" && (
             <>
-              <div className="flex w-full flex-col items-start">
+              {/* -------- */}
+              <div className="info-parent text-sm sm:text-base">
                 {/* Original title */}
-                <span className="flex w-full flex-row justify-between text-sm sm:text-base">
+                <div className="info-div1">
                   <span className="font-bold text-primary">
                     {trad[lang].movieDetails.originalTitle}:
-                  </span>{" "}
-                  {movie?.original_title}
-                </span>
+                  </span>
+                </div>
+                <div className="info-div2">{movie?.original_title}</div>
 
                 {/* Release date */}
-                {movie?.release_date && (
-                  <span className="flex w-full flex-row justify-between text-sm sm:text-base">
-                    <span className="font-bold text-primary">
-                      {trad[lang].movieDetails.releaseDate}:
-                    </span>{" "}
-                    {lang === "fr"
-                      ? formatDateUsToFr(movie?.release_date)
-                      : movie?.release_date}
+                <div className="info-div3">
+                  <span className="font-bold text-primary">
+                    {trad[lang].movieDetails.releaseDate}:
                   </span>
-                )}
+                </div>
+                <div className="info-div4">
+                  {lang === "fr"
+                    ? formatDateUsToFr(movie?.release_date)
+                    : movie?.release_date}
+                </div>
 
                 {/* Runtime */}
-                <span className="flex w-full flex-row justify-between text-sm sm:text-base">
+                <div className="info-div5">
                   <span className="font-bold text-primary">
                     {trad[lang].movieDetails.runtime}:
-                  </span>{" "}
-                  {movie?.runtime} min
-                </span>
-              </div>
-              {/* Genres */}
-              <div className="flex w-full flex-col items-start text-sm sm:text-base">
-                <span className="font-bold text-primary">
-                  {trad[lang].movieDetails.genres}:
-                </span>
+                  </span>
+                </div>
+                <div className="info-div6">{movie?.runtime} min</div>
 
-                <div className="mt-1 flex flex-wrap items-center gap-1 sm:gap-2">
-                  {movie?.genres.map((genre) => (
-                    <span
-                      className={`rounded-full ${
-                        darkMode ? "bg-darkTert" : "bg-[#FBFBFB]"
-                      } py-1 px-3 text-sm`}
-                      key={`genre-${genre.id}`}
-                    >
-                      {genre.name}
-                    </span>
-                  ))}
-                </div>
+                {/* Production country */}
+                {movie?.production_countries[0] && (
+                  <>
+                    <div className="info-div7">
+                      <span className="font-bold text-primary">
+                        {trad[lang].movieDetails.productionCountry}:
+                      </span>
+                    </div>
+                    <div className="info-div8">
+                      {movie?.production_countries[0].name}
+                    </div>
+                  </>
+                )}
               </div>
+              {/* -------- */}
+
+              {/* Genres */}
+              {movie?.genres && movie?.genres.length > 0 && (
+                <div className="flex w-full flex-col items-start text-sm sm:text-base">
+                  <span className="font-bold text-primary">
+                    {trad[lang].movieDetails.genres}:
+                  </span>
+
+                  <div className="mt-1 flex flex-wrap items-center gap-1 sm:gap-2">
+                    {movie?.genres.map((genre) => (
+                      <span
+                        className={`rounded-full ${
+                          darkMode ? "bg-darkTert" : "bg-[#FBFBFB]"
+                        } py-1 px-3 text-sm`}
+                        key={`genre-${genre.id}`}
+                      >
+                        {genre.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Overview */}
-              <div className="flex w-full flex-col items-start text-sm sm:text-base">
-                <span className="font-bold text-primary">
-                  {trad[lang].movieDetails.overview}:
-                </span>
-                <span className="italic">{movie?.overview}</span>
-              </div>
-              {/* Similar Movies */}
-              <div className="flex flex-col items-start">
-                <span className="text-sm font-bold text-primary sm:text-base">
-                  {trad[lang].movieDetails.recommendations}:
-                </span>
-                <div className="flex flex-row flex-wrap items-center gap-3 sm:gap-5">
-                  {similarMovies?.slice(0, 12).map(
-                    (movie) =>
-                      movie?.poster_path && (
-                        <Link
-                          to={`/movieDetails/${movie.id}`}
-                          key={`similar-movie-${movie.id}`}
-                        >
-                          <img
-                            src={
-                              movie?.poster_path
-                                ? "https://image.tmdb.org/t/p/w500" +
-                                  movie.poster_path
-                                : "/src/assets/poster.jpg"
-                            }
-                            className="w-24 rounded-md"
-                            alt=""
-                          />
-                        </Link>
-                      )
-                  )}
+              {movie?.overview && (
+                <div className="flex w-full flex-col items-start text-sm sm:text-base">
+                  <span className="font-bold text-primary">
+                    {trad[lang].movieDetails.overview}:
+                  </span>
+                  <span className="italic">{movie?.overview}</span>
                 </div>
-              </div>
+              )}
+
+              {/* Similar Movies */}
+              {similarMovies && similarMovies.length > 0 && (
+                <div className="flex flex-col items-start">
+                  <span className="text-sm font-bold text-primary sm:text-base">
+                    {trad[lang].movieDetails.recommendations}:
+                  </span>
+                  <div className="flex flex-row flex-wrap items-center gap-3 sm:gap-5">
+                    {similarMovies?.slice(0, 12).map(
+                      (movie) =>
+                        movie?.poster_path && (
+                          <Link
+                            to={`/movieDetails/${movie.id}`}
+                            key={`similar-movie-${movie.id}`}
+                          >
+                            <img
+                              src={
+                                movie?.poster_path
+                                  ? "https://image.tmdb.org/t/p/w500" +
+                                    movie.poster_path
+                                  : "/src/assets/poster.jpg"
+                              }
+                              className="w-24 rounded-md"
+                              alt=""
+                            />
+                          </Link>
+                        )
+                    )}
+                  </div>
+                </div>
+              )}
             </>
           )}
 

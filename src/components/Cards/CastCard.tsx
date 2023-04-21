@@ -24,7 +24,7 @@ function CastCard({
     >
       <div className="flex flex-1 flex-col p-3 sm:p-8">
         <img
-          className="h-32 w-full flex-shrink-0 rounded-md object-cover sm:mx-auto sm:h-32 sm:w-32 sm:rounded-full sm:object-cover"
+          className="h-32 w-full flex-shrink-0 rounded-md object-cover shadow-inner sm:mx-auto sm:h-32 sm:w-32 sm:rounded-full sm:object-cover"
           src={imageUrl ? "https://image.tmdb.org/t/p/w500" + imageUrl : Poster}
           alt=""
         />

@@ -4,11 +4,12 @@ import { useContext, useEffect, useState } from "react";
 import { SearchIcon } from "@heroicons/react/solid";
 import { AppContext } from "../contexts/AppContext";
 import CircularProgress from "@mui/material/CircularProgress";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import YoutubeVideoCard from "../components/Cards/YoutubeVideoCard";
 import { UserContext } from "../contexts/UserContext";
 import AddToList from "../components/Modals/AddToList";
 import CreateListForm from "../components/Modals/CreateListForm";
+import PageLoader from "../components/Common/PageLoader";
+import { scrollToTop } from "../utils/UsefullFunctions";
 
 interface IYoutubeSearch {
   etag: string;
@@ -55,8 +56,6 @@ function YoutubeSearch() {
       setResults(data);
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -116,6 +115,7 @@ function YoutubeSearch() {
       console.error(error);
     } finally {
       getYoutubeData();
+      scrollToTop();
     }
   };
 
@@ -129,6 +129,10 @@ function YoutubeSearch() {
       getYoutubeData();
     }
   };
+
+  if (loading) {
+    return <PageLoader lang={lang} darkMode={darkMode} />;
+  }
 
   return (
     <div

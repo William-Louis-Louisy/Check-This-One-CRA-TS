@@ -19,6 +19,7 @@ export interface IList {
   tags?: any;
   liked_by: ILikedBy[];
   qrCodeDataURL?: string;
+  completionPercentage?: number;
 }
 
 export interface ICreator {
