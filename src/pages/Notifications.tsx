@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import trad from "../lang/traduction";
 import { useParams } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";

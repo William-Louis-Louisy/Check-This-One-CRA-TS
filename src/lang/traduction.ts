@@ -5,6 +5,7 @@ const trad = {
       totalUsers: "Nombre total d'utilisateurs",
       totalLists: "Nombre total de listes",
       totalLikes: "Nombre total de likes",
+      totalBadges: "Nombre total de badges",
       viewAll: "Voir tout",
     },
     global: {
@@ -71,6 +72,11 @@ const trad = {
       city: "Ville",
       lists: "Listes",
       trendingVideos: "Vidéos en tendances",
+      levelOfProgressOnThisList: "Progression de visionnage",
+      icon: "Icône",
+      createNewBadge: "Créer un nouveau badge",
+      launchBadgesChecking: "Lancer la vérification des badges",
+      badgeCreation: "Création d'un badge",
     },
     listEdition: {
       title: "Edition de la liste",
@@ -134,6 +140,7 @@ const trad = {
       thisMovieappearsIn: "Déjà dans",
       informations: "Informations",
       cast: "Casting",
+      productionCountry: "Pays",
     },
     navbar: {
       home: "Accueil",
@@ -182,7 +189,7 @@ const trad = {
     },
     showDetails: {
       originalName: "Nom original",
-      firstAirDate: "Date de première diffusion",
+      firstAirDate: "Première diffusion",
       episodeRunTime: "Durée d'un épisode",
       numberOfEpisodes: "Nombre d'épisodes",
       numberOfSeasons: "Nombre de saisons",
@@ -221,6 +228,7 @@ const trad = {
         listUpdated: "La liste a bien été mise à jour !",
         userProfileUpdated: "Votre profil a bien été mis à jour !",
         contentAddedToList: "Le contenu a bien été ajouté à la liste !",
+        badgesVerification: "Badges vérifiés !",
       },
       error: {
         login: "Une erreur est survenue lors de la connexion.",
@@ -240,6 +248,8 @@ const trad = {
           "Un problème est survenu lors de la mise à jour de votre profil !",
         contentAddedToListError:
           "Un problème est survenu lors de l'ajout du contenu à la liste !",
+        badgesVerificationError:
+          "Un problème est survenu lors de la vérification des badges !",
       },
     },
     user: {
@@ -279,6 +289,7 @@ const trad = {
       totalUsers: "Total number of users",
       totalLists: "Total number of lists",
       totalLikes: "Total number of likes",
+      totalBadges: "Total number of badges",
       viewAll: "View all",
     },
     global: {
@@ -345,6 +356,11 @@ const trad = {
       city: "City",
       lists: "Lists",
       trendingVideos: "Trending videos",
+      levelOfProgressOnThisList: "Viewing progress",
+      icon: "Icon",
+      createNewBadge: "Create a new badge",
+      launchBadgesChecking: "Launch the badges checking",
+      badgeCreation: "Badge creation",
     },
     listEdition: {
       title: "Edit the list",
@@ -407,6 +423,7 @@ const trad = {
       thisMovieappearsIn: "Already in",
       informations: "Informations",
       cast: "Cast",
+      productionCountry: "Country",
     },
     navbar: {
       home: "Home",
@@ -493,6 +510,7 @@ const trad = {
         listUpdated: "List updated !",
         userProfileUpdated: "Your profile has been updated !",
         contentAddedToList: "The content has been added to the list !",
+        badgesVerification: "Badges verified !",
       },
       error: {
         login: "An error occurred while logging in.",
@@ -508,6 +526,7 @@ const trad = {
           "An error occurred while updating your profile !",
         contentAddedToListError:
           "An error occurred while adding the content to the list !",
+        badgesVerificationError: "An error occurred while verifying badges !",
       },
     },
     user: {

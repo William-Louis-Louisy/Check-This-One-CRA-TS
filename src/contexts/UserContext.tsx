@@ -49,7 +49,8 @@ export const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const { lang, darkMode } = useContext(AppContext);
-  const [user, setUser] = useState<IUser>({
+
+  const storedUser = JSON.parse(localStorage.getItem("user")) || {
     id: 0,
     email: "",
     user_name: "",
@@ -58,7 +59,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     city: "",
     introduction: "",
     catchline: "",
-  });
+  };
+
+  const [user, setUser] = useState<IUser>(storedUser);
   const [notifications, setNotifications] = useState<INotifs[]>();
 
   // STORE USER IN ASYNC STORAGE
@@ -75,7 +78,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   // GET USER FROM ASYNC STORAGE
   const getUser = async () => {
     try {
-      setUser(JSON.parse(await localStorage.getItem("user")));
+      const storedUser = await localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
     } catch (error) {
       console.error(error);
     }
@@ -99,15 +105,15 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    if (user?.id) {
+    if (user?.id && user?.id !== 0) {
       refetchUser();
     }
-  }, []);
+  }, [user?.id]);
 
   // GET USER NOTIFICATIONS
   const getUserNotifications = async () => {
     try {
-      if (user) {
+      if (user && user.id !== 0) {
         const data = await axios.get(
           `${process.env.REACT_APP_API_URL}/user/${user.id}/notifications/unseen`
         );
@@ -131,6 +137,21 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [user?.id]);
 
+  // RESET USER
+  const resetUser = () => {
+    setUser({
+      id: 0,
+      email: "",
+      user_name: "",
+      avatar: "",
+      country: "",
+      city: "",
+      introduction: "",
+      catchline: "",
+    });
+    localStorage.removeItem("user");
+  };
+
   // LOGOUT
   const logout = async () => {
     try {
@@ -143,17 +164,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         pauseOnHover: false,
         theme: darkMode ? "dark" : "light",
       });
-      setUser({
-        id: 0,
-        email: "",
-        user_name: "",
-        avatar: "",
-        country: "",
-        city: "",
-        introduction: "",
-        catchline: "",
-      });
-      await localStorage.removeItem("user");
+      await resetUser();
       window.location.replace("/");
     } catch (error) {
       console.error(error);

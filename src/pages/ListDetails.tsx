@@ -16,24 +16,25 @@ import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
 import { ICreator, IList } from "../types/List";
 import { typeToIcon } from "../utils/TypeToIcon";
+import CircularProgressBar from "../components/Common/CircularProgressBar";
+import ListDetailsCard from "../components/Cards/ListDetailsCard";
 
 function ListDetails() {
+  // GET LANG FROM CONTEXT
+  const { user } = useContext(UserContext);
+  const { lang, darkMode } = useContext(AppContext);
   const { id } = useParams();
   const [list, setList] = useState<IList>();
   const [creator, setCreator] = useState<ICreator>();
   const [creatorModal, setCreatorModal] = useState(false);
   const [openShareModal, setOpenShareModal] = useState(false);
 
-  // GET LANG FROM CONTEXT
-  const { lang, darkMode } = useContext(AppContext);
-  const { user } = useContext(UserContext);
-
   // GET LIST BY ID
   const getListById = async () => {
     if (id) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/list/getById/${id}`
+          `${process.env.REACT_APP_API_URL}/list/getById/${id}/user/${user?.id}`
         );
         setList(data.data.list);
       } catch (error) {
@@ -74,7 +75,7 @@ function ListDetails() {
       } pt-16`}
     >
       {/*----- PAGE HEADING -----*/}
-      <div className="mt-5 mb-8 flex w-full flex-col-reverse gap-4 border-b border-primary px-4 pb-3 sm:mt-8 sm:mb-8 sm:flex-row sm:items-center sm:justify-between sm:gap-0 sm:px-0 sm:pb-5 lg:w-[70%]">
+      <div className="mt-5 mb-4 flex w-full flex-col-reverse gap-4 border-b border-primary px-4 pb-3 sm:mt-8 sm:mb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-0 sm:px-0 sm:pb-5 lg:w-[70%]">
         {/* TITLE */}
         <div className="flex flex-row items-center gap-2 text-primary sm:gap-4">
           <div>{typeToIcon(list.type)}</div>
@@ -122,7 +123,7 @@ function ListDetails() {
         </div>
       </div>
 
-      <div className="mt-4 w-full px-4 sm:px-0 lg:w-[70%]">
+      <div className="w-full px-4 sm:px-0 lg:w-[70%]">
         {/* SLIDER */}
         <Slider
           content={list.content.map((c: any, index: number) => (
@@ -155,90 +156,12 @@ function ListDetails() {
       </div>
 
       {/*----- LIST DETAILS -----*/}
-      <div className="flex w-full flex-col items-start justify-between lg:w-[70%] lg:flex-row">
-        {/* LEFT SIDE */}
-        <div className="flex flex-col gap-4 p-4 lg:w-2/5">
-          {/* Description */}
-          <div className="flex flex-col items-start">
-            <span className="text-primary">
-              {trad[lang].labels.description}:
-            </span>
-            <span
-              className={`mt-1 text-sm ${
-                darkMode ? "text-gray-300" : "text-smokyBlack"
-              }`}
-            >
-              {list.description}
-            </span>
-          </div>
-
-          <div className="h-px w-full bg-gray-300"></div>
-
-          {/* Tags */}
-          {list.tags && list.tags.length > 0 && (
-            <div className="flex flex-col items-start">
-              <span className="text-primary">{trad[lang].labels.tags}:</span>
-              <div className="mt-1 flex flex-row flex-wrap items-center gap-2">
-                {list.tags &&
-                  list.tags.length > 0 &&
-                  list.tags.map((tag: any, index: number) => (
-                    <div
-                      key={tag.name}
-                      className={`flex items-center gap-2 rounded-md px-2 py-1 ${
-                        darkMode
-                          ? "bg-darkSec text-gray-300"
-                          : "bg-myWhite text-smokyBlack"
-                      }`}
-                    >
-                      <span className="text-sm">
-                        {lang === "en" ? tag.name : tag.name_fr}
-                      </span>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* RIGHT SIDE */}
-        <div className="p-4 lg:w-2/5">
-          {/* Likes */}
-          {list.liked_by && list.liked_by.length > 0 && (
-            <div className="flex flex-col items-start">
-              <span className="text-primary">{trad[lang].labels.likes}:</span>
-              <div className="card mt-1 flex max-h-32 flex-row flex-wrap items-center gap-3">
-                {list.liked_by.map((user: any, index: number) => (
-                  <div
-                    key={user.id}
-                    className={`flex flex-row items-center gap-1 rounded-l-full rounded-r-full pr-3 text-sm ${
-                      darkMode
-                        ? "bg-darkSec text-gray-300"
-                        : "bg-myWhite text-smokyBlack"
-                    }`}
-                  >
-                    {user.avatar ? (
-                      <img
-                        className="h-6 w-6 rounded-full object-cover sm:h-8 sm:w-8"
-                        src={user.avatar}
-                        alt=""
-                      />
-                    ) : (
-                      user.user_name && (
-                        <div className="mr-2 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-secondary text-sm sm:h-8 sm:w-8 sm:text-base">
-                          <p className="text-center text-xl text-myWhite">
-                            {user.user_name[0].toUpperCase()}
-                          </p>
-                        </div>
-                      )
-                    )}
-                    <span className="text-sm">{user.user_name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      <ListDetailsCard
+        lang={lang}
+        darkMode={darkMode}
+        list={list}
+        loggedUser={user}
+      />
 
       {/*----- MODALS -----*/}
       {/* CREATOR MODAL */}

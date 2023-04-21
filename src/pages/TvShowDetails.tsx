@@ -358,57 +358,61 @@ function TvShowDetails() {
           {/* Main Informations */}
           {dataDisplayed === "informations" && (
             <>
-              <div className="flex w-full flex-col items-start">
+              <div className="grid w-full grid-cols-2 grid-rows-2 gap-x-5 gap-y-1 text-sm sm:text-base">
                 {/* Original title */}
-                <span className="flex w-full flex-row justify-between text-sm sm:text-base">
-                  <span className="font-bold text-primary">
-                    {trad[lang].showDetails.originalName}:
-                  </span>{" "}
-                  {show?.original_name}
+                <span className="info-div1 font-bold text-primary">
+                  {trad[lang].showDetails.originalName}:
                 </span>
+                <span className="info-div2">{show?.original_name}</span>
 
                 {/* Release date */}
                 {show?.first_air_date && (
-                  <span className="flex w-full flex-row justify-between text-sm sm:text-base">
-                    <span className="font-bold text-primary">
+                  <>
+                    <span className="info-div3 font-bold text-primary">
                       {trad[lang].showDetails.firstAirDate}:
-                    </span>{" "}
-                    {lang === "fr"
-                      ? formatDateUsToFr(show?.first_air_date)
-                      : show?.first_air_date}
-                  </span>
+                    </span>
+                    <span className="info-div4">
+                      {lang === "fr"
+                        ? formatDateUsToFr(show?.first_air_date)
+                        : show?.first_air_date}
+                    </span>
+                  </>
                 )}
               </div>
 
-              <div className="flex w-full flex-col items-start">
+              <div className="grid w-full grid-cols-2 grid-rows-3 gap-x-5 gap-y-1 text-sm sm:text-base">
                 {/* Runtime */}
                 {show?.episode_run_time?.length > 0 && show?.episode_run_time && (
-                  <span className="flex w-full flex-row justify-between text-sm sm:text-base">
-                    <span className="font-bold text-primary">
+                  <>
+                    <span className="info-div1 font-bold text-primary">
                       {trad[lang].showDetails.episodeRunTime}:
-                    </span>{" "}
-                    {show?.episode_run_time[0]} min
-                  </span>
+                    </span>
+                    <span className="info-div2">
+                      {show?.episode_run_time[0]} min
+                    </span>
+                  </>
                 )}
 
                 {/* Number of episodes */}
                 {show?.number_of_episodes && (
-                  <span className="flex w-full flex-row justify-between text-sm sm:text-base">
-                    <span className="font-bold text-primary">
+                  <>
+                    <span className="info-div3 font-bold text-primary">
                       {trad[lang].showDetails.numberOfEpisodes}:
-                    </span>{" "}
-                    {show?.number_of_episodes}
-                  </span>
+                    </span>
+                    <span className="info-div4">
+                      {show?.number_of_episodes}
+                    </span>
+                  </>
                 )}
 
                 {/* Number of seasons */}
                 {show?.number_of_seasons && (
-                  <span className="flex w-full flex-row justify-between text-sm sm:text-base">
-                    <span className="font-bold text-primary">
+                  <>
+                    <span className="info-div5 font-bold text-primary">
                       {trad[lang].showDetails.numberOfSeasons}:
-                    </span>{" "}
-                    {show?.number_of_seasons}
-                  </span>
+                    </span>
+                    <span className="info-div6">{show?.number_of_seasons}</span>
+                  </>
                 )}
               </div>
 

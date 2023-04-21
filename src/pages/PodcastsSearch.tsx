@@ -8,6 +8,7 @@ import AddToList from "../components/Modals/AddToList";
 import CreateListForm from "../components/Modals/CreateListForm";
 import PodcastCard from "../components/Cards/PodcastCard";
 import SearchInput from "../components/Common/SearchInput";
+import PageLoader from "../components/Common/PageLoader";
 
 interface IContentToList {
   podcast: boolean;
@@ -19,6 +20,7 @@ interface IContentToList {
 function PodcastsSearch() {
   const { lang, darkMode } = useContext(AppContext);
   const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const [keyword, setKeyword] = useState<string>();
   const [searchResults, setSearchResults] = useState([]);
   const [trendingPodcasts, setTrendingPodcasts] = useState([]);
@@ -65,6 +67,8 @@ function PodcastsSearch() {
       setTrendingPodcasts(data.feed.entry);
     } catch (error) {
       console.error(`Error occured: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -108,6 +112,10 @@ function PodcastsSearch() {
   useEffect(() => {
     getTrendingPodcasts();
   }, [lang]);
+
+  if (loading) {
+    return <PageLoader lang={lang} darkMode={darkMode} />;
+  }
 
   return (
     <div
@@ -154,6 +162,7 @@ function PodcastsSearch() {
                 href={item.trackViewUrl}
                 img={item.artworkUrl600}
                 title={item.trackName}
+                user={user}
               />
             ))}
           </div>
@@ -176,6 +185,7 @@ function PodcastsSearch() {
                 href={item.link.attributes.href}
                 img={item["im:image"][2].label}
                 title={item["im:name"].label}
+                user={user}
               />
             ))}
           </div>

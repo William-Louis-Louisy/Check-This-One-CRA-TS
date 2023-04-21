@@ -45,7 +45,7 @@ function MovieCard({ movie, lang, handleAddToList, user, darkMode }) {
       </Link>
 
       <h2 className="mt-3 mb-2 w-[90%] truncate text-center text-lg font-semibold sm:w-full sm:text-ellipsis sm:whitespace-nowrap">
-        {screenWidth > 400 ? titleLength(movie.title) : movie.title}
+        {movie.title}
       </h2>
       {movie.release_date ? (
         <h4 className="text-center text-sm font-extralight">

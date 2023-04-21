@@ -11,10 +11,13 @@ import CreateListForm from "../components/Modals/CreateListForm";
 import { useSearchParams } from "react-router-dom";
 import SearchInput from "../components/Common/SearchInput";
 import { XIcon } from "@heroicons/react/outline";
+import PageLoader from "../components/Common/PageLoader";
+import { scrollToTop } from "../utils/UsefullFunctions";
 
 function MoviesSearch() {
   const { lang, darkMode } = useContext(AppContext);
   const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const [lists, setLists] = useState([]);
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useSearchParams({ query: "a" });
@@ -39,15 +42,24 @@ function MoviesSearch() {
   };
 
   useEffect(() => {
-    axios
-      .get(
-        `${process.env.REACT_APP_TMDB_SEARCH_URL}?api_key=${
-          process.env.REACT_APP_TMDB_API_KEY
-        }&query=${search.get("query")}&language=${handleLang(
-          lang
-        )}&page=${page}`
-      )
-      .then((res) => setMoviesData(res.data.results));
+    const getMovies = async () => {
+      try {
+        const data = await axios.get(
+          `${process.env.REACT_APP_TMDB_SEARCH_URL}?api_key=${
+            process.env.REACT_APP_TMDB_API_KEY
+          }&query=${search.get("query")}&language=${handleLang(
+            lang
+          )}&page=${page}`
+        );
+        setMoviesData(data.data.results);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getMovies();
   }, [search, lang, page]);
 
   const handleAddToList = (content) => {
@@ -70,6 +82,10 @@ function MoviesSearch() {
   useEffect(() => {
     if (user?.id) getLists();
   }, [user?.id]);
+
+  if (loading) {
+    return <PageLoader lang={lang} darkMode={darkMode} />;
+  }
 
   return (
     <div
@@ -190,7 +206,10 @@ function MoviesSearch() {
             } ${
               darkMode ? "bg-darkTert" : "bg-myWhite"
             } rounded-r-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
-            onClick={() => setPage(page + 1)}
+            onClick={() => {
+              setPage(page + 1);
+              scrollToTop();
+            }}
           >
             {trad[lang].global.next}
           </button>

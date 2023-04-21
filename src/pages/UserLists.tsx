@@ -3,7 +3,6 @@ import trad from "../lang/traduction";
 import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
-import { SearchIcon } from "@heroicons/react/solid";
 import ListDisplay from "../components/Lists/ListDisplay";
 import ListViewBtnGroup from "../components/Common/ListViewBtnGroup";
 import TableListDisplay from "../components/Lists/TableListDisplay";
@@ -79,39 +78,7 @@ function UserLists() {
         <h3 className="text-lg font-medium leading-6 text-primary">
           {trad[lang].navbar.myLists}
         </h3>
-        <div className="mt-3 sm:mt-0 sm:ml-4">
-          {/* SEARCH BAR */}
-          {/* <div className="flex w-full items-center justify-center sm:px-2 md:w-[400px] lg:justify-end">
-            <div className="w-full max-w-lg lg:max-w-xl">
-              <label htmlFor="search" className="sr-only">
-                {trad[lang].placeholders.searchLists}
-              </label>
-              <div className="relative">
-                <button
-                  id="search-button"
-                  className="absolute inset-y-0 left-0 flex cursor-pointer items-center pl-3"
-                >
-                  <SearchIcon
-                    className="h-5 w-5 text-myGray"
-                    aria-hidden="true"
-                  />
-                </button>
-                <input
-                  id="search"
-                  name="search"
-                  className={`placeholder-myGtext-myborder-myGray block w-full rounded-md border border-myGray ${
-                    darkMode
-                      ? "bg-darkQuin text-gray-300 focus:border-darkTert"
-                      : "bg-myWhite focus:border-myGray"
-                  } py-2 pl-10 pr-3 leading-5 placeholder-myGray focus:outline-none focus:ring-0 sm:text-sm`}
-                  placeholder={trad[lang].placeholders.searchLists}
-                  type="text"
-                  onChange={(e) => console.log(e.target.value)}
-                />
-              </div>
-            </div>
-          </div> */}
-        </div>
+        <div className="mt-3 sm:mt-0 sm:ml-4"></div>
       </div>
 
       <div className="my-5 flex w-full flex-col items-end px-4 lg:my-2 lg:w-[70%] lg:px-0 lg:pr-2">
@@ -182,6 +149,7 @@ function UserLists() {
             <div className="flex h-10 flex-row items-center overflow-x-hidden">
               {pagesToDisplay?.map((pageNb: number, i) => (
                 <span
+                  key={`page-${pageNb}`}
                   onClick={() => setPage(pageNb)}
                   className={`${
                     (darkMode && page === pageNb) || page === pageNb
