@@ -35,6 +35,7 @@ const trad = {
       noResults: "Aucun résultat",
       type: "Type",
       goToTheTop: "Retour en haut",
+      send: "Envoyer",
     },
     home: {
       title1: "Créez vos listes",
@@ -109,6 +110,9 @@ const trad = {
       submit: "Se connecter",
       dontHaveAnAccount: "Vous n'avez pas de compte ?",
       rememberMe: "Se souvenir de moi",
+      forgotPassword: "Mot de passe oublié ?",
+      passwordReset:
+        "Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
     },
     modals: {
       add: "Ajouter",
@@ -172,6 +176,7 @@ const trad = {
       youtubeSearch: "Recherche de vidéos Youtube",
       podcastsSearch: "Recherche de podcasts",
       notifications: "Notifications",
+      resetPassword: "Réinitialisation du mot de passe",
     },
     placeholders: {
       searchYoutube: "Rechercher une vidéo Youtube...",
@@ -181,6 +186,9 @@ const trad = {
       chooseATag: "Choisissez un ou plusieurs tags...",
       searchPodcasts: "Rechercher un podcast...",
       chooseAType: "Choisissez un type de liste...",
+      enterYourMail: "Entrez votre adresse email...",
+      enterNewPassword: "Entrez votre nouveau mot de passe...",
+      confirmNewPassword: "Confirmez votre nouveau mot de passe...",
     },
     podcasts: {
       trendingPodcasts: "Podcasts en tendances",
@@ -229,6 +237,8 @@ const trad = {
         userProfileUpdated: "Votre profil a bien été mis à jour !",
         contentAddedToList: "Le contenu a bien été ajouté à la liste !",
         badgesVerification: "Badges vérifiés !",
+        emailSent: "Email envoyé !",
+        passwordReset: "Mot de passe réinitialisé !",
       },
       error: {
         login: "Une erreur est survenue lors de la connexion.",
@@ -250,6 +260,9 @@ const trad = {
           "Un problème est survenu lors de l'ajout du contenu à la liste !",
         badgesVerificationError:
           "Un problème est survenu lors de la vérification des badges !",
+        emailSentError: "Un problème est survenu lors de l'envoi de l'email !",
+        passwordResetError:
+          "Un problème est survenu lors de la réinitialisation du mot de passe !",
       },
     },
     user: {
@@ -319,6 +332,7 @@ const trad = {
       noResults: "No results",
       type: "Type",
       goToTheTop: "Go to the top",
+      send: "Send",
     },
     home: {
       title1: "List it up",
@@ -393,6 +407,9 @@ const trad = {
       submit: "Login",
       dontHaveAnAccount: "Don't have an account ?",
       rememberMe: "Remember me",
+      forgotPassword: "Forgot your password ?",
+      passwordReset:
+        "Enter your email address and we'll send you a link to reset your password",
     },
     modals: {
       add: "Ajouter",
@@ -455,6 +472,7 @@ const trad = {
       youtubeSearch: "Youtube search",
       podcastsSearch: "Podcasts search",
       notifications: "Notifications",
+      resetPassword: "Reset password",
     },
     placeholders: {
       searchYoutube: "Search a Youtube video...",
@@ -464,6 +482,9 @@ const trad = {
       chooseATag: "Choose one or more tags...",
       searchPodcasts: "Search a podcast...",
       chooseAType: "Choose a list type...",
+      enterYourMail: "Enter your email address...",
+      enterNewPassword: "Enter your new password...",
+      confirmNewPassword: "Confirm your new password...",
     },
     podcasts: {
       trendingPodcasts: "Trending podcasts",
@@ -511,6 +532,8 @@ const trad = {
         userProfileUpdated: "Your profile has been updated !",
         contentAddedToList: "The content has been added to the list !",
         badgesVerification: "Badges verified !",
+        emailSent: "Email sent !",
+        passwordReset: "Password reset !",
       },
       error: {
         login: "An error occurred while logging in.",
@@ -527,6 +550,8 @@ const trad = {
         contentAddedToListError:
           "An error occurred while adding the content to the list !",
         badgesVerificationError: "An error occurred while verifying badges !",
+        emailSentError: "An error occurred while sending the email !",
+        passwordResetError: "An error occurred while resetting the password !",
       },
     },
     user: {

@@ -20,6 +20,8 @@ import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import AdminDashboard from "../pages/AdminDashboard";
 import Notifications from "../pages/Notifications";
+import ForgottenPassword from "../pages/ForgottenPassword";
+import ResetPassword from "../pages/ResetPassword";
 
 export default function PublicRoutes() {
   const { user } = useContext(UserContext);
@@ -52,6 +54,8 @@ export default function PublicRoutes() {
           {/* AUTHENTICATION */}
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="forgottenPassword" element={<ForgottenPassword />} />
+          <Route path="reset-password/:token" element={<ResetPassword />} />
         </>
 
         {/* --- PRIVATE ROUTES --- */}

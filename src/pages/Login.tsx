@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
@@ -183,6 +183,15 @@ function Login() {
                   >
                     {trad[lang].login.submit}
                   </button>
+                  <Link to="/forgottenPassword">
+                    <p
+                      className={`mt-2 block text-sm font-medium underline-offset-4 hover:underline ${
+                        darkMode ? "text-altSecondary" : "text-secondary"
+                      }`}
+                    >
+                      {trad[lang].login.forgotPassword}
+                    </p>
+                  </Link>
                 </div>
               </div>
             </div>
