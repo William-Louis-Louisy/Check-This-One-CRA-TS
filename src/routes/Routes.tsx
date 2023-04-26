@@ -20,6 +20,11 @@ import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import AdminDashboard from "../pages/AdminDashboard";
 import Notifications from "../pages/Notifications";
+import ForgottenPassword from "../pages/ForgottenPassword";
+import ResetPassword from "../pages/ResetPassword";
+import AboutUs from "../pages/AboutUs";
+import Footer from "../components/Navigation/Footer";
+import ContactUs from "../pages/ContactUs";
 
 export default function PublicRoutes() {
   const { user } = useContext(UserContext);
@@ -33,6 +38,8 @@ export default function PublicRoutes() {
           {/* BASICS */}
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Error404 />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
+          <Route path="/contactUs" element={<ContactUs />} />
 
           {/* SEARCH */}
           <Route path="moviesSearch" element={<MoviesSearch />} />
@@ -52,6 +59,8 @@ export default function PublicRoutes() {
           {/* AUTHENTICATION */}
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="forgottenPassword" element={<ForgottenPassword />} />
+          <Route path="reset-password/:token" element={<ResetPassword />} />
         </>
 
         {/* --- PRIVATE ROUTES --- */}
@@ -77,6 +86,7 @@ export default function PublicRoutes() {
           </>
         )}
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

@@ -8,6 +8,20 @@ const trad = {
       totalBadges: "Nombre total de badges",
       viewAll: "Voir tout",
     },
+    contact: {
+      title: "Aidez-nous à progresser",
+      subtitle:
+        "Vous avez une idée d'amélioration ? Vous avez trouvé un bug ? Vous avez une question ? N'hésitez pas à nous contacter !",
+      email: "Email",
+      subject: "Sujet",
+      message: "Message",
+      send: "Envoyer",
+      maxLength: "Max. 500 caractères",
+    },
+    footer: {
+      about: "À propos",
+      contact: "Contact",
+    },
     global: {
       error: "Un problème est survenu.",
       lists: "Listes",
@@ -35,6 +49,7 @@ const trad = {
       noResults: "Aucun résultat",
       type: "Type",
       goToTheTop: "Retour en haut",
+      send: "Envoyer",
     },
     home: {
       title1: "Créez vos listes",
@@ -49,6 +64,7 @@ const trad = {
       lists: "Listes",
       accumulatedLikes: "Likes cumulés",
       usersTop: "Top utilisateurs",
+      createList: "Créer une liste",
     },
     labels: {
       previousPage: "Page précédente",
@@ -109,6 +125,9 @@ const trad = {
       submit: "Se connecter",
       dontHaveAnAccount: "Vous n'avez pas de compte ?",
       rememberMe: "Se souvenir de moi",
+      forgotPassword: "Mot de passe oublié ?",
+      passwordReset:
+        "Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
     },
     modals: {
       add: "Ajouter",
@@ -125,6 +144,18 @@ const trad = {
       copyToClipboardSuccess: "Lien copié dans le presse-papier",
       copyToClipboardError:
         "Impossible de copier le lien dans le presse-papier",
+      whatTypeOfContent: "Quel type de contenu souhaitez-vous ajouter ?",
+      selectType:
+        "Sélectionnez un type de contenu que vous souhaitez ajouter, il vous sera toujours possible d'ajouter d'autres types de contenus par la suite.",
+      typeInfo:
+        "Vous pouvez également accéder à ces catégories depuis la barre de navigation.",
+      typeInfoMobile:
+        "Vous pouvez également accéder à ces catégories depuis le menu (le bouton en haut à droite de l'écran).",
+      movie: "Film",
+      tvShow: "Série",
+      podcast: "Podcast",
+      youtube: "Youtube",
+      select: "Sélectionner",
     },
     movieDetails: {
       originalTitle: "Titre original",
@@ -172,6 +203,7 @@ const trad = {
       youtubeSearch: "Recherche de vidéos Youtube",
       podcastsSearch: "Recherche de podcasts",
       notifications: "Notifications",
+      resetPassword: "Réinitialisation du mot de passe",
     },
     placeholders: {
       searchYoutube: "Rechercher une vidéo Youtube...",
@@ -181,6 +213,9 @@ const trad = {
       chooseATag: "Choisissez un ou plusieurs tags...",
       searchPodcasts: "Rechercher un podcast...",
       chooseAType: "Choisissez un type de liste...",
+      enterYourMail: "Entrez votre adresse email...",
+      enterNewPassword: "Entrez votre nouveau mot de passe...",
+      confirmNewPassword: "Confirmez votre nouveau mot de passe...",
     },
     podcasts: {
       trendingPodcasts: "Podcasts en tendances",
@@ -229,6 +264,9 @@ const trad = {
         userProfileUpdated: "Votre profil a bien été mis à jour !",
         contentAddedToList: "Le contenu a bien été ajouté à la liste !",
         badgesVerification: "Badges vérifiés !",
+        emailSent: "Email envoyé !",
+        passwordReset: "Mot de passe réinitialisé !",
+        messageSent: "Message envoyé !",
       },
       error: {
         login: "Une erreur est survenue lors de la connexion.",
@@ -250,6 +288,11 @@ const trad = {
           "Un problème est survenu lors de l'ajout du contenu à la liste !",
         badgesVerificationError:
           "Un problème est survenu lors de la vérification des badges !",
+        emailSentError: "Un problème est survenu lors de l'envoi de l'email !",
+        passwordResetError:
+          "Un problème est survenu lors de la réinitialisation du mot de passe !",
+        messageSentError:
+          "Un problème est survenu lors de l'envoi du message !",
       },
     },
     user: {
@@ -292,6 +335,20 @@ const trad = {
       totalBadges: "Total number of badges",
       viewAll: "View all",
     },
+    contact: {
+      title: "Help us to step up",
+      subtitle:
+        "Do you have an idea for improvement? Found a bug? You have a question? Do not hesitate to contact us!",
+      email: "Email",
+      subject: "Subject",
+      message: "Message",
+      send: "Send",
+      maxLength: "Max. 500 characters",
+    },
+    footer: {
+      about: "About",
+      contact: "Contact",
+    },
     global: {
       error: "Language changed.",
       lists: "Lists",
@@ -319,6 +376,7 @@ const trad = {
       noResults: "No results",
       type: "Type",
       goToTheTop: "Go to the top",
+      send: "Send",
     },
     home: {
       title1: "List it up",
@@ -333,6 +391,7 @@ const trad = {
       lists: "Lists",
       accumulatedLikes: "Accumulated likes",
       usersTop: "Users top",
+      createList: "Create a list",
     },
     labels: {
       previousPage: "Previous page",
@@ -393,6 +452,9 @@ const trad = {
       submit: "Login",
       dontHaveAnAccount: "Don't have an account ?",
       rememberMe: "Remember me",
+      forgotPassword: "Forgot your password ?",
+      passwordReset:
+        "Enter your email address and we'll send you a link to reset your password",
     },
     modals: {
       add: "Ajouter",
@@ -408,9 +470,20 @@ const trad = {
       copyToClipboardSuccess: "Link copied to clipboard",
       copyToClipboardError:
         "An error occurred while copying the link to the clipboard",
+      whatTypeOfContent: "What type of content do you want to add ?",
+      selectType:
+        "Select one type of content you want to add, you can always add other types of content later.",
+      typeInfo: "You can also access these categories from the navigation bar.",
+      typeInfoMobile:
+        "You can also access these categories from the menu (the button at the top right of the screen).",
+      movie: "Movie",
+      tvShow: "TV Show",
+      podcast: "Podcast",
+      youtube: "Youtube",
+      select: "Select",
     },
     movieDetails: {
-      originalTitle: "Titre original",
+      originalTitle: "Original title",
       releaseDate: "Release date",
       runtime: "Runtime",
       genres: "Genres",
@@ -455,6 +528,7 @@ const trad = {
       youtubeSearch: "Youtube search",
       podcastsSearch: "Podcasts search",
       notifications: "Notifications",
+      resetPassword: "Reset password",
     },
     placeholders: {
       searchYoutube: "Search a Youtube video...",
@@ -464,6 +538,9 @@ const trad = {
       chooseATag: "Choose one or more tags...",
       searchPodcasts: "Search a podcast...",
       chooseAType: "Choose a list type...",
+      enterYourMail: "Enter your email address...",
+      enterNewPassword: "Enter your new password...",
+      confirmNewPassword: "Confirm your new password...",
     },
     podcasts: {
       trendingPodcasts: "Trending podcasts",
@@ -511,6 +588,8 @@ const trad = {
         userProfileUpdated: "Your profile has been updated !",
         contentAddedToList: "The content has been added to the list !",
         badgesVerification: "Badges verified !",
+        emailSent: "Email sent !",
+        passwordReset: "Password reset !",
       },
       error: {
         login: "An error occurred while logging in.",
@@ -527,6 +606,8 @@ const trad = {
         contentAddedToListError:
           "An error occurred while adding the content to the list !",
         badgesVerificationError: "An error occurred while verifying badges !",
+        emailSentError: "An error occurred while sending the email !",
+        passwordResetError: "An error occurred while resetting the password !",
       },
     },
     user: {

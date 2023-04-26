@@ -75,7 +75,7 @@ function ListEdition() {
     if (listId) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/list/getById/${listId.listId}`
+          `${process.env.REACT_APP_API_URL}/list/getById/${listId.listId}/user/${user?.id}`
         );
         setList(data.data.list);
       } catch (error) {
