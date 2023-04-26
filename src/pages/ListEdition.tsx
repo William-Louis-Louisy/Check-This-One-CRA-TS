@@ -75,8 +75,9 @@ function ListEdition() {
     if (listId) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/list/getById/${listId.listId}`
+          `${process.env.REACT_APP_API_URL}/list/getById/${listId.listId}/user/${user?.id}`
         );
+        console.log(data);
         setList(data.data.list);
       } catch (error) {
         console.error(error);
@@ -86,6 +87,8 @@ function ListEdition() {
   useEffect(() => {
     getListById();
   }, [listId]);
+
+  console.log(list);
 
   // EDITION FORM
   const [newListForm, setNewListForm] = useState<INewListForm>();

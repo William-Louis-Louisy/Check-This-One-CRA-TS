@@ -13,7 +13,7 @@ function CreateListForm({
   user,
   open,
   setOpen,
-  refetch,
+  refetch = undefined,
   darkMode,
 }) {
   const cancelButtonRef = useRef(null);
@@ -25,13 +25,13 @@ function CreateListForm({
 
   // ON CLOSE MODAL
   const onClose = () => {
-    setOpenNewList(false);
-    setOpen(true);
     setNewListForm({
       title: "",
       description: "",
       tags: [],
     });
+    setOpenNewList(false);
+    // setOpen(true);
   };
 
   // POST NEW LIST
@@ -49,6 +49,7 @@ function CreateListForm({
         pauseOnHover: false,
         theme: darkMode ? "dark" : "light",
       });
+      setOpen(true);
     } catch (error) {
       console.error(error);
       toast.error(`${trad[lang].toasts.error.listCreatedError}`, {

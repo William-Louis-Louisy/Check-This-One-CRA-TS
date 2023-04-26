@@ -11,6 +11,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import PageLoader from "../components/Common/PageLoader";
 import TopRatedUserCard from "../components/Cards/TopRatedUserCard";
 import LazyImage from "../components/Common/LazyImage";
+import CreateListForm from "../components/Modals/CreateListForm";
+import ContentTypeSelect from "../components/Modals/ContentTypeSelect";
 
 function Home() {
   const { lang, darkMode } = useContext(AppContext);
@@ -19,6 +21,8 @@ function Home() {
   const [upcomingMovies, setUpcomingMovies] = useState([]);
   const [topRatedShows, setTopRatedShows] = useState([]);
   const [topUsers, setTopUsers] = useState([]);
+  const [openNewList, setOpenNewList] = useState(false);
+  const [openSelect, setOpenSelect] = useState(false);
 
   // GET UPOCOMING MOVIES
   const getUpcomingMovies = async () => {
@@ -105,7 +109,7 @@ function Home() {
               <p className="mx-auto mt-6 max-w-md text-center text-xl text-myWhite sm:max-w-3xl">
                 {trad[lang].home.subtitle}
               </p>
-              {!user?.user_name && (
+              {!user?.user_name ? (
                 <div className="mt-8 flex w-full flex-col items-center">
                   <Link
                     to="/signup"
@@ -117,6 +121,19 @@ function Home() {
                   >
                     {trad[lang].home.signUpNow}
                   </Link>
+                </div>
+              ) : (
+                <div className="mt-8 flex w-full flex-col items-center">
+                  <button
+                    onClick={() => setOpenNewList(true)}
+                    className={`rounded-md px-4 py-3 ${
+                      darkMode
+                        ? "bg-altSecondary text-darkBg"
+                        : "bg-secondary text-myWhite"
+                    }`}
+                  >
+                    {trad[lang].home.createList}
+                  </button>
                 </div>
               )}
             </div>
@@ -248,6 +265,28 @@ function Home() {
           />
         </div>
       )}
+
+      {/* CREATE NEW LIST */}
+      {user?.id && (
+        <CreateListForm
+          open={openSelect}
+          setOpen={setOpenSelect}
+          openNewList={openNewList}
+          setOpenNewList={setOpenNewList}
+          lang={lang}
+          user={user}
+          darkMode={darkMode}
+        />
+      )}
+
+      {/* CONTENT TYPE SELECT */}
+      <ContentTypeSelect
+        open={openSelect}
+        setOpen={setOpenSelect}
+        setOpenNewList={setOpenNewList}
+        darkMode={darkMode}
+        lang={lang}
+      />
     </div>
   );
 }

@@ -8,6 +8,20 @@ const trad = {
       totalBadges: "Nombre total de badges",
       viewAll: "Voir tout",
     },
+    contact: {
+      title: "Aidez-nous à progresser",
+      subtitle:
+        "Vous avez une idée d'amélioration ? Vous avez trouvé un bug ? Vous avez une question ? N'hésitez pas à nous contacter !",
+      email: "Email",
+      subject: "Sujet",
+      message: "Message",
+      send: "Envoyer",
+      maxLength: "Max. 500 caractères",
+    },
+    footer: {
+      about: "À propos",
+      contact: "Contact",
+    },
     global: {
       error: "Un problème est survenu.",
       lists: "Listes",
@@ -50,6 +64,7 @@ const trad = {
       lists: "Listes",
       accumulatedLikes: "Likes cumulés",
       usersTop: "Top utilisateurs",
+      createList: "Créer une liste",
     },
     labels: {
       previousPage: "Page précédente",
@@ -129,6 +144,18 @@ const trad = {
       copyToClipboardSuccess: "Lien copié dans le presse-papier",
       copyToClipboardError:
         "Impossible de copier le lien dans le presse-papier",
+      whatTypeOfContent: "Quel type de contenu souhaitez-vous ajouter ?",
+      selectType:
+        "Sélectionnez un type de contenu que vous souhaitez ajouter, il vous sera toujours possible d'ajouter d'autres types de contenus par la suite.",
+      typeInfo:
+        "Vous pouvez également accéder à ces catégories depuis la barre de navigation.",
+      typeInfoMobile:
+        "Vous pouvez également accéder à ces catégories depuis le menu (le bouton en haut à droite de l'écran).",
+      movie: "Film",
+      tvShow: "Série",
+      podcast: "Podcast",
+      youtube: "Youtube",
+      select: "Sélectionner",
     },
     movieDetails: {
       originalTitle: "Titre original",
@@ -239,6 +266,7 @@ const trad = {
         badgesVerification: "Badges vérifiés !",
         emailSent: "Email envoyé !",
         passwordReset: "Mot de passe réinitialisé !",
+        messageSent: "Message envoyé !",
       },
       error: {
         login: "Une erreur est survenue lors de la connexion.",
@@ -263,6 +291,8 @@ const trad = {
         emailSentError: "Un problème est survenu lors de l'envoi de l'email !",
         passwordResetError:
           "Un problème est survenu lors de la réinitialisation du mot de passe !",
+        messageSentError:
+          "Un problème est survenu lors de l'envoi du message !",
       },
     },
     user: {
@@ -304,6 +334,20 @@ const trad = {
       totalLikes: "Total number of likes",
       totalBadges: "Total number of badges",
       viewAll: "View all",
+    },
+    contact: {
+      title: "Help us to step up",
+      subtitle:
+        "Do you have an idea for improvement? Found a bug? You have a question? Do not hesitate to contact us!",
+      email: "Email",
+      subject: "Subject",
+      message: "Message",
+      send: "Send",
+      maxLength: "Max. 500 characters",
+    },
+    footer: {
+      about: "About",
+      contact: "Contact",
     },
     global: {
       error: "Language changed.",
@@ -347,6 +391,7 @@ const trad = {
       lists: "Lists",
       accumulatedLikes: "Accumulated likes",
       usersTop: "Users top",
+      createList: "Create a list",
     },
     labels: {
       previousPage: "Previous page",
@@ -425,9 +470,20 @@ const trad = {
       copyToClipboardSuccess: "Link copied to clipboard",
       copyToClipboardError:
         "An error occurred while copying the link to the clipboard",
+      whatTypeOfContent: "What type of content do you want to add ?",
+      selectType:
+        "Select one type of content you want to add, you can always add other types of content later.",
+      typeInfo: "You can also access these categories from the navigation bar.",
+      typeInfoMobile:
+        "You can also access these categories from the menu (the button at the top right of the screen).",
+      movie: "Movie",
+      tvShow: "TV Show",
+      podcast: "Podcast",
+      youtube: "Youtube",
+      select: "Select",
     },
     movieDetails: {
-      originalTitle: "Titre original",
+      originalTitle: "Original title",
       releaseDate: "Release date",
       runtime: "Runtime",
       genres: "Genres",
