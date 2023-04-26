@@ -32,9 +32,18 @@ function AddToList({
     if (content?.etag) return "youtube";
   };
 
+  // HANDLE CLOSE MODAL
   const handleClose = () => {
-    setOpen(false);
     setSelectedList([]);
+    setOpen(false);
+  };
+
+  // HANDLE OPEN SECOND MODAL
+  const handleOpenNewList = () => {
+    handleClose();
+    setTimeout(() => {
+      setOpenNewList(true);
+    }, 500);
   };
 
   // FOR EACH LIST, ADD CONTENT TO LIST
@@ -81,19 +90,13 @@ function AddToList({
     handleClose();
   };
 
-  useEffect(() => {
-    if (openNewList) {
-      setOpen(false);
-    }
-  }, [openNewList]);
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={setOpen}
+        onClose={handleClose}
       >
         <div className="flex min-h-screen flex-col items-center justify-end pt-4 text-center sm:block sm:p-0">
           <Transition.Child
@@ -163,10 +166,7 @@ function AddToList({
                           {trad[lang].modals.lists} :
                         </legend>
                         <button
-                          onClick={() => {
-                            setOpen(false);
-                            setOpenNewList(!openNewList);
-                          }}
+                          onClick={() => handleOpenNewList()}
                           className={`whitespace-nowrap rounded-md border px-3 py-2 text-sm ${
                             darkMode
                               ? "border-altSecondary bg-darkTert text-altSecondary"

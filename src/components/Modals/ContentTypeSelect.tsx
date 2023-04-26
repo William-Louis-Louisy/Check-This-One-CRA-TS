@@ -1,15 +1,19 @@
 import { FaTv, FaYoutube, FaFilm, FaPodcast } from "react-icons/fa";
 import trad from "../../lang/traduction";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function ContentTypeSelect({ open, setOpen, darkMode, lang, setOpenNewList }) {
   const cancelButtonRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleNavigation = (type) => {
+  const onClose = () => {
     setOpen(false);
+  };
+
+  const handleNavigation = (type) => {
+    onClose();
     navigate(`/${type.link}`);
   };
 
@@ -39,10 +43,6 @@ function ContentTypeSelect({ open, setOpen, darkMode, lang, setOpenNewList }) {
       link: "podcastsSearch",
     },
   ];
-
-  const onClose = () => {
-    setOpen(false);
-  };
 
   return (
     <Transition.Root show={open} as={Fragment}>

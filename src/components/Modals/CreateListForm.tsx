@@ -31,7 +31,14 @@ function CreateListForm({
       tags: [],
     });
     setOpenNewList(false);
-    // setOpen(true);
+  };
+
+  // OPEN SECOND MODAL
+  const openSecondModal = () => {
+    onClose();
+    setTimeout(() => {
+      setOpen(true);
+    }, 500);
   };
 
   // POST NEW LIST
@@ -49,7 +56,7 @@ function CreateListForm({
         pauseOnHover: false,
         theme: darkMode ? "dark" : "light",
       });
-      setOpen(true);
+      openSecondModal();
     } catch (error) {
       console.error(error);
       toast.error(`${trad[lang].toasts.error.listCreatedError}`, {
@@ -61,7 +68,6 @@ function CreateListForm({
         theme: darkMode ? "dark" : "light",
       });
     } finally {
-      onClose();
       refetch();
     }
   };
