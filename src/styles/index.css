@@ -206,3 +206,30 @@ body {
     padding: 12px;
   }
 }
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes appear {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+#floating-bot {
+  animation: appear 2.5s ease-out forwards, float 2.5s ease-in-out infinite;
+}

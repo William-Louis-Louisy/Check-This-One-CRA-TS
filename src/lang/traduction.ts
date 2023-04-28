@@ -8,6 +8,36 @@ const trad = {
       totalBadges: "Nombre total de badges",
       viewAll: "Voir tout",
     },
+    bingeBuddy: {
+      description:
+        "Binge Buddy va vous aider à trouver un contenu à regarder. Répondez à ses questions pour orienter ses propositions.",
+      start: "Commencer",
+      next: "Suivant",
+      previous: "Précédent",
+      finish: "Terminer",
+      cancel: "Annuler",
+      reset: "Réinitialiser",
+      steps: {
+        step1: "Quel type de contenu recherchez-vous ?",
+        step2: "Choisissez la langue du contenu",
+        step3: "Quel genre de contenu recherchez-vous ?",
+        step4: "Quelle époque recherchez-vous ?",
+        step5: "Quelle durée recherchez-vous ?",
+        step6: "Vous désirez binger plusieurs saisons ?",
+      },
+      types: {
+        movie: "Film",
+        show: "Série",
+      },
+      bullets: {
+        bullet1: "Type",
+        bullet2: "Genre",
+        bullet3: "Époque",
+        bullet4: "Détails",
+      },
+      results: "Voici les propositions de Binge Buddy",
+      noResults: "Aucun résultat",
+    },
     contact: {
       title: "Aidez-nous à progresser",
       subtitle:
@@ -204,6 +234,7 @@ const trad = {
       podcastsSearch: "Recherche de podcasts",
       notifications: "Notifications",
       resetPassword: "Réinitialisation du mot de passe",
+      bingeBuddy: "Binge Buddy",
     },
     placeholders: {
       searchYoutube: "Rechercher une vidéo Youtube...",
@@ -335,6 +366,35 @@ const trad = {
       totalBadges: "Total number of badges",
       viewAll: "View all",
     },
+    bingeBuddy: {
+      description: "Binge Buddy is a tool to help you find content to watch.",
+      start: "Start",
+      next: "Next",
+      previous: "Previous",
+      finish: "Finish",
+      cancel: "Cancel",
+      reset: "Reset",
+      steps: {
+        step1: "What type of content are you looking for ?",
+        step2: "Choose the language of the content",
+        step3: "What genre are you looking for ?",
+        step4: "What period are you looking for?",
+        step5: "What duration are you looking for?",
+        step6: "Do you want to binge several seasons?",
+      },
+      types: {
+        movie: "Movie",
+        show: "Show",
+      },
+      bullets: {
+        bullet1: "Type",
+        bullet2: "Genre",
+        bullet3: "Period",
+        bullet4: "Details",
+      },
+      results: "Here are the Binge Buddy proposals",
+      noResults: "No results",
+    },
     contact: {
       title: "Help us to step up",
       subtitle:
@@ -457,7 +517,7 @@ const trad = {
         "Enter your email address and we'll send you a link to reset your password",
     },
     modals: {
-      add: "Ajouter",
+      add: "Add",
       lists: "Lists",
       cancel: "Cancel",
       createNewList: "Create a new list",
@@ -529,6 +589,7 @@ const trad = {
       podcastsSearch: "Podcasts search",
       notifications: "Notifications",
       resetPassword: "Reset password",
+      bingeBuddy: "Binge Buddy",
     },
     placeholders: {
       searchYoutube: "Search a Youtube video...",

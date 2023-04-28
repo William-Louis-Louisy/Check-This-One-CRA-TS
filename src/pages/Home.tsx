@@ -13,6 +13,7 @@ import TopRatedUserCard from "../components/Cards/TopRatedUserCard";
 import LazyImage from "../components/Common/LazyImage";
 import CreateListForm from "../components/Modals/CreateListForm";
 import ContentTypeSelect from "../components/Modals/ContentTypeSelect";
+import { FaClipboardList, FaRobot } from "react-icons/fa";
 
 function Home() {
   const { lang, darkMode } = useContext(AppContext);
@@ -123,17 +124,30 @@ function Home() {
                   </Link>
                 </div>
               ) : (
-                <div className="mt-8 flex w-full flex-col items-center">
+                <div className="mt-8 flex w-full flex-row items-center justify-center gap-4">
+                  {/* NEW LIST */}
                   <button
                     onClick={() => setOpenNewList(true)}
-                    className={`rounded-md px-4 py-3 ${
+                    className={`flex flex-row items-center gap-3 rounded-md px-4 py-3 ${
                       darkMode
                         ? "bg-altSecondary text-darkBg"
                         : "bg-secondary text-myWhite"
                     }`}
                   >
-                    {trad[lang].home.createList}
+                    <FaClipboardList /> {trad[lang].home.createList}
                   </button>
+
+                  {/* BINGE BUDDY */}
+                  <Link
+                    to="/bingeBuddy"
+                    className={`flex flex-row items-center gap-3 rounded-md px-4 py-3 ${
+                      darkMode
+                        ? "bg-altSecondary text-darkBg"
+                        : "bg-secondary text-myWhite"
+                    }`}
+                  >
+                    <FaRobot /> BingeBuddy
+                  </Link>
                 </div>
               )}
             </div>

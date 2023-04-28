@@ -25,6 +25,7 @@ import ResetPassword from "../pages/ResetPassword";
 import AboutUs from "../pages/AboutUs";
 import Footer from "../components/Navigation/Footer";
 import ContactUs from "../pages/ContactUs";
+import BingeBuddy from "../pages/BingeBuddy";
 
 export default function PublicRoutes() {
   const { user } = useContext(UserContext);
@@ -46,6 +47,7 @@ export default function PublicRoutes() {
           <Route path="showsSearch" element={<TvShowsSearch />} />
           <Route path="youtubeSearch" element={<YoutubeSearch />} />
           <Route path="podcastsSearch" element={<PodcastsSearch />} />
+          <Route path="bingeBuddy" element={<BingeBuddy />} />
 
           {/* CONTENT DETAILS */}
           <Route path="movieDetails/:movieId" element={<MovieDetails />} />
