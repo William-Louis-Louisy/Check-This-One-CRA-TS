@@ -27,7 +27,7 @@ function Footer() {
       },
       {
         name: "Discord",
-        href: "#",
+        href: "https://discord.gg/TWzE8cywbF",
         icon: <SiDiscord />,
       },
     ],
@@ -42,14 +42,14 @@ function Footer() {
         >
           {navigation.main.map((item) => (
             <div key={item.name} className="px-5 py-2">
-              <Link
-                to={item.href}
+              <a
+                href={item.href}
                 className={`text-base ${
                   darkMode ? "text-altSecondary" : "text-secondary"
                 }`}
               >
                 {item.name}
-              </Link>
+              </a>
             </div>
           ))}
         </nav>

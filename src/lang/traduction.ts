@@ -17,10 +17,12 @@ const trad = {
       finish: "Terminer",
       cancel: "Annuler",
       reset: "Réinitialiser",
+      dontCare: "Si ce choix vous est égal, passez à l'étape suivante",
       steps: {
         step1: "Quel type de contenu recherchez-vous ?",
         step2: "Sélectionnez votre localisation :",
-        step2bis: "À quelle plateforme de streaming/VOD avez vous accès ?",
+        step2bis:
+          "À quelle(s) plateforme(s) de streaming/VOD avez vous accès ?",
         step3: "Choisissez la langue d'origine du contenu :",
         step4: "Quel genre de contenu recherchez-vous ?",
         step5: "Quelle époque recherchez-vous ?",
@@ -376,6 +378,7 @@ const trad = {
       finish: "Finish",
       cancel: "Cancel",
       reset: "Reset",
+      dontCare: "If you don't mind this choice, go to the next step",
       steps: {
         step1: "What type of content are you looking for?",
         step2: "Select your location :",

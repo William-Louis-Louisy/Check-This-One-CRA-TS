@@ -57,14 +57,14 @@ function StatsCard({
   ];
 
   return (
-    <div>
-      <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="flex w-full items-center justify-center">
+      <dl className="flex flex-col items-center gap-4 lg:w-[70%] lg:flex-row lg:flex-wrap lg:justify-center">
         {stats.map((item) => (
           <div
             key={item.id}
             className={classNames(
               darkMode ? "bg-darkSec text-gray-100" : "bg-myWhite text-myWhite",
-              "relative overflow-hidden rounded-lg px-4 pt-5 pb-12 shadow sm:px-6 sm:pt-6"
+              "relative w-72 overflow-hidden rounded-lg px-4 pt-5 pb-12 shadow sm:px-6 sm:pt-6"
             )}
           >
             <dt>
