@@ -6,6 +6,29 @@ import {
   useState,
 } from "react";
 
+export interface IBuddyForm {
+  type: string;
+  watchProvider: string[];
+  language: string;
+  genre: number;
+  period: { start: string; end: string };
+  runtime: { start: number; end: number };
+  runtimeTv: { start: number; end: number };
+  binge: boolean;
+  userLocation: string;
+}
+export const defaultBuddyForm: IBuddyForm = {
+  type: "",
+  watchProvider: [],
+  language: "",
+  genre: 0,
+  period: { start: "", end: "" },
+  runtime: { start: 0, end: 0 },
+  runtimeTv: { start: 0, end: 0 },
+  binge: false,
+  userLocation: "FR",
+};
+
 type AppContextType = {
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
@@ -14,6 +37,18 @@ type AppContextType = {
   darkMode: boolean;
   setDarkMode: Dispatch<SetStateAction<boolean>>;
   storeDarkMode: (value: boolean) => void;
+  results: any[];
+  setResults: Dispatch<SetStateAction<any[]>>;
+  currentStep: number;
+  setCurrentStep: Dispatch<SetStateAction<number>>;
+  isFinished: boolean;
+  setIsFinished: Dispatch<SetStateAction<boolean>>;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+  totalPages: number;
+  setTotalPages: Dispatch<SetStateAction<number>>;
+  buddyForm: IBuddyForm;
+  setBuddyForm: any;
 };
 
 export const AppContext = createContext<AppContextType>(null);
@@ -23,6 +58,14 @@ const AppProvider = ({ children }) => {
   const [lang, setLang] = useState<string>("fr");
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(isDarkMode);
+
+  // BINGE BUDDY STATES
+  const [buddyForm, setBuddyForm] = useState(defaultBuddyForm);
+  const [results, setResults] = useState([]);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isFinished, setIsFinished] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   // CHECK IF DARK MODE IS ENABLED IN BROWSER
   useEffect(() => {
@@ -95,6 +138,18 @@ const AppProvider = ({ children }) => {
         darkMode,
         setDarkMode,
         storeDarkMode,
+        results,
+        setResults,
+        currentStep,
+        setCurrentStep,
+        isFinished,
+        setIsFinished,
+        page,
+        setPage,
+        totalPages,
+        setTotalPages,
+        buddyForm,
+        setBuddyForm,
       }}
     >
       {children}

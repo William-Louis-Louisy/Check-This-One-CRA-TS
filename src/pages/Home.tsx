@@ -13,6 +13,7 @@ import TopRatedUserCard from "../components/Cards/TopRatedUserCard";
 import LazyImage from "../components/Common/LazyImage";
 import CreateListForm from "../components/Modals/CreateListForm";
 import ContentTypeSelect from "../components/Modals/ContentTypeSelect";
+import { FaClipboardList, FaRobot } from "react-icons/fa";
 
 function Home() {
   const { lang, darkMode } = useContext(AppContext);
@@ -106,7 +107,7 @@ function Home() {
                   {trad[lang].home.title2}
                 </span>
               </h1>
-              <p className="mx-auto mt-6 max-w-md text-center text-xl text-myWhite sm:max-w-3xl">
+              <p className="mx-auto mt-6 max-w-md text-center text-lg text-myWhite sm:max-w-3xl sm:text-xl">
                 {trad[lang].home.subtitle}
               </p>
               {!user?.user_name ? (
@@ -123,17 +124,30 @@ function Home() {
                   </Link>
                 </div>
               ) : (
-                <div className="mt-8 flex w-full flex-col items-center">
+                <div className="mt-8 flex w-full flex-row flex-wrap items-center justify-center gap-4 text-sm sm:text-base">
+                  {/* NEW LIST */}
                   <button
                     onClick={() => setOpenNewList(true)}
-                    className={`rounded-md px-4 py-3 ${
+                    className={`flex flex-row items-center gap-3 rounded-md px-4 py-3 ${
                       darkMode
                         ? "bg-altSecondary text-darkBg"
                         : "bg-secondary text-myWhite"
                     }`}
                   >
-                    {trad[lang].home.createList}
+                    <FaClipboardList /> {trad[lang].home.createList}
                   </button>
+
+                  {/* BINGE BUDDY */}
+                  <Link
+                    to="/bingeBuddy"
+                    className={`flex flex-row items-center gap-3 rounded-md px-4 py-3 ${
+                      darkMode
+                        ? "bg-altSecondary text-darkBg"
+                        : "bg-secondary text-myWhite"
+                    }`}
+                  >
+                    <FaRobot /> Binge Buddy
+                  </Link>
                 </div>
               )}
             </div>

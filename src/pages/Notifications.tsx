@@ -26,9 +26,6 @@ function Notifications() {
       const res = await axios.put(
         `${process.env.REACT_APP_API_URL}/user/${userId.id}/notification/${id}}`
       );
-      if (res.status === 200) {
-        console.log("updated");
-      }
     } catch (error) {
       console.error(error);
     } finally {
