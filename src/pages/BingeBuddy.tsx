@@ -3,6 +3,7 @@ import {
   runtimes,
   languages,
   bingeOptions,
+  tv_runtimes,
 } from "../utils/BingeBuddy";
 import axios from "axios";
 import trad from "../lang/traduction";
@@ -14,14 +15,20 @@ import { AppContext } from "../contexts/AppContext";
 import LazyImage from "../components/Common/LazyImage";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { scrollToTop } from "../utils/UsefullFunctions";
+import { watchRegionsFr } from "../utils/WatchProviderRegions";
+import { handleLang } from "../utils/RequestLanguageHandler";
 
 interface IBuddyForm {
   type: string;
+  watchProvider: string[];
   language: string;
   genre: number;
   period: { start: string; end: string };
-  runtime: number;
+  runtime: { start: number; end: number };
+  runtimeTv: { start: number; end: number };
   binge: boolean;
+  userLocation: string;
 }
 
 interface IGenre {
@@ -31,11 +38,14 @@ interface IGenre {
 
 const defaultBuddyForm: IBuddyForm = {
   type: "",
+  watchProvider: [],
   language: "",
   genre: 0,
   period: { start: "", end: "" },
-  runtime: 0,
+  runtime: { start: 0, end: 0 },
+  runtimeTv: { start: 0, end: 0 },
   binge: false,
+  userLocation: "FR",
 };
 
 function BingeBuddy() {
@@ -46,8 +56,11 @@ function BingeBuddy() {
   const [currentStep, setCurrentStep] = useState(1);
   const [buddyForm, setBuddyForm] = useState(defaultBuddyForm);
   const [genres, setGenres] = useState<IGenre[]>();
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [results, setResults] = useState([]);
   const [isFinished, setIsFinished] = useState(false);
+  const [providers, setProviders] = useState<any[]>([]);
 
   const types = [
     {
@@ -66,9 +79,9 @@ function BingeBuddy() {
 
   // HANDLE PREVIOUS STEP
   const handlePreviousStep = () => {
-    if (currentStep === 6) {
+    if (currentStep === 7) {
       if (buddyForm.type === "tv") {
-        setCurrentStep(4);
+        setCurrentStep(5);
       } else if (buddyForm.type === "movie") {
         setCurrentStep(currentStep - 1);
       }
@@ -79,41 +92,61 @@ function BingeBuddy() {
 
   // HANDLE NEXT STEP
   const handleNextStep = () => {
-    if (currentStep === 4) {
+    if (currentStep === 5) {
       if (buddyForm.type === "movie") {
-        setCurrentStep(5);
-      } else if (buddyForm.type === "tv") {
         setCurrentStep(6);
+      } else if (buddyForm.type === "tv") {
+        setCurrentStep(7);
       }
-    } else if (currentStep < 6) {
+    } else if (currentStep < 7) {
       setCurrentStep(currentStep + 1);
     }
   };
 
+  // HANDLE BUTTON CLICK
   const handleButtonClick = () => {
-    if (currentStep === 5 && buddyForm.type === "movie") {
+    if (currentStep === 6 && buddyForm.type === "movie") {
       fetchRecommendations();
-    } else if (currentStep === 6 && buddyForm.type === "tv") {
+    } else if (currentStep === 7 && buddyForm.type === "tv") {
       fetchRecommendations();
     } else {
       handleNextStep();
     }
   };
 
+  // GET WATCH PROVIDERS
+  const getWatchProviders = async () => {
+    if (currentStep === 2) {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/watch/providers/${buddyForm.type}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=${handleLang}&watch_region=${buddyForm.userLocation}`
+        );
+        setProviders(response.data.results);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getWatchProviders();
+  }, [currentStep, buddyForm.type, buddyForm.userLocation]);
+
+  // GET GENRES
   const getGenres = async () => {
     try {
       if (buddyForm.type === "") return;
 
       if (currentStep === 3 && buddyForm.type === "movie") {
         const data = await axios.get(
-          `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=fr`
+          `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=${lang}`
         );
         setGenres(data.data.genres);
       }
 
       if (currentStep === 3 && buddyForm.type === "tv") {
         const data = await axios.get(
-          `https://api.themoviedb.org/3/genre/tv/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=fr`
+          `https://api.themoviedb.org/3/genre/tv/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=${lang}`
         );
         setGenres(data.data.genres);
       }
@@ -126,50 +159,58 @@ function BingeBuddy() {
     getGenres();
   }, [buddyForm.type, currentStep]);
 
+  // FETCH RECOMMENDATIONS
   const fetchRecommendations = async () => {
     try {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/discover/${buddyForm.type}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=${lang}&with_original_language=${buddyForm.language}&with_genres=${buddyForm.genre}&primary_release_date.gte=${buddyForm.period.start}&primary_release_date.lte=${buddyForm.period.end}&with_runtime.gte=${buddyForm.runtime}`
+        `https://api.themoviedb.org/3/discover/${buddyForm.type}?api_key=${
+          process.env.REACT_APP_TMDB_API_KEY
+        }&language=${lang}&with_original_language=${
+          buddyForm.language
+        }&with_genres=${buddyForm.genre}&primary_release_date.gte=${
+          buddyForm.period.start
+        }&primary_release_date.lte=${buddyForm.period.end}&with_runtime.gte=${
+          buddyForm.runtime.start
+        }&with_runtime.lte=${
+          buddyForm.runtime.end
+        }&with_watch_providers=${buddyForm.watchProvider.join(
+          "|"
+        )}&page=${page}&watch_region=${buddyForm.userLocation}`
       );
-
-      let filteredResults = response.data.results;
-
-      if (buddyForm.type === "tv") {
-        const tvDetailsPromises = filteredResults.map((result) =>
-          axios.get(
-            `https://api.themoviedb.org/3/tv/${result.id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=${lang}`
-          )
-        );
-        const tvDetailsResponses = await Promise.all(tvDetailsPromises);
-        const tvDetailsResults = tvDetailsResponses.map(
-          (response) => response.data
-        );
-
-        if (buddyForm.binge) {
-          filteredResults = tvDetailsResults.filter(
-            (result) => result.number_of_seasons >= 2
-          );
-        } else {
-          filteredResults = tvDetailsResults.filter(
-            (result) => result.number_of_seasons === 1
-          );
-        }
-      }
-
-      setResults(filteredResults);
+      setTotalPages(response.data.total_pages);
+      setResults(response.data.results);
       setIsFinished(true);
       setCurrentStep(0);
-      setBuddyForm(defaultBuddyForm);
     } catch (error) {
       console.error(error);
     }
   };
 
+  // HANDLE NEXT PAGE
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage(page + 1);
+      fetchRecommendations();
+      scrollToTop();
+    }
+  };
+
+  // HANDLE PREVIOUS PAGE
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+      fetchRecommendations();
+      scrollToTop();
+    }
+  };
+
+  // HANDLE RESET
   const handleReset = () => {
     setCurrentStep(1);
     setBuddyForm(defaultBuddyForm);
     setIsFinished(false);
     setResults([]);
+    setPage(1);
   };
 
   // Filter the results by excluding those with their ID is equal to user.seenContent.provider_id
@@ -209,7 +250,7 @@ function BingeBuddy() {
               {/* BOT */}
               <img
                 id="floating-bot"
-                className="aspect-square w-1/3 lg:h-60 lg:w-60"
+                className="aspect-square w-1/3 lg:h-40 lg:w-40"
                 src="https://ucarecdn.com/8e0be7eb-743d-4b8e-8bb0-dfe9a8f7b4ba/bingeBuddy.png"
                 alt=""
               />
@@ -219,7 +260,7 @@ function BingeBuddy() {
               {/* BOT */}
               <img
                 id="floating-bot"
-                className="aspect-square w-1/3 lg:h-60 lg:w-60"
+                className="aspect-square w-1/3 lg:h-40 lg:w-40"
                 src="https://ucarecdn.com/a68114ff-dc90-401b-aeeb-eea715503799/bingeBuddymodifi01.png"
                 alt=""
               />
@@ -239,7 +280,7 @@ function BingeBuddy() {
           {/* STEPS */}
           {currentStep !== 0 && (
             <div
-              className={`my-8 flex flex-col items-center gap-6 rounded-md p-4 ${
+              className={`my-4 flex flex-col items-center gap-6 px-4 pt-9 pb-4 lg:my-0 lg:rounded-md ${
                 darkMode ? "bg-darkQuar" : "bg-myWhite"
               }`}
             >
@@ -259,7 +300,7 @@ function BingeBuddy() {
                         onClick={() =>
                           setBuddyForm({ ...buddyForm, type: type.type })
                         }
-                        className={`m-0 flex aspect-square w-24 cursor-pointer flex-col items-center justify-around gap-1 rounded-md p-4 text-sm font-bold lg:w-24 lg:text-base ${
+                        className={`m-0 flex aspect-square w-24 cursor-pointer flex-col items-center justify-around gap-1 rounded-md p-4 text-sm lg:w-24 ${
                           buddyForm.type === type.type
                             ? darkMode
                               ? "bg-darkSec text-primary"
@@ -276,9 +317,95 @@ function BingeBuddy() {
                   </div>
                 </>
               )}
+
               {currentStep === 2 && (
                 <>
                   {/* STEP 2 */}
+                  {/* Step Question */}
+                  <h4 className="text-lg font-medium text-primary">
+                    {trad[lang].bingeBuddy.steps.step2}
+                  </h4>
+
+                  <select
+                    id="location"
+                    name="location"
+                    className={`mt-1 block w-full rounded-md lg:w-1/2 ${
+                      darkMode
+                        ? "bg-darkQuin text-gray-300"
+                        : "bg-white text-smokyBlack"
+                    } border-gray-300 py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-0 sm:text-sm`}
+                    defaultValue={lang === "fr" ? "FR" : "US"}
+                    onChange={(e) =>
+                      setBuddyForm({
+                        ...buddyForm,
+                        userLocation: e.target.value,
+                      })
+                    }
+                  >
+                    {watchRegionsFr.map((region) => (
+                      <option key={region.iso_3166_1} value={region.iso_3166_1}>
+                        {lang === "fr"
+                          ? region.native_name
+                          : region.english_name}
+                      </option>
+                    ))}
+                  </select>
+
+                  <h4 className="text-lg font-medium text-primary">
+                    {trad[lang].bingeBuddy.steps.step2bis}
+                  </h4>
+
+                  {/* Answer choices */}
+                  <div className="flex w-full flex-row gap-4 overflow-x-scroll lg:flex-wrap lg:items-center lg:justify-center">
+                    {providers.map((provider) => (
+                      <div
+                        key={`provider-${provider.provider_id}`}
+                        onClick={() => {
+                          const newProviders = buddyForm.watchProvider.includes(
+                            provider.provider_id
+                          )
+                            ? buddyForm.watchProvider.filter(
+                                (p) => p !== provider.provider_id
+                              )
+                            : [
+                                ...buddyForm.watchProvider,
+                                provider.provider_id,
+                              ];
+
+                          setBuddyForm({
+                            ...buddyForm,
+                            watchProvider: newProviders,
+                          });
+                        }}
+                        className={`m-0 flex aspect-square h-36 w-36 cursor-pointer flex-col items-center justify-around gap-1 rounded-md p-4 text-center text-sm ${
+                          buddyForm.watchProvider.includes(provider.provider_id)
+                            ? darkMode
+                              ? "bg-darkSec text-primary"
+                              : "bg-myLightGray text-primary"
+                            : darkMode
+                            ? "bg-darkSec text-altSecondary"
+                            : "bg-myLightGray text-secondary"
+                        }`}
+                      >
+                        <img
+                          key={`provider-${provider.provider_id}`}
+                          src={
+                            "https://image.tmdb.org/t/p/w500" +
+                            provider.logo_path
+                          }
+                          className="h-12 rounded-md"
+                          alt=""
+                        />
+                        <p>{provider.provider_name}</p>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {currentStep === 3 && (
+                <>
+                  {/* STEP 3 */}
                   {/* Step Question */}
                   <h4 className="text-lg font-medium text-primary">
                     {trad[lang].bingeBuddy.steps.step2}
@@ -295,7 +422,7 @@ function BingeBuddy() {
                             language: language.value,
                           })
                         }
-                        className={`m-0 flex aspect-square w-24 cursor-pointer flex-col items-center justify-around gap-1 rounded-md p-4 text-sm font-bold lg:w-28 lg:text-base ${
+                        className={`m-0 flex aspect-square w-24 cursor-pointer flex-col items-center justify-around gap-1 rounded-md p-4 text-sm lg:w-28 ${
                           buddyForm.language === language.value
                             ? darkMode
                               ? "bg-darkSec text-primary"
@@ -312,9 +439,9 @@ function BingeBuddy() {
                 </>
               )}
 
-              {currentStep === 3 && (
+              {currentStep === 4 && (
                 <>
-                  {/* STEP 3 */}
+                  {/* STEP 4 */}
                   {/* Step Question */}
                   <h4 className="text-lg font-medium text-primary">
                     {trad[lang].bingeBuddy.steps.step3}
@@ -324,6 +451,7 @@ function BingeBuddy() {
                   <div className="flex flex-row flex-wrap items-center justify-center gap-4">
                     {genres?.map((genre) => (
                       <div
+                        key={genre.id}
                         onClick={() =>
                           setBuddyForm({ ...buddyForm, genre: genre.id })
                         }
@@ -344,9 +472,9 @@ function BingeBuddy() {
                 </>
               )}
 
-              {currentStep === 4 && (
+              {currentStep === 5 && (
                 <>
-                  {/* STEP 4 */}
+                  {/* STEP 5 */}
                   {/* Step Question */}
                   <h4 className="text-lg font-medium text-primary">
                     {trad[lang].bingeBuddy.steps.step4}
@@ -356,6 +484,7 @@ function BingeBuddy() {
                   <div className="flex flex-row flex-wrap items-center justify-center gap-4">
                     {periods.map((period) => (
                       <div
+                        key={period.start_value}
                         onClick={() =>
                           setBuddyForm({
                             ...buddyForm,
@@ -382,9 +511,9 @@ function BingeBuddy() {
                 </>
               )}
 
-              {currentStep === 5 && (
+              {currentStep === 6 && (
                 <>
-                  {/* STEP 5 */}
+                  {/* STEP 6 */}
                   {/* Step Question */}
                   <h4 className="text-lg font-medium text-primary">
                     {trad[lang].bingeBuddy.steps.step5}
@@ -394,14 +523,18 @@ function BingeBuddy() {
                   <div className="flex flex-row flex-wrap items-center justify-center gap-4">
                     {runtimes.map((runtime) => (
                       <div
+                        key={runtime.start_value}
                         onClick={() =>
                           setBuddyForm({
                             ...buddyForm,
-                            runtime: runtime.value,
+                            runtime: {
+                              start: runtime.start_value,
+                              end: runtime.end_value,
+                            },
                           })
                         }
                         className={`flex aspect-square w-24 cursor-pointer flex-col items-center justify-center rounded-md p-3 text-center text-sm ${
-                          buddyForm.runtime === runtime.value
+                          buddyForm.runtime.start === runtime.start_value
                             ? darkMode
                               ? "bg-darkSec text-primary"
                               : "bg-myLightGray text-primary"
@@ -417,9 +550,9 @@ function BingeBuddy() {
                 </>
               )}
 
-              {currentStep === 6 && (
+              {currentStep === 7 && (
                 <>
-                  {/* STEP 6 */}
+                  {/* STEP 7 */}
                   {/* Step Question */}
                   <h4 className="text-lg font-medium text-primary">
                     {trad[lang].bingeBuddy.steps.step6}
@@ -427,16 +560,20 @@ function BingeBuddy() {
 
                   {/* Answer choices */}
                   <div className="flex flex-row flex-wrap items-center justify-center gap-4">
-                    {bingeOptions.map((bingeOption) => (
+                    {tv_runtimes.map((runtime) => (
                       <div
+                        key={runtime.start_value}
                         onClick={() =>
                           setBuddyForm({
                             ...buddyForm,
-                            binge: bingeOption.value,
+                            runtimeTv: {
+                              start: runtime.start_value,
+                              end: runtime.end_value,
+                            },
                           })
                         }
                         className={`flex aspect-square w-24 cursor-pointer flex-col items-center justify-center rounded-md p-3 text-center text-sm ${
-                          buddyForm.binge === bingeOption.value
+                          buddyForm.runtimeTv.start === runtime.start_value
                             ? darkMode
                               ? "bg-darkSec text-primary"
                               : "bg-myLightGray text-primary"
@@ -445,7 +582,7 @@ function BingeBuddy() {
                             : "bg-myLightGray text-secondary"
                         }`}
                       >
-                        {bingeOption[`name_${lang}`]}
+                        {runtime[`name_${lang}`]}
                       </div>
                     ))}
                   </div>
@@ -474,10 +611,11 @@ function BingeBuddy() {
                     onClick={handleButtonClick}
                     disabled={
                       (currentStep === 1 && buddyForm.type === "") ||
-                      (currentStep === 2 && buddyForm.language === "") ||
-                      (currentStep === 3 && buddyForm.genre === 0) ||
-                      (currentStep === 4 && buddyForm.period.start === "") ||
-                      (currentStep === 5 && buddyForm.runtime === 0)
+                      (currentStep === 2 && !buddyForm.watchProvider) ||
+                      (currentStep === 3 && buddyForm.language === "") ||
+                      (currentStep === 4 && buddyForm.genre === 0) ||
+                      (currentStep === 5 && buddyForm.period.start === "") ||
+                      (currentStep === 6 && buddyForm.runtime.start === 0)
                     }
                     className={`rounded-md px-4 py-3 ${
                       darkMode
@@ -485,9 +623,9 @@ function BingeBuddy() {
                         : "bg-secondary text-myWhite"
                     }`}
                   >
-                    {currentStep === 6
+                    {currentStep === 7
                       ? trad[lang].bingeBuddy.finish
-                      : currentStep === 5 && buddyForm.type === "movie"
+                      : currentStep === 6 && buddyForm.type === "movie"
                       ? trad[lang].bingeBuddy.finish
                       : trad[lang].bingeBuddy.next}
                   </button>
@@ -514,7 +652,7 @@ function BingeBuddy() {
               </button>
             </div>
             <div className="my-8 flex flex-row flex-wrap items-center justify-center gap-4">
-              {filteredResults.length > 0 &&
+              {filteredResults.length > 0 ? (
                 filteredResults.map((result) => (
                   <Link
                     to={
@@ -534,8 +672,65 @@ function BingeBuddy() {
                       alt={result?.original_title}
                     />
                   </Link>
-                ))}
+                ))
+              ) : (
+                <p
+                  className={`italic ${
+                    darkMode ? "text-gray-300" : "text-smokyBlack"
+                  }`}
+                >
+                  {trad[lang].bingeBuddy.noResults}
+                </p>
+              )}
             </div>
+            {/* PAGINATION */}
+            {page < totalPages && (
+              <div className="flex w-full flex-row items-center justify-between lg:w-3/5">
+                {/* Previous button */}
+                <button
+                  disabled={page === 1}
+                  className={`${
+                    (darkMode && page === 1) || page === 1
+                      ? "cursor-not-allowed text-gray-300"
+                      : darkMode
+                      ? "text-altSecondary hover:text-primary"
+                      : "text-secondary hover:text-primary"
+                  } ${
+                    darkMode ? "bg-darkTert" : "bg-myWhite"
+                  } rounded-l-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
+                  onClick={() => handlePreviousPage()}
+                >
+                  {trad[lang].global.previous}
+                </button>
+
+                <span
+                  className={`${
+                    darkMode
+                      ? "bg-darkTert text-altSecondary"
+                      : "bg-myWhite text-secondary"
+                  } h-10 border-t border-b px-4 py-2`}
+                >
+                  {page}
+                </span>
+
+                {/* Next button */}
+                <button
+                  disabled={page === totalPages}
+                  className={`${
+                    (darkMode && page === totalPages) || page === totalPages
+                      ? "cursor-not-allowed text-gray-300"
+                      : darkMode
+                      ? "text-altSecondary hover:text-primary"
+                      : "text-secondary hover:text-primary"
+                  } ${
+                    darkMode ? "bg-darkTert" : "bg-myWhite"
+                  } rounded-r-md px-4 py-2 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0`}
+                  onClick={() => handleNextPage()}
+                >
+                  {trad[lang].global.next}
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

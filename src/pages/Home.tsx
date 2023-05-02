@@ -107,7 +107,7 @@ function Home() {
                   {trad[lang].home.title2}
                 </span>
               </h1>
-              <p className="mx-auto mt-6 max-w-md text-center text-xl text-myWhite sm:max-w-3xl">
+              <p className="mx-auto mt-6 max-w-md text-center text-lg text-myWhite sm:max-w-3xl sm:text-xl">
                 {trad[lang].home.subtitle}
               </p>
               {!user?.user_name ? (
@@ -124,7 +124,7 @@ function Home() {
                   </Link>
                 </div>
               ) : (
-                <div className="mt-8 flex w-full flex-row items-center justify-center gap-4">
+                <div className="mt-8 flex w-full flex-row flex-wrap items-center justify-center gap-4 text-sm sm:text-base">
                   {/* NEW LIST */}
                   <button
                     onClick={() => setOpenNewList(true)}
@@ -146,7 +146,7 @@ function Home() {
                         : "bg-secondary text-myWhite"
                     }`}
                   >
-                    <FaRobot /> BingeBuddy
+                    <FaRobot /> Binge Buddy
                   </Link>
                 </div>
               )}

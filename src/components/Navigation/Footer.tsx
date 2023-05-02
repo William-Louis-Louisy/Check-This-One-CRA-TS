@@ -53,7 +53,7 @@ function Footer() {
             </div>
           ))}
         </nav>
-        <div className="mt-8 flex justify-center space-x-6">
+        {/* <div className="mt-8 flex justify-center space-x-6">
           {navigation.social.map((item) => (
             <a
               key={item.name}
@@ -64,7 +64,7 @@ function Footer() {
               {item.icon}
             </a>
           ))}
-        </div>
+        </div> */}
         <p className="mt-8 text-center text-base text-gray-400">
           &copy; 2023 221B-BakerScript.
         </p>

@@ -36,9 +36,6 @@ function ResetPassword() {
           password: password,
         }
       );
-      if (response) {
-        console.log(response);
-      }
 
       setMessage(trad[lang].toasts.success.passwordReset);
     } catch (error) {
