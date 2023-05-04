@@ -53,7 +53,7 @@ function YoutubeVideoCard({ item, lang, addToList, darkMode, user }) {
           {user && user.id !== 0 ? (
             <button
               type="button"
-              className={`inline-flex w-1/2 items-center justify-center gap-2 px-4 py-2 text-sm font-medium shadow-sm duration-150 hover:bg-primary focus:outline-none focus:ring-0 focus:ring-offset-0 lg:text-base ${
+              className={`inline-flex w-1/2 items-center justify-center gap-2 px-4 py-2 text-sm font-medium shadow-sm duration-150 hover:text-primary focus:outline-none focus:ring-0 focus:ring-offset-0 lg:text-base ${
                 darkMode ? "text-altSecondary" : "text-secondary"
               }`}
               onClick={() => addToList(item)}
