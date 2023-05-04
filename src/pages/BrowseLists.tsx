@@ -1,4 +1,4 @@
-import { SearchIcon } from "@heroicons/react/outline";
+import { FilterIcon, SearchIcon } from "@heroicons/react/outline";
 import { PlusIcon, XIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
@@ -89,9 +89,11 @@ function BrowseLists() {
   };
 
   const handleTagSelect = (e) => {
-    const selectedTag = tagsList.find((tag) => tag.name === e.target.value);
+    if (e.target.value !== "") {
+      const selectedTag = tagsList.find((tag) => tag.name === e.target.value);
 
-    setTags([...tags, selectedTag]);
+      setTags([...tags, selectedTag]);
+    }
   };
 
   const handleTypeSelect = (e) => {
@@ -173,7 +175,7 @@ function BrowseLists() {
             className="flex flex-row items-center gap-2 text-sm duration-150 hover:text-primary"
             onClick={() => setFilters(!filters)}
           >
-            <PlusIcon className="h-4 w-4" />
+            <FilterIcon className="h-4 w-4" />
             <p>{trad[lang].global.addFilters}</p>
           </button>
         </div>
