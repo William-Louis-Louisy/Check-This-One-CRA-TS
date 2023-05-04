@@ -16,13 +16,8 @@ function Footer() {
     ],
     social: [
       {
-        name: "Instagram",
-        href: "#",
-        icon: <SiInstagram />,
-      },
-      {
         name: "Twitter",
-        href: "#",
+        href: "https://twitter.com/checkthisoneCTO",
         icon: <SiTwitter />,
       },
       {
@@ -53,18 +48,20 @@ function Footer() {
             </div>
           ))}
         </nav>
-        {/* <div className="mt-8 flex justify-center space-x-6">
+        <div className="mt-8 flex justify-center space-x-6">
           {navigation.social.map((item) => (
             <a
               key={item.name}
               href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`${darkMode ? "text-altSecondary" : "text-secondary"}`}
             >
               <span className="sr-only">{item.name}</span>
               {item.icon}
             </a>
           ))}
-        </div> */}
+        </div>
         <p className="mt-8 text-center text-base text-gray-400">
           &copy; 2023 221B-BakerScript.
         </p>

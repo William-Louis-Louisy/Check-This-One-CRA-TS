@@ -1,6 +1,7 @@
 import React from "react";
 import trad from "../../lang/traduction";
 import { IUser } from "../../contexts/UserContext";
+import { ClipboardListIcon } from "@heroicons/react/outline";
 
 function PodcastCard({
   item,
@@ -36,29 +37,33 @@ function PodcastCard({
         <img src={img} alt={title} className="max-h-[170px] md:rounded-t-md" />
       </a>
 
-      <div className="flex h-full w-full flex-col items-center justify-between gap-2 py-2 md:pt-0 md:pb-4">
+      <div className="flex h-full w-full flex-col items-center justify-between gap-2 pt-2 md:pt-0">
         <span className="max-h-12 overflow-hidden px-2">{title}</span>
 
         {user && user.id !== 0 ? (
           <button
-            className={`w-fit rounded-md px-3 py-2 text-sm ${
+            className={`flex w-full items-center justify-center gap-2 border-t px-3 py-2 text-sm duration-150 hover:text-primary ${
               darkMode
-                ? "bg-altSecondary text-darkTert"
-                : "bg-secondary text-myWhite"
+                ? "border-gray-500 text-altSecondary"
+                : "border-gray-300 text-secondary"
             }`}
             onClick={() => handleAddToList(item)}
           >
+            <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />
             {trad[lang].labels.addToAList}
           </button>
         ) : (
           <button
-            className={`w-fit cursor-not-allowed rounded-md px-3 py-2 text-sm ${
-              darkMode ? "bg-gray-500 text-darkSec" : "bg-gray-400 text-myWhite"
+            className={`flex w-full cursor-not-allowed items-center justify-center gap-2 border-t px-3 py-2 text-sm ${
+              darkMode
+                ? "border-gray-500 text-gray-500"
+                : "border-gray-300 text-gray-400"
             }`}
             onClick={() => handleAddToList(item)}
             disabled
             title={trad[lang].global.loginToAddContentToYourLists}
           >
+            <ClipboardListIcon className="h-5 w-5" aria-hidden="true" />
             {trad[lang].labels.addToAList}
           </button>
         )}
