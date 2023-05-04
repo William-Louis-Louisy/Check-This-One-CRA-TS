@@ -37,7 +37,6 @@ function BingeBuddy() {
   } = useContext(AppContext);
   const { user } = useContext(UserContext);
 
-  const [loading, setLoading] = useState(true);
   const [genres, setGenres] = useState<IGenre[]>();
   const [providers, setProviders] = useState<any[]>([]);
 
@@ -338,7 +337,7 @@ function BingeBuddy() {
                   </h4>
 
                   {/* Answer choices */}
-                  <div className="flex w-full flex-row gap-4 overflow-x-scroll lg:max-h-80 lg:flex-wrap lg:items-center lg:justify-center">
+                  <div className="card flex w-full flex-row gap-4 overflow-x-scroll md:max-h-80 md:flex-wrap md:items-center md:justify-center md:overflow-auto">
                     {providers.map((provider) => (
                       <div
                         key={`provider-${provider.provider_id}`}
@@ -579,7 +578,7 @@ function BingeBuddy() {
               <div className="flex w-full flex-row items-center justify-end gap-4">
                 {/* --*-- */}
                 {currentStep === 2 && (
-                  <p className="text-sm text-altRed">
+                  <p className="text-sm text-red-500">
                     {trad[lang].bingeBuddy.dontCare}
                   </p>
                 )}

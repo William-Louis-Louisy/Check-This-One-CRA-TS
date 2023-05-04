@@ -3,7 +3,6 @@ import { ClipboardListIcon, PlayIcon } from "@heroicons/react/outline";
 import trad from "../../lang/traduction";
 
 function YoutubeVideoCard({ item, lang, addToList, darkMode, user }) {
-  console.log(item);
   return (
     <div
       className={`my-4 flex w-full flex-col shadow-lg lg:h-44 lg:w-3/5 lg:min-w-[900px] lg:flex-row ${
