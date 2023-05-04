@@ -1,8 +1,7 @@
-import { TrashIcon } from "@heroicons/react/outline";
-import axios from "axios";
 import React from "react";
 import trad from "../../lang/traduction";
 import { typeToIcon } from "../../utils/TypeToIcon";
+import { IList } from "../../types/List";
 
 function ListsTable({
   lang,
@@ -12,7 +11,7 @@ function ListsTable({
 }: {
   lang: string;
   darkMode: boolean;
-  lists: any;
+  lists: IList[];
   getTotalLists: () => void;
 }) {
   return (
@@ -54,12 +53,6 @@ function ListsTable({
             >
               {trad[lang].labels.likes}
             </th>
-            {/* <th
-          scope="col"
-          className="px-3 py-3.5 text-center text-sm font-semibold text-altRed"
-        >
-          {trad[lang].listEdition.delete}
-        </th> */}
           </tr>
         </thead>
         <tbody
@@ -90,11 +83,6 @@ function ListsTable({
               <td className="whitespace-nowrap px-3 py-4 text-center text-sm">
                 {list.likes}
               </td>
-              {/* <td className="flex items-center justify-center whitespace-nowrap px-3 py-4 text-center text-sm text-altRed">
-            <button onClick={() => deleteUser(user.id)}>
-              <TrashIcon className="h-6 w-6" />
-            </button>
-          </td> */}
             </tr>
           ))}
         </tbody>

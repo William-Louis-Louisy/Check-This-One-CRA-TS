@@ -338,7 +338,7 @@ function ListEdition() {
             {trad[lang].listEdition.deleteElement}:
           </label>
           <div
-            className={`card mt-1 flex h-[calc(100vh*0.70)] w-full flex-wrap gap-8 overflow-y-scroll rounded-md border ${
+            className={`card mt-1 flex max-h-[calc(100vh*0.70)] w-full flex-wrap gap-8 overflow-y-scroll rounded-md border md:h-[calc(100vh*0.70)] ${
               darkMode ? "border-darkTert" : "border-gray-300"
             } p-4 shadow-inner`}
           >

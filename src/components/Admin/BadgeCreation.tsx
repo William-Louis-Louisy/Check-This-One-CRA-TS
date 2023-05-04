@@ -1,8 +1,17 @@
 import trad from "../../lang/traduction";
 import { RiMedalLine } from "react-icons/ri";
-import { Fragment, useRef, useState } from "react";
+import { Dispatch, Fragment, SetStateAction, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Widget } from "@uploadcare/react-widget";
+import { IBadge } from "../../types/Badges";
+
+const defaultBadgeForm: IBadge = {
+  icon: "",
+  name: "",
+  name_en: "",
+  description: "",
+  description_en: "",
+};
 
 function BadgeCreation({
   lang,
@@ -13,16 +22,10 @@ function BadgeCreation({
   lang: string;
   darkMode: boolean;
   open: boolean;
-  setOpen: any;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   const cancelButtonRef = useRef(null);
-  const [badgeForm, setBadgeForm] = useState({
-    icon: "",
-    name: "",
-    name_en: "",
-    description: "",
-    description_en: "",
-  });
+  const [badgeForm, setBadgeForm] = useState(defaultBadgeForm);
 
   return (
     <Transition.Root show={open} as={Fragment}>

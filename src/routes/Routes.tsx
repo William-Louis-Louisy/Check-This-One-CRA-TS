@@ -26,12 +26,14 @@ import AboutUs from "../pages/AboutUs";
 import Footer from "../components/Navigation/Footer";
 import ContactUs from "../pages/ContactUs";
 import BingeBuddy from "../pages/BingeBuddy";
+import ScrollToTop from "../components/Common/ScrollToTop";
 
 export default function PublicRoutes() {
   const { user } = useContext(UserContext);
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <NavBar />
       <Routes>
         {/* --- PUBLIC ROUTES --- */}
