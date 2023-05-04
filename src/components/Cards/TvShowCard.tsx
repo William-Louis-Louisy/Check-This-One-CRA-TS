@@ -24,7 +24,7 @@ function TvShowCard({ serie, lang, handleAddToList, darkMode, user }) {
 
   return (
     <div
-      className={`relative flex w-[90%] flex-col items-center overflow-hidden rounded-xl px-3 py-3 duration-100 sm:w-full md:h-[564px] md:w-60 ${
+      className={`flex w-[90%] flex-col items-center overflow-hidden rounded-xl px-3 py-3 duration-100 sm:w-full md:w-60 ${
         darkMode ? "text-gray-300" : "text-smokyBlack"
       }`}
     >
@@ -43,23 +43,18 @@ function TvShowCard({ serie, lang, handleAddToList, darkMode, user }) {
         />
       </Link>
 
-      <h2 className="mt-3 mb-2 w-full text-ellipsis whitespace-nowrap text-center text-lg font-semibold">
+      <h2 className="mt-3 mb-2 w-full text-ellipsis whitespace-nowrap text-center text-sm font-semibold">
         {screenWidth > 400 ? titleLength(serie.name) : serie.name}
       </h2>
       {serie.first_air_date ? (
-        <h4 className="text-center text-sm font-extralight">
+        <h4 className="text-center text-xs font-extralight italic">
           {dateFormater(serie.first_air_date)}
         </h4>
       ) : (
         ""
       )}
-      {serie?.overview && (
-        <p className="card mt-2 h-[90px] overflow-y-scroll text-ellipsis px-4 text-center text-sm">
-          {serie.overview}
-        </p>
-      )}
 
-      <div className="mt-4 mb-2 flex flex-row items-center gap-6 md:absolute md:bottom-1">
+      <div className="mt-3 mb-2 flex flex-row items-center gap-6">
         {user?.id ? (
           <button
             className={`inline-flex items-center gap-2 rounded-md border border-transparent ${
