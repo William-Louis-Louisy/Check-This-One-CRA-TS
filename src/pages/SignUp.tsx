@@ -1,7 +1,7 @@
 import axios from "axios";
 import trad from "../lang/traduction";
 import { AppContext } from "../contexts/AppContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -87,7 +87,9 @@ function SignUp() {
         }
         break;
       case "password":
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        const passwordRegex =
+          /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+[\]{}|;:'",.<>?`~])[A-Za-z\d!@#$%^&*()-_=+[\]{}|;:'",.<>?`~]{8,}$/;
+
         if (!passwordRegex.test(signupForm.password)) {
           errorMessage = trad[lang].signup.verifyPassword;
         }
@@ -145,11 +147,7 @@ function SignUp() {
   };
 
   // HANDLE BLUR
-  const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    await validateField(name as keyof SignupForm);
-
-    // Update isFormValid by checking the validity of all fields
+  useEffect(() => {
     const isValidUsername = !validationMessages.username;
     const isValidEmail = !validationMessages.email;
     const isValidPassword = !validationMessages.password;
@@ -161,6 +159,12 @@ function SignUp() {
         isValidPassword &&
         isValidPasswordConfirm
     );
+  }, [validationMessages]);
+
+  // Remove setIsFormValid from handleBlur function
+  const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    await validateField(name as keyof SignupForm);
   };
 
   // HANDLE SUBMIT
