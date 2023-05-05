@@ -6,6 +6,7 @@ import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
+import { debounce } from "lodash";
 
 interface SignupForm {
   username: string;
@@ -27,7 +28,12 @@ function SignUp() {
   const [signupForm, setSignupForm] = useState<SignupForm>(initialState);
   const [validationMessages, setValidationMessages] = useState<{
     [key: string]: string;
-  }>({});
+  }>({
+    username: trad[lang].signup.usernameRequired,
+    email: trad[lang].signup.emailRequired,
+    password: trad[lang].signup.passwordRequired,
+    passwordConfirm: trad[lang].signup.passwordConfirmRequired,
+  });
   const [isFormValid, setIsFormValid] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
@@ -47,7 +53,12 @@ function SignUp() {
 
     switch (fieldName) {
       case "username":
-        if (signupForm.username.length < 5 || signupForm.username.length > 16) {
+        if (!signupForm.username) {
+          errorMessage = "";
+        } else if (
+          signupForm.username.length < 5 ||
+          signupForm.username.length > 16
+        ) {
           errorMessage = trad[lang].signup.usernameLength;
         } else {
           try {
@@ -68,34 +79,47 @@ function SignUp() {
         }
         break;
       case "email":
-        const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-        if (!emailRegex.test(signupForm.email)) {
-          errorMessage = "Le format de l'email est incorrect.";
+        if (!signupForm.email) {
+          errorMessage = "";
         } else {
-          try {
-            const emailResponse = await axios.get(
-              `${process.env.REACT_APP_API_URL}/users/check-email-availability`,
-              { params: { email: signupForm.email } }
-            );
-            if (!emailResponse.data.available) {
-              errorMessage = trad[lang].signup.emailAlreadyExists;
+          const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+          if (!emailRegex.test(signupForm.email)) {
+            errorMessage = "Le format de l'email est incorrect.";
+          } else {
+            try {
+              const emailResponse = await axios.get(
+                `${process.env.REACT_APP_API_URL}/users/check-email-availability`,
+                { params: { email: signupForm.email } }
+              );
+              if (!emailResponse.data.available) {
+                errorMessage = trad[lang].signup.emailAlreadyExists;
+              }
+            } catch (error) {
+              console.error(
+                "Erreur lors de la vérification de l'email:",
+                error
+              );
+              errorMessage = trad[lang].signup.verificationError;
             }
-          } catch (error) {
-            console.error("Erreur lors de la vérification de l'email:", error);
-            errorMessage = trad[lang].signup.verificationError;
           }
         }
         break;
       case "password":
-        const passwordRegex =
-          /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+[\]{}|;:'",.<>?`~])[A-Za-z\d!@#$%^&*()-_=+[\]{}|;:'",.<>?`~]{8,}$/;
+        if (!signupForm.password) {
+          errorMessage = "";
+        } else {
+          const passwordRegex =
+            /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+[\]{}|;:'",.<>?`~])[A-Za-z\d!@#$%^&*()-_=+[\]{}|;:'",.<>?`~]{8,}$/;
 
-        if (!passwordRegex.test(signupForm.password)) {
-          errorMessage = trad[lang].signup.verifyPassword;
+          if (!passwordRegex.test(signupForm.password)) {
+            errorMessage = trad[lang].signup.verifyPassword;
+          }
         }
         break;
       case "passwordConfirm":
-        if (signupForm.password !== signupForm.passwordConfirm) {
+        if (!signupForm.passwordConfirm) {
+          errorMessage = "";
+        } else if (signupForm.password !== signupForm.passwordConfirm) {
           errorMessage = trad[lang].signup.passwordConfirmError;
         }
         break;
@@ -146,7 +170,6 @@ function SignUp() {
     }
   };
 
-  // HANDLE BLUR
   useEffect(() => {
     const isValidUsername = !validationMessages.username;
     const isValidEmail = !validationMessages.email;
@@ -161,11 +184,16 @@ function SignUp() {
     );
   }, [validationMessages]);
 
-  // Remove setIsFormValid from handleBlur function
-  const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    await validateField(name as keyof SignupForm);
+  // HANDLE KEYUP
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const { name } = e.target as HTMLInputElement;
+    debouncedValidation(name as keyof SignupForm);
   };
+
+  // Debounced validation function
+  const debouncedValidation = debounce((fieldName: keyof SignupForm) => {
+    validateField(fieldName);
+  }, 300); // Adjust the debounce time (in ms) as needed
 
   // HANDLE SUBMIT
   const handleSubmit = async () => {
@@ -230,10 +258,14 @@ function SignUp() {
                           : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
                       }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
                       onChange={handleInputChange}
-                      onBlur={handleBlur}
+                      onKeyUp={handleKeyUp}
                     />
                     {validationMessages.username && (
-                      <p className="mt-1 flex gap-1 text-xs text-red-500">
+                      <p
+                        className={`mt-1 flex gap-1 text-xs ${
+                          signupForm.username ? "text-red-500" : "text-gray-400"
+                        }`}
+                      >
                         {validationMessages.username}
                       </p>
                     )}
@@ -264,10 +296,14 @@ function SignUp() {
                           : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
                       }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
                       onChange={handleInputChange}
-                      onBlur={handleBlur}
+                      onKeyUp={handleKeyUp}
                     />
                     {validationMessages.email && (
-                      <p className="mt-1 flex gap-1 text-xs text-red-500">
+                      <p
+                        className={`mt-1 flex gap-1 text-xs ${
+                          signupForm.username ? "text-red-500" : "text-gray-400"
+                        }`}
+                      >
                         {validationMessages.email}
                       </p>
                     )}
@@ -298,7 +334,7 @@ function SignUp() {
                           : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
                       }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
                       onChange={handleInputChange}
-                      onBlur={handleBlur}
+                      onKeyUp={handleKeyUp}
                     />
                     <button
                       type="button"
@@ -316,7 +352,11 @@ function SignUp() {
                       )}
                     </button>
                     {validationMessages.password && (
-                      <p className="mt-1 flex gap-1 text-xs text-red-500">
+                      <p
+                        className={`mt-1 flex gap-1 text-xs ${
+                          signupForm.username ? "text-red-500" : "text-gray-400"
+                        }`}
+                      >
                         {validationMessages.password}
                       </p>
                     )}
@@ -347,7 +387,7 @@ function SignUp() {
                           : "border-gray-300 bg-myWhite placeholder-gray-400 focus:border-secondary"
                       }  px-3 py-2 shadow-sm focus:outline-none focus:ring-0 sm:text-sm`}
                       onChange={handleInputChange}
-                      onBlur={handleBlur}
+                      onKeyUp={handleKeyUp}
                     />
                     <button
                       type="button"
@@ -367,7 +407,11 @@ function SignUp() {
                       )}
                     </button>
                     {validationMessages.passwordConfirm && (
-                      <p className="mt-1 flex gap-1 text-xs text-red-500">
+                      <p
+                        className={`mt-1 flex gap-1 text-xs ${
+                          signupForm.username ? "text-red-500" : "text-gray-400"
+                        }`}
+                      >
                         {validationMessages.passwordConfirm}
                       </p>
                     )}

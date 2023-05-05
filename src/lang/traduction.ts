@@ -284,6 +284,10 @@ const trad = {
       usernameAlreadyExists: "Ce nom d'utilisateur est déjà utilisé.",
       emailAlreadyExists: "Cette adresse email est déjà utilisée.",
       verificationError: "Une erreur est survenue lors de la vérification.",
+      usernameRequired: "Le nom d'utilisateur est requis.",
+      emailRequired: "L'adresse email est requise.",
+      passwordRequired: "Le mot de passe est requis.",
+      passwordConfirmRequired: "La confirmation du mot de passe est requise.",
     },
     toasts: {
       success: {
@@ -641,6 +645,10 @@ const trad = {
       usernameAlreadyExists: "This username is already taken.",
       emailAlreadyExists: "This email address is already taken.",
       verificationError: "An error occurred while verifying your account.",
+      usernameRequired: "Your username is required.",
+      emailRequired: "Your email address is required.",
+      passwordRequired: "A password is required.",
+      passwordConfirmRequired: "A password confirmation is required.",
     },
     toasts: {
       success: {
