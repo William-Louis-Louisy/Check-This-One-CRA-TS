@@ -301,7 +301,7 @@ function SignUp() {
                     {validationMessages.email && (
                       <p
                         className={`mt-1 flex gap-1 text-xs ${
-                          signupForm.username ? "text-red-500" : "text-gray-400"
+                          signupForm.email ? "text-red-500" : "text-gray-400"
                         }`}
                       >
                         {validationMessages.email}
@@ -354,7 +354,7 @@ function SignUp() {
                     {validationMessages.password && (
                       <p
                         className={`mt-1 flex gap-1 text-xs ${
-                          signupForm.username ? "text-red-500" : "text-gray-400"
+                          signupForm.password ? "text-red-500" : "text-gray-400"
                         }`}
                       >
                         {validationMessages.password}
@@ -409,7 +409,9 @@ function SignUp() {
                     {validationMessages.passwordConfirm && (
                       <p
                         className={`mt-1 flex gap-1 text-xs ${
-                          signupForm.username ? "text-red-500" : "text-gray-400"
+                          signupForm.passwordConfirm
+                            ? "text-red-500"
+                            : "text-gray-400"
                         }`}
                       >
                         {validationMessages.passwordConfirm}
