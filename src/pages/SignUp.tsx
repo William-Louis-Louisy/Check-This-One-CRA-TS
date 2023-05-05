@@ -248,6 +248,7 @@ function SignUp() {
                       name="username"
                       value={signupForm.username}
                       type="text"
+                      autoComplete="off"
                       required
                       minLength={5}
                       maxLength={16}
@@ -325,6 +326,7 @@ function SignUp() {
                       name="password"
                       value={signupForm.password}
                       type={showPassword ? "text" : "password"}
+                      autoComplete="off"
                       required
                       className={`block w-full appearance-none rounded-md border ${
                         darkMode
