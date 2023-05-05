@@ -114,6 +114,12 @@ function SignUp() {
           if (!passwordRegex.test(signupForm.password)) {
             errorMessage = trad[lang].signup.verifyPassword;
           }
+          if (
+            signupForm.passwordConfirm.length > 0 &&
+            signupForm.password !== signupForm.passwordConfirm
+          ) {
+            errorMessage = trad[lang].signup.passwordConfirmError;
+          }
         }
         break;
       case "passwordConfirm":
