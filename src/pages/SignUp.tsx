@@ -105,28 +105,19 @@ function SignUp() {
         }
         break;
       case "password":
-        if (!signupForm.password) {
-          errorMessage = "";
+        const passwordRegex =
+          /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+[\]{}|;:'",.<>?`~])[A-Za-z\d!@#$%^&*()-_=+[\]{}|;:'",.<>?`~]{8,}$/;
+        if (!passwordRegex.test(signupForm.password)) {
+          errorMessage = trad[lang].signup.verifyPassword;
         } else {
-          const passwordRegex =
-            /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+[\]{}|;:'",.<>?`~])[A-Za-z\d!@#$%^&*()-_=+[\]{}|;:'",.<>?`~]{8,}$/;
-
-          if (!passwordRegex.test(signupForm.password)) {
-            errorMessage = trad[lang].signup.verifyPassword;
-          }
-          if (
-            signupForm.passwordConfirm.length > 0 &&
-            signupForm.password !== signupForm.passwordConfirm
-          ) {
-            errorMessage = trad[lang].signup.passwordConfirmError;
-          }
+          errorMessage = "";
         }
         break;
       case "passwordConfirm":
-        if (!signupForm.passwordConfirm) {
-          errorMessage = "";
-        } else if (signupForm.password !== signupForm.passwordConfirm) {
+        if (signupForm.password !== signupForm.passwordConfirm) {
           errorMessage = trad[lang].signup.passwordConfirmError;
+        } else {
+          errorMessage = "";
         }
         break;
     }

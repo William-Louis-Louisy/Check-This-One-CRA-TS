@@ -51,34 +51,22 @@ export const periods = [
 
 export const runtimes = [
   {
-    name_en: "From 60 to 90m",
-    name_fr: "60 - 90min",
-    start_value: 60,
+    name_en: "less than 90m",
+    name_fr: "moins de 90min",
+    start_value: 0,
     end_value: 90,
   },
   {
-    name_en: "From 90 to 120m",
-    name_fr: "90 - 120min",
-    start_value: 90,
+    name_en: "less than 120m",
+    name_fr: "moins de 120min",
+    start_value: 0,
     end_value: 120,
   },
   {
-    name_en: "From 120 to 150m",
-    name_fr: "120 - 150min",
+    name_en: "more than 120m",
+    name_fr: "plus de 120min",
     start_value: 120,
-    end_value: 150,
-  },
-  {
-    name_en: "From 150 to 180m",
-    name_fr: "150 - 180min",
-    start_value: 150,
-    end_value: 180,
-  },
-  {
-    name_en: "More than 180m",
-    name_fr: "Plus de 180min",
-    start_value: 180,
-    end_value: 360,
+    end_value: 780,
   },
 ];
 
@@ -170,33 +158,21 @@ export const languages = [
 
 export const tv_runtimes = [
   {
-    name_en: "less than 20m",
-    name_fr: "moins de 20min",
+    name_en: "less than 30m",
+    name_fr: "moins de 30min",
     start_value: 0,
-    end_value: 20,
-  },
-  {
-    name_en: "From 20 to 30m",
-    name_fr: "20 - 30min",
-    start_value: 20,
     end_value: 30,
   },
   {
-    name_en: "From 30 to 40m",
-    name_fr: "30 - 40min",
-    start_value: 30,
-    end_value: 40,
+    name_en: "less than 60m",
+    name_fr: "moins de 60min",
+    start_value: 0,
+    end_value: 60,
   },
   {
-    name_en: "From 40 to 50m",
-    name_fr: "40 - 50min",
-    start_value: 40,
-    end_value: 50,
-  },
-  {
-    name_en: "More than 50m",
-    name_fr: "Plus de 50min",
-    start_value: 50,
+    name_en: "more than 60m",
+    name_fr: "plus de 60min",
+    start_value: 60,
     end_value: 360,
   },
 ];

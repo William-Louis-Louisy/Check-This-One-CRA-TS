@@ -5,15 +5,15 @@ import Poster from "../assets/poster.jpg";
 import Slider from "../components/Common/Slider";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
+import LazyImage from "../components/Common/LazyImage";
 import { useContext, useEffect, useState } from "react";
+import PageLoader from "../components/Common/PageLoader";
+import { FaClipboardList, FaRobot } from "react-icons/fa";
+import CreateListForm from "../components/Modals/CreateListForm";
+import TopRatedUserCard from "../components/Cards/TopRatedUserCard";
+import ContentTypeSelect from "../components/Modals/ContentTypeSelect";
 import { handleCountry, handleLang } from "../utils/RequestLanguageHandler";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import PageLoader from "../components/Common/PageLoader";
-import TopRatedUserCard from "../components/Cards/TopRatedUserCard";
-import LazyImage from "../components/Common/LazyImage";
-import CreateListForm from "../components/Modals/CreateListForm";
-import ContentTypeSelect from "../components/Modals/ContentTypeSelect";
-import { FaClipboardList, FaRobot } from "react-icons/fa";
 
 function Home() {
   const { lang, darkMode } = useContext(AppContext);
@@ -281,7 +281,7 @@ function Home() {
       )}
 
       {/* CREATE NEW LIST */}
-      {user?.id && (
+      {user?.id !== 0 && (
         <CreateListForm
           open={openSelect}
           setOpen={setOpenSelect}
