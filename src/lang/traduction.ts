@@ -9,6 +9,8 @@ const trad = {
       viewAll: "Voir tout",
     },
     bingeBuddy: {
+      between: "entre",
+      and: "et",
       description:
         "Binge Buddy va vous aider à trouver un contenu à regarder. Répondez à ses questions pour orienter ses propositions.",
       start: "Commencer",
@@ -41,6 +43,8 @@ const trad = {
       },
       results: "Voici les propositions de Binge Buddy",
       noResults: "Aucun résultat",
+      rslts: "résultat(s)",
+      pages: "page(s)",
     },
     contact: {
       title: "Aidez-nous à progresser",
@@ -219,7 +223,7 @@ const trad = {
       tvShows: "Séries",
       myProfile: "Mon profil",
       myLists: "Mes listes",
-      browseLists: "Parcourir les listes",
+      browseLists: "Listes",
       podcasts: "Podcasts",
       openMainMenu: "Ouvrir le menu principal",
       viewNotifications: "Voir les notifications",
@@ -375,6 +379,8 @@ const trad = {
       viewAll: "View all",
     },
     bingeBuddy: {
+      between: "between",
+      and: "and",
       description: "Binge Buddy is a tool to help you find content to watch.",
       start: "Start",
       next: "Next",
@@ -405,6 +411,8 @@ const trad = {
       },
       results: "Here are the Binge Buddy proposals",
       noResults: "No results",
+      rslts: "result(s)",
+      pages: "page(s)",
     },
     contact: {
       title: "Help us to step up",
@@ -581,7 +589,7 @@ const trad = {
       tvShows: "TV Shows",
       myProfile: "My profile",
       myLists: "My lists",
-      browseLists: "Browse lists",
+      browseLists: "Lists",
       podcasts: "Podcasts",
       openMainMenu: "Open main menu",
       viewNotifications: "View notifications",

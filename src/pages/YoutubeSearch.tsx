@@ -199,16 +199,19 @@ function YoutubeSearch() {
           <h4 className={`mb-4 text-xl font-semibold text-primary`}>
             {trad[lang].labels.trendingVideos}
           </h4>
-          {mostPopular?.items.map((item) => (
-            <YoutubeVideoCard
-              key={`${item.etag}-${item.id.kind}`}
-              addToList={handleAddToList}
-              item={item}
-              lang={lang}
-              darkMode={darkMode}
-              user={user}
-            />
-          ))}
+
+          <div className="flex flex-wrap justify-center gap-4 md:gap-2 lg:w-[70%]">
+            {mostPopular?.items.map((item) => (
+              <YoutubeVideoCard
+                key={`${item.etag}-${item.id.kind}`}
+                addToList={handleAddToList}
+                item={item}
+                lang={lang}
+                darkMode={darkMode}
+                user={user}
+              />
+            ))}
+          </div>
         </div>
       )}
 
@@ -219,18 +222,21 @@ function YoutubeSearch() {
           </div>
         ) : (
           <div className="flex w-full flex-col items-center">
-            {results?.items.map((item) =>
-              item.id.kind === "youtube#video" ? (
-                <YoutubeVideoCard
-                  key={`${item.etag}-${item.id.kind}`}
-                  addToList={handleAddToList}
-                  item={item}
-                  lang={lang}
-                  darkMode={darkMode}
-                  user={user}
-                />
-              ) : null
-            )}
+            <div className="flex flex-wrap justify-center gap-4 md:gap-2 lg:w-[70%]">
+              {results?.items.map((item) =>
+                item.id.kind === "youtube#video" ? (
+                  <YoutubeVideoCard
+                    key={`${item.etag}-${item.id.kind}`}
+                    addToList={handleAddToList}
+                    item={item}
+                    lang={lang}
+                    darkMode={darkMode}
+                    user={user}
+                  />
+                ) : null
+              )}
+            </div>
+
             <div className="my-5 flex w-full flex-row justify-between gap-8 md:w-3/5">
               <button
                 className={`${

@@ -10,7 +10,7 @@ export interface IBuddyForm {
   type: string;
   watchProvider: string[];
   language: string;
-  genre: number;
+  genre: number[];
   period: { start: string; end: string };
   runtime: { start: number; end: number };
   runtimeTv: { start: number; end: number };
@@ -21,8 +21,8 @@ export const defaultBuddyForm: IBuddyForm = {
   type: "",
   watchProvider: [],
   language: "",
-  genre: 0,
-  period: { start: "", end: "" },
+  genre: [],
+  period: { start: "1950-01-01", end: `${new Date().getFullYear()}-12-31` },
   runtime: { start: 0, end: 0 },
   runtimeTv: { start: 0, end: 0 },
   binge: false,
@@ -49,6 +49,8 @@ type AppContextType = {
   setTotalPages: Dispatch<SetStateAction<number>>;
   buddyForm: IBuddyForm;
   setBuddyForm: any;
+  totalResults: number;
+  setTotalResults: Dispatch<SetStateAction<number>>;
 };
 
 export const AppContext = createContext<AppContextType>(null);
@@ -66,6 +68,7 @@ const AppProvider = ({ children }) => {
   const [isFinished, setIsFinished] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [totalResults, setTotalResults] = useState(0);
 
   // CHECK IF DARK MODE IS ENABLED IN BROWSER
   useEffect(() => {
@@ -150,6 +153,8 @@ const AppProvider = ({ children }) => {
         setTotalPages,
         buddyForm,
         setBuddyForm,
+        totalResults,
+        setTotalResults,
       }}
     >
       {children}

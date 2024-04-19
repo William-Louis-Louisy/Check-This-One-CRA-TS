@@ -2,7 +2,6 @@ import { EyeIcon, EyeOffIcon, TrashIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ContentCard from "../components/Cards/ContentCard";
 import SmallContentCard from "../components/Cards/SmallContentCard";
 import DeleteConfirmation from "../components/Modals/DeleteConfirmation";
 import { AppContext } from "../contexts/AppContext";
@@ -11,6 +10,7 @@ import trad from "../lang/traduction";
 import { IList } from "../types/List";
 import { Switch } from "@headlessui/react";
 import { toast } from "react-toastify";
+import PageLoader from "../components/Common/PageLoader";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -28,13 +28,11 @@ interface INewListForm {
 
 function ListEdition() {
   // GET LIST ID FROM URL
-  const listId = useParams();
+  const { listId } = useParams();
   // GET LANG FROM CONTEXT
   const { lang, darkMode } = useContext(AppContext);
   // GET USER FROM CONTEXT
   const { user } = useContext(UserContext);
-  // GET SCREEN HEIGHT
-  const screenHeight = window.innerHeight;
 
   const navigate = useNavigate();
 
@@ -67,15 +65,13 @@ function ListEdition() {
         return "public";
     }
   };
-  // PRIVACY SWITCH STATE
-  const [privacy, setPrivacy] = useState(handlePrivacySwitch(list?.privacy));
 
   // GET LIST BY ID
   const getListById = async () => {
     if (listId) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/list/getById/${listId.listId}/user/${user?.id}`
+          `${process.env.REACT_APP_API_URL}/list/getById/${listId}/user/${user?.id}`
         );
         setList(data.data.list);
       } catch (error) {
@@ -87,6 +83,15 @@ function ListEdition() {
     getListById();
   }, [listId]);
 
+  // PRIVACY SWITCH STATE
+  const [privacy, setPrivacy] = useState<boolean>();
+
+  useEffect(() => {
+    if (list) {
+      setPrivacy(handlePrivacySwitch(list.privacy));
+    }
+  }, [list]);
+
   // EDITION FORM
   const [newListForm, setNewListForm] = useState<INewListForm>();
 
@@ -94,7 +99,7 @@ function ListEdition() {
   const deleteElement = async (id) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/${listId.listId}/content/${id}`
+        `${process.env.REACT_APP_API_URL}/${listId}/content/${id}`
       );
       getListById();
       toast.success(`${trad[lang].toasts.success.removeToList}`, {
@@ -136,7 +141,7 @@ function ListEdition() {
     if (newListForm) {
       try {
         await axios.put(
-          `${process.env.REACT_APP_API_URL}/list/update/${listId.listId}`,
+          `${process.env.REACT_APP_API_URL}/list/update/${listId}`,
           newListForm
         );
         getListById();
@@ -162,6 +167,8 @@ function ListEdition() {
       }
     }
   };
+
+  if (!list) return <PageLoader lang={lang} darkMode={darkMode} />;
 
   return (
     <div
