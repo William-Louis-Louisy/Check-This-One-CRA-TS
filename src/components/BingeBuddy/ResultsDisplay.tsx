@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import trad from "../../lang/traduction";
 import LazyImage from "../Common/LazyImage";
-import { GrFormPrevious, GrPowerReset } from "react-icons/gr";
 import Poster from "../../assets/poster.jpg";
-import { IBuddyForm, defaultBuddyForm } from "../../contexts/AppContext";
-import { Dispatch, SetStateAction, useEffect } from "react";
 import ResultsPagination from "./ResultsPagination";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import useRecommendations from "../../hooks/useRecommendations";
+import { HiXMark, HiOutlineChevronLeft } from "react-icons/hi2";
+import { IBuddyForm, defaultBuddyForm } from "../../contexts/AppContext";
 
 interface IResultsDisplayProps {
   lang: string;
@@ -78,7 +78,10 @@ function ResultsDisplay({
               : "bg-secondary text-myWhite"
           }`}
         >
-          <GrFormPrevious /> {trad[lang].bingeBuddy.previous}
+          <HiOutlineChevronLeft
+            className={`${darkMode ? "text-darkBg" : "text-myWhite"}`}
+          />{" "}
+          {trad[lang].bingeBuddy.previous}
         </button>
         <button
           onClick={handleReset}
@@ -88,7 +91,8 @@ function ResultsDisplay({
               : "bg-secondary text-myWhite"
           }`}
         >
-          <GrPowerReset /> {trad[lang].bingeBuddy.reset}
+          <HiXMark className={`${darkMode ? "text-darkBg" : "text-myWhite"}`} />{" "}
+          {trad[lang].bingeBuddy.reset}
         </button>
       </div>
       <div className="my-4 flex flex-row flex-wrap items-center justify-center gap-3">

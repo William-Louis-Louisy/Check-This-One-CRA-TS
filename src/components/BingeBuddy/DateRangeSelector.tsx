@@ -24,14 +24,7 @@ function DateRangeSelector({
       </h4>
 
       {/* Answer choices */}
-      <PeriodInputs
-        lang={lang}
-        darkMode={darkMode}
-        initialMin={1950}
-        initialMax={new Date().getFullYear()}
-        min={1950}
-        max={new Date().getFullYear()}
-      />
+      <PeriodInputs lang={lang} darkMode={darkMode} />
     </>
   );
 }

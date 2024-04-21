@@ -23,8 +23,8 @@ export const defaultBuddyForm: IBuddyForm = {
   language: "",
   genre: [],
   period: { start: "1950-01-01", end: `${new Date().getFullYear()}-12-31` },
-  runtime: { start: 0, end: 0 },
-  runtimeTv: { start: 0, end: 0 },
+  runtime: { start: 0, end: 480 },
+  runtimeTv: { start: 0, end: 180 },
   binge: false,
   userLocation: "FR",
 };
