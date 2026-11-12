@@ -81,7 +81,7 @@ function AdminDashboard() {
   // CHECK BADGES FOR ALL USERS
   const badgesVerification = async () => {
     try {
-      const data = await axios.get(
+      const data = await axios.post(
         `${process.env.REACT_APP_API_URL}/check-badges`
       );
       if (data.status === 200) {
