@@ -1,5 +1,3 @@
-import { TrashIcon } from "@heroicons/react/outline";
-import axios from "axios";
 import React from "react";
 import trad from "../../lang/traduction";
 

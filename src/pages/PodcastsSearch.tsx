@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
-import { SearchIcon } from "@heroicons/react/outline";
 import trad from "../lang/traduction";
 import AddToList from "../components/Modals/AddToList";
 import CreateListForm from "../components/Modals/CreateListForm";

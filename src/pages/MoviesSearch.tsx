@@ -9,7 +9,6 @@ import { useContext, useState, useEffect } from "react";
 import { handleLang } from "../utils/RequestLanguageHandler";
 import CreateListForm from "../components/Modals/CreateListForm";
 import { useSearchParams } from "react-router-dom";
-import SearchInput from "../components/Common/SearchInput";
 import { XIcon } from "@heroicons/react/outline";
 import PageLoader from "../components/Common/PageLoader";
 import { scrollToTop } from "../utils/UsefullFunctions";

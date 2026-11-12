@@ -1,7 +1,6 @@
 import axios from "axios";
 import trad from "../lang/traduction";
 import { AppContext } from "../contexts/AppContext";
-import { SearchIcon } from "@heroicons/react/solid";
 import { UserContext } from "../contexts/UserContext";
 import { useContext, useState, useEffect } from "react";
 import ListDisplay from "../components/Lists/ListDisplay";
@@ -27,6 +26,7 @@ function UserLikedLists() {
           `${process.env.REACT_APP_API_URL}/user/${user?.id}/lists?page=${page}&limit=10&paginate=true`
         );
         setLists(data.data.lists);
+        setTotal(data.data.totalPage);
       } catch (error) {
         console.error(error);
       } finally {

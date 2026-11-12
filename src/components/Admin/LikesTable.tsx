@@ -1,27 +1,6 @@
 import { Fragment } from "react";
 import trad from "../../lang/traduction";
 
-const locations = [
-  {
-    name: "Edinburgh",
-    people: [
-      {
-        name: "Lindsay Walton",
-        title: "Front-end Developer",
-        email: "lindsay.walton@example.com",
-        role: "Member",
-      },
-      {
-        name: "Courtney Henry",
-        title: "Designer",
-        email: "courtney.henry@example.com",
-        role: "Admin",
-      },
-    ],
-  },
-  // More people...
-];
-
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }

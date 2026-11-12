@@ -1,4 +1,4 @@
-import { ClipboardListIcon, EyeIcon } from "@heroicons/react/outline";
+import { ClipboardListIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
