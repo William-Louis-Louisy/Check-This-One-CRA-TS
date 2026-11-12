@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
-import { setAccessToken } from "../utils/authToken";
+import { setCsrfToken } from "../utils/csrfToken";
 
 function Login() {
   const navigate = useNavigate();
@@ -27,8 +27,8 @@ function Login() {
           password: loginForm.password,
         }
       );
-      if (data?.user && data?.token) {
-        setAccessToken(data.token);
+      if (data?.user && data?.csrfToken) {
+        setCsrfToken(data.csrfToken);
         await storeUser(data.user);
         navigate("/");
         toast.success(`${trad[lang].toasts.success.login}`, {
