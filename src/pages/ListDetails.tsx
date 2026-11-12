@@ -16,6 +16,7 @@ import { UserContext } from "../contexts/UserContext";
 import { ICreator, IList } from "../types/List";
 import { typeToIcon } from "../utils/TypeToIcon";
 import ListDetailsCard from "../components/Cards/ListDetailsCard";
+import Error404 from "./Error404";
 
 function ListDetails() {
   // GET LANG FROM CONTEXT
@@ -23,6 +24,7 @@ function ListDetails() {
   const { lang, darkMode } = useContext(AppContext);
   const { id } = useParams();
   const [list, setList] = useState<IList>();
+  const [notFound, setNotFound] = useState(false);
   const [creator, setCreator] = useState<ICreator>();
   const [creatorModal, setCreatorModal] = useState(false);
   const [openShareModal, setOpenShareModal] = useState(false);
@@ -31,12 +33,19 @@ function ListDetails() {
   // GET LIST BY ID
   const getListById = useCallback(async () => {
     if (id) {
+      setNotFound(false);
       try {
         const data = await axios.get(
           `${process.env.REACT_APP_API_URL}/list/getById/${id}/user/${user?.id}`
         );
         setList(data.data.list);
       } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
+          setList(undefined);
+          setCreator(undefined);
+          setNotFound(true);
+          return;
+        }
         console.error(error);
       }
     }
@@ -63,7 +72,11 @@ function ListDetails() {
     getUserById();
   }, [getUserById]);
 
-  if (!list && !creator) {
+  if (notFound) {
+    return <Error404 />;
+  }
+
+  if (!list) {
     return <PageLoader lang={lang} darkMode={darkMode} />;
   }
 
