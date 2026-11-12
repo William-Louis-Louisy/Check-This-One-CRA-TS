@@ -160,8 +160,21 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   // LOGOUT
   const logout = async () => {
+    let serverRevoked = false;
     try {
-      await axios.get(`${process.env.REACT_APP_API_URL}/logout`);
+      // Revocation must be enforced by the backend, not only by removing local state.
+      await axios.post(`${process.env.REACT_APP_API_URL}/logout`);
+      serverRevoked = true;
+    } catch (error) {
+      // Always erase local credentials; a failed request only means that
+      // remote revocation cannot be confirmed.
+      console.error("Server-side session revocation was not confirmed", error);
+    } finally {
+      resetUser();
+      setNotifications([]);
+    }
+
+    if (serverRevoked) {
       toast.success(`${trad[lang].toasts.success.logout}`, {
         position: "top-right",
         autoClose: 2500,
@@ -170,10 +183,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         pauseOnHover: false,
         theme: darkMode ? "dark" : "light",
       });
-      await resetUser();
       window.location.replace("/");
-    } catch (error) {
-      console.error(error);
+    } else {
       toast.error(`${trad[lang].toasts.error.logout}`, {
         position: "top-right",
         autoClose: 2500,
