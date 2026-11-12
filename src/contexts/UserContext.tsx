@@ -3,6 +3,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useEffect,
+  useCallback,
   useState,
   useContext,
 } from "react";
@@ -65,9 +66,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [user, setUser] = useState<IUser>(storedUser);
   const [notifications, setNotifications] = useState<INotifs[]>();
+  const userId = user?.id;
 
   // STORE USER IN ASYNC STORAGE
-  const storeUser = async (value: IUser) => {
+  const storeUser = useCallback(async (value: IUser) => {
     try {
       await localStorage.setItem("user", JSON.stringify(value));
       setUser(value);
@@ -75,10 +77,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.error(error);
       console.error("Error while storing user");
     }
-  };
+  }, []);
 
   // GET USER FROM ASYNC STORAGE
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     try {
       const storedUser = await localStorage.getItem("user");
       if (storedUser && getAccessToken()) {
@@ -87,47 +89,48 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
 
   // REFETCH USER FROM DB
-  const refetchUser = async () => {
+  const refetchUser = useCallback(async () => {
     try {
+      if (!userId) return;
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/user/${user.id}`
+        `${process.env.REACT_APP_API_URL}/user/${userId}`
       );
       if (data) {
-        storeUser(data.user);
+        await storeUser(data.user);
       }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [userId, storeUser]);
 
   useEffect(() => {
-    if (user?.id && user?.id !== 0) {
+    if (userId) {
       refetchUser();
     }
-  }, [user?.id]);
+  }, [userId, refetchUser]);
 
   // GET USER NOTIFICATIONS
-  const getUserNotifications = async () => {
+  const getUserNotifications = useCallback(async () => {
     try {
-      if (user && user.id !== 0) {
+      if (userId) {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/${user.id}/notifications/unseen`
+          `${process.env.REACT_APP_API_URL}/user/${userId}/notifications/unseen`
         );
         setNotifications(data.data.notifications);
       }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
-    if (user?.id) {
+    if (userId) {
       getUserNotifications();
 
       const notificationInterval = setInterval(() => {
@@ -137,7 +140,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         clearInterval(notificationInterval);
       };
     }
-  }, [user?.id]);
+  }, [userId, getUserNotifications]);
 
   // RESET USER
   const resetUser = () => {
