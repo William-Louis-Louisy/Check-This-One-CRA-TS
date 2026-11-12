@@ -142,7 +142,7 @@ function MovieDetails() {
       const filteredWatchProviders = watchProviders[selectedCountry];
       setFilteredProviders(filteredWatchProviders);
     }
-  }, [filterWatchProviders]);
+  }, [watchProviders, selectedCountry]);
 
   // GET LISTS BY USER ID
   const getLists = useCallback(async () => {
@@ -154,10 +154,10 @@ function MovieDetails() {
     } catch (error) {
       console.error(error);
     }
-  }, [getLists]);
+  }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [user?.id]);
+  }, [getLists]);
 
   // ADD MOVIE TO LIST
   const handleAddToList = (content) => {
@@ -176,7 +176,7 @@ function MovieDetails() {
 
   useEffect(() => {
     filterWatchProviders();
-  }, [watchProviders, selectedCountry]);
+  }, [filterWatchProviders]);
 
   if (loading) return <PageLoader lang={lang} darkMode={darkMode} />;
 

@@ -73,11 +73,11 @@ function YoutubeSearch() {
     } finally {
       setLoading(false);
     }
-  }, [getMostPopular]);
+  }, [regionCode]);
 
   useEffect(() => {
     getMostPopular();
-  }, [regionCode]);
+  }, [getMostPopular]);
 
   // GET LISTS BY USER ID
   const getLists = useCallback(async () => {
@@ -89,10 +89,10 @@ function YoutubeSearch() {
     } catch (error) {
       console.error(error);
     }
-  }, [getLists]);
+  }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [user?.id]);
+  }, [getLists]);
 
   // ADD MOVIE TO LIST
   const handleAddToList = (content) => {

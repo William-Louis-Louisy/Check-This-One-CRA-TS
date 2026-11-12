@@ -55,7 +55,7 @@ function PodcastsSearch() {
     } finally {
       setLoading(false);
     }
-  }, [getTrendingPodcasts]);
+  }, [lang]);
 
   // GET LISTS BY USER ID
   const getLists = useCallback(async () => {
@@ -67,10 +67,10 @@ function PodcastsSearch() {
     } catch (error) {
       console.error(error);
     }
-  }, [getLists]);
+  }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [user?.id]);
+  }, [getLists]);
 
   // HANDLE ADD PODCAST TO LIST
   const handleAddPodcastToList = (content) => {
@@ -96,7 +96,7 @@ function PodcastsSearch() {
 
   useEffect(() => {
     getTrendingPodcasts();
-  }, [lang]);
+  }, [getTrendingPodcasts]);
 
   if (loading) {
     return <PageLoader lang={lang} darkMode={darkMode} />;

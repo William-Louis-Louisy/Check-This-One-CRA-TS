@@ -88,10 +88,10 @@ function TvShowsSearch() {
     } catch (error) {
       console.error(error);
     }
-  }, [getLists]);
+  }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [user?.id]);
+  }, [getLists]);
 
   if (loading) {
     return <PageLoader lang={lang} darkMode={darkMode} />;

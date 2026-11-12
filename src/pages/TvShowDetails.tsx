@@ -107,7 +107,7 @@ function TvShowDetails() {
       const filteredWatchProviders = watchProviders[selectedCountry];
       setFilteredProviders(filteredWatchProviders);
     }
-  }, [filterWatchProviders]);
+  }, [watchProviders, selectedCountry]);
 
   // GET SIMILAR SHOWS BY SHOW ID
   const getSimilarMovies = useCallback(async () => {
@@ -155,7 +155,7 @@ function TvShowDetails() {
 
   useEffect(() => {
     filterWatchProviders();
-  }, [watchProviders, selectedCountry]);
+  }, [filterWatchProviders]);
 
   // GET LISTS BY USER ID
   const getLists = useCallback(async () => {
@@ -167,10 +167,10 @@ function TvShowDetails() {
     } catch (error) {
       console.error(error);
     }
-  }, [getLists]);
+  }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [user?.id]);
+  }, [getLists]);
 
   // ADD SHOW TO LIST
   const handleAddToList = (content) => {
