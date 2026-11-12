@@ -24,47 +24,48 @@ function UserProfile() {
   const { user, refetchUser } = useContext(UserContext);
   const [badges, setBadges] = useState<IBadge[]>();
   const [userStats, setUserStats] = useState<IUserStats>();
+  const userId = user?.id;
 
   // GET USER BADGES
   const getUserBadges = useCallback(async () => {
     try {
-      if (user) {
+      if (userId) {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/${user.id}/badges`
+          `${process.env.REACT_APP_API_URL}/user/${userId}/badges`
         );
         setBadges(data.data.badges);
       }
     } catch (error) {
       console.error(error);
     }
-  }, [user?.id]);
+  }, [userId]);
 
   // Get user stats
   const getUserStats = useCallback(async () => {
     try {
-      if (user) {
+      if (userId) {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/${user.id}/stats`
+          `${process.env.REACT_APP_API_URL}/user/${userId}/stats`
         );
         setUserStats(data.data);
       }
     } catch (error) {
       console.error(error);
     }
-  }, [user?.id]);
+  }, [userId]);
 
   const debouncedGetUserBadges = useMemo(() => _.debounce(getUserBadges, 1000), [getUserBadges]);
   const debouncedGetUserStats = useMemo(() => _.debounce(getUserStats, 1000), [getUserStats]);
 
   useEffect(() => {
-    if (!user?.id) return;
+    if (!userId) return;
     debouncedGetUserBadges();
     debouncedGetUserStats();
     return () => {
       debouncedGetUserBadges.cancel();
       debouncedGetUserStats.cancel();
     };
-  }, [user?.id, debouncedGetUserBadges, debouncedGetUserStats]);
+  }, [userId, debouncedGetUserBadges, debouncedGetUserStats]);
 
   if (user.id === 0) {
     return <PageLoader lang={lang} darkMode={darkMode} />;
