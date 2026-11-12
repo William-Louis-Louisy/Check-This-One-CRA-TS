@@ -1,6 +1,6 @@
 import axios from "axios";
 import trad from "../lang/traduction";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useCallback } from "react";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import ListDisplay from "../components/Lists/ListDisplay";
@@ -19,7 +19,7 @@ function UserLists() {
   const [pagesToDisplay, setPagesToDisplay] = useState([]);
 
   // GET LISTS BY USER ID
-  const getLists = async () => {
+  const getLists = useCallback(async () => {
     if (user?.id) {
       try {
         const data = await axios.get(
@@ -33,9 +33,9 @@ function UserLists() {
         setLoading(false);
       }
     }
-  };
+  }, [user?.id, page]);
 
-  const handlePageToDisplay = () => {
+  const handlePageToDisplay = useCallback(() => {
     if (total < 10)
       setPagesToDisplay(Array.from({ length: total }, (_, i) => i + 1));
     else if (page < 7)
@@ -43,22 +43,23 @@ function UserLists() {
     else if (total > page + 4)
       setPagesToDisplay(Array.from({ length: 10 }, (_, i) => page - 5 + i));
     else setPagesToDisplay(Array.from({ length: 10 }, (_, i) => total - 9 + i));
-  };
+  }, [total, page]);
 
   const handleNextPage = () => {
     if (page < total) setPage(page + 1);
-    handlePageToDisplay();
   };
 
   const handlePrevPage = () => {
     if (page > 1) setPage(page - 1);
-    handlePageToDisplay();
   };
 
   useEffect(() => {
     getLists();
+  }, [getLists]);
+
+  useEffect(() => {
     handlePageToDisplay();
-  }, [user, page, total]);
+  }, [handlePageToDisplay]);
 
   // if (!user?.id) {
   //   return <div>Vous devez être connecté pour accéder à cette page</div>;

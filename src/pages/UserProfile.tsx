@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import UserCard from "../components/Cards/UserCard";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
@@ -26,7 +26,7 @@ function UserProfile() {
   const [userStats, setUserStats] = useState<IUserStats>();
 
   // GET USER BADGES
-  const getUserBadges = async () => {
+  const getUserBadges = useCallback(async () => {
     try {
       if (user) {
         const data = await axios.get(
@@ -37,10 +37,10 @@ function UserProfile() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user?.id]);
 
   // Get user stats
-  const getUserStats = async () => {
+  const getUserStats = useCallback(async () => {
     try {
       if (user) {
         const data = await axios.get(
@@ -51,15 +51,20 @@ function UserProfile() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user?.id]);
 
-  const debouncedGetUserBadges = _.debounce(getUserBadges, 1000);
-  const debouncedGetUserStats = _.debounce(getUserStats, 1000);
+  const debouncedGetUserBadges = useMemo(() => _.debounce(getUserBadges, 1000), [getUserBadges]);
+  const debouncedGetUserStats = useMemo(() => _.debounce(getUserStats, 1000), [getUserStats]);
 
   useEffect(() => {
+    if (!user?.id) return;
     debouncedGetUserBadges();
     debouncedGetUserStats();
-  }, [user]);
+    return () => {
+      debouncedGetUserBadges.cancel();
+      debouncedGetUserStats.cancel();
+    };
+  }, [user?.id, debouncedGetUserBadges, debouncedGetUserStats]);
 
   if (user.id === 0) {
     return <PageLoader lang={lang} darkMode={darkMode} />;
