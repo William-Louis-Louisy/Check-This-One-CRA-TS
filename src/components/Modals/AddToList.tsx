@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState, useEffect } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ClipboardListIcon } from "@heroicons/react/outline";
 import trad from "../../lang/traduction";

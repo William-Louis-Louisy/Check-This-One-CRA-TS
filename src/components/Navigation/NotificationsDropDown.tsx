@@ -17,8 +17,8 @@ function NotificationsDropDown() {
   // UPDATE NOTIFICATION
   const updateNotification = async (id: number) => {
     try {
-      const res = await axios.put(
-        `${process.env.REACT_APP_API_URL}/user/${user.id}/notification/${id}}`
+      await axios.put(
+        `${process.env.REACT_APP_API_URL}/user/${user.id}/notification/${id}`
       );
     } catch (error) {
       console.error(error);

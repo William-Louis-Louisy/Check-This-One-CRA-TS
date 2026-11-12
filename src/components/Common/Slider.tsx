@@ -17,7 +17,6 @@ function Slider({
   rightStepValue: number;
 }) {
   const [stepValue, setStepValue] = useState(leftStepValue);
-  const [cardWidth, setCardWidth] = useState(213);
   const cardGap = 24;
 
   const updateStepValue = () => {
@@ -30,7 +29,6 @@ function Slider({
     } else {
       updatedCardWidth = 213;
     }
-    setCardWidth(updatedCardWidth);
 
     // Calculez combien de ContentCard peuvent être affichées sur l'écran
     const visibleCards = Math.floor(

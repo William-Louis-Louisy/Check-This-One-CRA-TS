@@ -1,5 +1,5 @@
 import { FilterIcon, SearchIcon } from "@heroicons/react/outline";
-import { PlusIcon, XIcon } from "@heroicons/react/solid";
+import { XIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { useEffect, useState, useContext, useCallback } from "react";
 import { useParams, useSearchParams } from "react-router-dom";

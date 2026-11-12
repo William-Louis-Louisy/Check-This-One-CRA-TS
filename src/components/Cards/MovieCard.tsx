@@ -12,7 +12,6 @@ function MovieCard({ movie, lang, handleAddToList, user, darkMode }) {
   };
 
   // GET SCREEN WIDTH
-  const screenWidth = window.innerWidth;
 
   return (
     <div

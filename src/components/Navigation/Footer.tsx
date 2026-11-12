@@ -1,7 +1,6 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
-import { SiDiscord, SiTwitter, SiInstagram } from "react-icons/si";
+import { SiDiscord, SiTwitter } from "react-icons/si";
 import trad from "../../lang/traduction";
 
 function Footer() {
