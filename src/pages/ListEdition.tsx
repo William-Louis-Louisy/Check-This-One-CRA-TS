@@ -1,6 +1,6 @@
 import { EyeIcon, EyeOffIcon, TrashIcon } from "@heroicons/react/outline";
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
+import { useCallback, useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SmallContentCard from "../components/Cards/SmallContentCard";
 import DeleteConfirmation from "../components/Modals/DeleteConfirmation";
@@ -67,7 +67,7 @@ function ListEdition() {
   };
 
   // GET LIST BY ID
-  const getListById = async () => {
+  const getListById = useCallback(async () => {
     if (listId) {
       try {
         const data = await axios.get(
@@ -78,10 +78,10 @@ function ListEdition() {
         console.error(error);
       }
     }
-  };
+  }, [listId, user?.id]);
   useEffect(() => {
     getListById();
-  }, [listId]);
+  }, [getListById]);
 
   // PRIVACY SWITCH STATE
   const [privacy, setPrivacy] = useState<boolean>();

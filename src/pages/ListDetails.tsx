@@ -4,7 +4,7 @@ import {
   ShareIcon,
 } from "@heroicons/react/outline";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ContentCard from "../components/Cards/ContentCard";
 import PageLoader from "../components/Common/PageLoader";
@@ -13,10 +13,8 @@ import CreatorDisplayCard from "../components/Modals/CreatorDisplayCard";
 import ShareModal from "../components/Modals/ShareModal";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
-import trad from "../lang/traduction";
 import { ICreator, IList } from "../types/List";
 import { typeToIcon } from "../utils/TypeToIcon";
-import CircularProgressBar from "../components/Common/CircularProgressBar";
 import ListDetailsCard from "../components/Cards/ListDetailsCard";
 
 function ListDetails() {
@@ -28,9 +26,10 @@ function ListDetails() {
   const [creator, setCreator] = useState<ICreator>();
   const [creatorModal, setCreatorModal] = useState(false);
   const [openShareModal, setOpenShareModal] = useState(false);
+  const creatorId = list?.creator_id;
 
   // GET LIST BY ID
-  const getListById = async () => {
+  const getListById = useCallback(async () => {
     if (id) {
       try {
         const data = await axios.get(
@@ -41,28 +40,28 @@ function ListDetails() {
         console.error(error);
       }
     }
-  };
+  }, [id, user?.id]);
   useEffect(() => {
     getListById();
-  }, [id]);
+  }, [getListById]);
 
   // GET USER BY ID
-  const getUserById = async () => {
-    if (list) {
+  const getUserById = useCallback(async () => {
+    if (creatorId) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/${list?.creator_id}`
+          `${process.env.REACT_APP_API_URL}/user/${creatorId}`
         );
         setCreator(data.data.user);
       } catch (error) {
         console.error(error);
       }
     }
-  };
+  }, [creatorId]);
 
   useEffect(() => {
     getUserById();
-  }, [list]);
+  }, [getUserById]);
 
   if (!list && !creator) {
     return <PageLoader lang={lang} darkMode={darkMode} />;
