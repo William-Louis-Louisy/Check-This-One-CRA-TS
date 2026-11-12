@@ -29,7 +29,7 @@ function Login() {
       );
       if (data?.user && data?.token) {
         setAccessToken(data.token);
-        storeUser(data.user);
+        await storeUser(data.user);
         navigate("/");
         toast.success(`${trad[lang].toasts.success.login}`, {
           position: "top-right",
