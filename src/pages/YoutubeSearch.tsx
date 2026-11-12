@@ -1,6 +1,7 @@
 import axios from "axios";
 import trad from "../lang/traduction";
 import { useCallback, useContext, useEffect, useState } from "react";
+import { SearchIcon } from "@heroicons/react/solid";
 import { AppContext } from "../contexts/AppContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import YoutubeVideoCard from "../components/Cards/YoutubeVideoCard";
