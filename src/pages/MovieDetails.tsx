@@ -12,7 +12,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { formatDateUsToFr } from "../utils/DateFormater";
 import { handleLang } from "../utils/RequestLanguageHandler";
 import CreateListForm from "../components/Modals/CreateListForm";
-import { ClipboardListIcon, EyeIcon } from "@heroicons/react/outline";
+import { ClipboardListIcon } from "@heroicons/react/outline";
 import PageLoader from "../components/Common/PageLoader";
 import Tabs from "../components/Navigation/Tabs";
 import CastCard from "../components/Cards/CastCard";
@@ -84,7 +84,7 @@ function MovieDetails() {
         console.error(error);
       }
     }
-  }, [movieParam, lang]);
+  }, [movieParam]);
 
   // GET WATCH PROVIDERS BY MOVIE ID
   const getWatchProviders = useCallback(async () => {
@@ -98,7 +98,7 @@ function MovieDetails() {
         console.error(error);
       }
     }
-  }, [movieParam, lang]);
+  }, [movieParam]);
 
   // GET SIMILAR MOVIES BY MOVIE ID
   const getSimilarMovies = useCallback(async () => {
@@ -157,7 +157,7 @@ function MovieDetails() {
   }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [getLists]);
+  }, [getLists, user?.id]);
 
   // ADD MOVIE TO LIST
   const handleAddToList = (content) => {

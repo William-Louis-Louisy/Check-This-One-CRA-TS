@@ -85,7 +85,7 @@ function TvShowDetails() {
         console.error(error);
       }
     }
-  }, [tvParam, lang]);
+  }, [tvParam]);
 
   // GET WATCH PROVIDERS BY SHOW ID
   const getWatchProviders = useCallback(async () => {
@@ -99,7 +99,7 @@ function TvShowDetails() {
         console.error(error);
       }
     }
-  }, [tvParam, lang]);
+  }, [tvParam]);
 
   // FILTER WATCH PROVIDERS BY COUNTRY
   const filterWatchProviders = useCallback(() => {
@@ -170,7 +170,7 @@ function TvShowDetails() {
   }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [getLists]);
+  }, [getLists, user?.id]);
 
   // ADD SHOW TO LIST
   const handleAddToList = (content) => {

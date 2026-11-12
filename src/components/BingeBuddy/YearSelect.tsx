@@ -1,5 +1,3 @@
-import { AppContext } from "../../contexts/AppContext";
-import { useState, useContext, useEffect } from "react";
 
 interface IYearSelectProps {
   darkMode: boolean;

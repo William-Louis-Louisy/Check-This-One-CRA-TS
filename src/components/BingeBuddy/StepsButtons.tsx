@@ -18,7 +18,7 @@ function StepsButtons({
   setCurrentStep,
 }: IStepsButtonsProps) {
   const apiKey = process.env.REACT_APP_TMDB_API_KEY;
-  const { fetchRecommendations, isLoading, error } = useRecommendations(apiKey);
+  const { fetchRecommendations } = useRecommendations(apiKey);
 
   // HANDLE PREVIOUS STEP
   const handlePreviousStep = () => {

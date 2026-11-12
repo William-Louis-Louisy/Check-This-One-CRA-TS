@@ -93,7 +93,7 @@ function YoutubeSearch() {
   }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [getLists]);
+  }, [getLists, user?.id]);
 
   // ADD MOVIE TO LIST
   const handleAddToList = (content) => {

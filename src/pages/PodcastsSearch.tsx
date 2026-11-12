@@ -70,7 +70,7 @@ function PodcastsSearch() {
   }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [getLists]);
+  }, [getLists, user?.id]);
 
   // HANDLE ADD PODCAST TO LIST
   const handleAddPodcastToList = (content) => {

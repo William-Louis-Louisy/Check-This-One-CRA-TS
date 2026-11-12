@@ -91,7 +91,7 @@ function TvShowsSearch() {
   }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [getLists]);
+  }, [getLists, user?.id]);
 
   if (loading) {
     return <PageLoader lang={lang} darkMode={darkMode} />;
