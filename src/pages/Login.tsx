@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import trad from "../lang/traduction";
+import { setAccessToken } from "../utils/authToken";
 
 function Login() {
   const navigate = useNavigate();
@@ -26,8 +27,10 @@ function Login() {
           password: loginForm.password,
         }
       );
-      if (data) {
-        storeUser(data.user);
+      if (data?.user && data?.token) {
+        setAccessToken(data.token);
+        await storeUser(data.user);
+        navigate("/");
         toast.success(`${trad[lang].toasts.success.login}`, {
           position: "top-right",
           autoClose: 2500,
@@ -47,8 +50,6 @@ function Login() {
         pauseOnHover: false,
         theme: darkMode ? "dark" : "light",
       });
-    } finally {
-      navigate("/");
     }
   };
 

@@ -1,8 +1,7 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import axios from "axios";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
-import { SearchIcon } from "@heroicons/react/outline";
 import trad from "../lang/traduction";
 import AddToList from "../components/Modals/AddToList";
 import CreateListForm from "../components/Modals/CreateListForm";
@@ -44,25 +43,11 @@ function PodcastsSearch() {
     return null;
   };
 
-  // HANDLE REGION CHANGE
-  const handleRegionChange = (lang: string) => {
-    switch (lang) {
-      case "fr":
-        return "fr";
-      case "en":
-        return "us";
-      default:
-        return "fr";
-    }
-  };
-
   // GET TRENDING PODCASTS
-  const getTrendingPodcasts = async () => {
+  const getTrendingPodcasts = useCallback(async () => {
     try {
       const { data } = await axios.get(
-        `https://itunes.apple.com/${handleRegionChange(
-          lang
-        )}/rss/toppodcasts/limit=50/json`
+        `https://itunes.apple.com/${lang === "fr" ? "fr" : "us"}/rss/toppodcasts/limit=50/json`
       );
       setTrendingPodcasts(data.feed.entry);
     } catch (error) {
@@ -70,10 +55,10 @@ function PodcastsSearch() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [lang]);
 
   // GET LISTS BY USER ID
-  const getLists = async () => {
+  const getLists = useCallback(async () => {
     try {
       const data = await axios.get(
         `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
@@ -82,10 +67,10 @@ function PodcastsSearch() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [user?.id]);
+  }, [getLists, user?.id]);
 
   // HANDLE ADD PODCAST TO LIST
   const handleAddPodcastToList = (content) => {
@@ -111,7 +96,7 @@ function PodcastsSearch() {
 
   useEffect(() => {
     getTrendingPodcasts();
-  }, [lang]);
+  }, [getTrendingPodcasts]);
 
   if (loading) {
     return <PageLoader lang={lang} darkMode={darkMode} />;

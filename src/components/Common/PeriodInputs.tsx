@@ -5,7 +5,7 @@ import YearSelect from "../BingeBuddy/YearSelect";
 
 function PeriodInputs({ lang, darkMode }: { lang: string; darkMode: boolean }) {
   const currentYear = new Date().getFullYear();
-  const { buddyForm, setBuddyForm } = useContext(AppContext);
+  const { setBuddyForm } = useContext(AppContext);
 
   const [minValue, setMinValue] = useState(1950);
   const [maxValue, setMaxValue] = useState(currentYear);
@@ -29,11 +29,15 @@ function PeriodInputs({ lang, darkMode }: { lang: string; darkMode: boolean }) {
   };
 
   useEffect(() => {
-    setBuddyForm({
-      ...buddyForm,
-      period: { start: `${minValue}-01-01`, end: `${maxValue}-12-31` },
+    const start = `${minValue}-01-01`;
+    const end = `${maxValue}-12-31`;
+    setBuddyForm((previous) => {
+      if (previous.period.start === start && previous.period.end === end) {
+        return previous;
+      }
+      return { ...previous, period: { start, end } };
     });
-  }, [minValue, maxValue, buddyForm]);
+  }, [minValue, maxValue, setBuddyForm]);
 
   return (
     <div

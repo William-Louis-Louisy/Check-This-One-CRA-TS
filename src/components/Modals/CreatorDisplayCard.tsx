@@ -8,32 +8,34 @@ import {
   ChevronUpIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 function CreatorDisplayCard({ open, setOpen, creator, lang, darkMode }) {
   const [badges, setBadges] = useState<IBadge[]>();
   const [showBadges, setShowBadges] = useState(false);
+  const creatorId = creator?.id;
 
   // GET USER BADGES
-  const getUserBadges = async () => {
+  const getUserBadges = useCallback(async () => {
     try {
-      if (creator) {
+      if (creatorId) {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/${creator.id}/badges`
+          `${process.env.REACT_APP_API_URL}/user/${creatorId}/badges`
         );
         setBadges(data.data.badges);
       }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [creatorId]);
 
-  const debouncedGetUserBadges = _.debounce(getUserBadges, 1000);
+  const debouncedGetUserBadges = useMemo(() => _.debounce(getUserBadges, 1000), [getUserBadges]);
 
   useEffect(() => {
-    debouncedGetUserBadges();
-  }, [creator]);
+    if (creatorId) debouncedGetUserBadges();
+    return () => debouncedGetUserBadges.cancel();
+  }, [creatorId, debouncedGetUserBadges]);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog

@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
 import trad from "../../lang/traduction";
-import useRecommendations from "../../hooks/useRecommendations";
 import { scrollToTop } from "../../utils/UsefullFunctions";
 
 interface IResultsPaginationProps {

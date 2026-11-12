@@ -2,7 +2,6 @@ import axios from "axios";
 import trad from "../lang/traduction";
 import { AppContext } from "../contexts/AppContext";
 import { useContext, useEffect, useState } from "react";
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";

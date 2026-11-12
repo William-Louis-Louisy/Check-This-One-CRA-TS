@@ -1,7 +1,7 @@
 import { FilterIcon, SearchIcon } from "@heroicons/react/outline";
-import { PlusIcon, XIcon } from "@heroicons/react/solid";
+import { XIcon } from "@heroicons/react/solid";
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import ListViewBtnGroup from "../components/Common/ListViewBtnGroup";
 import Pagination from "../components/Common/Pagination";
@@ -16,7 +16,7 @@ import PageLoader from "../components/Common/PageLoader";
 
 function BrowseLists() {
   // GET USER ID FROM PARAMS
-  const userId = useParams();
+  const { userId } = useParams();
 
   // GET LANG FROM CONTEXT
   const { lang, darkMode } = useContext(AppContext);
@@ -42,11 +42,11 @@ function BrowseLists() {
   };
 
   // GET LISTS
-  const getLists = async () => {
+  const getLists = useCallback(async () => {
     try {
       let url = `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/?page=${page}&limit=10&paginate=true`;
-      if (userId.userId) {
-        url += `&creator_id=${userId.userId}`;
+      if (userId) {
+        url += `&creator_id=${userId}`;
       }
       if (searchQuery.get("query")) {
         url += `&title=${searchQuery.get("query")}`;
@@ -66,9 +66,9 @@ function BrowseLists() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId, searchQuery, tags, page, type]);
 
-  const handlePageToDisplay = () => {
+  const handlePageToDisplay = useCallback(() => {
     if (total < 10)
       setPagesToDisplay(Array.from({ length: total }, (_, i) => i + 1));
     else if (page < 7)
@@ -76,16 +76,14 @@ function BrowseLists() {
     else if (total > page + 4)
       setPagesToDisplay(Array.from({ length: 10 }, (_, i) => page - 5 + i));
     else setPagesToDisplay(Array.from({ length: 10 }, (_, i) => total - 9 + i));
-  };
+  }, [total, page]);
 
   const handleNextPage = () => {
     if (page < total) setPage(page + 1);
-    handlePageToDisplay();
   };
 
   const handlePrevPage = () => {
     if (page > 1) setPage(page - 1);
-    handlePageToDisplay();
   };
 
   const handleTagSelect = (e) => {
@@ -102,8 +100,11 @@ function BrowseLists() {
 
   useEffect(() => {
     getLists();
+  }, [getLists]);
+
+  useEffect(() => {
     handlePageToDisplay();
-  }, [userId, searchQuery, tags, page, total, type]);
+  }, [handlePageToDisplay]);
 
   if (loading) return <PageLoader lang={lang} darkMode={darkMode} />;
 

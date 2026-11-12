@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import UserCard from "../components/Cards/UserCard";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
@@ -24,42 +24,48 @@ function UserProfile() {
   const { user, refetchUser } = useContext(UserContext);
   const [badges, setBadges] = useState<IBadge[]>();
   const [userStats, setUserStats] = useState<IUserStats>();
+  const userId = user?.id;
 
   // GET USER BADGES
-  const getUserBadges = async () => {
+  const getUserBadges = useCallback(async () => {
     try {
-      if (user) {
+      if (userId) {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/${user.id}/badges`
+          `${process.env.REACT_APP_API_URL}/user/${userId}/badges`
         );
         setBadges(data.data.badges);
       }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [userId]);
 
   // Get user stats
-  const getUserStats = async () => {
+  const getUserStats = useCallback(async () => {
     try {
-      if (user) {
+      if (userId) {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/${user.id}/stats`
+          `${process.env.REACT_APP_API_URL}/user/${userId}/stats`
         );
         setUserStats(data.data);
       }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [userId]);
 
-  const debouncedGetUserBadges = _.debounce(getUserBadges, 1000);
-  const debouncedGetUserStats = _.debounce(getUserStats, 1000);
+  const debouncedGetUserBadges = useMemo(() => _.debounce(getUserBadges, 1000), [getUserBadges]);
+  const debouncedGetUserStats = useMemo(() => _.debounce(getUserStats, 1000), [getUserStats]);
 
   useEffect(() => {
+    if (!userId) return;
     debouncedGetUserBadges();
     debouncedGetUserStats();
-  }, [user]);
+    return () => {
+      debouncedGetUserBadges.cancel();
+      debouncedGetUserStats.cancel();
+    };
+  }, [userId, debouncedGetUserBadges, debouncedGetUserStats]);
 
   if (user.id === 0) {
     return <PageLoader lang={lang} darkMode={darkMode} />;

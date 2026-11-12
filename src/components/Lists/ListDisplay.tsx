@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -43,6 +43,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
 
   // SHARE MODAL
   const [openShareModal, setOpenShareModal] = useState(false);
+  const creatorId = list?.creator_id;
 
   // HANDLE DELETE LIST
   const handleDeleteList = async () => {
@@ -74,18 +75,18 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
   };
 
   // GET USER BY ID
-  const getUserById = async () => {
-    if (list) {
+  const getUserById = useCallback(async () => {
+    if (creatorId) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/${list?.creator_id}`
+          `${process.env.REACT_APP_API_URL}/user/${creatorId}`
         );
         setCreator(data.data.user);
       } catch (error) {
         console.error(error);
       }
     }
-  };
+  }, [creatorId]);
 
   // LIST LIKES MANAGEMENT
   const handleLikes = async () => {
@@ -103,7 +104,7 @@ function ListDisplay({ list, lang, user, refetch, darkMode }) {
 
   useEffect(() => {
     getUserById();
-  }, [list]);
+  }, [getUserById]);
 
   // OPEN MODAL
   const openModal = (id: IListToDelete) => {

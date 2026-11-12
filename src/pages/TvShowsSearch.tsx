@@ -2,7 +2,7 @@ import axios from "axios";
 import trad from "../lang/traduction";
 import { SearchIcon } from "@heroicons/react/solid";
 import { AppContext } from "../contexts/AppContext";
-import { useContext, useState, useEffect } from "react";
+import { useCallback, useContext, useState, useEffect } from "react";
 import TvShowCard from "../components/Cards/TvShowCard";
 import AddToList from "../components/Modals/AddToList";
 import { UserContext } from "../contexts/UserContext";
@@ -79,7 +79,7 @@ function TvShowsSearch() {
   };
 
   // GET LISTS BY USER ID
-  const getLists = async () => {
+  const getLists = useCallback(async () => {
     try {
       const data = await axios.get(
         `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}?paginate=false`
@@ -88,10 +88,10 @@ function TvShowsSearch() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [user?.id]);
+  }, [getLists, user?.id]);
 
   if (loading) {
     return <PageLoader lang={lang} darkMode={darkMode} />;

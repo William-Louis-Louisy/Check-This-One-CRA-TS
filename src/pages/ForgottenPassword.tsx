@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
 import { MailIcon } from "@heroicons/react/outline";
 import trad from "../lang/traduction";

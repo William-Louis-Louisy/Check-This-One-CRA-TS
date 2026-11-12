@@ -8,18 +8,18 @@ import { UserContext } from "../contexts/UserContext";
 import { IMovieDetails } from "../types/MovieDetails";
 import AddToList from "../components/Modals/AddToList";
 import { IMovieProvider } from "../types/MovieProvider";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { formatDateUsToFr } from "../utils/DateFormater";
 import { handleLang } from "../utils/RequestLanguageHandler";
 import CreateListForm from "../components/Modals/CreateListForm";
-import { ClipboardListIcon, EyeIcon } from "@heroicons/react/outline";
+import { ClipboardListIcon } from "@heroicons/react/outline";
 import PageLoader from "../components/Common/PageLoader";
 import Tabs from "../components/Navigation/Tabs";
 import CastCard from "../components/Cards/CastCard";
 
 function MovieDetails() {
   // GET MOVIE ID FROM URL
-  const movieId = useParams();
+  const movieParam = useParams().movieId;
   // GET LANG FROM CONTEXT
   const { lang, darkMode } = useContext(AppContext);
   // GET USER FROM CONTEXT
@@ -27,7 +27,7 @@ function MovieDetails() {
   // STATES
   const [lists, setLists] = useState([]);
   const [open, setOpen] = useState(false);
-  const [listsCount, setListsCount] = useState<Number>(0);
+  const [, setListsCount] = useState<number>(0);
   const [movie, setMovie] = useState<IMovieDetails>();
   const [cast, setCast] = useState([]);
   const [contentToList, setContentToList] = useState();
@@ -55,11 +55,11 @@ function MovieDetails() {
   ];
 
   // GET MOVIE BY ID
-  const getMovie = async () => {
-    if (movieId) {
+  const getMovie = useCallback(async () => {
+    if (movieParam) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_TMDB_MOVIE_URL}/${movieId.movieId}?api_key=${
+          `${process.env.REACT_APP_TMDB_MOVIE_URL}/${movieParam}?api_key=${
             process.env.REACT_APP_TMDB_API_KEY
           }&language=${handleLang(lang)}`
         );
@@ -70,43 +70,43 @@ function MovieDetails() {
         setLoading(false);
       }
     }
-  };
+  }, [movieParam, lang]);
 
   // GET ALL LISTS COUNT THAT CONTAIN A PROVIDER ID
-  const getListsCount = async () => {
-    if (movieId) {
+  const getListsCount = useCallback(async () => {
+    if (movieParam) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/lists/getCountByProviderId/${movieId.movieId}`
+          `${process.env.REACT_APP_API_URL}/lists/getCountByProviderId/${movieParam}`
         );
         setListsCount(data.data.count);
       } catch (error) {
         console.error(error);
       }
     }
-  };
+  }, [movieParam]);
 
   // GET WATCH PROVIDERS BY MOVIE ID
-  const getWatchProviders = async () => {
-    if (movieId) {
+  const getWatchProviders = useCallback(async () => {
+    if (movieParam) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_TMDB_MOVIE_URL}/${movieId.movieId}/watch/providers?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+          `${process.env.REACT_APP_TMDB_MOVIE_URL}/${movieParam}/watch/providers?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
         );
         setWatchProviders(data.data.results);
       } catch (error) {
         console.error(error);
       }
     }
-  };
+  }, [movieParam]);
 
   // GET SIMILAR MOVIES BY MOVIE ID
-  const getSimilarMovies = async () => {
-    if (movieId) {
+  const getSimilarMovies = useCallback(async () => {
+    if (movieParam) {
       try {
         const data = await axios.get(
           `${process.env.REACT_APP_TMDB_MOVIE_URL}/${
-            movieId.movieId
+            movieParam
           }/similar?api_key=${
             process.env.REACT_APP_TMDB_API_KEY
           }&language=${handleLang(lang)}&page=1`
@@ -116,15 +116,15 @@ function MovieDetails() {
         console.error(error);
       }
     }
-  };
+  }, [movieParam, lang]);
 
   // GET CAST BY MOVIE ID
-  const getCasting = async () => {
-    if (movieId) {
+  const getCasting = useCallback(async () => {
+    if (movieParam) {
       try {
         const data = await axios.get(
           `${process.env.REACT_APP_TMDB_MOVIE_URL}/${
-            movieId.movieId
+            movieParam
           }/credits?api_key=${
             process.env.REACT_APP_TMDB_API_KEY
           }&language=${handleLang(lang)}`
@@ -134,18 +134,18 @@ function MovieDetails() {
         console.error(error);
       }
     }
-  };
+  }, [movieParam, lang]);
 
   // FILTER WATCH PROVIDERS BY COUNTRY
-  const filterWatchProviders = () => {
+  const filterWatchProviders = useCallback(() => {
     if (watchProviders) {
       const filteredWatchProviders = watchProviders[selectedCountry];
       setFilteredProviders(filteredWatchProviders);
     }
-  };
+  }, [watchProviders, selectedCountry]);
 
   // GET LISTS BY USER ID
-  const getLists = async () => {
+  const getLists = useCallback(async () => {
     try {
       const data = await axios.get(
         `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}?paginate=false`
@@ -154,10 +154,10 @@ function MovieDetails() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [user?.id]);
+  }, [getLists, user?.id]);
 
   // ADD MOVIE TO LIST
   const handleAddToList = (content) => {
@@ -172,11 +172,11 @@ function MovieDetails() {
     getSimilarMovies();
     getListsCount();
     getCasting();
-  }, [movieId, lang]);
+  }, [getMovie, getListsCount, getWatchProviders, getSimilarMovies, getCasting]);
 
   useEffect(() => {
     filterWatchProviders();
-  }, [watchProviders, selectedCountry]);
+  }, [filterWatchProviders]);
 
   if (loading) return <PageLoader lang={lang} darkMode={darkMode} />;
 

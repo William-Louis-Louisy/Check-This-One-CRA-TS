@@ -23,7 +23,7 @@ function Notifications() {
   // UPDATE NOTIFICATION
   const updateNotification = async (id: number) => {
     try {
-      const res = await axios.put(
+      await axios.put(
         `${process.env.REACT_APP_API_URL}/user/${userId.id}/notification/${id}}`
       );
     } catch (error) {

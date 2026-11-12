@@ -1,6 +1,6 @@
-import { ClipboardListIcon, EyeIcon } from "@heroicons/react/outline";
+import { ClipboardListIcon } from "@heroicons/react/outline";
 import axios from "axios";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useCallback, useContext, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import CastCard from "../components/Cards/CastCard";
 import PageLoader from "../components/Common/PageLoader";
@@ -18,7 +18,7 @@ import { handleLang } from "../utils/RequestLanguageHandler";
 
 function TvShowDetails() {
   // GET MOVIE ID FROM URL
-  const tvShowId = useParams();
+  const tvParam = useParams().tvShowId;
   // GET LANG FROM CONTEXT
   const { lang, darkMode } = useContext(AppContext);
   // GET USER FROM CONTEXT
@@ -26,7 +26,7 @@ function TvShowDetails() {
   // STATES
   const [lists, setLists] = useState([]);
   const [open, setOpen] = useState(false);
-  const [listsCount, setListsCount] = useState<Number>(0);
+  const [, setListsCount] = useState<number>(0);
   const [show, setShow] = useState<IShowDetails>();
   const [contentToList, setContentToList] = useState();
   const [contentTitle, setContentTitle] = useState("");
@@ -54,12 +54,12 @@ function TvShowDetails() {
   ];
 
   // GET SHOW BY ID
-  const getShow = async () => {
-    if (tvShowId) {
+  const getShow = useCallback(async () => {
+    if (tvParam) {
       try {
         const data = await axios.get(
           `${process.env.REACT_APP_TMDB_SHOWS_URL}/${
-            tvShowId.tvShowId
+            tvParam
           }?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=${handleLang(
             lang
           )}`
@@ -71,51 +71,51 @@ function TvShowDetails() {
         setLoading(false);
       }
     }
-  };
+  }, [tvParam, lang]);
 
   // GET ALL LISTS COUNT THAT CONTAIN A PROVIDER ID
-  const getListsCount = async () => {
-    if (tvShowId) {
+  const getListsCount = useCallback(async () => {
+    if (tvParam) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/lists/getCountByProviderId/${tvShowId.tvShowId}`
+          `${process.env.REACT_APP_API_URL}/lists/getCountByProviderId/${tvParam}`
         );
         setListsCount(data.data.count);
       } catch (error) {
         console.error(error);
       }
     }
-  };
+  }, [tvParam]);
 
   // GET WATCH PROVIDERS BY SHOW ID
-  const getWatchProviders = async () => {
-    if (tvShowId) {
+  const getWatchProviders = useCallback(async () => {
+    if (tvParam) {
       try {
         const data = await axios.get(
-          `${process.env.REACT_APP_TMDB_SHOWS_URL}/${tvShowId.tvShowId}/watch/providers?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+          `${process.env.REACT_APP_TMDB_SHOWS_URL}/${tvParam}/watch/providers?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
         );
         setWatchProviders(data.data.results);
       } catch (error) {
         console.error(error);
       }
     }
-  };
+  }, [tvParam]);
 
   // FILTER WATCH PROVIDERS BY COUNTRY
-  const filterWatchProviders = () => {
+  const filterWatchProviders = useCallback(() => {
     if (watchProviders) {
       const filteredWatchProviders = watchProviders[selectedCountry];
       setFilteredProviders(filteredWatchProviders);
     }
-  };
+  }, [watchProviders, selectedCountry]);
 
   // GET SIMILAR SHOWS BY SHOW ID
-  const getSimilarMovies = async () => {
-    if (tvShowId) {
+  const getSimilarMovies = useCallback(async () => {
+    if (tvParam) {
       try {
         const data = await axios.get(
           `${process.env.REACT_APP_TMDB_SHOWS_URL}/${
-            tvShowId.tvShowId
+            tvParam
           }/similar?api_key=${
             process.env.REACT_APP_TMDB_API_KEY
           }&language=${handleLang(lang)}&page=1`
@@ -125,15 +125,15 @@ function TvShowDetails() {
         console.error(error);
       }
     }
-  };
+  }, [tvParam, lang]);
 
   // GET CAST BY SHOW ID
-  const getCast = async () => {
-    if (tvShowId) {
+  const getCast = useCallback(async () => {
+    if (tvParam) {
       try {
         const data = await axios.get(
           `${process.env.REACT_APP_TMDB_SHOWS_URL}/${
-            tvShowId.tvShowId
+            tvParam
           }/credits?api_key=${
             process.env.REACT_APP_TMDB_API_KEY
           }&language=${handleLang(lang)}`
@@ -143,7 +143,7 @@ function TvShowDetails() {
         console.error(error);
       }
     }
-  };
+  }, [tvParam, lang]);
 
   useEffect(() => {
     getShow();
@@ -151,14 +151,14 @@ function TvShowDetails() {
     getSimilarMovies();
     getListsCount();
     getCast();
-  }, [tvShowId, lang]);
+  }, [getShow, getListsCount, getWatchProviders, getSimilarMovies, getCast]);
 
   useEffect(() => {
     filterWatchProviders();
-  }, [watchProviders, selectedCountry]);
+  }, [filterWatchProviders]);
 
   // GET LISTS BY USER ID
-  const getLists = async () => {
+  const getLists = useCallback(async () => {
     try {
       const data = await axios.get(
         `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}?paginate=false`
@@ -167,10 +167,10 @@ function TvShowDetails() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [user?.id]);
+  }, [getLists, user?.id]);
 
   // ADD SHOW TO LIST
   const handleAddToList = (content) => {

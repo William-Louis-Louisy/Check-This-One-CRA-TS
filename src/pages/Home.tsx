@@ -6,7 +6,7 @@ import Slider from "../components/Common/Slider";
 import { AppContext } from "../contexts/AppContext";
 import { UserContext } from "../contexts/UserContext";
 import LazyImage from "../components/Common/LazyImage";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import PageLoader from "../components/Common/PageLoader";
 import { FaClipboardList, FaRobot } from "react-icons/fa";
 import CreateListForm from "../components/Modals/CreateListForm";
@@ -26,7 +26,7 @@ function Home() {
   const [openSelect, setOpenSelect] = useState(false);
 
   // GET UPOCOMING MOVIES
-  const getUpcomingMovies = async () => {
+  const getUpcomingMovies = useCallback(async () => {
     try {
       const data = await axios.get(
         `${process.env.REACT_APP_TMDB_MOVIE_URL}/upcoming?api_key=${
@@ -37,10 +37,10 @@ function Home() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [lang]);
 
   // GET TOP RATED SHOWS
-  const getTopRatedShows = async () => {
+  const getTopRatedShows = useCallback(async () => {
     try {
       const data = await axios.get(
         `${process.env.REACT_APP_TMDB_SHOWS_URL}/top_rated?api_key=${
@@ -51,10 +51,10 @@ function Home() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [lang]);
 
   // GET TOP USERS
-  const getTopUsers = async () => {
+  const getTopUsers = useCallback(async () => {
     try {
       const data = await axios.get(
         `${process.env.REACT_APP_API_URL}/lists/getMostLiked`
@@ -63,13 +63,13 @@ function Home() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     getUpcomingMovies();
     getTopRatedShows();
     getTopUsers();
-  }, [lang]);
+  }, [getUpcomingMovies, getTopRatedShows, getTopUsers]);
 
   if (!upcomingMovies || !topRatedShows) {
     <PageLoader lang={lang} darkMode={darkMode} />;

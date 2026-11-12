@@ -11,17 +11,7 @@ function MovieCard({ movie, lang, handleAddToList, user, darkMode }) {
     return [dd, mm, yy].join("/");
   };
 
-  // CUT TITLES LENGTH IF TOO LONG
-  const titleLength = (title) => {
-    if (title.length > 16) {
-      return title.slice(0, 16) + "...";
-    } else {
-      return title;
-    }
-  };
-
   // GET SCREEN WIDTH
-  const screenWidth = window.innerWidth;
 
   return (
     <div

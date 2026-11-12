@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 function SmallContentCard({ data }) {
   // HANLE TYPE
@@ -20,7 +19,7 @@ function SmallContentCard({ data }) {
     <a
       href={
         data.type === "youtube"
-          ? `https://www.youtube.com/watch?v=${data.provider_id_string}}`
+          ? `https://www.youtube.com/watch?v=${data.provider_id_string}`
           : data.type === "podcast"
           ? `https://podcasts.apple.com/fr/podcast/miracle-fajr-podcast/id${data.provider_id_string}?uo=2`
           : `/${handleType(data.type)}/${data.provider_id}`
@@ -28,11 +27,7 @@ function SmallContentCard({ data }) {
       target={
         data.type === "youtube" || data.type === "podcast" ? "_blank" : ""
       }
-      rel={
-        data.type === "youtube" || data.type === "podcast"
-          ? "noopener noreferrer"
-          : ""
-      }
+      rel="noopener noreferrer"
     >
       <div className="h-40 md:h-48 md:max-w-[192px]">
         <img

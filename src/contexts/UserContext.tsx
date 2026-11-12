@@ -3,6 +3,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useEffect,
+  useCallback,
   useState,
   useContext,
 } from "react";
@@ -10,6 +11,7 @@ import axios from "axios";
 import trad from "../lang/traduction";
 import { toast } from "react-toastify";
 import { AppContext } from "./AppContext";
+import { clearAccessToken, getAccessToken } from "../utils/authToken";
 
 export interface IUser {
   id: number;
@@ -20,6 +22,7 @@ export interface IUser {
   city?: string;
   introduction?: string;
   catchline?: string;
+  role?: "user" | "admin";
   seenContent?: any[];
   seenCount?: number;
 }
@@ -50,7 +53,7 @@ export const UserContext = createContext<UserContextType | null>(null);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const { lang, darkMode } = useContext(AppContext);
 
-  const storedUser = JSON.parse(localStorage.getItem("user")) || {
+  const storedUser = (getAccessToken() && JSON.parse(localStorage.getItem("user") || "null")) || {
     id: 0,
     email: "",
     user_name: "",
@@ -63,9 +66,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [user, setUser] = useState<IUser>(storedUser);
   const [notifications, setNotifications] = useState<INotifs[]>();
+  const userId = user?.id;
 
   // STORE USER IN ASYNC STORAGE
-  const storeUser = async (value: IUser) => {
+  const storeUser = useCallback(async (value: IUser) => {
     try {
       await localStorage.setItem("user", JSON.stringify(value));
       setUser(value);
@@ -73,59 +77,60 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.error(error);
       console.error("Error while storing user");
     }
-  };
+  }, []);
 
   // GET USER FROM ASYNC STORAGE
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     try {
       const storedUser = await localStorage.getItem("user");
-      if (storedUser) {
+      if (storedUser && getAccessToken()) {
         setUser(JSON.parse(storedUser));
       }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
 
   // REFETCH USER FROM DB
-  const refetchUser = async () => {
+  const refetchUser = useCallback(async () => {
     try {
+      if (!userId) return;
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/user/${user.id}`
+        `${process.env.REACT_APP_API_URL}/user/${userId}`
       );
       if (data) {
-        storeUser(data.user);
+        await storeUser(data.user);
       }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [userId, storeUser]);
 
   useEffect(() => {
-    if (user?.id && user?.id !== 0) {
+    if (userId) {
       refetchUser();
     }
-  }, [user?.id]);
+  }, [userId, refetchUser]);
 
   // GET USER NOTIFICATIONS
-  const getUserNotifications = async () => {
+  const getUserNotifications = useCallback(async () => {
     try {
-      if (user && user.id !== 0) {
+      if (userId) {
         const data = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/${user.id}/notifications/unseen`
+          `${process.env.REACT_APP_API_URL}/user/${userId}/notifications/unseen`
         );
         setNotifications(data.data.notifications);
       }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
-    if (user?.id) {
+    if (userId) {
       getUserNotifications();
 
       const notificationInterval = setInterval(() => {
@@ -135,7 +140,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         clearInterval(notificationInterval);
       };
     }
-  }, [user?.id]);
+  }, [userId, getUserNotifications]);
 
   // RESET USER
   const resetUser = () => {
@@ -150,6 +155,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       catchline: "",
     });
     localStorage.removeItem("user");
+    clearAccessToken();
   };
 
   // LOGOUT

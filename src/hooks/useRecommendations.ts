@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useContext } from "react";
+import { useCallback, useState, useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 
 function useRecommendations(apiKey) {
@@ -17,7 +17,7 @@ function useRecommendations(apiKey) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchRecommendations = async () => {
+  const fetchRecommendations = useCallback(async () => {
     if (!buddyForm.type) return;
     setIsLoading(true);
     setError(null);
@@ -55,7 +55,7 @@ function useRecommendations(apiKey) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [buddyForm, lang, page, apiKey, setResults, setTotalPages, setTotalResults, setIsFinished, setCurrentStep]);
 
   return { fetchRecommendations, isLoading, error };
 }

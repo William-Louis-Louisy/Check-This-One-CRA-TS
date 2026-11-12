@@ -5,11 +5,10 @@ import { AppContext } from "../contexts/AppContext";
 import MovieCard from "../components/Cards/MovieCard";
 import { UserContext } from "../contexts/UserContext";
 import AddToList from "../components/Modals/AddToList";
-import { useContext, useState, useEffect } from "react";
+import { useCallback, useContext, useState, useEffect } from "react";
 import { handleLang } from "../utils/RequestLanguageHandler";
 import CreateListForm from "../components/Modals/CreateListForm";
 import { useSearchParams } from "react-router-dom";
-import SearchInput from "../components/Common/SearchInput";
 import { XIcon } from "@heroicons/react/outline";
 import PageLoader from "../components/Common/PageLoader";
 import { scrollToTop } from "../utils/UsefullFunctions";
@@ -69,7 +68,7 @@ function MoviesSearch() {
   };
 
   // GET LISTS BY USER ID
-  const getLists = async () => {
+  const getLists = useCallback(async () => {
     try {
       const data = await axios.get(
         `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}?paginate=false`
@@ -78,10 +77,10 @@ function MoviesSearch() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user?.id]);
   useEffect(() => {
     if (user?.id) getLists();
-  }, [user?.id]);
+  }, [getLists, user?.id]);
 
   if (loading) {
     return <PageLoader lang={lang} darkMode={darkMode} />;

@@ -1,9 +1,8 @@
 import axios from "axios";
 import trad from "../lang/traduction";
 import { AppContext } from "../contexts/AppContext";
-import { SearchIcon } from "@heroicons/react/solid";
 import { UserContext } from "../contexts/UserContext";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useCallback } from "react";
 import ListDisplay from "../components/Lists/ListDisplay";
 import PageLoader from "../components/Common/PageLoader";
 import TableListDisplay from "../components/Lists/TableListDisplay";
@@ -20,22 +19,23 @@ function UserLikedLists() {
   const [pagesToDisplay, setPagesToDisplay] = useState([]);
 
   // GET LISTS LIKED BY USER
-  const getLists = async () => {
+  const getLists = useCallback(async () => {
     if (user?.id) {
       try {
         const data = await axios.get(
           `${process.env.REACT_APP_API_URL}/user/${user?.id}/lists?page=${page}&limit=10&paginate=true`
         );
         setLists(data.data.lists);
+        setTotal(data.data.totalPage);
       } catch (error) {
         console.error(error);
       } finally {
         setLoading(false);
       }
     }
-  };
+  }, [user?.id, page]);
 
-  const handlePageToDisplay = () => {
+  const handlePageToDisplay = useCallback(() => {
     if (total < 10)
       setPagesToDisplay(Array.from({ length: total }, (_, i) => i + 1));
     else if (page < 7)
@@ -43,22 +43,23 @@ function UserLikedLists() {
     else if (total > page + 4)
       setPagesToDisplay(Array.from({ length: 10 }, (_, i) => page - 5 + i));
     else setPagesToDisplay(Array.from({ length: 10 }, (_, i) => total - 9 + i));
-  };
+  }, [total, page]);
 
   const handleNextPage = () => {
     if (page < total) setPage(page + 1);
-    handlePageToDisplay();
   };
 
   const handlePrevPage = () => {
     if (page > 1) setPage(page - 1);
-    handlePageToDisplay();
   };
 
   useEffect(() => {
     getLists();
+  }, [getLists]);
+
+  useEffect(() => {
     handlePageToDisplay();
-  }, [user, page, total]);
+  }, [handlePageToDisplay]);
 
   if (loading) return <PageLoader lang={lang} darkMode={darkMode} />;
 
