@@ -1,12 +1,6 @@
-// Temporary bearer-token transport for CTO-01.
-// CTO-03 will replace this with a hardened first-party session design.
-const TOKEN_KEY = "cto.accessToken";
-
-export const getAccessToken = (): string | null =>
-  sessionStorage.getItem(TOKEN_KEY);
-
-export const setAccessToken = (token: string): void =>
-  sessionStorage.setItem(TOKEN_KEY, token);
-
-export const clearAccessToken = (): void =>
-  sessionStorage.removeItem(TOKEN_KEY);
+// CTO-03b: legacy CTO-01/03a Bearer tokens must not survive the switch
+// to server-managed HttpOnly cookies.
+export const clearLegacyAuth = (): void => {
+  sessionStorage.removeItem("cto.accessToken");
+  localStorage.removeItem("user");
+};

@@ -29,7 +29,11 @@ import BingeBuddy from "../pages/BingeBuddy";
 import ScrollToTop from "../components/Common/ScrollToTop";
 
 export default function PublicRoutes() {
-  const { user } = useContext(UserContext);
+  const { user, authReady } = useContext(UserContext);
+
+  // Avoid briefly presenting a private route as 404 before the cookie
+  // session has been restored after a page reload.
+  if (!authReady) return null;
 
   return (
     <BrowserRouter>
