@@ -84,7 +84,7 @@ export default function PublicRoutes() {
         )}
 
         {/* --- ADMIN ROUTES --- */}
-        {user && user?.user_name === "admin" && (
+        {user && user?.role === "admin" && (
           <>
             <Route path="adminDashboard" element={<AdminDashboard />} />
           </>

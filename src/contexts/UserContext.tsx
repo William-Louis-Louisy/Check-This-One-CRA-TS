@@ -10,6 +10,7 @@ import axios from "axios";
 import trad from "../lang/traduction";
 import { toast } from "react-toastify";
 import { AppContext } from "./AppContext";
+import { clearAccessToken, getAccessToken } from "../utils/authToken";
 
 export interface IUser {
   id: number;
@@ -20,6 +21,7 @@ export interface IUser {
   city?: string;
   introduction?: string;
   catchline?: string;
+  role?: "user" | "admin";
   seenContent?: any[];
   seenCount?: number;
 }
@@ -50,7 +52,7 @@ export const UserContext = createContext<UserContextType | null>(null);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const { lang, darkMode } = useContext(AppContext);
 
-  const storedUser = JSON.parse(localStorage.getItem("user")) || {
+  const storedUser = (getAccessToken() && JSON.parse(localStorage.getItem("user") || "null")) || {
     id: 0,
     email: "",
     user_name: "",
@@ -79,7 +81,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const getUser = async () => {
     try {
       const storedUser = await localStorage.getItem("user");
-      if (storedUser) {
+      if (storedUser && getAccessToken()) {
         setUser(JSON.parse(storedUser));
       }
     } catch (error) {
@@ -150,6 +152,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       catchline: "",
     });
     localStorage.removeItem("user");
+    clearAccessToken();
   };
 
   // LOGOUT

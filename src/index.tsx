@@ -1,3 +1,4 @@
+import "./utils/configureApi";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "../src/styles/index.css";
