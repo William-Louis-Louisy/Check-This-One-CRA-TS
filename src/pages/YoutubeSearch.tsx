@@ -1,6 +1,6 @@
 import axios from "axios";
 import trad from "../lang/traduction";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { AppContext } from "../contexts/AppContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import YoutubeVideoCard from "../components/Cards/YoutubeVideoCard";
@@ -62,7 +62,7 @@ function YoutubeSearch() {
   const regionCode = lang === "fr" ? "FR" : "US";
 
   // GET MOST POPULAR
-  const getMostPopular = async () => {
+  const getMostPopular = useCallback(async () => {
     try {
       const { data } = await axios.get(
         `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&regionCode=${regionCode}&maxResults=25&key=${process.env.REACT_APP_YTB_API_KEY}`
@@ -73,14 +73,14 @@ function YoutubeSearch() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [getMostPopular]);
 
   useEffect(() => {
     getMostPopular();
   }, [regionCode]);
 
   // GET LISTS BY USER ID
-  const getLists = async () => {
+  const getLists = useCallback(async () => {
     try {
       const data = await axios.get(
         `${process.env.REACT_APP_API_URL}/lists/getByUserId/${user?.id}`
@@ -89,7 +89,7 @@ function YoutubeSearch() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [getLists]);
   useEffect(() => {
     if (user?.id) getLists();
   }, [user?.id]);
