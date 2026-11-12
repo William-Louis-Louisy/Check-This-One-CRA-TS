@@ -63,7 +63,7 @@ function ResultsDisplay({
     if (isFinished) {
       fetchRecommendations();
     }
-  }, [page]);
+  }, [page, isFinished, fetchRecommendations]);
 
   if (!isFinished) return null;
 
