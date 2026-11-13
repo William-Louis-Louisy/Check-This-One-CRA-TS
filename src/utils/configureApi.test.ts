@@ -1,11 +1,9 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { clearCsrfToken, setCsrfToken } from "./csrfToken";
 
-type TestConfig = AxiosRequestConfig & {
-  headers: Record<string, string>;
-};
+type TestConfig = InternalAxiosRequestConfig;
 
-const adapter = async (config: AxiosRequestConfig): Promise<AxiosResponse> => ({
+const adapter = async (config: InternalAxiosRequestConfig): Promise<AxiosResponse> => ({
   data: {},
   status: 200,
   statusText: "OK",

@@ -15,7 +15,8 @@ axios.interceptors.request.use((config) => {
     const method = (config.method ?? "get").toUpperCase();
     const token = getCsrfToken();
     if (token && !["GET", "HEAD", "OPTIONS"].includes(method)) {
-      config.headers = { ...config.headers, "X-CSRF-Token": token };
+      // Axios v1 exposes a typed AxiosHeaders instance; preserve its defaults.
+      config.headers.set("X-CSRF-Token", token);
     }
   }
   return config;
