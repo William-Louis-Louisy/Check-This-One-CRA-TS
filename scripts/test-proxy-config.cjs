@@ -1,5 +1,7 @@
 // Preview-only validation: this route MUST NEVER target a production database.
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 const config = require("../vercel.json");
 assert.ok(Array.isArray(config.rewrites));
 assert.deepEqual(config.rewrites[0], {
@@ -18,4 +20,8 @@ assert.ok(config.headers.some(entry =>
     header.value.includes("no-store")
   )
 ));
+// Avoid Vercel trailing-slash routing quirks for POST-based list filtering.
+const browseSource = fs.readFileSync(path.join(__dirname, "../src/pages/BrowseLists.tsx"), "utf8");
+assert.ok(browseSource.includes("/lists/getAllListsFiltered?page="));
+assert.ok(!browseSource.includes("/lists/getAllListsFiltered/?page="));
 console.log("P0 preview reverse proxy config: OK (staging upstream only)");

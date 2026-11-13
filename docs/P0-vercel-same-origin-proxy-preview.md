@@ -44,3 +44,9 @@ Before any production merge or release, **replace the temporary
 endpoint, configure the production frontend with `REACT_APP_API_URL=/api`,
 and perform a paired pre-production browser acceptance on the precise target.
 Neither production routing nor production DB has been changed.
+
+## Correctif ciblé suite au rapport Work du 13 novembre
+
+La preview renvoyait `405` pour `POST /api/lists/getAllListsFiltered/?page=...`, alors que sans la barre finale la requête était relayée à l'API et renvoyait `403 Untrusted request origin`. La barre finale a été retirée de `BrowseLists.tsx`, et la vérification statique de la construction de cette URL est ajoutée au smoke test GitHub Actions.
+
+Ce changement **ne corrige pas le refus de l'origine preview** côté backend staging : le `CORS_ALLOWED_ORIGINS` strict et `requireTrustedBrowserOrigin` doivent être mis à jour seulement sur le service staging, après contrôle d'isolation et traitement des secrets exposés. Le test réel de POST avec cette URL reste indispensable. Cette branche expérimentale doit rester séparée de la production.

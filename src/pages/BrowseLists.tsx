@@ -44,7 +44,7 @@ function BrowseLists() {
   // GET LISTS
   const getLists = useCallback(async () => {
     try {
-      let url = `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered/?page=${page}&limit=10&paginate=true`;
+      let url = `${process.env.REACT_APP_API_URL}/lists/getAllListsFiltered?page=${page}&limit=10&paginate=true`;
       if (userId) {
         url += `&creator_id=${userId}`;
       }
