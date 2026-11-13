@@ -26,3 +26,11 @@ warranted as a separate, explicitly tested change. Do not use
 For Vercel production, a separate same-origin proxy or same-site domain plan
 must be verified before switching CTO-03b browser cookies. This audit does not
 change that routing.
+
+## Initial results (13 November 2026)
+
+The baseline GitHub Actions run passed clean install, Jest and CRA build. NPM reported **92 affected packages: 7 critical, 40 high, 24 moderate, 21 low** both for the entire manifest and for packages marked `dependencies`. This is inflated by CRA build toolchains under the production-tagged manifest.
+
+Axios `^0.27.2` is a **direct runtime dependency** and has high-severity advisories in the lockfile; the targeted first patch is `axios@1.21.1`. Axios v1 also changes request interceptor types; use `AxiosHeaders#set` rather than assigning a plain headers object. Validate CSRF, credential isolation, login/logout and external-provider requests.
+
+A non-forced lockfile update can patch many transitive packages without replacing `react-scripts`. Do not accept npm's suggested `react-scripts@0.0.0` as a security fix. Evaluate remaining build-only warnings separately. A full CRA-to-Vite migration is a distinct project and is **not** included in this PR.
