@@ -128,13 +128,16 @@ function ListEdition() {
     setElementToDelete(id);
     setOpen(true);
   };
+  // Initialize the form from the fetched list only. A privacy toggle must
+  // not overwrite title/description edits still awaiting submission.
   useEffect(() => {
+    if (!list) return;
     setNewListForm({
-      title: list?.title,
-      description: list?.description,
-      privacy: handlePrivacySwitchState(privacy),
+      title: list.title,
+      description: list.description,
+      privacy: list.privacy,
     });
-  }, [list, privacy]);
+  }, [list]);
 
   // UPDATE LIST
   const updateList = async () => {
@@ -142,7 +145,10 @@ function ListEdition() {
       try {
         await axios.put(
           `${process.env.REACT_APP_API_URL}/list/update/${listId}`,
-          newListForm
+          {
+            ...newListForm,
+            privacy: handlePrivacySwitchState(privacy),
+          }
         );
         getListById();
         toast.success(`${trad[lang].toasts.success.listUpdated}`, {

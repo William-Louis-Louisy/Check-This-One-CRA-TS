@@ -50,3 +50,7 @@ Neither production routing nor production DB has been changed.
 La preview renvoyait `405` pour `POST /api/lists/getAllListsFiltered/?page=...`, alors que sans la barre finale la requête était relayée à l'API et renvoyait `403 Untrusted request origin`. La barre finale a été retirée de `BrowseLists.tsx`, et la vérification statique de la construction de cette URL est ajoutée au smoke test GitHub Actions.
 
 Ce changement **ne corrige pas le refus de l'origine preview** côté backend staging : le `CORS_ALLOWED_ORIGINS` strict et `requireTrustedBrowserOrigin` doivent être mis à jour seulement sur le service staging, après contrôle d'isolation et traitement des secrets exposés. Le test réel de POST avec cette URL reste indispensable. Cette branche expérimentale doit rester séparée de la production.
+
+## List editor regression — 17 November 2026
+
+Includes the same non-destructive `ListEdition.tsx` form-state fix as the frontend dependency branch (#61). React Testing Library checks title and description survive a privacy toggle in both directions. This preview does not alter the production API; its staging-only Vercel rewrite must **not** be merged into production. Before qualification, let Vercel build the revised preview and repeat the Chrome edit + visibility test with synthetic lists on staging and preview. No current CapRover image has been updated by this commit.
