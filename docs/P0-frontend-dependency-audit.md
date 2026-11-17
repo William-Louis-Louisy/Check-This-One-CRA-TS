@@ -45,3 +45,7 @@ The temporary GitHub Actions lockfile generator performed a **non-forced** NPM l
 - These are package-scanner findings, not a count of browser-exploitable vulnerabilities. The remaining high advisories need reachability and build-tool analysis before P0 can be declared ready for production.
 
 The branch-only workflow with `contents: write` permissions was removed after generating the lockfile; future CI runs only read the repository. The audit CI checks that no **critical** advisories or direct Axios high/critical issue reappear. It intentionally does not declare an unconditional GO while the other high build-chain advisories remain.
+
+## Form state regression — 17 November 2026
+
+Work reproduced a pre-existing UI defect: editing title/description and then toggling privacy reset the form to the originally fetched list. The effect was dependent on both `list` and `privacy`. The form is now initialized only when `list` changes; the current privacy switch value is applied to the final PUT payload. A real React Testing Library test toggles privacy **in both directions** after modifying title and description, and verifies the PUT payload retains all fields. Revalidate this flow in Chrome on the staging and Vercel preview **after** deploying the new commits. Previous CapRover builds are unchanged.
