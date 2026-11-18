@@ -166,6 +166,8 @@ const trad = {
       forgotPassword: "Mot de passe oublié ?",
       passwordReset:
         "Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+      passwordResetRequirements:
+        "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.",
     },
     modals: {
       add: "Ajouter",
@@ -534,6 +536,8 @@ const trad = {
       forgotPassword: "Forgot your password ?",
       passwordReset:
         "Enter your email address and we'll send you a link to reset your password",
+      passwordResetRequirements:
+        "Password must contain at least 8 characters, one uppercase letter, one digit and one special character.",
     },
     modals: {
       add: "Add",
