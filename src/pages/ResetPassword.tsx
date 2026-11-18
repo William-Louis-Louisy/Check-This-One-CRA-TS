@@ -17,7 +17,7 @@ function ResetPassword() {
   const resetPassword = async () => {
     // Check password format
     const passwordRegex =
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\[\]{}|;:'",.<>?`~])[A-Za-z\d!@#$%^&*()\-_=+\[\]{}|;:'",.<>?`~]{8,}$/;
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+[\]{}|;:'",.<>?`~])[A-Za-z\d!@#$%^&*()\-_=+[\]{}|;:'",.<>?`~]{8,}$/;
     if (!passwordRegex.test(password)) {
       setMessage(trad[lang].login.passwordResetRequirements);
       return;

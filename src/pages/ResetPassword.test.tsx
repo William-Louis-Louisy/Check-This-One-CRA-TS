@@ -47,6 +47,7 @@ describe("ResetPassword validation", () => {
           { token: "fixture-reset-token", password }
         );
       });
+      expect(await screen.findByText("Mot de passe réinitialisé !")).toBeInTheDocument();
     }
   );
 
