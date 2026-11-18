@@ -1,0 +1,34 @@
+name: P0 Vercel Same-Origin Proxy Preview
+
+on:
+  push:
+    branches: [security/p0-vercel-api-proxy-preview]
+  pull_request:
+    branches: [security/p0-frontend-dependency-audit]
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: "true"
+      REACT_APP_API_URL: /api
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Restore exact dependencies
+        run: npm ci --no-fund
+      - name: Validate staging-only rewrites
+        run: node scripts/test-proxy-config.cjs
+      - name: Verify React request credentials and CSRF
+        run: npm test -- --watch=false --runInBand
+      - name: Build CRA with /api same-origin endpoint
+        run: npm run build
