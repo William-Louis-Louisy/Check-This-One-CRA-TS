@@ -1,0 +1,81 @@
+name: P0 Frontend Dependency Audit
+on:
+  push:
+    branches: [security/p0-frontend-dependency-audit]
+  pull_request:
+    branches: [security/cto-03b-session-client]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      CI: "true"
+      REACT_APP_API_URL: https://api.check-this-one.com
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Reproducible dependency install
+        run: npm ci --no-fund
+      - name: Client security and unit tests
+        run: npm test -- --watch=false --runInBand
+      - name: React production build
+        run: npm run build
+      - name: npm audit full tree
+        run: |
+          npm audit --json > p0-frontend-audit-all.json || test "$?" -eq 1
+      - name: npm audit declared production tree
+        run: |
+          npm audit --omit=dev --json > p0-frontend-audit-prod.json || test "$?" -eq 1
+      - name: Summarize findings
+        run: |
+          node - <<'NODE'
+          const fs = require("node:fs");
+          for (const [label, file] of [["all", "p0-frontend-audit-all.json"], ["declared-production", "p0-frontend-audit-prod.json"]]) {
+            const audit = JSON.parse(fs.readFileSync(file, "utf8"));
+            if (!audit.metadata?.vulnerabilities) throw new Error("Missing npm audit data: " + file);
+            const summary = Object.entries(audit.vulnerabilities || {})
+              .filter(([, item]) => ["critical", "high"].includes(item.severity))
+              .map(([name, item]) => ({
+                name,
+                severity: item.severity,
+                direct: item.isDirect,
+                fixAvailable: item.fixAvailable
+              }));
+            console.log(JSON.stringify({scope: label, vulnerabilities: audit.metadata.vulnerabilities, priority: summary}, null, 2));
+          }
+          NODE
+      - name: Security gate — critical packages and browser Axios
+        run: |
+          node - <<'NODE'
+          const fs = require("node:fs");
+          const audit = JSON.parse(fs.readFileSync("p0-frontend-audit-all.json", "utf8"));
+          const totals = audit.metadata?.vulnerabilities;
+          if (!totals) throw new Error("Audit JSON missing vulnerability totals");
+          if (totals.critical > 0) {
+            throw new Error("Critical dependency advisories remain; release blocked");
+          }
+          const axios = audit.vulnerabilities?.axios;
+          if (axios && ["critical", "high"].includes(axios.severity)) {
+            throw new Error("Runtime Axios vulnerability remains");
+          }
+          NODE
+      - name: Store audit JSON reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: p0-frontend-audit
+          path: |
+            p0-frontend-audit-all.json
+            p0-frontend-audit-prod.json
+          retention-days: 7
